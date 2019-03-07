@@ -1,6 +1,7 @@
 package com.sudokusolver;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -164,6 +165,48 @@ public class Main {
         return m;
     }
 
+    public static boolean CONTAIN_DIGIT_SUB_MATRIX_DENSITY (Mat input) {
+
+        double tl = input.size().height/3;
+        double br = input.size().width - input.size().width/3;
+
+
+        Rect cut = new Rect(new Point(tl,tl), new Point(br,br));
+
+
+        return Core.countNonZero(new Mat(input, cut)) > 20;
+    }
+
+    public static Optional<Rect> GET_DIGIT_BOX_CONTOURS(Mat input) {
+        List<MatOfPoint> cont = Lists.newArrayList();
+
+        findContours(input.clone(), cont, new Mat(), RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+
+        List<Point> lp = Lists.newArrayList();
+
+        for (MatOfPoint p : cont) {
+            Rect rect = boundingRect(p);
+
+            double aspect = rect.height / (double) rect.width;
+            double area = rect.area();
+
+            if (aspect > 0.5 && aspect < 10 && area > 20) {
+                lp.add(rect.tl());
+                lp.add(rect.br());
+            }
+
+        }
+
+        if (!lp.isEmpty()) {
+            MatOfPoint points = new MatOfPoint();
+            points.fromList(lp);
+            return Optional.of(boundingRect(points));
+        }
+
+        return Optional.absent();
+
+    }
+
 
     public static void main(String[] args){
         Mat sudoku = getSudoku();
@@ -175,12 +218,19 @@ public class Main {
         proccesd = cleanLines(proccesd);
 
         List<Mat> cells = getCells(proccesd);
-
+        int counter = 0;
         for(int i = 0; i < cells.size(); i++){
-            imshow("cell" + i, cells.get(i));
-            waitKey();
-        }
-        waitKey (30);
+            Optional<Rect> box = GET_DIGIT_BOX_CONTOURS(cells.get(i));
+            if (box.isPresent() && CONTAIN_DIGIT_SUB_MATRIX_DENSITY(cells.get(i))){
+                counter++;
+                imshow("cell" + i, cells.get(i));
+                waitKey();
 
+            }
+        }
+
+        System.out.println(counter);
+//        imshow("main", sudoku);
+        waitKey (30);
     }
 }
