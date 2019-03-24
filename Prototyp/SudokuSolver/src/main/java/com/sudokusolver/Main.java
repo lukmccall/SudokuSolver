@@ -19,8 +19,73 @@ import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
-public class Main {
+class LineDetector {
+    /*
+     * 'true' means row-iterator
+     * 'false' mean col-iterator
+     */
+    private boolean aggregator;
 
+    private static int TRIES = 6;
+    private static int THRESHOLD = 2;
+
+    private Mat m;
+
+    private boolean found = false;
+    private int nTry = 0;
+    private int foundAt = 0;
+
+    private Mat temp;
+
+    private LineDetector(Mat m, boolean aggregator) {
+        this.m = m;
+        this.aggregator = aggregator;
+    }
+
+    /**
+     * Creates a detector based on 'm' matrix, and iterate throw cols
+     */
+    static LineDetector col(Mat m) {
+        return new LineDetector(m, false);
+    }
+
+    /**
+     * Creates a detector based on 'm' matrix, and iterate throw rows
+     */
+    static LineDetector row(Mat m) {
+        return new LineDetector(m, true);
+    }
+
+    public void step(int i) {
+
+        if (nTry < TRIES) {
+            temp = getVector(i);
+
+            if (Core.countNonZero(temp) < THRESHOLD) {
+                if (!found) {
+                    foundAt = i;
+                    found = true;
+                }
+
+                nTry++;
+            } else if (found) {
+                found = false;
+            }
+        }
+    }
+
+    private Mat getVector(int i) {
+        return aggregator ? m.row(i) : m.col(i);
+    }
+
+    public int get() {
+        return foundAt;
+    }
+
+}
+
+public class Main {
+    private static Detector detector;
     static {
         // takie cos co laduje takie drugie cos pobrane z https://opencv.org
         // stosunkowo wazne!!!
@@ -144,7 +209,7 @@ public class Main {
         Mat m = image.clone();
         Mat lines = new Mat();
 
-        int threshold = 50;
+        int threshold = 80;
         int minLineSize = 200;
         int lineGap = 20;
 
@@ -207,8 +272,42 @@ public class Main {
 
     }
 
+    public static Optional<Rect> GET_DIGIT_BOX_BYTE_SUM(Mat input) {
+        List<MatOfPoint> cont = Lists.newArrayList();
+        findContours(input.clone(), cont, new Mat(), RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+        Mat m = input.clone();
+
+        for (MatOfPoint p : cont) {
+            Rect rect = boundingRect(p);
+
+            double aspect = rect.height / (double) rect.width;
+
+            if (aspect < 0.1 || aspect > 10) {
+                Imgproc.rectangle(m, rect.tl(), rect.br(), Scalar.all(0), -1);
+            }
+
+        }
+
+        int center = m.rows() / 2;
+        int n = m.rows()-1;
+
+        LineDetector rowBottom = LineDetector.row(m);
+        LineDetector rowTop = LineDetector.row(m);
+        LineDetector colLeft = LineDetector.col(m);
+        LineDetector colRight = LineDetector.col(m);
+
+        for (int i = center; i <= n; i++) {
+            rowBottom.step(i);
+            rowTop.step(n-i);
+            colLeft.step(i);
+            colRight.step(n-i);
+        }
+
+        return Optional.of(new Rect(new Point(colLeft.get(), rowTop.get()), new Point(colRight.get()+1, rowBottom.get()+1)));
+    }
 
     public static void main(String[] args){
+        detector = new Detector();
         Mat sudoku = getSudoku();
         Mat proccesd = new Mat();
         cvtColor(sudoku, proccesd, Imgproc.COLOR_RGB2GRAY);
@@ -223,14 +322,20 @@ public class Main {
             Optional<Rect> box = GET_DIGIT_BOX_CONTOURS(cells.get(i));
             if (box.isPresent() && CONTAIN_DIGIT_SUB_MATRIX_DENSITY(cells.get(i))){
                 counter++;
-                imshow("cell" + i, cells.get(i));
+                Rect rect = box.get();
+//                System.out.println(box.get() + " " + cells.get(i));
+                if(rect.x+rect.width > cells.get(i).width()) rect.x = cells.get(i).width() - rect.width;
+                if(rect.y+rect.height > cells.get(i).height()) rect.y = cells.get(i).height() - rect.height;
+//                System.out.println(rect + " " + cells.get(i));
+                Mat cutted = new Mat(cells.get(i), rect);
+                System.out.println(detector.detect(cutted));
+                imshow("cell",cutted);
                 waitKey();
-
             }
         }
 
-        System.out.println(counter);
+//        System.out.println(counter);
 //        imshow("main", sudoku);
-        waitKey (30);
+//        waitKey (30);
     }
 }
