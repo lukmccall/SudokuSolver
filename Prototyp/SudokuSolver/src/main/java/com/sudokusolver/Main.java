@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-import static org.opencv.imgcodecs.Imgcodecs.CV_LOAD_IMAGE_UNCHANGED;
+import static org.opencv.imgcodecs.Imgcodecs.IMREAD_UNCHANGED;
 import static org.opencv.imgproc.Imgproc.*;
 import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
@@ -133,7 +133,7 @@ public class Main {
     }
 
     public static Mat getSudoku(){
-        Mat sudoku = imread("sudoku.jpg", CV_LOAD_IMAGE_UNCHANGED);
+        Mat sudoku = imread("sudoku.jpg", IMREAD_UNCHANGED);
         Mat outerBox = new Mat();
         cvtColor(sudoku, outerBox, Imgproc.COLOR_RGB2GRAY);
         GaussianBlur(outerBox, outerBox, new Size(11,11), 0);
