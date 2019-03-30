@@ -9,6 +9,7 @@ import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -133,7 +134,7 @@ public class Main {
     }
 
     public static Mat getSudoku(){
-        Mat sudoku = imread("sudoku.jpg", IMREAD_UNCHANGED);
+        Mat sudoku = imread("sudoku2.jpg", IMREAD_UNCHANGED);
         Mat outerBox = new Mat();
         cvtColor(sudoku, outerBox, Imgproc.COLOR_RGB2GRAY);
         GaussianBlur(outerBox, outerBox, new Size(11,11), 0);
@@ -308,6 +309,8 @@ public class Main {
 
     public static void main(String[] args){
         detector = new Detector();
+
+
         Mat sudoku = getSudoku();
         Mat proccesd = new Mat();
         cvtColor(sudoku, proccesd, Imgproc.COLOR_RGB2GRAY);
@@ -317,25 +320,35 @@ public class Main {
         proccesd = cleanLines(proccesd);
 
         List<Mat> cells = getCells(proccesd);
+//        List<Integer> answer = Arrays.asList(6,4,7, 7,6,9,5,8,7,2,9,3,8,5,4,3,1,7,5,2,3,2,8,2,3,1);
+        List<Integer> answer = Arrays.asList(3,4,8,7,1,8,8,9,5,4,2,6,9,3,2,8,4,8,2,1,2,7,6,4,5,8,7,1,9,8);
+//        List<Integer> answer = Arrays.asList(7,1,4,4,3,6,5,7,9,3,6,8,6,4,2,4,4,6,9,6,9,2,3,5,3,1,2);
+
         int counter = 0;
+        int good = 0;
         for(int i = 0; i < cells.size(); i++){
-            Optional<Rect> box = GET_DIGIT_BOX_CONTOURS(cells.get(i));
+            Optional<Rect> box = GET_DIGIT_BOX_BYTE_SUM(cells.get(i));
             if (box.isPresent() && CONTAIN_DIGIT_SUB_MATRIX_DENSITY(cells.get(i))){
-                counter++;
                 Rect rect = box.get();
-//                System.out.println(box.get() + " " + cells.get(i));
+
                 if(rect.x+rect.width > cells.get(i).width()) rect.x = cells.get(i).width() - rect.width;
                 if(rect.y+rect.height > cells.get(i).height()) rect.y = cells.get(i).height() - rect.height;
-//                System.out.println(rect + " " + cells.get(i));
+
                 Mat cutted = new Mat(cells.get(i), rect);
-                System.out.println(detector.detect(cutted));
-                imshow("cell",cutted);
-                waitKey();
+
+                int detected;
+                if(detector.knn == null)
+                    detected = detector.detectANN(cutted);
+                else
+                    detected = detector.detectKNN(cutted);
+
+                if(detected == answer.get(counter)) good++;
+                System.out.println(detected + " <-- " + answer.get(counter));
+
+                counter++;
             }
         }
+        System.out.println(good + "/" + counter);
 
-//        System.out.println(counter);
-//        imshow("main", sudoku);
-//        waitKey (30);
     }
 }

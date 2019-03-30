@@ -11,36 +11,32 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FavoritesManager">
     <favorites_list name="SudokuSolver" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="326" column="104" lean-forward="true" selection-start-line="326" selection-start-column="104" selection-end-line="326" selection-end-column="104" />
+            <state relative-caret-position="3120">
+              <caret line="329" column="56" selection-start-line="329" selection-start-column="56" selection-end-line="329" selection-end-column="56" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="class#LineDetector#0" />
-                <element signature="e#1246#1247#0" expanded="true" />
-                <element signature="e#1295#1296#0" expanded="true" />
-                <element signature="e#1419#1420#0" expanded="true" />
-                <element signature="e#1467#1468#0" expanded="true" />
-                <element signature="e#1885#1886#0" expanded="true" />
-                <element signature="e#1940#1941#0" expanded="true" />
-                <element signature="e#1964#1965#0" expanded="true" />
-                <element signature="e#1994#1995#0" expanded="true" />
                 <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
                 <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
               </folding>
@@ -48,16 +44,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Detector.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Detector.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Detector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="130" lean-forward="true" selection-start-line="130" selection-end-line="130" />
+            <state relative-caret-position="120">
+              <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#deskew#0;class#Detector#0" />
-                <element signature="method#procSimple#0;class#Detector#0" />
                 <element signature="method#center#0;class#Detector#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MNISTReader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/MNISTReader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="167">
+              <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#loadFile#0;class#MNISTReader#0" />
+                <element signature="method#getKNNData#0;class#MNISTReader#0" />
               </folding>
             </state>
           </provider>
@@ -76,15 +84,18 @@
     <findStrings>
       <find>blu</find>
       <find>GET_DIGIT_BOX_BYTE_SUM</find>
+      <find>load</find>
+      <find>getS</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sudokusolver/Detector.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/sudokusolver/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sudokusolver/MNISTReader.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sudokusolver/Detector.java" />
       </list>
     </option>
   </component>
@@ -108,16 +119,17 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="415" />
-    <option name="width" value="980" />
-    <option name="height" value="1040" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="951" />
+    <option name="width" value="978" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
@@ -164,51 +176,16 @@
               <item name="SudokuSolver" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
-            <path>
-              <item name="SudokuSolver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="opencv-342" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="SudokuSolver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="opencv-342" type="70bed36:NamedLibraryElementNode" />
-              <item name="opencv-342.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SudokuSolver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="opencv-342" type="70bed36:NamedLibraryElementNode" />
-              <item name="opencv-342.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="opencv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SudokuSolver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="opencv-342" type="70bed36:NamedLibraryElementNode" />
-              <item name="opencv-342.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="opencv" type="462c0819:PsiDirectoryNode" />
-              <item name="highgui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SudokuSolver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="opencv-342" type="70bed36:NamedLibraryElementNode" />
-              <item name="opencv-342.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="opencv" type="462c0819:PsiDirectoryNode" />
-              <item name="ml" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="C:/opencv/build/java/opencv-342.jar!/" />
+    <property name="last_opened_file_path" value="C:/opencv4.0.1/opencv/build/java/opencv-401.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -227,11 +204,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Reader">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.sudokusolver.Main" />
       <module name="SudokuSolver" />
-      <option name="VM_PARAMETERS" value="-Djava.library.path=&quot;C:\opencv\build\java\x64&quot;" />
+      <option name="VM_PARAMETERS" value="-Djava.library.path=&quot;C:\opencv4.0.1\opencv\build\java\x64&quot;" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="Reader" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.sudokusolver.MNISTReader" />
+      <module name="SudokuSolver" />
+      <option name="VM_PARAMETERS" value="-Djava.library.path=&quot;C:\opencv4.0.1\opencv\build\java\x64&quot;" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -276,6 +259,10 @@
       <properties />
       <listeners />
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Reader" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -293,11 +280,14 @@
       <workItem from="1551990709855" duration="1070000" />
       <workItem from="1552251911410" duration="42000" />
       <workItem from="1553454851605" duration="8485000" />
+      <workItem from="1553546262375" duration="6793000" />
+      <workItem from="1553607567168" duration="14169000" />
+      <workItem from="1553936366833" duration="133000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26054000" />
+    <option name="totallyTimeSpent" value="47149000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -305,7 +295,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.49932885" weight="0.32478634" />
+      <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.49932885" weight="0.32193732" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
@@ -313,18 +303,18 @@
       <window_info anchor="right" id="Maven Projects" order="3" weight="0.3295302" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4986577" visible="true" weight="0.32763532" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986577" visible="true" weight="0.3803419" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32905984" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4985755" visible="true" weight="0.2624161" />
-      <window_info anchor="right" id="Database" order="3" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4985755" visible="true" weight="0.13557047" />
+      <window_info anchor="right" id="Database" order="3" weight="0.3295302" />
       <window_info id="Structure" order="1" sideWeight="0.5014245" side_tool="true" weight="0.252349" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" sideWeight="0.5014245" side_tool="true" weight="0.252349" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3988604" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -333,33 +323,34 @@
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="right" id="Palette" order="0" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="bottom" id="Run" order="6" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24966443" />
-      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
-      <window_info id="Image Layers" order="0" />
-      <window_info id="Designer" order="1" />
-      <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
-      <window_info anchor="right" id="Palette&#9;" order="4" />
-      <window_info anchor="bottom" id="Terminal" order="2" />
-      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="5" />
-      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4986577" visible="true" weight="0.38176638" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49932885" weight="0.3233618" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4985755" visible="true" weight="0.13355705" />
+      <window_info id="Structure" order="1" sideWeight="0.5014245" side_tool="true" weight="0.252349" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3988604" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32905984" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5013423" side_tool="true" weight="0.32763532" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Database" order="6" weight="0.3295302" />
+      <window_info anchor="right" id="Maven Projects" order="8" weight="0.3295302" />
+      <window_info id="Favorites" order="6" sideWeight="0.5014245" side_tool="true" weight="0.252349" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -368,7 +359,100 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="10" />
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6580">
+          <caret line="329" column="56" selection-start-line="329" selection-start-column="56" selection-end-line="329" selection-end-column="56" />
+          <folding>
+            <element signature="class#LineDetector#0" />
+            <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
+            <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Detector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2760">
+          <caret line="138" column="15" lean-forward="true" selection-start-line="138" selection-start-column="15" selection-end-line="138" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#center#0;class#Detector#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/MNISTReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1460">
+          <caret line="92" column="33" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#loadFile#0;class#MNISTReader#0" />
+            <element signature="method#getKNNData#0;class#MNISTReader#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6720">
+          <caret line="336" lean-forward="true" selection-start-line="336" selection-end-line="336" />
+          <folding>
+            <element signature="class#LineDetector#0" />
+            <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
+            <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Detector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1460">
+          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#center#0;class#Detector#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Detector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2600">
+          <caret line="130" lean-forward="true" selection-start-line="130" selection-end-line="130" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#center#0;class#Detector#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6520">
+          <caret line="326" column="104" lean-forward="true" selection-start-line="326" selection-start-column="104" selection-end-line="326" selection-end-column="104" />
+          <folding>
+            <element signature="class#LineDetector#0" />
+            <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
+            <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
@@ -388,16 +472,7 @@
         <state relative-caret-position="4380">
           <caret line="219" column="31" selection-start-line="219" selection-start-column="31" selection-end-line="219" selection-end-column="31" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="class#LineDetector#0" />
-            <element signature="e#1246#1247#0" expanded="true" />
-            <element signature="e#1295#1296#0" expanded="true" />
-            <element signature="e#1419#1420#0" expanded="true" />
-            <element signature="e#1467#1468#0" expanded="true" />
-            <element signature="e#1885#1886#0" expanded="true" />
-            <element signature="e#1940#1941#0" expanded="true" />
-            <element signature="e#1964#1965#0" expanded="true" />
-            <element signature="e#1994#1995#0" expanded="true" />
             <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
             <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
           </folding>
@@ -423,16 +498,7 @@
         <state relative-caret-position="4660">
           <caret line="233" column="21" selection-start-line="233" selection-start-column="21" selection-end-line="233" selection-end-column="21" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="class#LineDetector#0" />
-            <element signature="e#1246#1247#0" expanded="true" />
-            <element signature="e#1295#1296#0" expanded="true" />
-            <element signature="e#1419#1420#0" expanded="true" />
-            <element signature="e#1467#1468#0" expanded="true" />
-            <element signature="e#1885#1886#0" expanded="true" />
-            <element signature="e#1940#1941#0" expanded="true" />
-            <element signature="e#1964#1965#0" expanded="true" />
-            <element signature="e#1994#1995#0" expanded="true" />
             <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
             <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
           </folding>
@@ -458,16 +524,7 @@
         <state relative-caret-position="3600">
           <caret line="180" column="22" selection-start-line="180" selection-start-column="22" selection-end-line="180" selection-end-column="22" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="class#LineDetector#0" />
-            <element signature="e#1246#1247#0" expanded="true" />
-            <element signature="e#1295#1296#0" expanded="true" />
-            <element signature="e#1419#1420#0" expanded="true" />
-            <element signature="e#1467#1468#0" expanded="true" />
-            <element signature="e#1885#1886#0" expanded="true" />
-            <element signature="e#1940#1941#0" expanded="true" />
-            <element signature="e#1964#1965#0" expanded="true" />
-            <element signature="e#1994#1995#0" expanded="true" />
             <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
             <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
           </folding>
@@ -486,16 +543,7 @@
         <state relative-caret-position="1520">
           <caret line="76" column="56" selection-start-line="76" selection-start-column="56" selection-end-line="76" selection-end-column="56" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="class#LineDetector#0" />
-            <element signature="e#1246#1247#0" expanded="true" />
-            <element signature="e#1295#1296#0" expanded="true" />
-            <element signature="e#1419#1420#0" expanded="true" />
-            <element signature="e#1467#1468#0" expanded="true" />
-            <element signature="e#1885#1886#0" expanded="true" />
-            <element signature="e#1940#1941#0" expanded="true" />
-            <element signature="e#1964#1965#0" expanded="true" />
-            <element signature="e#1994#1995#0" expanded="true" />
             <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
             <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
           </folding>
@@ -514,16 +562,7 @@
         <state relative-caret-position="1540">
           <caret line="77" column="35" selection-start-line="77" selection-start-column="35" selection-end-line="77" selection-end-column="35" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="class#LineDetector#0" />
-            <element signature="e#1246#1247#0" expanded="true" />
-            <element signature="e#1295#1296#0" expanded="true" />
-            <element signature="e#1419#1420#0" expanded="true" />
-            <element signature="e#1467#1468#0" expanded="true" />
-            <element signature="e#1885#1886#0" expanded="true" />
-            <element signature="e#1940#1941#0" expanded="true" />
-            <element signature="e#1964#1965#0" expanded="true" />
-            <element signature="e#1994#1995#0" expanded="true" />
             <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
             <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
           </folding>
@@ -611,44 +650,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/highgui/HighGui.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2746">
-          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/ml/KNearest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/core/CvType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/digits.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/core/Rect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/core/Mat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="1044" selection-start-line="1044" selection-end-line="1044" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/highgui/HighGui.java" />
+    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/ml/KNearest.java" />
+    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/core/CvType.java" />
+    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/core/Rect.java" />
+    <entry file="jar://C:/opencv/build/java/opencv-342.jar!/org/opencv/core/Mat.java" />
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
@@ -656,36 +662,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Detector.java">
+    <entry file="jar://C:/opencv4.0.1/opencv/build/java/opencv-401.jar!/org/opencv/core/Mat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="130" lean-forward="true" selection-start-line="130" selection-end-line="130" />
+        <state relative-caret-position="-550">
+          <caret line="970" column="26" selection-start-line="970" selection-start-column="23" selection-end-line="970" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/opencv4.0.1/opencv/build/java/opencv-401.jar!/org/opencv/ml/KNearest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3755">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/opencv4.0.1/opencv/build/java/opencv-401.jar!/org/opencv/ml/SVM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="123" column="44" selection-start-line="123" selection-start-column="40" selection-end-line="123" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/opencv4.0.1/opencv/build/java/opencv-401.jar!/org/opencv/ml/ANN_MLP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="545" column="31" selection-start-line="545" selection-start-column="31" selection-end-line="545" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sudoku.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/digits.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="jar://C:/opencv4.0.1/opencv/build/java/opencv-401.jar!/org/opencv/highgui/HighGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="43" column="23" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ann.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sudoku2.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3120">
+          <caret line="329" column="56" selection-start-line="329" selection-start-column="56" selection-end-line="329" selection-end-column="56" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#deskew#0;class#Detector#0" />
-            <element signature="method#procSimple#0;class#Detector#0" />
-            <element signature="method#center#0;class#Detector#0" />
+            <element signature="class#LineDetector#0" />
+            <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
+            <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/MNISTReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="326" column="104" lean-forward="true" selection-start-line="326" selection-start-column="104" selection-end-line="326" selection-end-column="104" />
+        <state relative-caret-position="167">
+          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="class#LineDetector#0" />
-            <element signature="e#1246#1247#0" expanded="true" />
-            <element signature="e#1295#1296#0" expanded="true" />
-            <element signature="e#1419#1420#0" expanded="true" />
-            <element signature="e#1467#1468#0" expanded="true" />
-            <element signature="e#1885#1886#0" expanded="true" />
-            <element signature="e#1940#1941#0" expanded="true" />
-            <element signature="e#1964#1965#0" expanded="true" />
-            <element signature="e#1994#1995#0" expanded="true" />
-            <element signature="method#CONTAIN_DIGIT_SUB_MATRIX_DENSITY#0;class#Main#0" />
-            <element signature="method#GET_DIGIT_BOX_BYTE_SUM#0;class#Main#0" />
+            <element signature="method#loadFile#0;class#MNISTReader#0" />
+            <element signature="method#getKNNData#0;class#MNISTReader#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sudokusolver/Detector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#center#0;class#Detector#0" />
           </folding>
         </state>
       </provider>
@@ -754,11 +812,11 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>opencv-342</last-edited>
+          <last-edited>opencv-401</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.3494253" />
+                <option value="0.15276381" />
               </list>
             </option>
           </splitter-proportions>
