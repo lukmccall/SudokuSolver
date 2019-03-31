@@ -26,6 +26,7 @@ public class Detector {
     public static final int SZ = 20;
     public KNearest knn;
     public ANN_MLP ann_mlp;
+	public SVM		svm;
 
     public void learnKNN(){
         Size cellSize = new Size(SZ, SZ);
@@ -132,10 +133,15 @@ public class Detector {
 
         ann_mlp.train(samples, Ml.ROW_SAMPLE, labels);
     }
+	
+	public void loadSVM(){
+        svm = SVM.load("svm.yml");
+    }
 
     public Detector(){
 //        learnANN();
-        loadANN();
+        //loadANN();
+		loadSVM();
 //        learnKNNFromMNIST();
 //        learnKNN();
     }
@@ -195,6 +201,15 @@ public class Detector {
         return res;
     }
 
+	 public int detectSVM(Mat digit){
+        Mat wraped = deskew(center(digit.clone()));
+        Mat result = new Mat();
+
+
+        svm.predict(procSimple(wraped), result);
+        return (int)result.get(0,0)[0];
+    }
+	
     public int detectKNN(Mat digit){
         Mat wraped = deskew(center(digit.clone()));
         Mat result = new Mat();

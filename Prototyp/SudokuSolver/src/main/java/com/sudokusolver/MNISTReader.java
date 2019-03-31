@@ -25,7 +25,8 @@ class TrainData{
 public class MNISTReader {
     static private String imgUrl = "images";
     static private String labelUrl = "labels";
-    private static ANN_MLP ann_mlp;
+    private static ANN_MLP 	ann_mlp;
+	private static SVM		svm
 
     public static byte[] loadFile(String infile) {
         try {
@@ -116,6 +117,49 @@ public class MNISTReader {
         return d;
     }
 
+	public static TrainData getSVMData(){
+		ByteBuffer imgBuffer = loadFileToByteBuffer(imgUrl);
+        ByteBuffer labelBuffer = loadFileToByteBuffer(labelUrl);
+
+        /*********IMAGES LOAD**********/
+        int magicNumber = imgBuffer.getInt();
+        int imgNumber = imgBuffer.getInt();
+        int imgRows = imgBuffer.getInt();
+        int imgCols = imgBuffer.getInt();
+
+        /**********LABELS LOAD************/
+        labelBuffer.getInt(); // magic number
+        labelBuffer.getInt(); // iteams number
+
+
+        Mat trainData = Mat.zeros(imgNumber, Detector.SZ*Detector.SZ, CvType.CV_32FC1);
+        Mat labels = Mat.zeros(imgNumber, 1, CvType.CV_32SC1);
+
+        for(int n = 0; n < imgNumber; n++) {
+            int label = labelBuffer.get() & 0xFF;
+
+            labels.put(n,0,label);
+            Mat img = Mat.zeros(imgRows,imgCols, CvType.CV_32FC1);
+
+            for (int i = 0; i < imgRows; i++)
+                for (int j = 0; j < imgCols; j++)
+                    img.put(i,j, imgBuffer.get() & 0xFF);
+
+
+            Size sz = new Size(Detector.SZ,Detector.SZ);
+            Imgproc.resize(img, img, sz );
+            img = Detector.deskew(img);
+            Mat procCell = Detector.procSimple(img);
+            for (int k = 0; k < Detector.SZ * Detector.SZ; k++) {
+                trainData.put(n, k, procCell.get(0, k));
+            }
+        }
+        TrainData d = new TrainData();
+        d.data = trainData;
+        d.labels = labels;
+        return d;
+	}
+	
     public static TrainData getKNNData(){
         ByteBuffer imgBuffer = loadFileToByteBuffer(imgUrl);
         ByteBuffer labelBuffer = loadFileToByteBuffer(labelUrl);
@@ -160,6 +204,17 @@ public class MNISTReader {
     }
 
     public static void main(String[] args) {
+		
+		
+		TrainData d = getSVMData();
+		svm = SVM.create();
+		
+		svm.trainAuto(d.data,Ml.ROW_SAMPLE, d.labels, 10);
+		//svm.train();
+        
+        svm.save("svm.yml");
+		
+		/*
         TrainData d = getData();
         ann_mlp = ANN_MLP.create();
 
@@ -172,6 +227,7 @@ public class MNISTReader {
 
         ann_mlp.train(d.data, Ml.ROW_SAMPLE, d.labels);
         ann_mlp.save("ann.xml");
+		*/
     }
 
 
