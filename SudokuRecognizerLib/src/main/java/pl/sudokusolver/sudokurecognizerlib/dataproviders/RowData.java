@@ -1,19 +1,20 @@
 package pl.sudokusolver.sudokurecognizerlib.dataproviders;
 
 import org.opencv.core.*;
+import org.opencv.ml.Ml;
 import pl.sudokusolver.sudokurecognizerlib.imageprocessing.ImageProcessing;
 
 import static org.opencv.imgcodecs.Imgcodecs.IMREAD_UNCHANGED;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
-public class Data implements IData{
+public class RowData implements IData{
     private  Mat samples;
     private Mat labels;
-    public short SampleSize;
+    public short sampleSize;
 
-    public Data(){}
+    public RowData(){}
 
-    public Data(String url, short size){
+    public RowData(String url, short size){
         loadFromFile(url,size);
     }
 
@@ -55,5 +56,13 @@ public class Data implements IData{
 
     public Mat getLabels() {
         return labels;
+    }
+
+    public int getType() {
+        return Ml.ROW_SAMPLE;
+    }
+
+    public short getSize() {
+        return sampleSize;
     }
 }
