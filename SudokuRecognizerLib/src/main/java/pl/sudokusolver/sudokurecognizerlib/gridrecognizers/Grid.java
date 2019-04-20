@@ -5,6 +5,7 @@ import com.google.common.collect.Ordering;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.sudokurecognizerlib.imageprocessing.ImageProcessing;
+import pl.sudokusolver.sudokurecognizerlib.sudoku.Sudoku;
 
 import java.util.ArrayList;
 import java.util.Collections;
