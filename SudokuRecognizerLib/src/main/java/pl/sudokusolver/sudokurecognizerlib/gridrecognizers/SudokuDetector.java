@@ -49,12 +49,7 @@ public class SudokuDetector {
 
     public Sudoku getSudokuFromGrid(Grid grid){
         Sudoku sudoku = new Sudoku();
-        
-        // i need this? or maybe move this to cleanlines method
-//        cvtColor(sudoku, proccesd, Imgproc.COLOR_RGB2GRAY);
-//        Imgproc.GaussianBlur(proccesd, proccesd, new Size(11, 11), 0);
-//
-//        adaptiveThreshold(proccesd, proccesd, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 5, 2);
+
         List<Mat> cells = getCells(grid.getSudokuGrid());
 
         for(int i = 0; i < cells.size(); i++){
@@ -70,7 +65,7 @@ public class SudokuDetector {
                 Mat cutted = new Mat(cells.get(i), rect);
                 short x = (short) (i/9);
                 short y = (short) (i%9);
-                sudoku.setDigir(recognizer.detect(cutted), x, y);
+                sudoku.setDigit(recognizer.detect(cutted), x, y);
 
             }
         }

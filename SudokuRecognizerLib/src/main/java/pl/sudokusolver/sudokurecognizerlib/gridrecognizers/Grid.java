@@ -97,14 +97,18 @@ public class Grid {
     }
 
     public void cleanLines(){
-        Mat m = sudokuGrid.clone();
+        Mat proccesd = new Mat();
+        cvtColor(sudokuGrid, proccesd, Imgproc.COLOR_RGB2GRAY);
+        Imgproc.GaussianBlur(proccesd, proccesd, new Size(11, 11), 0);
+        adaptiveThreshold(proccesd, proccesd, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 5, 2);
+
         Mat lines = new Mat();
 
         int threshold = 80;
         int minLineSize = 200;
         int lineGap = 20;
 
-        Imgproc.HoughLinesP(m, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
+        Imgproc.HoughLinesP(proccesd, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
         for (int x = 0; x < lines.rows(); x++) {
             double[] vec = lines.get(x, 0);
@@ -115,10 +119,10 @@ public class Grid {
             Point start = new Point(x1, y1);
             Point end = new Point(x2, y2);
 
-            line(m, start, end, Scalar.all(0), 3);
+            line(proccesd, start, end, Scalar.all(0), 3);
 
         }
-        sudokuGrid = m;
+        sudokuGrid = proccesd;
     }
 
     public Mat getSudokuGrid() {

@@ -1,15 +1,26 @@
 package pl.sudokusolver.sudokurecognizerlib.sudoku;
 
-import pl.sudokusolver.sudokurecognizerlib.gridrecognizers.Grid;
-
 public class Sudoku {
-    private short grid[][];
+    private short sudoku[][];
 
-    public short getDigit(short x, short y) {
-        return grid[x][y];
+    public Sudoku(){
+        sudoku = new short[9][9];
     }
 
-    public void setDigir(short digit, short x, short y) {
-        this.grid[x][y] = digit;
+    public short getDigit(short x, short y) {
+        return sudoku[x][y];
+    }
+
+    public void setDigit(short digit, short x, short y) {
+        this.sudoku[x][y] = digit;
+    }
+
+    public void printSudoku(){
+        for(int i = 0; i < 9; i++){
+            System.out.print("[");
+            for (int j = 0; j < 8; j++)
+                System.out.print(sudoku[i][j]+", ");
+            System.out.println(sudoku[i][8]+"]");
+        }
     }
 }

@@ -4,6 +4,10 @@ import pl.sudokusolver.sudokurecognizerlib.dataproviders.DataType;
 import pl.sudokusolver.sudokurecognizerlib.dataproviders.IData;
 import pl.sudokusolver.sudokurecognizerlib.dataproviders.MNISTReader;
 import pl.sudokusolver.sudokurecognizerlib.digitsrecognizers.ANN;
+import pl.sudokusolver.sudokurecognizerlib.gridrecognizers.DigitBoxByteSum;
+import pl.sudokusolver.sudokurecognizerlib.gridrecognizers.Grid;
+import pl.sudokusolver.sudokurecognizerlib.gridrecognizers.IDigitBox;
+import pl.sudokusolver.sudokurecognizerlib.gridrecognizers.SudokuDetector;
 
 public class test {
 
@@ -14,13 +18,14 @@ public class test {
     public static void main(String[] args) {
         System.out.println("Rec Lib Test");
 
-        System.out.println("Getting Data");
-        IData data = MNISTReader.read("../Data/images", "../Data/labels", DataType.Complex);
 
-        System.out.println("Learning");
-        ANN ann = new ANN(data);
-        ann.dump("ann.xml");
+        ANN ann = new ANN("ann.xml");
 
+        SudokuDetector sudokuDetector = new SudokuDetector(ann, new DigitBoxByteSum());
+        Grid grid = new Grid();
+        grid.imgToSudokuGrid("../Data/sudoku2.jpg");
+        grid.cleanLines();
+        sudokuDetector.getSudokuFromGrid(grid).printSudoku();
 
     }
 }
