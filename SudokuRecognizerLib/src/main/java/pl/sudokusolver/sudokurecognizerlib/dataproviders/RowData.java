@@ -14,6 +14,12 @@ public class RowData implements IData{
 
     public RowData(){}
 
+    public RowData(Mat samples, Mat labels, short sampleSize){
+        this.samples = samples;
+        this.labels = labels;
+        this.sampleSize = sampleSize;
+    }
+
     public RowData(String url, short size){
         loadFromFile(url,size);
     }
