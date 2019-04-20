@@ -55,6 +55,7 @@ public class MNISTReader {
         Mat labels = null;
         if(type == DataType.Complex) labels = Mat.zeros(imgNumber, 10, CvType.CV_32FC1);
         else if(type == DataType.Simple) labels = Mat.zeros(imgNumber, 1, CvType.CV_32FC1);
+        else if(type == DataType.SimpleSVM) labels = Mat.zeros(imgNumber, 1, CvType.CV_32SC1);
         for(int n = 0; n < imgNumber; n++) {
             int label = labelBuffer.get() & 0xFF;
 
@@ -75,7 +76,7 @@ public class MNISTReader {
                     double c = (word.charAt(k) == '1') ? 1 : 0;
                     labels.put(n, k, c);
                 }
-            } else if(type == DataType.Simple){
+            } else if(type == DataType.Simple || type == DataType.SimpleSVM){
                 labels.put(n,0,label);
             }
             Mat img = Mat.zeros(imgRows,imgCols, CvType.CV_32FC1);

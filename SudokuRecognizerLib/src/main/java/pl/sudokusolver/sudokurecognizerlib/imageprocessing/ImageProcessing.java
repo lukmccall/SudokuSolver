@@ -1,7 +1,7 @@
 package pl.sudokusolver.sudokurecognizerlib.imageprocessing;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
+import com.google.common.collect.ImmutableList;
+import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
@@ -65,4 +65,15 @@ public class ImageProcessing {
         return res;
     }
 
+    public static Mat applyMask(Mat image, MatOfPoint poly) {
+        Mat mask = Mat.zeros(image.size(), CvType.CV_8UC1);
+
+        Imgproc.drawContours(mask, ImmutableList.of(poly), 0, Scalar.all(255), -1);
+        Imgproc.drawContours(mask, ImmutableList.of(poly), 0, Scalar.all(0), 2);
+
+        Mat dst = new Mat();
+        image.copyTo(dst, mask);
+
+        return dst;
+    }
 }
