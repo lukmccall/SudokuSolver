@@ -8,8 +8,7 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .idea/
-SudokuRecognizerLib/.idea/
-SudokuRecognizerLib/target/
-Server/.idea/
-Server/target/
+Web/RecognizerLib/target/
+Web/Server/target/
+Web/.idea/
 
