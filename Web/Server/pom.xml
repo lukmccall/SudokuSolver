@@ -12,7 +12,7 @@
     </parent>
  
     <artifactId>server</artifactId>
-
+    <packaging>war</packaging>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
@@ -53,6 +53,13 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.2</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.2</version>
@@ -73,8 +80,8 @@
                         <ignorePackaging>true</ignorePackaging>
                     </configuration>
                 </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
-
 </project>
