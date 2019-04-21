@@ -6,14 +6,33 @@
 
     <groupId>pl.sudokusolver</groupId>
     <artifactId>server</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <openCVPath>C:/opencv4.0.1/opencv/build/java/opencv-401.jar</openCVPath>
+    </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.opencv</groupId>
+            <artifactId>opencv</artifactId>
+            <version>4.0.1</version>
+            <scope>system</scope>
+            <systemPath>${openCVPath}</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>pl.sudokusolver</groupId>
+            <artifactId>sudokurecognizerlib</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../SudokuRecognizerLib/target/sudokurecognizerlib-1.0-jar-with-dependencies.jar</systemPath>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.0.3.RELEASE</version>
+            <version>5.0.7.RELEASE</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
@@ -26,14 +45,15 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.0.3.RELEASE</version>
+            <version>5.0.7.RELEASE</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.0.3.RELEASE</version>
+            <version>5.0.7.RELEASE</version>
         </dependency>
+
 
     </dependencies>
 

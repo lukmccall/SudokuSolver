@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @ComponentScan("pl.sudokusolver.server") //default packet for this project
 public class WebConfig implements WebMvcConfigurer{
-    @Override
+
     public void configureViewResolvers(ViewResolverRegistry registry) {
         // directory to views folder
         registry.jsp("/WEB-INF/views/", ".jsp");
