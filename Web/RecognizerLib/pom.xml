@@ -16,16 +16,20 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <openCVPath>C:/opencv4.0.1/opencv/build/java/opencv-401.jar</openCVPath>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>opencv</id>
+            <url>file:///${project.basedir}/opencv</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.opencv</groupId>
             <artifactId>opencv</artifactId>
             <version>4.0.1</version>
-            <scope>system</scope>
-            <systemPath>${openCVPath}</systemPath>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
