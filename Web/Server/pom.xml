@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-	
+
 	<!--The identifier of the parent POM-->
     <parent>
         <groupId>pl.sudokusolver</groupId>
@@ -28,6 +28,13 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>pl.sudokusolver</groupId>
+            <artifactId>recognizerlib</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -53,13 +60,21 @@
             <artifactId>spring-core</artifactId>
             <version>${springVersion}</version>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
         <dependency>
-            <groupId>pl.sudokusolver</groupId>
-            <artifactId>recognizerlib</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-io -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -73,8 +88,6 @@
             <version>1.4.0</version>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
 
     <build>
