@@ -16,6 +16,7 @@
     <modules>
         <module>Server</module>
         <module>RecognizerLib</module>
+        <module>Solver</module>
     </modules>
 
     <dependencies>

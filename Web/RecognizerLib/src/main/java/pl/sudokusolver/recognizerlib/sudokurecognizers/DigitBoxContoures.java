@@ -35,7 +35,14 @@ public class DigitBoxContoures implements IDigitBox {
         if (!lp.isEmpty()) {
             MatOfPoint points = new MatOfPoint();
             points.fromList(lp);
-            return Optional.of(boundingRect(points));
+
+            Rect rect = boundingRect(points);
+            if(rect.x+rect.width > input.width())
+                rect.x = input.width() - rect.width;
+            if(rect.y+rect.height > input.height())
+                rect.y = input.height() - rect.height;
+
+            return Optional.of(rect);
         }
 
         return Optional.empty();

@@ -10,5 +10,6 @@ buildNumber.properties
 .idea/
 Web/RecognizerLib/target/
 Web/Server/target/
+Web/Solver/target/
 Web/.idea/
 

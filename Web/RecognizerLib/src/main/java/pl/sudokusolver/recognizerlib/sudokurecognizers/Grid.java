@@ -5,6 +5,7 @@ import com.google.common.collect.Ordering;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,37 +18,10 @@ import static org.opencv.imgproc.Imgproc.*;
 public class Grid {
     private Mat sudokuGrid;
 
-    private static final Ordering<Point> SORT = Ordering.natural().nullsFirst().onResultOf(
-            new Function<Point, Integer>() {
-                public Integer apply(Point foo) {
-                    return (int) (foo.x+foo.y);
-                }
-            }
-    );
-
-    private static MatOfPoint2f orderPoints(MatOfPoint2f mat) {
-        List<Point> pointList = SORT.sortedCopy(mat.toList());
-
-        if (pointList.get(1).x > pointList.get(2).x) {
-            Collections.swap(pointList, 1, 2);
-        }
-
-        MatOfPoint2f s = new MatOfPoint2f();
-        s.fromList(pointList);
-
-        return s;
-    }
-
-    private static int distance(MatOfPoint2f poly) {
-        Point[] a =  poly.toArray();
-        return (int)Math.sqrt((a[0].x - a[1].x)*(a[0].x - a[1].x) +
-                (a[0].y - a[1].y)*(a[0].y - a[1].y));
-    }
-
     private static int getBiggestBlobIndex(List<MatOfPoint> contours){
         double area;
         double maxarea = 0;
-        int p = 0;
+        int p = -1;
         for (int i = 0; i < contours.size(); i++) {
             area = contourArea(contours.get(i), false);
             if (area > 50) {
@@ -77,11 +51,11 @@ public class Grid {
 
         double arcLength = Imgproc.arcLength(src, true);
         approxPolyDP(src, dst, 0.02 * arcLength, true);
-        int size = distance(dst);
+        int size = Utility.distance(dst);
 
         Mat cutted = ImageProcessing.applyMask(sudoku, poly);
 
-        MatOfPoint2f order = orderPoints(dst);
+        MatOfPoint2f order = Utility.orderPoints(dst);
 
 
         Size reshape = new Size(size, size);

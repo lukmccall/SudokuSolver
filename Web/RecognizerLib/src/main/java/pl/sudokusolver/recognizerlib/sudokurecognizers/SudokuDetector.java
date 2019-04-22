@@ -54,13 +54,8 @@ public class SudokuDetector {
             if (box.isPresent() && containsDigit(cell)){
                 Rect rect = box.get();
 
-                // todo: move this to DigitBoxCountoures implemetation
-                if(rect.x+rect.width > cells.get(i).width()) rect.x = cells.get(i).width() - rect.width;
-                if(rect.y+rect.height > cells.get(i).height()) rect.y = cells.get(i).height() - rect.height;
-
-                Mat cutted = new Mat(cells.get(i), rect);
+                Mat cutted = new Mat(cell, rect);
                 sudoku.setDigit(recognizer.detect(cutted), i/9, i%9);
-
             }
         }
 

@@ -3,7 +3,7 @@ package pl.sudokusolver.recognizerlib.sudokurecognizers;
 import com.google.common.collect.Lists;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
-import pl.sudokusolver.recognizerlib.imageprocessing.LineDetector;
+import pl.sudokusolver.recognizerlib.utility.LineDetector;
 
 import java.util.List;
 import java.util.Optional;

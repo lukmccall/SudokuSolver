@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.imageprocessing;
+package pl.sudokusolver.recognizerlib.utility;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
