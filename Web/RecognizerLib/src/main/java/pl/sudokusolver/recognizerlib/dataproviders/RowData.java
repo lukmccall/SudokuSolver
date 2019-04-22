@@ -10,7 +10,7 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 public class RowData implements IData{
     private  Mat samples;
     private Mat labels;
-    public short sampleSize;
+    private short sampleSize;
 
     public RowData(){}
 
@@ -24,7 +24,7 @@ public class RowData implements IData{
         loadFromFile(url,size);
     }
 
-    public void loadFromFile(String url, short size) {
+    private void loadFromFile(String url, short size) {
         Size cellSize = new Size(size, size);
         Mat img = imread(url, IMREAD_UNCHANGED);
 

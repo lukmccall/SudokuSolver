@@ -7,11 +7,11 @@ public class Sudoku {
         sudoku = new short[9][9];
     }
 
-    public short getDigit(short x, short y) {
+    public short getDigit(int x, int y) {
         return sudoku[x][y];
     }
 
-    public void setDigit(short digit, short x, short y) {
+    public void setDigit(short digit, int x, int y) {
         this.sudoku[x][y] = digit;
     }
 

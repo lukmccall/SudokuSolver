@@ -1,8 +1,9 @@
-package pl.sudokusolver.recognizerlib.gridrecognizers;
+package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
-import com.google.common.base.Optional;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
+
+import java.util.Optional;
 
 public interface IDigitBox {
     Optional<Rect> getDigitBox(Mat input);

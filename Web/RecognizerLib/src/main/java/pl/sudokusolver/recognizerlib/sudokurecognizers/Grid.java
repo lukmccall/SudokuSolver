@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.gridrecognizers;
+package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
@@ -44,18 +44,7 @@ public class Grid {
                 (a[0].y - a[1].y)*(a[0].y - a[1].y));
     }
 
-    public void imgToSudokuGrid(String url) {
-        Mat sudoku = imread(url, IMREAD_UNCHANGED);
-        Mat outerBox = new Mat();
-        cvtColor(sudoku, outerBox, Imgproc.COLOR_RGB2GRAY);
-        GaussianBlur(outerBox, outerBox, new Size(11, 11), 0);
-        adaptiveThreshold(outerBox, outerBox, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY_INV, 5, 2);
-
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Mat heirarchy = new Mat();
-        findContours(outerBox, contours, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
-
-
+    private static int getBiggestBlobIndex(List<MatOfPoint> contours){
         double area;
         double maxarea = 0;
         int p = 0;
@@ -68,6 +57,19 @@ public class Grid {
                 }
             }
         }
+        return p;
+    }
+
+    public void imgToSudokuGrid(String url) {
+        Mat sudoku = imread(url, IMREAD_UNCHANGED);
+        Mat outerBox = ImageProcessing.applyFilters(sudoku);
+
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Mat heirarchy = new Mat();
+        findContours(outerBox, contours, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+
+        int p = getBiggestBlobIndex(contours);
+
         MatOfPoint poly = new MatOfPoint(contours.get(p));
         MatOfPoint2f dst = new MatOfPoint2f();
         MatOfPoint2f src = new MatOfPoint2f();

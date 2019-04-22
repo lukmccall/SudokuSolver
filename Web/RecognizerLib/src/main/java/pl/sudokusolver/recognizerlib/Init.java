@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
 
-public class InitClass {
+public class Init {
     public enum OSType {
         Windows, MacOS, Linux, Other
     }

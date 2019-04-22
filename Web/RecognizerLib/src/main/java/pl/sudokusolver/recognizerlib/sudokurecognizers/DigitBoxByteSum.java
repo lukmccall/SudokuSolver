@@ -1,12 +1,12 @@
-package pl.sudokusolver.recognizerlib.gridrecognizers;
+package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.imageprocessing.LineDetector;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.opencv.imgproc.Imgproc.*;
 

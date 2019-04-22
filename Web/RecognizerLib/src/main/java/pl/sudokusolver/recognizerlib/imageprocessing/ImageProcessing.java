@@ -6,8 +6,7 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
 import static org.opencv.core.CvType.CV_32FC1;
-import static org.opencv.imgproc.Imgproc.moments;
-import static org.opencv.imgproc.Imgproc.warpAffine;
+import static org.opencv.imgproc.Imgproc.*;
 
 public class ImageProcessing {
     public static Mat deskew(Mat img, short size) {
@@ -75,6 +74,14 @@ public class ImageProcessing {
         image.copyTo(dst, mask);
 
         return dst;
+    }
+
+    public static Mat applyFilters(Mat img){
+        Mat output = new Mat();
+        cvtColor(img, output, Imgproc.COLOR_RGB2GRAY);
+        GaussianBlur(output, output, new Size(11, 11), 0);
+        adaptiveThreshold(output, output, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY_INV, 5, 2);
+        return output;
     }
 
 }

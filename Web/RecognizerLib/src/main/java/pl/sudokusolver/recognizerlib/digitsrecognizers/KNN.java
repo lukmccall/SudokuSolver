@@ -5,9 +5,8 @@ import org.opencv.ml.KNearest;
 import pl.sudokusolver.recognizerlib.dataproviders.IData;
 import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
 
-public class KNN implements IRecognizer {
+public class KNN extends MLWrapper {
     private KNearest knn;
-    private short sampleSize;
 
     public KNN(IData data){
         knn = KNearest.create();

@@ -1,14 +1,12 @@
-package pl.sudokusolver.recognizerlib.gridrecognizers;
+package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib.digitsrecognizers.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 
 import java.util.List;
-
-import static org.opencv.imgproc.Imgproc.cvtColor;
+import java.util.Optional;
 
 public class SudokuDetector {
     private IRecognizer recognizer;
@@ -61,9 +59,7 @@ public class SudokuDetector {
                 if(rect.y+rect.height > cells.get(i).height()) rect.y = cells.get(i).height() - rect.height;
 
                 Mat cutted = new Mat(cells.get(i), rect);
-                short x = (short) (i/9);
-                short y = (short) (i%9);
-                sudoku.setDigit(recognizer.detect(cutted), x, y);
+                sudoku.setDigit(recognizer.detect(cutted), i/9, i%9);
 
             }
         }

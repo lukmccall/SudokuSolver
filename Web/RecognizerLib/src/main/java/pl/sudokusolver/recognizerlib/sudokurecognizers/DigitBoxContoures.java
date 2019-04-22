@@ -1,6 +1,5 @@
-package pl.sudokusolver.recognizerlib.gridrecognizers;
+package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -8,9 +7,9 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.opencv.imgproc.Imgproc.*;
-import static org.opencv.imgproc.Imgproc.boundingRect;
 
 public class DigitBoxContoures implements IDigitBox {
     public Optional<Rect> getDigitBox(Mat input) {
@@ -39,7 +38,7 @@ public class DigitBoxContoures implements IDigitBox {
             return Optional.of(boundingRect(points));
         }
 
-        return Optional.absent();
+        return Optional.empty();
 
     }
 }

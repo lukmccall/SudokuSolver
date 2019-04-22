@@ -61,7 +61,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.2</version>
                     <configuration>
-                        <verbose>true</verbose>
+                        <verbose>false</verbose>
                         <source>8</source>
                         <target>8</target>
                         <showWarnings>true</showWarnings>

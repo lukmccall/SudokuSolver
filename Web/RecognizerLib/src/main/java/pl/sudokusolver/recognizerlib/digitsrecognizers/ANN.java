@@ -8,7 +8,7 @@ import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
 import static java.lang.Math.sqrt;
 import static org.opencv.core.CvType.CV_32FC1;
 
-public class ANN implements ILoader, IRecognizer{
+public class ANN extends MLWrapper implements ILoader{
     private ANN_MLP ann;
     private short sampleSize;
 
