@@ -1,14 +1,11 @@
 package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Ordering;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.Utility;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.opencv.imgcodecs.Imgcodecs.IMREAD_UNCHANGED;

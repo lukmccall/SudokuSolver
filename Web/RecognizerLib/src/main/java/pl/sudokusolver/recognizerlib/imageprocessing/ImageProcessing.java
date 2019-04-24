@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
-import pl.sudokusolver.recognizerlib.utility.Utility;
 
 import static org.opencv.core.CvType.CV_32FC1;
 import static org.opencv.imgproc.Imgproc.*;

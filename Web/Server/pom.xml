@@ -28,13 +28,6 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>pl.sudokusolver</groupId>
-            <artifactId>recognizerlib</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -87,6 +80,13 @@
             <artifactId>spring-test-junit5</artifactId>
             <version>1.4.0</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.sudokusolver</groupId>
+            <artifactId>recognizerlib</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

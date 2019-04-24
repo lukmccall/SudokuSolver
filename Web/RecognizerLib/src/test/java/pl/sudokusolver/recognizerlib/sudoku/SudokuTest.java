@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.recognizerlib.digitsrecognizers.ANN;
 import pl.sudokusolver.recognizerlib.digitsrecognizers.IRecognizer;
+import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.DigitBoxByteSum;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.Grid;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

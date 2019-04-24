@@ -2,7 +2,6 @@ package pl.sudokusolver.recognizerlib;
 
 import org.opencv.core.Core;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
 

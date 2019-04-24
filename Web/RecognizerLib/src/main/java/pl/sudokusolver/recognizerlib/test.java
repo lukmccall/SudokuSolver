@@ -2,9 +2,9 @@ package pl.sudokusolver.recognizerlib;
 
 import pl.sudokusolver.recognizerlib.digitsrecognizers.ANN;
 import pl.sudokusolver.recognizerlib.digitsrecognizers.IRecognizer;
+import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.DigitBoxByteSum;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.Grid;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
 
 public class test {
 
