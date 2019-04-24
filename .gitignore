@@ -12,4 +12,6 @@ Web/RecognizerLib/target/
 Web/Server/target/
 Web/Solver/target/
 Web/.idea/
+App/.idea/
+App/target/
 

@@ -18,8 +18,9 @@ public class MainController {
 
     @RequestMapping(value = "solve", method = RequestMethod.POST)
     public String solve(@RequestParam("sudoku")
-                                MultipartFile multipart, Model model){
-        System.out.println("Upload" + multipart.getOriginalFilename());
+                                MultipartFile sudoku, Model model){
+        //todo: check everything
+
         return "home";
     }
 }
