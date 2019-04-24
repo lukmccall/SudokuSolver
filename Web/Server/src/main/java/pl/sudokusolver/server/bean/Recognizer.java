@@ -13,6 +13,7 @@ public class Recognizer {
 
     @PostConstruct
     public void init(){
-        Init.init("C:\\opencv4.0.1\\opencv\\build\\java\\x64");
+        System.out.println("Loading openCV from " + this.openCVUrl);
+        Init.init(this.openCVUrl);
     }
 }

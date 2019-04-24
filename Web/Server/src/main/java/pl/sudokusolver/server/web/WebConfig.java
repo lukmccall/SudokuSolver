@@ -34,6 +34,6 @@ public class WebConfig implements WebMvcConfigurer{
 
     @Bean
     public Recognizer recognizer(){
-        return new Recognizer(openCVUrl);   
+        return new Recognizer(openCVUrl);
     }
 }

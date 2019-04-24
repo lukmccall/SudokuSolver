@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.recognizerlib.digitsrecognizers.ANN;
 import pl.sudokusolver.recognizerlib.digitsrecognizers.IRecognizer;
+import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.DigitBoxByteSum;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.Grid;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
@@ -25,7 +26,9 @@ public class MainController {
     @RequestMapping(value = "/test")
     public String test(Model model){
         System.out.println("Test");
-
+        Sudoku sudoku = new Sudoku();
+        Grid grid = new Grid();
+        sudoku.printSudoku();
         return "home";
     }
 
