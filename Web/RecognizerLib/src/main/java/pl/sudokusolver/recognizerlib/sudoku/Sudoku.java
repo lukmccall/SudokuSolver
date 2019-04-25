@@ -23,4 +23,17 @@ public class Sudoku {
             System.out.println(sudoku[i][8]+"]");
         }
     }
+
+
+    @Override
+    public String toString(){
+        StringBuilder ss = new StringBuilder();
+        for(int i = 0; i < 9; i++){
+            ss.append("[");
+            for (int j = 0; j < 8; j++)
+                ss.append(sudoku[i][j]).append(", ");
+            ss.append(sudoku[i][8]).append("]").append(System.getProperty("line.separator"));
+        }
+        return ss.toString();
+    }
 }
