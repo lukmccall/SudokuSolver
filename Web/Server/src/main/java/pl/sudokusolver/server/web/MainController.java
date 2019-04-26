@@ -1,7 +1,8 @@
 package pl.sudokusolver.server.web;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.opencv.core.Mat;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,8 @@ import java.io.IOException;
 
 @RestController
 public class MainController {
-    private static final Logger LOGGER = Logger.getLogger(MainController.class);
+    @Autowired
+    private Logger LOGGER;
 
     @Autowired
     private Recognizer recognizer;
