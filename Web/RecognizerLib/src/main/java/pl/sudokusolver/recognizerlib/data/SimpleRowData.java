@@ -57,6 +57,7 @@ public class SimpleRowData implements IData{
                 labels.put(currentCell, 0 , label);
 
             }
+        sampleSize = size;
     }
 
     @Override
