@@ -31,7 +31,6 @@ public class SudokuTest {
         GridImg gridImg = new GridImg();
         gridImg.imgToSudokuGrid("../../Data/sudoku2.jpg");
         Sudoku s = sudokuDetector.getSudokuFromGrid(gridImg);
-        s.printSudoku();
         assertEquals(3,s.getDigit(0,0));
 
     }

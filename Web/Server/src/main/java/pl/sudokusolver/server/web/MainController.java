@@ -1,9 +1,12 @@
 package pl.sudokusolver.server.web;
 
+import com.google.gson.Gson;
 import org.opencv.core.Mat;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +16,8 @@ import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.GridImg;
 import pl.sudokusolver.server.bean.Recognizer;
 import pl.sudokusolver.server.utility.Utility;
+import pl.sudokusolver.solver.BrutalSolver;
+import pl.sudokusolver.solver.ISolver;
 
 import java.io.IOException;
 
@@ -25,12 +30,15 @@ public class MainController {
     private Recognizer recognizer;
 
     @RequestMapping(value = "/")
-    public String home(Model model) {
-        return "home";
+    public String home() {
+        Sudoku sudoku = new Sudoku();
+        return new Gson().toJson(sudoku);
+
+
     }
 
     @RequestMapping(value = "/test")
-    public String test(Model model){
+    public String test(){
         System.out.println("Test");
         Sudoku sudoku = new Sudoku();
         GridImg gridImg = new GridImg();
@@ -38,9 +46,19 @@ public class MainController {
         return "home";
     }
 
-    @RequestMapping(value = "/solve", method = RequestMethod.POST)
+    @RequestMapping(value = "/solve",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String solve(@RequestBody String json){
+        Sudoku sudoku = new Gson().fromJson(json, Sudoku.class);
+        // todo: check if sudoku is null
+        ISolver solver = new BrutalSolver();
+        solver.solve(sudoku.getGrid());
+        return sudoku.toString();
+    }
+
+    @RequestMapping(value = "/recognize", method = RequestMethod.POST)
     public String solve(@RequestParam("sudoku")
-                                MultipartFile inputImg, Model model){
+                                MultipartFile inputImg){
         //todo: check everything
 
         LOGGER.trace("Send "+inputImg.getContentType()+" which have " + inputImg.getSize() +" bits");
