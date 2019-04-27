@@ -23,6 +23,13 @@ public class Sudoku {
         return grid;
     }
 
+    public boolean empty() {
+        for(int i = 0; i < 9; i++)
+            for (int j = 0; j < 9; j++)
+                if(grid[i][j] != 0) return false;
+        return true;
+    }
+
     @Override
     public String toString(){
         StringBuilder ss = new StringBuilder();

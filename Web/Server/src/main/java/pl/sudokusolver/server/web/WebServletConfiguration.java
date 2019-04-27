@@ -16,5 +16,6 @@ public class WebServletConfiguration implements WebApplicationInitializer{
         ServletRegistration.Dynamic servlet = ctx.addServlet("dispatcher", new DispatcherServlet(webCtx));
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
+        servlet.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
 }

@@ -1,11 +1,11 @@
 package pl.sudokusolver.server.web;
 
 import com.google.gson.Gson;
-import org.opencv.core.Mat;
 import org.apache.logging.log4j.Logger;
+import org.opencv.core.Mat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,9 +48,11 @@ public class MainController {
 
     @RequestMapping(value = "/solve",
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String solve(@RequestBody String json){
+    public String solve(@RequestBody String json) throws MissingServletRequestParameterException {
+
         Sudoku sudoku = new Gson().fromJson(json, Sudoku.class);
-        // todo: check if sudoku is null
+        if(sudoku == null || sudoku.empty())
+            throw new MissingServletRequestParameterException("sudoku", "int[9][9]");
         ISolver solver = new BrutalSolver();
         solver.solve(sudoku.getGrid());
         return sudoku.toString();
