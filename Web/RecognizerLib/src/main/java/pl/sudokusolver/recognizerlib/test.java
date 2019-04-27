@@ -3,7 +3,7 @@ package pl.sudokusolver.recognizerlib;
 import pl.sudokusolver.recognizerlib.ml.ANN;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.DigitBoxByteSum;
+import pl.sudokusolver.recognizerlib.digitbox.DigitBoxByteSum;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.Grid;
 
 public class test {
@@ -18,7 +18,6 @@ public class test {
         SudokuDetector sudokuDetector = new SudokuDetector(ann, new DigitBoxByteSum());
         Grid grid = new Grid();
         grid.imgToSudokuGrid("../Data/sudoku2.jpg");
-        grid.cleanLines();
         sudokuDetector.getSudokuFromGrid(grid).printSudoku();
 
     }

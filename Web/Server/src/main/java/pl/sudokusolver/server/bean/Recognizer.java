@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.recognizerlib.ml.ANN;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.DigitBoxByteSum;
+import pl.sudokusolver.recognizerlib.digitbox.DigitBoxByteSum;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
 
 import javax.annotation.PostConstruct;

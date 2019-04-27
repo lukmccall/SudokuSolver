@@ -1,7 +1,7 @@
 package pl.sudokusolver.recognizerlib.ml;
 
 import org.opencv.core.Mat;
-import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
 
 public abstract class MLWrapper implements IRecognizer{
     protected short sampleSize;

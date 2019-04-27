@@ -3,7 +3,7 @@ package pl.sudokusolver.recognizerlib.ml;
 import org.opencv.core.Mat;
 import org.opencv.ml.KNearest;
 import pl.sudokusolver.recognizerlib.data.IData;
-import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
 
 public class KNN extends MLWrapper {
     private KNearest knn;

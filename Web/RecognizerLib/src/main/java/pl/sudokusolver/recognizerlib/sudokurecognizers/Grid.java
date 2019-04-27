@@ -8,7 +8,8 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.Utility;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgproc.Imgproc.*;
 
 public class Grid {
-    private Mat sudokuGrid;
+    private Mat sudokuImg;
 
     public Grid(){}
 
@@ -47,84 +48,28 @@ public class Grid {
         return p;
     }
 
-    //todo: refactor this later
-    public void matToSudokuGrid(Mat sudoku){
-        Mat outerBox = ImageProcessing.applyFilters(sudoku);
-
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+    private static List<MatOfPoint> getContours(Mat img){
+        List<MatOfPoint> ret = new ArrayList<MatOfPoint>();
         Mat heirarchy = new Mat();
-        findContours(outerBox, contours, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+        findContours(img, ret, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+        return ret;
+    }
 
-        int p = getBiggestBlobIndex(contours);
-
-        MatOfPoint poly = new MatOfPoint(contours.get(p));
+    private static Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours){
+        MatOfPoint poly = new MatOfPoint(contours);
         MatOfPoint2f dst = new MatOfPoint2f();
         MatOfPoint2f src = new MatOfPoint2f();
         poly.convertTo(src, CvType.CV_32FC2);
 
         double arcLength = Imgproc.arcLength(src, true);
         approxPolyDP(src, dst, 0.02 * arcLength, true);
-        int size = Utility.distance(dst);
 
-        Mat cutted = ImageProcessing.applyMask(sudoku, poly);
-
-        MatOfPoint2f order = Utility.orderPoints(dst);
-
-
-        Size reshape = new Size(size, size);
-
-        Mat undistorted = new Mat(reshape, CvType.CV_8UC1);
-
-        MatOfPoint2f d = new MatOfPoint2f();
-        d.fromArray(new Point(0, 0), new Point(0, reshape.width), new Point(reshape.height, 0),
-                new Point(reshape.width, reshape.height));
-
-        warpPerspective(cutted, undistorted, getPerspectiveTransform(order, d), reshape);
-
-        sudokuGrid = undistorted;
+        return new Pair<>(poly, dst);
     }
 
-    //todo: refactor it later
-    public void imgToSudokuGrid(String url) {
-        Mat sudoku = imread(url, IMREAD_UNCHANGED);
-        Mat outerBox = ImageProcessing.applyFilters(sudoku);
-
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Mat heirarchy = new Mat();
-        findContours(outerBox, contours, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
-
-        int p = getBiggestBlobIndex(contours);
-
-        MatOfPoint poly = new MatOfPoint(contours.get(p));
-        MatOfPoint2f dst = new MatOfPoint2f();
-        MatOfPoint2f src = new MatOfPoint2f();
-        poly.convertTo(src, CvType.CV_32FC2);
-
-        double arcLength = Imgproc.arcLength(src, true);
-        approxPolyDP(src, dst, 0.02 * arcLength, true);
-        int size = Utility.distance(dst);
-
-        Mat cutted = ImageProcessing.applyMask(sudoku, poly);
-
-        MatOfPoint2f order = Utility.orderPoints(dst);
-
-
-        Size reshape = new Size(size, size);
-
-        Mat undistorted = new Mat(reshape, CvType.CV_8UC1);
-
-        MatOfPoint2f d = new MatOfPoint2f();
-        d.fromArray(new Point(0, 0), new Point(0, reshape.width), new Point(reshape.height, 0),
-                new Point(reshape.width, reshape.height));
-
-        warpPerspective(cutted, undistorted, getPerspectiveTransform(order, d), reshape);
-
-        sudokuGrid = undistorted;
-    }
-
-    public void cleanLines(){
+    private void cleanLines(){
         Mat proccesd = new Mat();
-        cvtColor(sudokuGrid, proccesd, Imgproc.COLOR_RGB2GRAY);
+        cvtColor(sudokuImg, proccesd, Imgproc.COLOR_RGB2GRAY);
         Imgproc.GaussianBlur(proccesd, proccesd, new Size(11, 11), 0);
         adaptiveThreshold(proccesd, proccesd, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 5, 2);
 
@@ -148,10 +93,44 @@ public class Grid {
             line(proccesd, start, end, Scalar.all(0), 3);
 
         }
-        sudokuGrid = proccesd;
+        sudokuImg = proccesd;
     }
 
-    public Mat getSudokuGrid() {
-        return sudokuGrid;
+    public void matToSudokuGrid(Mat sudoku){
+        Mat outerBox = ImageProcessing.applyFilters(sudoku);
+
+        List<MatOfPoint> contours = getContours(outerBox);
+
+        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
+
+        MatOfPoint poly = approx.getFirst();
+        MatOfPoint2f dst = approx.getSecond();
+
+        int size = Utility.distance(dst);
+
+        Mat cutted = ImageProcessing.applyMask(sudoku, poly);
+        MatOfPoint2f order = Utility.orderPoints(dst);
+
+        Size reshape = new Size(size, size);
+
+        Mat undistorted = new Mat(reshape, CvType.CV_8UC1);
+
+        MatOfPoint2f d = new MatOfPoint2f();
+        d.fromArray(new Point(0, 0), new Point(0, reshape.width), new Point(reshape.height, 0),
+                new Point(reshape.width, reshape.height));
+
+        warpPerspective(cutted, undistorted, getPerspectiveTransform(order, d), reshape);
+
+        sudokuImg = undistorted;
+
+        this.cleanLines();
+    }
+
+    public void imgToSudokuGrid(String url) {
+        matToSudokuGrid(imread(url, IMREAD_UNCHANGED));
+    }
+
+    public Mat getSudokuImg() {
+        return sudokuImg;
     }
 }

@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.sudokurecognizers;
+package pl.sudokusolver.recognizerlib.digitbox;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;

@@ -2,7 +2,7 @@ package pl.sudokusolver.recognizerlib.ml;
 
 import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib.data.IData;
-import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
 
 public class SVM extends MLWrapper implements ILoader{
     private org.opencv.ml.SVM svm;

@@ -2,6 +2,7 @@ package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
 import com.google.common.collect.Lists;
 import org.opencv.core.*;
+import pl.sudokusolver.recognizerlib.digitbox.IDigitBox;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 
@@ -46,7 +47,7 @@ public class SudokuDetector {
     public Sudoku getSudokuFromGrid(Grid grid){
         Sudoku sudoku = new Sudoku();
 
-        List<Mat> cells = getCells(grid.getSudokuGrid());
+        List<Mat> cells = getCells(grid.getSudokuImg());
 
         for(int i = 0; i < cells.size(); i++){
             Mat cell = cells.get(i);
