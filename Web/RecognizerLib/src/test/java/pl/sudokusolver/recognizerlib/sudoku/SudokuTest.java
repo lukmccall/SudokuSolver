@@ -6,7 +6,7 @@ import pl.sudokusolver.recognizerlib.ml.ANN;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
 import pl.sudokusolver.recognizerlib.digitbox.DigitBoxByteSum;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.Grid;
+import pl.sudokusolver.recognizerlib.sudokurecognizers.GridImg;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,9 +27,9 @@ public class SudokuTest {
         IRecognizer ann = new ANN("ann.xml");
 
         SudokuDetector sudokuDetector = new SudokuDetector(ann, new DigitBoxByteSum());
-        Grid grid = new Grid();
-        grid.imgToSudokuGrid("../../Data/sudoku2.jpg");
-        Sudoku s = sudokuDetector.getSudokuFromGrid(grid);
+        GridImg gridImg = new GridImg();
+        gridImg.imgToSudokuGrid("../../Data/sudoku2.jpg");
+        Sudoku s = sudokuDetector.getSudokuFromGrid(gridImg);
         s.printSudoku();
         assertEquals(3,s.getDigit(0,0));
 

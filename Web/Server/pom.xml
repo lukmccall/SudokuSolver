@@ -122,7 +122,6 @@
                         <path>/</path>
                         <contextReloadable>true</contextReloadable>
                         <ignorePackaging>true</ignorePackaging>
-                        <tomcatLoggingFile>log.txt</tomcatLoggingFile>
                     </configuration>
                 </plugin>
 

@@ -19,16 +19,16 @@ import static org.opencv.imgcodecs.Imgcodecs.IMREAD_UNCHANGED;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgproc.Imgproc.*;
 
-public class Grid {
+public class GridImg {
     private Mat sudokuImg;
 
-    public Grid(){}
+    public GridImg(){}
 
-    public Grid(String url){
+    public GridImg(String url){
         this.imgToSudokuGrid(url);
     }
 
-    public Grid(Mat sudoku){
+    public GridImg(Mat sudoku){
         this.matToSudokuGrid(sudoku);
     }
 
@@ -130,7 +130,7 @@ public class Grid {
         matToSudokuGrid(imread(url, IMREAD_UNCHANGED));
     }
 
-    public Mat getSudokuImg() {
+    public Mat getImg() {
         return sudokuImg;
     }
 }

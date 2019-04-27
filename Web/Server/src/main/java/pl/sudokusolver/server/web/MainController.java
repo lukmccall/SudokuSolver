@@ -1,6 +1,5 @@
 package pl.sudokusolver.server.web;
 
-import org.apache.logging.log4j.LogManager;
 import org.opencv.core.Mat;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.Grid;
+import pl.sudokusolver.recognizerlib.sudokurecognizers.GridImg;
 import pl.sudokusolver.server.bean.Recognizer;
 import pl.sudokusolver.server.utility.Utility;
 
@@ -34,7 +33,7 @@ public class MainController {
     public String test(Model model){
         System.out.println("Test");
         Sudoku sudoku = new Sudoku();
-        Grid grid = new Grid();
+        GridImg gridImg = new GridImg();
         sudoku.printSudoku();
         return "home";
     }
@@ -48,10 +47,9 @@ public class MainController {
 
         try {
             Mat mat = Utility.multipartFileToMat(inputImg);
-            Grid grid = new Grid(mat);
-            grid.cleanLines();
+            GridImg gridImg = new GridImg(mat);
 
-            return recognizer.getDetector().getSudokuFromGrid(grid).toString();
+            return recognizer.getDetector().getSudokuFromGrid(gridImg).toString();
         } catch (IOException e) {
             // todo: i don't know what i should do next
             return "Error";
