@@ -16,14 +16,8 @@ public class Sudoku {
     }
 
     public void printSudoku(){
-        for(int i = 0; i < 9; i++){
-            System.out.print("[");
-            for (int j = 0; j < 8; j++)
-                System.out.print(sudoku[i][j]+", ");
-            System.out.println(sudoku[i][8]+"]");
-        }
+        System.out.println(toString());
     }
-
 
     @Override
     public String toString(){

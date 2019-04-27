@@ -1,27 +1,25 @@
-package pl.sudokusolver.recognizerlib.digitsrecognizers;
+package pl.sudokusolver.recognizerlib.ml;
 
 import org.opencv.core.Mat;
-import pl.sudokusolver.recognizerlib.dataproviders.IData;
+import pl.sudokusolver.recognizerlib.data.IData;
 import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
 
 public class SVM extends MLWrapper implements ILoader{
     private org.opencv.ml.SVM svm;
-    private short sampleSize;
 
     public SVM(IData data){
         svm = org.opencv.ml.SVM.create();
         sampleSize = data.getSize();
-        svm.trainAuto(data.getData(),data.getType(), data.getLabels(), 3);
+        svm.trainAuto(data.getData(),data.getSampleType(), data.getLabels(), 3);
     }
 
-    public SVM(String url){
-        svm = org.opencv.ml.SVM.create();
+    public SVM(String url, short sampleSize){
+        this.sampleSize = sampleSize;
         load(url);
     }
 
     public void load(String url) {
-        // todo: add sample size
-        svm.load(url);
+        svm = org.opencv.ml.SVM.load(url);
     }
 
     public void dump(String url) {
@@ -29,7 +27,7 @@ public class SVM extends MLWrapper implements ILoader{
     }
 
     public short detect(Mat img) {
-        Mat wraped = ImageProcessing.deskew(ImageProcessing.center(img.clone(),sampleSize),sampleSize);
+        Mat wraped = applyFilter(img);
         Mat result = new Mat();
 
         svm.predict(ImageProcessing.procSimple(wraped,sampleSize), result);

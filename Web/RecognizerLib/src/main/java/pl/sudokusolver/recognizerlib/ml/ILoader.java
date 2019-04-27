@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.digitsrecognizers;
+package pl.sudokusolver.recognizerlib.ml;
 
 public interface ILoader {
     void load(String url);

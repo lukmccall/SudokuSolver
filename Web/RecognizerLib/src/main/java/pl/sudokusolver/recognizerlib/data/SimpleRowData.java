@@ -1,31 +1,33 @@
-package pl.sudokusolver.recognizerlib.dataproviders;
+package pl.sudokusolver.recognizerlib.data;
 
-import org.opencv.core.*;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Size;
 import org.opencv.ml.Ml;
 import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
 
 import static org.opencv.imgcodecs.Imgcodecs.IMREAD_UNCHANGED;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
-public class RowData implements IData{
-    private  Mat samples;
+public class SimpleRowData implements IData{
+    private Mat samples;
     private Mat labels;
     private short sampleSize;
 
-    public RowData(){}
-
-    public RowData(Mat samples, Mat labels, short sampleSize){
+    public SimpleRowData(Mat samples, Mat labels, short sampleSize){
         this.samples = samples;
         this.labels = labels;
         this.sampleSize = sampleSize;
     }
 
-    public RowData(String url, short size){
-        loadFromFile(url,size);
+    public SimpleRowData(String url, short size){
+        loadFromSheet(url,size);
     }
 
-    private void loadFromFile(String url, short size) {
-        Size cellSize = new Size(size, size);
+    private void loadFromSheet(String url, short size) {
+        //todo: check if file exist
         Mat img = imread(url, IMREAD_UNCHANGED);
 
         int cols = img.width() / size;
@@ -36,6 +38,7 @@ public class RowData implements IData{
         samples = Mat.zeros(cols * rows, size * size, CvType.CV_32FC1);
         labels = Mat.zeros(cols * rows, 1, CvType.CV_32FC1);
 
+        Size cellSize = new Size(size, size);
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++) {
                 Rect rect = new Rect(new Point(j * size, i * size), cellSize);
@@ -56,19 +59,27 @@ public class RowData implements IData{
             }
     }
 
+    @Override
     public Mat getData() {
         return samples;
     }
 
+    @Override
     public Mat getLabels() {
         return labels;
     }
 
-    public int getType() {
+    @Override
+    public int getSampleType() {
         return Ml.ROW_SAMPLE;
     }
 
+    @Override
     public short getSize() {
         return sampleSize;
     }
+
+    @Override
+    public DataType getDataType() { return DataType.Simple; }
+
 }

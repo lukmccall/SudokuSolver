@@ -1,8 +1,8 @@
-package pl.sudokusolver.recognizerlib.digitsrecognizers;
+package pl.sudokusolver.recognizerlib.ml;
 
 import org.opencv.core.Mat;
 import org.opencv.ml.ANN_MLP;
-import pl.sudokusolver.recognizerlib.dataproviders.IData;
+import pl.sudokusolver.recognizerlib.data.IData;
 import pl.sudokusolver.recognizerlib.imageprocessing.ImageProcessing;
 
 import static java.lang.Math.sqrt;
@@ -10,7 +10,6 @@ import static org.opencv.core.CvType.CV_32FC1;
 
 public class ANN extends MLWrapper implements ILoader{
     private ANN_MLP ann;
-    private short sampleSize;
 
     public ANN(IData data){
         ann = ANN_MLP.create();
@@ -25,25 +24,27 @@ public class ANN extends MLWrapper implements ILoader{
         ann.setLayerSizes(layers);
         ann.setActivationFunction(ANN_MLP.SIGMOID_SYM);
 
-        ann.train(data.getData(), data.getType(), data.getLabels());
+        ann.train(data.getData(), data.getSampleType(), data.getLabels());
     }
 
     public ANN(String url){
-        ann = ANN_MLP.create();
         load(url);
         sampleSize = (short) sqrt(ann.getLayerSizes().get(0,0)[0]);
     }
 
+    @Override
     public void load(String url) {
         ann = ANN_MLP.load(url);
     }
 
+    @Override
     public void dump(String url) {
         ann.save(url);
     }
 
+    @Override
     public short detect(Mat img) {
-        Mat wraped = ImageProcessing.deskew(ImageProcessing.center(img.clone(), sampleSize), sampleSize);
+        Mat wraped = applyFilter(img);
         Mat result = new Mat();
         ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
         int pre = 0;

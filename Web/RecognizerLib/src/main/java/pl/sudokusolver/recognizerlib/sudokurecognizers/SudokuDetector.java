@@ -2,7 +2,7 @@ package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
 import com.google.common.collect.Lists;
 import org.opencv.core.*;
-import pl.sudokusolver.recognizerlib.digitsrecognizers.IRecognizer;
+import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 
 import java.util.List;

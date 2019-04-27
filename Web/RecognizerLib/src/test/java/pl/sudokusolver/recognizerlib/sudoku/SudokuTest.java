@@ -2,8 +2,8 @@ package pl.sudokusolver.recognizerlib.sudoku;
 
 import org.junit.jupiter.api.Test;
 import pl.sudokusolver.recognizerlib.Init;
-import pl.sudokusolver.recognizerlib.digitsrecognizers.ANN;
-import pl.sudokusolver.recognizerlib.digitsrecognizers.IRecognizer;
+import pl.sudokusolver.recognizerlib.ml.ANN;
+import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.DigitBoxByteSum;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.Grid;

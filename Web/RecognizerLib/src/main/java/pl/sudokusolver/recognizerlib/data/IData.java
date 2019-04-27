@@ -1,10 +1,11 @@
-package pl.sudokusolver.recognizerlib.dataproviders;
+package pl.sudokusolver.recognizerlib.data;
 
 import org.opencv.core.Mat;
 
 public interface IData {
     Mat getData();
     Mat getLabels();
-    int getType();
+    int getSampleType();
     short getSize();
+    DataType getDataType();
 }
