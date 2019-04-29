@@ -26,7 +26,9 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${junitVersion}</version>
             <scope>test</scope>
+
         </dependency>
+
         <!-- Only needed to run tests in a version of IntelliJ IDEA that bundles older versions -->
         <dependency>
             <groupId>org.junit.platform</groupId>
@@ -81,8 +83,8 @@
                     <version>3.8.0</version>
                     <configuration>
                         <verbose>false</verbose>
-                        <source>8</source>
-                        <target>8</target>
+                        <source>1.8</source>
+                        <target>1.8</target>
                         <showWarnings>true</showWarnings>
                     </configuration>
                 </plugin>

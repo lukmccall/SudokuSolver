@@ -1,15 +1,13 @@
 package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
 import com.google.common.collect.Lists;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Size;
+import org.opencv.core.*;
+import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.digitbox.IDigitBox;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +24,7 @@ public class SudokuDetector {
         return Core.countNonZero(new Mat(input, cut)) > 20;
     }
 
-    private static List<Mat> getCells(Mat m) {
+    public static List<Mat> getCells(Mat m) {
         int size = m.height() / 9;
 
         Size cellSize = new Size(size, size);
@@ -37,10 +35,34 @@ public class SudokuDetector {
                 Rect rect = new Rect(new Point(col * size, row * size), cellSize);
 
                 Mat digit = new Mat(m, rect).clone();
+//                removeNoise(digit);
                 cells.add(digit);
             }
         }
         return cells;
+    }
+
+    private static void removeNoise(Mat submat) {
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Mat tmp = new Mat(submat.size(), submat.type());
+        submat.copyTo(tmp);
+
+        Imgproc.findContours(tmp, contours, new Mat(), Imgproc.RETR_LIST,
+                Imgproc.CHAIN_APPROX_SIMPLE);
+        for (int i = 0; i < contours.size(); i++) {
+            Rect r = Imgproc.boundingRect(contours.get(i));
+            if (isNoise(r.width, r.height, submat.cols(), submat.rows())) {
+                Imgproc.drawContours(submat, contours, i, new Scalar(0), Core.FILLED);
+            }
+        }
+
+    }
+
+    private static  boolean isNoise(int width, int height, int tileWidth, int tileHeight) {
+        if (width < tileWidth / 10 || height < tileHeight / 10) {
+            return true;
+        }
+        return false;
     }
 
     public SudokuDetector(IRecognizer recognizer, IDigitBox digitBox){

@@ -1,5 +1,6 @@
 package pl.sudokusolver.recognizerlib;
 
+import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
 import pl.sudokusolver.recognizerlib.ml.ANN;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
@@ -8,7 +9,7 @@ import pl.sudokusolver.recognizerlib.sudokurecognizers.GridImg;
 
 public class test {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NotFoundSudokuExceptions {
         System.out.println("Rec Lib Test");
 
         Init.init("C:\\opencv4.0.1\\opencv\\build\\java\\x64");

@@ -8,6 +8,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
 import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.Utility;
@@ -15,7 +16,6 @@ import pl.sudokusolver.recognizerlib.utility.Utility;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opencv.imgcodecs.Imgcodecs.IMREAD_UNCHANGED;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgproc.Imgproc.*;
 
@@ -24,11 +24,11 @@ public class GridImg {
 
     public GridImg(){}
 
-    public GridImg(String url){
+    public GridImg(String url) throws NotFoundSudokuExceptions {
         this.imgToSudokuGrid(url);
     }
 
-    public GridImg(Mat sudoku){
+    public GridImg(Mat sudoku) throws NotFoundSudokuExceptions {
         this.matToSudokuGrid(sudoku);
     }
 
@@ -55,21 +55,46 @@ public class GridImg {
         return ret;
     }
 
-    private static Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours){
+    private static Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuExceptions {
         MatOfPoint poly = new MatOfPoint(contours);
         MatOfPoint2f dst = new MatOfPoint2f();
         MatOfPoint2f src = new MatOfPoint2f();
         poly.convertTo(src, CvType.CV_32FC2);
 
+        final int maxIteration = 100;
+        final int corners = 4;
+
+        // default value
         double arcLength = Imgproc.arcLength(src, true);
         approxPolyDP(src, dst, 0.02 * arcLength, true);
+        if(dst.rows() == corners)
+            return new Pair<>(poly, dst);
 
-        return new Pair<>(poly, dst);
+        // searching for new
+        double left = 0.0;
+        double right = 1.0;
+
+        for (int i = 0; i < maxIteration; i++){
+
+            double k = (right+left)/2.0;
+
+            double eps = k * arcLength;
+
+            approxPolyDP(src, dst, eps * arcLength, true);
+            if (dst.rows() == corners) return new Pair<>(poly, dst);
+            else if(dst.rows() > corners) left = k;
+            else right = k;
+
+        }
+
+        throw new NotFoundSudokuExceptions();
+
     }
 
     private void cleanLines(){
         Mat proccesd = new Mat();
         cvtColor(sudokuImg, proccesd, Imgproc.COLOR_RGB2GRAY);
+
         Imgproc.GaussianBlur(proccesd, proccesd, new Size(11, 11), 0);
         adaptiveThreshold(proccesd, proccesd, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 5, 2);
 
@@ -96,13 +121,7 @@ public class GridImg {
         sudokuImg = proccesd;
     }
 
-    public void matToSudokuGrid(Mat sudoku){
-        Mat outerBox = ImageProcessing.applyFilters(sudoku);
-
-        List<MatOfPoint> contours = getContours(outerBox);
-
-        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
-
+    private Mat perspectiveWrap(Mat sudoku, Pair<MatOfPoint, MatOfPoint2f> approx){
         MatOfPoint poly = approx.getFirst();
         MatOfPoint2f dst = approx.getSecond();
 
@@ -120,14 +139,23 @@ public class GridImg {
                 new Point(reshape.width, reshape.height));
 
         warpPerspective(cutted, undistorted, getPerspectiveTransform(order, d), reshape);
-
-        sudokuImg = undistorted;
-
-        this.cleanLines();
+        return undistorted;
     }
 
-    public void imgToSudokuGrid(String url) {
-        matToSudokuGrid(imread(url, IMREAD_UNCHANGED));
+    public void matToSudokuGrid(Mat sudoku) throws NotFoundSudokuExceptions {
+        Mat outerBox = ImageProcessing.applyFilters(sudoku);
+
+        List<MatOfPoint> contours = getContours(outerBox);
+
+        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
+
+        sudokuImg = perspectiveWrap(sudoku, approx);
+
+//        this.cleanLines();
+    }
+
+    public void imgToSudokuGrid(String url) throws NotFoundSudokuExceptions {
+        matToSudokuGrid(imread(url, 1));
     }
 
     public Mat getImg() {

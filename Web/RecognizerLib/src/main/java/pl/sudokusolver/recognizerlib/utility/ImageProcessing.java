@@ -83,8 +83,8 @@ public class ImageProcessing {
     public static Mat applyFilters(Mat img){
         Mat output = new Mat();
         cvtColor(img, output, Imgproc.COLOR_RGB2GRAY);
-        GaussianBlur(output, output, new Size(11, 11), 0);
-        adaptiveThreshold(output, output, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY_INV, 5, 2);
+        GaussianBlur(output, output, new Size(5, 5), 0);
+        adaptiveThreshold(output, output, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 19, 3);
         return output;
     }
 
