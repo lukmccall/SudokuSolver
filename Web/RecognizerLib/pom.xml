@@ -38,22 +38,27 @@
             <version>16.0.1</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.nd4j</groupId>-->
-            <!--<artifactId>nd4j-native-platform</artifactId>-->
-            <!--<version>0.9.1</version>-->
-        <!--</dependency>-->
-         <!--&lt;!&ndash;Core DL4J functionality&ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.deeplearning4j</groupId>-->
-            <!--<artifactId>deeplearning4j-core</artifactId>-->
-            <!--<version>0.9.1</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-simple</artifactId>-->
-            <!--<version>1.7.12</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-native-platform</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+         <!--Core DL4J functionality-->
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-core</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.8.2</version>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>org.deeplearning4j</groupId>-->
             <!--<artifactId>deeplearning4j-ui_2.10</artifactId>-->
