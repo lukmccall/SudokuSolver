@@ -3,9 +3,9 @@ package pl.sudokusolver.recognizerlib.gridextractors;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
-import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.Pair;
-import pl.sudokusolver.recognizerlib.utility.Utility;
+import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import static org.opencv.imgproc.Imgproc.*;
 public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
     @Override
-    public Mat matToSudokuGrid(Mat img) throws NotFoundSudokuExceptions {
+    public Mat extractGrid(Mat img) throws NotFoundSudokuExceptions {
             Mat outerBox = ImageProcessing.applyFilters(img);
             List<MatOfPoint> contours = getContours(outerBox);
             Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));

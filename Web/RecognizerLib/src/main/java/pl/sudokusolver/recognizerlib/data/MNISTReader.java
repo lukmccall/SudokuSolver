@@ -5,7 +5,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
-import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

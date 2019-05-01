@@ -14,7 +14,7 @@ public class DigitBoxContoures implements IDigitBox {
     public Optional<Rect> getDigitBox(Mat input) {
         List<MatOfPoint> cont = Lists.newArrayList();
 
-        findContours(input.clone(), cont, new Mat(), RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+        findContours(input, cont, new Mat(), RETR_CCOMP, CHAIN_APPROX_SIMPLE);
 
         List<Point> lp = Lists.newArrayList();
 

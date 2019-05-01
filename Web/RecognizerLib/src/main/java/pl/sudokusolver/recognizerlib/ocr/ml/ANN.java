@@ -3,7 +3,7 @@ package pl.sudokusolver.recognizerlib.ocr.ml;
 import org.opencv.core.Mat;
 import org.opencv.ml.ANN_MLP;
 import pl.sudokusolver.recognizerlib.data.IData;
-import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
+import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 import static java.lang.Math.sqrt;
 import static org.opencv.core.CvType.CV_32FC1;

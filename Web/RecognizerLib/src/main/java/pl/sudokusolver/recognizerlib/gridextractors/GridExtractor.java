@@ -41,7 +41,7 @@ public class GridExtractor {
 
 
     public void matToSudokuGrid(Mat sudoku) throws NotFoundSudokuExceptions {
-        sudokuImg = gridExtractStrategy.matToSudokuGrid(sudoku);
+        sudokuImg = gridExtractStrategy.extractGrid(sudoku);
     }
 
     public void imgToSudokuGrid(String url) throws NotFoundSudokuExceptions {

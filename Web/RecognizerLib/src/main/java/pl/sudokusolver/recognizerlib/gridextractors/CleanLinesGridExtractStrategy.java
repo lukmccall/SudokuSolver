@@ -14,8 +14,8 @@ import static org.opencv.imgproc.Imgproc.line;
 public class CleanLinesGridExtractStrategy extends DefaultGridExtractStrategy {
 
     @Override
-    public Mat matToSudokuGrid(Mat img) throws NotFoundSudokuExceptions {
-        Mat ret = super.matToSudokuGrid(img);
+    public Mat extractGrid(Mat img) throws NotFoundSudokuExceptions {
+        Mat ret = super.extractGrid(img);
         ret = cleanLines(ret);
         return ret;
     }

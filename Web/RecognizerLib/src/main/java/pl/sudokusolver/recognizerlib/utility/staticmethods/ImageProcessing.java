@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.utility;
+package pl.sudokusolver.recognizerlib.utility.staticmethods;
 
 import com.google.common.collect.ImmutableList;
 import org.opencv.core.CvType;

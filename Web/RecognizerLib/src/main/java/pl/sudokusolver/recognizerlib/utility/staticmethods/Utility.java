@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.utility;
+package pl.sudokusolver.recognizerlib.utility.staticmethods;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
@@ -11,6 +11,7 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.util.Collections;
 import java.util.List;
+
 
 public class Utility {
     public static final Ordering<Point> SORT = Ordering.natural().nullsFirst().onResultOf(

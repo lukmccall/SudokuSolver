@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.utility;
+package pl.sudokusolver.recognizerlib.utility.comparators;
 
 import org.opencv.core.Point;
 

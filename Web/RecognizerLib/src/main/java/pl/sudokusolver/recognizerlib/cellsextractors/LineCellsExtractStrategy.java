@@ -4,9 +4,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.TermCriteria;
-import pl.sudokusolver.recognizerlib.utility.CenterLinesComparator;
+import pl.sudokusolver.recognizerlib.utility.comparators.CenterLinesComparator;
 import pl.sudokusolver.recognizerlib.utility.Pair;
-import pl.sudokusolver.recognizerlib.utility.PointComparator;
+import pl.sudokusolver.recognizerlib.utility.comparators.PointComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

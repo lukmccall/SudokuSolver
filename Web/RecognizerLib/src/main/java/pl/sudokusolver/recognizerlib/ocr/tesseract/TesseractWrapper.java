@@ -4,7 +4,7 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
-import pl.sudokusolver.recognizerlib.utility.Utility;
+import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 public class TesseractWrapper implements IRecognizer {
     public static Tesseract tesseract;
