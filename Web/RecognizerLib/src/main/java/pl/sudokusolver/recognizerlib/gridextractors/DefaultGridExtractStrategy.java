@@ -22,7 +22,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
             return perspectiveWrap(img, approx);
     }
 
-    protected static int getBiggestBlobIndex(List<MatOfPoint> contours){
+    protected int getBiggestBlobIndex(List<MatOfPoint> contours){
         double area;
         double maxarea = 0;
         int p = -1;
@@ -38,14 +38,14 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         return p;
     }
 
-    protected static List<MatOfPoint> getContours(Mat img){
+    protected List<MatOfPoint> getContours(Mat img){
         List<MatOfPoint> ret = new ArrayList<>();
         Mat heirarchy = new Mat();
         findContours(img, ret, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
         return ret;
     }
 
-    protected static Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuExceptions {
+    protected Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuExceptions {
         MatOfPoint poly = new MatOfPoint(contours);
         MatOfPoint2f dst = new MatOfPoint2f();
         MatOfPoint2f src = new MatOfPoint2f();

@@ -26,11 +26,11 @@ public class SVM extends MLWrapper implements ILoader{
         svm.save(url);
     }
 
-    public short detect(Mat img) {
+    public int detect(Mat img) {
         Mat wraped = applyFilter(img);
         Mat result = new Mat();
 
         svm.predict(ImageProcessing.procSimple(wraped,sampleSize), result);
-        return (short) result.get(0,0)[0];
+        return (int) result.get(0,0)[0];
     }
 }

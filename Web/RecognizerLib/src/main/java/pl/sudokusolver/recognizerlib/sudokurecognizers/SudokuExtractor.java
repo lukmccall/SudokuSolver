@@ -1,8 +1,9 @@
 package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
-import com.google.common.collect.Lists;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
+import pl.sudokusolver.recognizerlib.cellsextractors.CellsExtractStrategy;
+import pl.sudokusolver.recognizerlib.cellsextractors.SizeCellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.digitbox.IDigitBox;
 import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class SudokuExtractor {
     private IRecognizer recognizer;
     private IDigitBox digitBox;
+    private CellsExtractStrategy cellsExtractStrategy;
+
 
     private static boolean containsDigit (Mat input) {
         double tl = input.size().height/3;
@@ -23,24 +26,6 @@ public class SudokuExtractor {
         Rect cut = new Rect(new Point(tl,tl), new Point(br,br));
 
         return Core.countNonZero(new Mat(input, cut)) > 20;
-    }
-
-    public static List<Mat> getCells(Mat m) {
-        int size = m.height() / 9;
-
-        Size cellSize = new Size(size, size);
-        List<Mat> cells = Lists.newArrayList();
-
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                Rect rect = new Rect(new Point(col * size, row * size), cellSize);
-
-                Mat digit = new Mat(m, rect).clone();
-//                removeNoise(digit);
-                cells.add(digit);
-            }
-        }
-        return cells;
     }
 
     private static void removeNoise(Mat submat) {
@@ -69,12 +54,13 @@ public class SudokuExtractor {
     public SudokuExtractor(IRecognizer recognizer, IDigitBox digitBox){
         this.recognizer = recognizer;
         this.digitBox = digitBox;
+        this.cellsExtractStrategy = new SizeCellsExtractStrategy();
     }
 
     public Sudoku getSudokuFromGrid(GridExtractor gridExtractor){
         Sudoku sudoku = new Sudoku();
 
-        List<Mat> cells = getCells(gridExtractor.getImg());
+        List<Mat> cells = cellsExtractStrategy.getCells(gridExtractor.getImg());
 
         for(int i = 0; i < cells.size(); i++){
             Mat cell = cells.get(i);

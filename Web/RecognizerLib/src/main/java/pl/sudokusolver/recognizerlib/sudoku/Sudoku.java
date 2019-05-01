@@ -11,7 +11,7 @@ public class Sudoku {
         return grid[x][y];
     }
 
-    public void setDigit(short digit, int x, int y) {
+    public void setDigit(int digit, int x, int y) {
         this.grid[x][y] = digit;
     }
 

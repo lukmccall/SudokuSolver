@@ -43,7 +43,7 @@ public class ANN extends MLWrapper implements ILoader{
     }
 
     @Override
-    public short detect(Mat img) {
+    public int detect(Mat img) {
         Mat wraped = applyFilter(img);
         Mat result = new Mat();
         ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
@@ -51,6 +51,6 @@ public class ANN extends MLWrapper implements ILoader{
         for(int i = 1; i < 10; i++)
             if(result.get(0,pre)[0] < result.get(0,i)[0])
                 pre = i;
-        return (short) pre;
+        return pre;
     }
 }

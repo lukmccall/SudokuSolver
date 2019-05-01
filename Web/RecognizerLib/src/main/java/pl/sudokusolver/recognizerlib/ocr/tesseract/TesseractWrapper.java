@@ -13,7 +13,7 @@ public class TesseractWrapper implements IRecognizer {
         tesseract.setTessVariable("tessedit_char_whitelist", "123456789");
     }
     @Override
-    public short detect(Mat img) {
+    public int detect(Mat img) {
         String text = "";
         try {
             text = tesseract.doOCR(Utility.matToBufferedImage(img));
@@ -22,6 +22,6 @@ public class TesseractWrapper implements IRecognizer {
             return 0;
         }
 
-        return (short) Integer.parseInt(text);
+        return Integer.parseInt(text);
     }
 }
