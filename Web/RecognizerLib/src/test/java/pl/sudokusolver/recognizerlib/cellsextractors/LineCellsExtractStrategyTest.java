@@ -6,15 +6,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib._TestUtility_;
-import pl.sudokusolver.recognizerlib.digitsextractors.ContoursDigitExtractStrategy;
-import pl.sudokusolver.recognizerlib.digitsextractors.DigitsExtractStrategy;
+import pl.sudokusolver.recognizerlib.extractors.digits.ContoursDigitExtractStrategy;
+import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
+import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
+import pl.sudokusolver.recognizerlib.extractors.cells.LineCellsExtractStrategy;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static org.opencv.highgui.HighGui.imshow;
-import static org.opencv.highgui.HighGui.waitKey;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
 import static org.opencv.imgproc.Imgproc.cvtColor;

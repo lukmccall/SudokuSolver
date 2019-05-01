@@ -5,7 +5,7 @@ import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuExtractor;
 import pl.sudokusolver.recognizerlib.digitbox.DigitBoxByteSum;
-import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
+import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractor;
 
 public class test {
 

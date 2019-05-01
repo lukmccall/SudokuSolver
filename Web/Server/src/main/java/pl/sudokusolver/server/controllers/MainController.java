@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
-import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
+import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractor;
 import pl.sudokusolver.server.bean.Recognizer;
 import pl.sudokusolver.server.utility.Utility;
 import pl.sudokusolver.solver.BrutalSolver;

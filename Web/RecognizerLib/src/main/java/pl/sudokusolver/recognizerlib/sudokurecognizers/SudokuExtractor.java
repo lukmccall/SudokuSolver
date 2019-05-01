@@ -2,10 +2,10 @@ package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
-import pl.sudokusolver.recognizerlib.cellsextractors.CellsExtractStrategy;
-import pl.sudokusolver.recognizerlib.cellsextractors.SizeCellsExtractStrategy;
+import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
+import pl.sudokusolver.recognizerlib.extractors.cells.SizeCellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.digitbox.IDigitBox;
-import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
+import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractor;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 

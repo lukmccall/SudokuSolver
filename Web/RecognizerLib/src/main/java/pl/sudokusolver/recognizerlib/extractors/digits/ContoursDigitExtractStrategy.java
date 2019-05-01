@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.digitsextractors;
+package pl.sudokusolver.recognizerlib.extractors.digits;
 
 import com.google.common.collect.Lists;
 import org.opencv.core.*;
@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.opencv.core.Core.BORDER_CONSTANT;
 import static org.opencv.core.Core.bitwise_not;
 import static org.opencv.core.Core.copyMakeBorder;
 import static org.opencv.imgproc.Imgproc.*;

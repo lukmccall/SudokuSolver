@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.gridextractors;
+package pl.sudokusolver.recognizerlib.extractors.grid;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Point;

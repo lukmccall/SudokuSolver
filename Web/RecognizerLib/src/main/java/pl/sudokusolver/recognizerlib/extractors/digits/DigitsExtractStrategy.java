@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.digitsextractors;
+package pl.sudokusolver.recognizerlib.extractors.digits;
 
 import org.opencv.core.Mat;
 

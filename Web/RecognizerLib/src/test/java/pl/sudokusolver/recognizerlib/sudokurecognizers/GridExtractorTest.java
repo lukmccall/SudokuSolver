@@ -8,18 +8,12 @@ import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib._TestUtility_;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
-import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
+import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractor;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.opencv.core.Core.KMEANS_RANDOM_CENTERS;
 import static org.opencv.core.Core.kmeans;
-import static org.opencv.core.CvType.CV_32F;
-import static org.opencv.core.CvType.CV_8U;
 import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
 import static org.opencv.imgproc.Imgproc.*;

@@ -3,14 +3,12 @@ package pl.sudokusolver.recognizerlib.sudokurecognizers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib._TestUtility_;
-import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
+import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractor;
 
 import java.util.List;
 
-import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
 
 @ExtendWith({_INIT_.class})

@@ -1,4 +1,4 @@
-package pl.sudokusolver.recognizerlib.cellsextractors;
+package pl.sudokusolver.recognizerlib.extractors.cells;
 
 import com.google.common.collect.Lists;
 import org.opencv.core.Mat;
