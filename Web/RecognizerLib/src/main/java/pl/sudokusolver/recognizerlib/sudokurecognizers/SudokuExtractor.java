@@ -5,7 +5,7 @@ import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.digitbox.IDigitBox;
 import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
-import pl.sudokusolver.recognizerlib.ml.IRecognizer;
+import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 
 import java.util.ArrayList;

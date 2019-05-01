@@ -1,8 +1,8 @@
 package pl.sudokusolver.recognizerlib;
 
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
-import pl.sudokusolver.recognizerlib.ml.ANN;
-import pl.sudokusolver.recognizerlib.ml.IRecognizer;
+import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
+import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuExtractor;
 import pl.sudokusolver.recognizerlib.digitbox.DigitBoxByteSum;
 import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
