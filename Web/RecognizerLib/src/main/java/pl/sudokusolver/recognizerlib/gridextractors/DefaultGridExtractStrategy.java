@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.opencv.imgproc.Imgproc.*;
 
-public class DefaultExtractStrategy implements ExtractStrategy {
+public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
     @Override
     public Mat matToSudokuGrid(Mat img) throws NotFoundSudokuExceptions {

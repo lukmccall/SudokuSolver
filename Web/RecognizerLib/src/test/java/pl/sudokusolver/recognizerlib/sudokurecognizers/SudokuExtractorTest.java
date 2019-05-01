@@ -14,7 +14,7 @@ import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
 
 @ExtendWith({_INIT_.class})
-class SudokuDetectorTest {
+class SudokuExtractorTest {
     private boolean show = false;
     @Test
     void getCells(){
@@ -22,7 +22,7 @@ class SudokuDetectorTest {
             List<String> images = _TestUtility_.getAllImages();
             for (String img : images.subList(0,1)) {
                 GridExtractor gridExtractor = new GridExtractor(img);
-                List<Mat> cells = SudokuDetector.getCells(gridExtractor.getImg());
+                List<Mat> cells = SudokuExtractor.getCells(gridExtractor.getImg());
                 if(show) {
                     for (Mat cell : cells) {
                         imshow("Cell", cell);

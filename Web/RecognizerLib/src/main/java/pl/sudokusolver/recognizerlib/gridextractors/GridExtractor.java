@@ -8,40 +8,40 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 // Strategy
 public class GridExtractor {
     private Mat sudokuImg;
-    private ExtractStrategy extractStrategy;
+    private GridExtractStrategy gridExtractStrategy;
 
     public GridExtractor(){
-        setExtractStrategy(new DefaultExtractStrategy());
+        setGridExtractStrategy(new DefaultGridExtractStrategy());
     }
 
     public GridExtractor(String url) throws NotFoundSudokuExceptions {
-        setExtractStrategy(new DefaultExtractStrategy());
+        setGridExtractStrategy(new DefaultGridExtractStrategy());
         this.imgToSudokuGrid(url);
     }
 
     public GridExtractor(Mat sudoku) throws NotFoundSudokuExceptions {
-        setExtractStrategy(new DefaultExtractStrategy());
+        setGridExtractStrategy(new DefaultGridExtractStrategy());
         this.matToSudokuGrid(sudoku);
     }
 
-    public GridExtractor(ExtractStrategy extractStrategy){
-        setExtractStrategy(extractStrategy);
+    public GridExtractor(GridExtractStrategy gridExtractStrategy){
+        setGridExtractStrategy(gridExtractStrategy);
     }
 
-    public GridExtractor(ExtractStrategy extractStrategy, String url) throws NotFoundSudokuExceptions {
-        setExtractStrategy(extractStrategy);
+    public GridExtractor(GridExtractStrategy gridExtractStrategy, String url) throws NotFoundSudokuExceptions {
+        setGridExtractStrategy(gridExtractStrategy);
         this.imgToSudokuGrid(url);
 
     }
 
-    public GridExtractor(ExtractStrategy extractStrategy, Mat sudoku) throws NotFoundSudokuExceptions {
-        setExtractStrategy(extractStrategy);
+    public GridExtractor(GridExtractStrategy gridExtractStrategy, Mat sudoku) throws NotFoundSudokuExceptions {
+        setGridExtractStrategy(gridExtractStrategy);
         this.matToSudokuGrid(sudoku);
     }
 
 
     public void matToSudokuGrid(Mat sudoku) throws NotFoundSudokuExceptions {
-        sudokuImg = extractStrategy.matToSudokuGrid(sudoku);
+        sudokuImg = gridExtractStrategy.matToSudokuGrid(sudoku);
     }
 
     public void imgToSudokuGrid(String url) throws NotFoundSudokuExceptions {
@@ -52,7 +52,7 @@ public class GridExtractor {
         return sudokuImg;
     }
 
-    public void setExtractStrategy(ExtractStrategy newExtractStrategy){
-        extractStrategy = newExtractStrategy;
+    public void setGridExtractStrategy(GridExtractStrategy newGridExtractStrategy){
+        gridExtractStrategy = newGridExtractStrategy;
     }
 }

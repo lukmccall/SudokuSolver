@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SudokuDetector {
+public class SudokuExtractor {
     private IRecognizer recognizer;
     private IDigitBox digitBox;
 
@@ -66,7 +66,7 @@ public class SudokuDetector {
         return false;
     }
 
-    public SudokuDetector(IRecognizer recognizer, IDigitBox digitBox){
+    public SudokuExtractor(IRecognizer recognizer, IDigitBox digitBox){
         this.recognizer = recognizer;
         this.digitBox = digitBox;
     }

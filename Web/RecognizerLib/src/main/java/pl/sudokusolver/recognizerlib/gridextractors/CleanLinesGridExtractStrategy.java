@@ -11,7 +11,7 @@ import static org.opencv.imgproc.Imgproc.adaptiveThreshold;
 import static org.opencv.imgproc.Imgproc.cvtColor;
 import static org.opencv.imgproc.Imgproc.line;
 
-public class CleanLinesExtractStrategy extends DefaultExtractStrategy {
+public class CleanLinesGridExtractStrategy extends DefaultGridExtractStrategy {
 
     @Override
     public Mat matToSudokuGrid(Mat img) throws NotFoundSudokuExceptions {

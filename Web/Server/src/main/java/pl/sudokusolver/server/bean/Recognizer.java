@@ -6,13 +6,13 @@ import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.recognizerlib.ml.ANN;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.digitbox.DigitBoxByteSum;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
+import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuExtractor;
 
 import javax.annotation.PostConstruct;
 
 public class Recognizer {
     private String openCVUrl;
-    private SudokuDetector sudokuDetector;
+    private SudokuExtractor sudokuExtractor;
     @Autowired
     private Logger LOGGER;
     public Recognizer(String openCVUrl){
@@ -24,10 +24,10 @@ public class Recognizer {
         LOGGER.info("Loading openCV from " + this.openCVUrl);
         Init.init(this.openCVUrl);
         IRecognizer ann = new ANN("../RecognizerLib/ann.xml");
-        sudokuDetector = new SudokuDetector(ann, new DigitBoxByteSum());
+        sudokuExtractor = new SudokuExtractor(ann, new DigitBoxByteSum());
     }
 
-    public SudokuDetector getDetector() {
-        return sudokuDetector;
+    public SudokuExtractor getDetector() {
+        return sudokuExtractor;
     }
 }
