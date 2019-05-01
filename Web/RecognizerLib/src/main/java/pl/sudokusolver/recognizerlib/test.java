@@ -5,7 +5,7 @@ import pl.sudokusolver.recognizerlib.ml.ANN;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudokurecognizers.SudokuDetector;
 import pl.sudokusolver.recognizerlib.digitbox.DigitBoxByteSum;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.GridImg;
+import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
 
 public class test {
 
@@ -17,9 +17,9 @@ public class test {
         IRecognizer ann = new ANN("RecognizerLib/ann.xml");
 
         SudokuDetector sudokuDetector = new SudokuDetector(ann, new DigitBoxByteSum());
-        GridImg gridImg = new GridImg();
-        gridImg.imgToSudokuGrid("../Data/sudoku2.jpg");
-        sudokuDetector.getSudokuFromGrid(gridImg).printSudoku();
+        GridExtractor gridExtractor = new GridExtractor();
+        gridExtractor.imgToSudokuGrid("../Data/sudoku2.jpg");
+        sudokuDetector.getSudokuFromGrid(gridExtractor).printSudoku();
 
     }
 }

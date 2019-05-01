@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
-import pl.sudokusolver.recognizerlib.sudokurecognizers.GridImg;
+import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
 import pl.sudokusolver.server.bean.Recognizer;
 import pl.sudokusolver.server.utility.Utility;
 import pl.sudokusolver.solver.BrutalSolver;
@@ -22,7 +22,6 @@ import pl.sudokusolver.solver.ISolver;
 
 import java.io.IOException;
 
-import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
 
 @RestController
@@ -45,7 +44,7 @@ public class MainController {
     public String test(){
         System.out.println("Test");
         Sudoku sudoku = new Sudoku();
-        GridImg gridImg = new GridImg();
+        GridExtractor gridExtractor = new GridExtractor();
         sudoku.printSudoku();
         return "home";
     }
@@ -71,9 +70,9 @@ public class MainController {
 
         try {
             Mat mat = Utility.multipartFileToMat(inputImg);
-            GridImg gridImg = new GridImg(mat);
+            GridExtractor gridExtractor = new GridExtractor(mat);
 
-            return recognizer.getDetector().getSudokuFromGrid(gridImg).toString();
+            return recognizer.getDetector().getSudokuFromGrid(gridExtractor).toString();
         } catch (IOException e) {
             // todo: i don't know what i should do next
             return "Error";

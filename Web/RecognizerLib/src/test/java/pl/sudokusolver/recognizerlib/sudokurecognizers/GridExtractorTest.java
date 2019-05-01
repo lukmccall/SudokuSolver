@@ -8,10 +8,8 @@ import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib._TestUtility_;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
+import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,14 +32,14 @@ class CenterLinesComparator implements Comparator<Point> {
 }
 
 @ExtendWith({_INIT_.class})
-class GridImgTest {
+class GridExtractorTest {
     private static boolean showIMG = false;
 
     void getSudoku(String url) throws NotFoundSudokuExceptions {
-        GridImg gridImg = new GridImg(url);
+        GridExtractor gridExtractor = new GridExtractor(url);
         if (showIMG) {
-            resize(gridImg.getImg(), gridImg.getImg(), new Size(600, 600));
-            imshow(url, gridImg.getImg());
+            resize(gridExtractor.getImg(), gridExtractor.getImg(), new Size(600, 600));
+            imshow(url, gridExtractor.getImg());
             waitKey();
         }
 
@@ -62,21 +60,21 @@ class GridImgTest {
     @Test
     void newImple(){
         List<String> images = null;
-        GridImg gridImg = null;
+        GridExtractor gridExtractor = null;
         try {
             images = _TestUtility_.getAllImages();
-            gridImg = new GridImg(images.get(1));
+            gridExtractor = new GridExtractor(images.get(1));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NotFoundSudokuExceptions notFoundSudokuExceptions) {
             notFoundSudokuExceptions.printStackTrace();
         }
 
-        Mat canimg = new Mat(gridImg.getImg().size(), gridImg.getImg().type());
+        Mat canimg = new Mat(gridExtractor.getImg().size(), gridExtractor.getImg().type());
 
-        Mat procimg = gridImg.getImg().clone();
+        Mat procimg = gridExtractor.getImg().clone();
 
-        Canny(gridImg.getImg(), canimg, 30, 90);
+        Canny(gridExtractor.getImg(), canimg, 30, 90);
 
         Mat lines = new Mat();//vector stores the parameters (rho,theta) of the detected lines
         //HoughLines(canimg, lines, 1, CV_PI / 180, 70,1,1, 0, CV_PI);

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.digitbox.IDigitBox;
+import pl.sudokusolver.recognizerlib.gridextractors.GridExtractor;
 import pl.sudokusolver.recognizerlib.ml.IRecognizer;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 
@@ -70,10 +71,10 @@ public class SudokuDetector {
         this.digitBox = digitBox;
     }
 
-    public Sudoku getSudokuFromGrid(GridImg gridImg){
+    public Sudoku getSudokuFromGrid(GridExtractor gridExtractor){
         Sudoku sudoku = new Sudoku();
 
-        List<Mat> cells = getCells(gridImg.getImg());
+        List<Mat> cells = getCells(gridExtractor.getImg());
 
         for(int i = 0; i < cells.size(); i++){
             Mat cell = cells.get(i);

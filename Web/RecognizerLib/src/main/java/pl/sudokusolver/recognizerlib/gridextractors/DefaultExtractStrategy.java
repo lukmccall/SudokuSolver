@@ -1,12 +1,6 @@
-package pl.sudokusolver.recognizerlib.sudokurecognizers;
+package pl.sudokusolver.recognizerlib.gridextractors;
 
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
+import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
 import pl.sudokusolver.recognizerlib.utility.ImageProcessing;
@@ -16,23 +10,19 @@ import pl.sudokusolver.recognizerlib.utility.Utility;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgproc.Imgproc.*;
 
-public class GridImg {
-    private Mat sudokuImg;
+public class DefaultExtractStrategy implements ExtractStrategy {
 
-    public GridImg(){}
-
-    public GridImg(String url) throws NotFoundSudokuExceptions {
-        this.imgToSudokuGrid(url);
+    @Override
+    public Mat matToSudokuGrid(Mat img) throws NotFoundSudokuExceptions {
+            Mat outerBox = ImageProcessing.applyFilters(img);
+            List<MatOfPoint> contours = getContours(outerBox);
+            Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
+            return perspectiveWrap(img, approx);
     }
 
-    public GridImg(Mat sudoku) throws NotFoundSudokuExceptions {
-        this.matToSudokuGrid(sudoku);
-    }
-
-    private static int getBiggestBlobIndex(List<MatOfPoint> contours){
+    protected static int getBiggestBlobIndex(List<MatOfPoint> contours){
         double area;
         double maxarea = 0;
         int p = -1;
@@ -48,14 +38,14 @@ public class GridImg {
         return p;
     }
 
-    private static List<MatOfPoint> getContours(Mat img){
-        List<MatOfPoint> ret = new ArrayList<MatOfPoint>();
+    protected static List<MatOfPoint> getContours(Mat img){
+        List<MatOfPoint> ret = new ArrayList<>();
         Mat heirarchy = new Mat();
         findContours(img, ret, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
         return ret;
     }
 
-    private static Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuExceptions {
+    protected static Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuExceptions {
         MatOfPoint poly = new MatOfPoint(contours);
         MatOfPoint2f dst = new MatOfPoint2f();
         MatOfPoint2f src = new MatOfPoint2f();
@@ -91,37 +81,7 @@ public class GridImg {
 
     }
 
-    private void cleanLines(){
-        Mat proccesd = new Mat();
-        cvtColor(sudokuImg, proccesd, Imgproc.COLOR_RGB2GRAY);
-
-        Imgproc.GaussianBlur(proccesd, proccesd, new Size(11, 11), 0);
-        adaptiveThreshold(proccesd, proccesd, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 5, 2);
-
-        Mat lines = new Mat();
-
-        int threshold = 80;
-        int minLineSize = 200;
-        int lineGap = 20;
-
-        Imgproc.HoughLinesP(proccesd, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
-
-        for (int x = 0; x < lines.rows(); x++) {
-            double[] vec = lines.get(x, 0);
-            double x1 = vec[0],
-                    y1 = vec[1],
-                    x2 = vec[2],
-                    y2 = vec[3];
-            Point start = new Point(x1, y1);
-            Point end = new Point(x2, y2);
-
-            line(proccesd, start, end, Scalar.all(0), 3);
-
-        }
-        sudokuImg = proccesd;
-    }
-
-    private Mat perspectiveWrap(Mat sudoku, Pair<MatOfPoint, MatOfPoint2f> approx){
+    protected Mat perspectiveWrap(Mat sudoku, Pair<MatOfPoint, MatOfPoint2f> approx){
         MatOfPoint poly = approx.getFirst();
         MatOfPoint2f dst = approx.getSecond();
 
@@ -140,25 +100,5 @@ public class GridImg {
 
         warpPerspective(cutted, undistorted, getPerspectiveTransform(order, d), reshape);
         return undistorted;
-    }
-
-    public void matToSudokuGrid(Mat sudoku) throws NotFoundSudokuExceptions {
-        Mat outerBox = ImageProcessing.applyFilters(sudoku);
-
-        List<MatOfPoint> contours = getContours(outerBox);
-
-        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
-
-        sudokuImg = perspectiveWrap(sudoku, approx);
-
-//        this.cleanLines();
-    }
-
-    public void imgToSudokuGrid(String url) throws NotFoundSudokuExceptions {
-        matToSudokuGrid(imread(url, 1));
-    }
-
-    public Mat getImg() {
-        return sudokuImg;
     }
 }
