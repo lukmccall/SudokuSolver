@@ -4,26 +4,18 @@ package pl.sudokusolver.recognizerlib.sudokurecognizers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.opencv.core.*;
+import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib._TestUtility_;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractor;
 
-import java.util.Comparator;
 import java.util.List;
 
-import static org.opencv.core.Core.kmeans;
 import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
-import static org.opencv.imgproc.Imgproc.*;
+import static org.opencv.imgproc.Imgproc.resize;
 
-class CenterLinesComparator implements Comparator<Point> {
-    @Override
-    public int compare(Point t1, Point t2) {
-        return Integer.compare((int) t1.x, (int) t2.y);
-    }
-}
 
 @ExtendWith({_INIT_.class})
 class GridExtractorTest {

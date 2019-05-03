@@ -4,8 +4,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.TermCriteria;
-import pl.sudokusolver.recognizerlib.utility.comparators.CenterLinesComparator;
 import pl.sudokusolver.recognizerlib.utility.Pair;
+import pl.sudokusolver.recognizerlib.utility.comparators.CenterLinesComparator;
 import pl.sudokusolver.recognizerlib.utility.comparators.PointComparator;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import static org.opencv.imgproc.Imgproc.HoughLines;
 
 public class LineCellsExtractStrategy implements CellsExtractStrategy{
     @Override
-    public List<Mat> getCells(Mat grid) {
+    public List<Mat> extract(Mat grid) {
         Mat canimg = new Mat(grid.size(), grid.type());
         Canny(grid, canimg, 30, 90);
 
@@ -63,9 +63,12 @@ public class LineCellsExtractStrategy implements CellsExtractStrategy{
 //                for debugging
 //                int z = 0;
 //                for(Point p : points){
-//                    putText(grid,  new Integer(z).toString(), p, 0, 0.3,  new Scalar(255,0,0), 1);
+//                    Point x = new Point(p.x + 20, p.y + 20);
+//
+//                    putText(grid,  new Integer(z).toString(), x, 0, 0.5,  new Scalar(0,255,0), 1);
 //                    z++;
 //                }
+//                copyMakeBorder(grid, grid, 50, 50, 50, 50, BORDER_CONSTANT, new Scalar(255, 255, 255, 255));
 //                imshow("points", grid);
 //                waitKey();
                 return cutGrid(grid, points);

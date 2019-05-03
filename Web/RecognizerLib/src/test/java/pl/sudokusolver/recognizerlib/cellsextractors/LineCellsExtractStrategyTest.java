@@ -30,7 +30,7 @@ class LineCellsExtractStrategyTest {
         Mat img = imread(url, 1);
         cvtColor(img, img, COLOR_BGR2GRAY);
 
-        List<Mat> cells = cellsExtractStrategy.getCells(img);
+        List<Mat> cells = cellsExtractStrategy.extract(img);
         Assert.assertEquals("Couldn't extract 81 cells from sudoku", 81, cells.size());
 
         DigitsExtractStrategy digitsExtractStrategy = new ContoursDigitExtractStrategy();

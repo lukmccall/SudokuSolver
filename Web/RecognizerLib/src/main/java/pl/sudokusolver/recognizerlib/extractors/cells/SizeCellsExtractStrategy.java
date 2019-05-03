@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SizeCellsExtractStrategy implements CellsExtractStrategy{
     @Override
-    public List<Mat> getCells(Mat grid) {
+    public List<Mat> extract(Mat grid) {
         int size = grid.height() / 9;
 
         Size cellSize = new Size(size, size);

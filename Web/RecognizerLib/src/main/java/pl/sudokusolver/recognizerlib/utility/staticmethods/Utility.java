@@ -5,6 +5,7 @@ import com.google.common.collect.Ordering;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
+import pl.sudokusolver.recognizerlib.filters.IFilter;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -54,5 +55,12 @@ public class Utility {
         byte[] data = dataBuffer.getData();
         frame.get(0, 0, data);
         return image;
+    }
+
+    public static void applyFilters(Mat input, List<IFilter> filters){
+        if(filters != null) {
+            for (IFilter filter : filters)
+                filter.apply(input);
+        }
     }
 }

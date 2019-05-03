@@ -16,7 +16,7 @@ public class ContoursDigitExtractStrategy implements DigitsExtractStrategy {
     @Override
     public Optional<Mat> extractDigit(Mat cell) {
         Mat img = cell.clone();
-        bitwise_not(img, img);
+
         List<MatOfPoint> countours = Lists.newArrayList();
 
 
@@ -44,7 +44,6 @@ public class ContoursDigitExtractStrategy implements DigitsExtractStrategy {
         }
 
         if (!araes.isEmpty()) {
-            bitwise_not(img,img);
             Double d = Collections.max(araes);
 //            System.out.println("Araes: ");
 //            araes.forEach(System.out::println);

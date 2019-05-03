@@ -3,6 +3,8 @@ package pl.sudokusolver.recognizerlib.extractors.grid;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
+import pl.sudokusolver.recognizerlib.filters.BlurFilter;
+import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
@@ -13,12 +15,25 @@ import java.util.List;
 import static org.opencv.imgproc.Imgproc.*;
 
 public class DefaultGridExtractStrategy implements GridExtractStrategy {
+    private BlurFilter blurFilter;
+
+    public DefaultGridExtractStrategy(){
+        blurFilter = new BlurFilter();
+    }
+
+    public DefaultGridExtractStrategy(BlurFilter blurFilter) {
+        this.blurFilter = blurFilter;
+    }
 
     @Override
     public Mat extractGrid(Mat img) throws NotFoundSudokuExceptions {
-            Mat outerBox = ImageProcessing.applyFilters(img);
-            List<MatOfPoint> contours = getContours(outerBox);
+            Mat outbox = img.clone();
+            new ToGrayFilter().apply(outbox);
+            blurFilter.apply(outbox);
+
+            List<MatOfPoint> contours = getContours(outbox);
             Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
+
             return perspectiveWrap(img, approx);
     }
 

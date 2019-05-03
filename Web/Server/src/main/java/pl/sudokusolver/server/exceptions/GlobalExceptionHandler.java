@@ -1,4 +1,4 @@
-package pl.sudokusolver.server.controllers;
+package pl.sudokusolver.server.exceptions;
 
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import pl.sudokusolver.server.exceptions.ErrorCodes;
-import pl.sudokusolver.server.exceptions.ErrorRsponse;
 
 
 @ControllerAdvice

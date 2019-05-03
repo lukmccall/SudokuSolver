@@ -72,7 +72,7 @@ public class MainController {
             Mat mat = Utility.multipartFileToMat(inputImg);
             GridExtractor gridExtractor = new GridExtractor(mat);
 
-            return recognizer.getDetector().getSudokuFromGrid(gridExtractor).toString();
+            return "cos";
         } catch (IOException e) {
             // todo: i don't know what i should do next
             return "Error";
