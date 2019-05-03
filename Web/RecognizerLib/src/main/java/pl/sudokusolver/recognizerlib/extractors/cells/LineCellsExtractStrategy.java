@@ -1,9 +1,6 @@
 package pl.sudokusolver.recognizerlib.extractors.cells;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.TermCriteria;
+import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.comparators.CenterLinesComparator;
 import pl.sudokusolver.recognizerlib.utility.comparators.PointComparator;
@@ -12,12 +9,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opencv.core.Core.KMEANS_RANDOM_CENTERS;
-import static org.opencv.core.Core.kmeans;
+import static org.opencv.core.Core.*;
 import static org.opencv.core.CvType.CV_32F;
 import static org.opencv.core.CvType.CV_8U;
+import static org.opencv.highgui.HighGui.imshow;
+import static org.opencv.highgui.HighGui.waitKey;
 import static org.opencv.imgproc.Imgproc.Canny;
 import static org.opencv.imgproc.Imgproc.HoughLines;
+import static org.opencv.imgproc.Imgproc.putText;
 
 public class LineCellsExtractStrategy implements CellsExtractStrategy{
     @Override
@@ -57,7 +56,9 @@ public class LineCellsExtractStrategy implements CellsExtractStrategy{
 
 
             if (checkLines(vlines, hlines)) {
+
                 List<Point> points = getPoint(vlines, hlines);
+
                 if (points.size() != 100) return null;
                 Collections.sort(points, new PointComparator());
 //                for debugging
@@ -65,7 +66,7 @@ public class LineCellsExtractStrategy implements CellsExtractStrategy{
 //                for(Point p : points){
 //                    Point x = new Point(p.x + 20, p.y + 20);
 //
-//                    putText(grid,  new Integer(z).toString(), x, 0, 0.5,  new Scalar(0,255,0), 1);
+//                    putText(grid,  new Integer(z).toString(), x, 0, 0.5,  new Scalar(255,0,0), 1);
 //                    z++;
 //                }
 //                copyMakeBorder(grid, grid, 50, 50, 50, 50, BORDER_CONSTANT, new Scalar(255, 255, 255, 255));
@@ -80,6 +81,7 @@ public class LineCellsExtractStrategy implements CellsExtractStrategy{
     }
 
     private List<Mat> cutGrid(Mat grid, List<Point> interPoints){
+
         List<Mat> list = new ArrayList<>(81);
         for (int i = 0; i < interPoints.size() - 11; i++) {
             int ri = i / 10;

@@ -10,6 +10,7 @@ import pl.sudokusolver.recognizerlib.extractors.digits.ContoursDigitExtractStrat
 import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.cells.LineCellsExtractStrategy;
+import pl.sudokusolver.recognizerlib.filters.NotFilter;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +30,7 @@ class LineCellsExtractStrategyTest {
 
         Mat img = imread(url, 1);
         cvtColor(img, img, COLOR_BGR2GRAY);
-
+        new NotFilter().apply(img);
         List<Mat> cells = cellsExtractStrategy.extract(img);
         Assert.assertEquals("Couldn't extract 81 cells from sudoku", 81, cells.size());
 

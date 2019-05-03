@@ -3,6 +3,7 @@ package pl.sudokusolver.recognizerlib.ocr.ml;
 import org.opencv.core.Mat;
 import org.opencv.ml.ANN_MLP;
 import pl.sudokusolver.recognizerlib.data.IData;
+import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 import static java.lang.Math.sqrt;
@@ -43,7 +44,7 @@ public class ANN extends MLWrapper implements ILoader{
     }
 
     @Override
-    public int detect(Mat img) {
+    public Pair<Integer,Double> recognize(Mat img) {
         Mat wraped = applyFilter(img);
         Mat result = new Mat();
         ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
@@ -51,6 +52,6 @@ public class ANN extends MLWrapper implements ILoader{
         for(int i = 1; i < 10; i++)
             if(result.get(0,pre)[0] < result.get(0,i)[0])
                 pre = i;
-        return pre;
+        return new Pair<>(pre, result.get(0,pre)[0]);
     }
 }

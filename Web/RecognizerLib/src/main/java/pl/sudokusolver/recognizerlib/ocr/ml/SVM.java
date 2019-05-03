@@ -2,6 +2,7 @@ package pl.sudokusolver.recognizerlib.ocr.ml;
 
 import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib.data.IData;
+import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 public class SVM extends MLWrapper implements ILoader{
@@ -26,11 +27,12 @@ public class SVM extends MLWrapper implements ILoader{
         svm.save(url);
     }
 
-    public int detect(Mat img) {
+    public Pair<Integer, Double> recognize(Mat img) {
         Mat wraped = applyFilter(img);
         Mat result = new Mat();
 
-        svm.predict(ImageProcessing.procSimple(wraped,sampleSize), result);
-        return (int) result.get(0,0)[0];
+        double dist = svm.predict(ImageProcessing.procSimple(wraped,sampleSize), result,1);
+
+        return new Pair<>((int) result.get(0,0)[0],dist);
     }
 }

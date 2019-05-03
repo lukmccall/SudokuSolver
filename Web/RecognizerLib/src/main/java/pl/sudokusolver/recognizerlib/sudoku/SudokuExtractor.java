@@ -1,27 +1,20 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
 import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.IFilter;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
-import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.opencv.core.CvType.CV_8UC1;
-import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
-import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
 import static org.opencv.imgproc.Imgproc.cvtColor;
-import static org.opencv.imgproc.Imgproc.threshold;
 
 public class SudokuExtractor {
     private GridExtractStrategy gridExtractStrategy;
@@ -89,9 +82,8 @@ public class SudokuExtractor {
             Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
 
             if (digit.isPresent())
-                sudoku.setDigit(recognizer.detect(digit.get()), i/9, i%9);
+                sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i/9, i%9);
         }
-
         return sudoku;
 
     }
