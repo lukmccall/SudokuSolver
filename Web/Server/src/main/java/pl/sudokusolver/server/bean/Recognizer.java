@@ -31,7 +31,7 @@ public class Recognizer {
         LOGGER.info("Loading openCV from " + this.openCVUrl);
         Init.init(this.openCVUrl);
         IRecognizer ann = new ANN("../RecognizerLib/ann.xml");
-        SudokuExtractor sudokuExtractor2 = new SudokuExtractor(
+        this.sudokuExtractor = new SudokuExtractor(
                 new DefaultGridExtractStrategy(),
                 new SizeCellsExtractStrategy(),
                 new FastDigitExtractStrategy(),
