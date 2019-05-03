@@ -3,6 +3,10 @@ package pl.sudokusolver.recognizerlib.sudoku;
 public class Sudoku {
     private int grid[][];
 
+    public Sudoku(int grid[][]){
+        this.grid = grid;
+    }
+
     public Sudoku(){
         grid = new int[9][9];
     }

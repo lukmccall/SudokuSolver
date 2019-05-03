@@ -1,5 +1,6 @@
 package pl.sudokusolver.server.exceptions;
 
+import com.google.gson.JsonSyntaxException;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,11 +64,25 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.SudokuNotFound, exception.getMessage());
     }
 
+    @ExceptionHandler({SolvingFailedException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ErrorResponse handleSolvingFailedException(SolvingFailedException exception){
+        return new ErrorResponse(ErrorCodes.SolverFailed, exception.getMessage());
+    }
+
     @ExceptionHandler({CellsExtractionFailedException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     ErrorResponse handleCellsExtractionFailedException(CellsExtractionFailedException exception){
         return new ErrorResponse(ErrorCodes.CellsExtractionFailed, exception.getMessage());
+    }
+
+    @ExceptionHandler({JsonSyntaxException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ErrorResponse handleJsonSyntaxException(JsonSyntaxException exception){
+        return new ErrorResponse(ErrorCodes.InvalidParameter, "Invalid json: " + exception.getMessage());
     }
 
     @ExceptionHandler({Exception.class})

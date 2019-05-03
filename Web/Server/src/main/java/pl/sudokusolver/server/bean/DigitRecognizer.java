@@ -17,12 +17,12 @@ import pl.sudokusolver.recognizerlib.sudoku.SudokuExtractor;
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
-public class Recognizer {
+public class DigitRecognizer {
     private String openCVUrl;
     private IRecognizer recognizer;
     @Autowired
     private Logger LOGGER;
-    public Recognizer(String openCVUrl){
+    public DigitRecognizer(String openCVUrl){
         this.openCVUrl = openCVUrl;
     }
 

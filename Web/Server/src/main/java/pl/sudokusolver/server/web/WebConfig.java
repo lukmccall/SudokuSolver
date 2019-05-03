@@ -10,7 +10,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import pl.sudokusolver.server.bean.Recognizer;
+import pl.sudokusolver.server.bean.DigitRecognizer;
+import pl.sudokusolver.solver.BrutalSolver;
+import pl.sudokusolver.solver.ISolver;
 
 @Configuration
 @EnableWebMvc
@@ -34,9 +36,15 @@ public class WebConfig implements WebMvcConfigurer{
     }
 
     @Bean
-    public Recognizer recognizer(){
-        return new Recognizer(openCVUrl);
+    public DigitRecognizer digitRecognizer(){
+        return new DigitRecognizer(openCVUrl);
     }
+
+    @Bean
+    public ISolver solver(){
+        return new BrutalSolver();
+    }
+
 
     @Bean
     @Scope("prototype")

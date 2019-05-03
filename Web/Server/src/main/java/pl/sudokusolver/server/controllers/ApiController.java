@@ -14,24 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
-import pl.sudokusolver.recognizerlib.extractors.cells.LineCellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.cells.SizeCellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
 import pl.sudokusolver.recognizerlib.filters.CleanLinesFilter;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
-import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractor;
 import pl.sudokusolver.recognizerlib.sudoku.SudokuExtractor;
-import pl.sudokusolver.server.bean.Recognizer;
-import pl.sudokusolver.server.models.ExtractFromImgModel;
+import pl.sudokusolver.server.bean.DigitRecognizer;
+import pl.sudokusolver.server.exceptions.SolvingFailedException;
+import pl.sudokusolver.server.models.GridModel;
 import pl.sudokusolver.server.utility.Utility;
 import pl.sudokusolver.solver.BrutalSolver;
 import pl.sudokusolver.solver.ISolver;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Optional;
 
 import static org.opencv.highgui.HighGui.waitKey;
 
@@ -42,35 +40,23 @@ public class ApiController {
     private Logger LOGGER;
 
     @Autowired
-    private Recognizer recognizer;
+    private DigitRecognizer digitRecognizer;
 
-    @RequestMapping(value = "/")
-    public String home() {
-        Sudoku sudoku = new Sudoku();
-        return new Gson().toJson(sudoku);
-
-
-    }
-
-    @RequestMapping(value = "/test")
-    public String test(){
-        System.out.println("Test");
-        Sudoku sudoku = new Sudoku();
-        GridExtractor gridExtractor = new GridExtractor();
-        sudoku.printSudoku();
-        return "home";
-    }
+    @Autowired
+    private ISolver solver;
 
     @RequestMapping(value = "/solve",
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String solve(@RequestBody String json) throws MissingServletRequestParameterException {
+    public String solve(@RequestBody String json) throws MissingServletRequestParameterException, SolvingFailedException {
 
         Sudoku sudoku = new Gson().fromJson(json, Sudoku.class);
         if(sudoku == null || sudoku.empty())
             throw new MissingServletRequestParameterException("sudoku", "int[9][9]");
-        ISolver solver = new BrutalSolver();
-        solver.solve(sudoku.getGrid());
-        return sudoku.toString();
+
+        if(!solver.solve(sudoku.getGrid()))
+            throw new SolvingFailedException();
+
+        return new Gson().toJson(new GridModel(1, sudoku.getGrid()));
     }
 
     @RequestMapping(value = "/extractfromimg", method = RequestMethod.POST)
@@ -93,7 +79,7 @@ public class ApiController {
             new DefaultGridExtractStrategy(new BlurFilter(blurSize,blurBlockSize,blurC)),
             new SizeCellsExtractStrategy(),
             new FastDigitExtractStrategy(),
-            recognizer.getRecognizer(),
+            digitRecognizer.getRecognizer(),
             null,
             Collections.singletonList(new CleanLinesFilter(lineTreshold, minLineSize, lineGap)),
             null
@@ -101,6 +87,6 @@ public class ApiController {
 
         Mat mat = Utility.multipartFileToMat(inputImg);
         Sudoku sudoku = sudokuExtractor.extract(mat);
-        return new Gson().toJson(new ExtractFromImgModel(1, sudoku.getGrid()));
+        return new Gson().toJson(new GridModel(1, sudoku.getGrid()));
     }
 }
