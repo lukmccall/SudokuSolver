@@ -1,7 +1,9 @@
 package pl.sudokusolver.server.web;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.Filter;
 import javax.servlet.ServletRegistration;
 
 public class MainDispatcherServlet extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -21,6 +23,13 @@ public class MainDispatcherServlet extends AbstractAnnotationConfigDispatcherSer
     protected String[] getServletMappings() {
         // map all entries points
         return new String[] {"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        return new Filter[] { characterEncodingFilter};
     }
 
     @Override
