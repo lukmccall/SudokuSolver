@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib._TestUtility_;
-import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
+import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractor;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import static org.opencv.imgproc.Imgproc.resize;
 class GridExtractorTest {
     private static boolean showIMG = false;
 
-    void getSudoku(String url) throws NotFoundSudokuExceptions {
+    void getSudoku(String url) throws NotFoundSudokuException {
         GridExtractor gridExtractor = new GridExtractor(url);
         if (showIMG) {
             resize(gridExtractor.getImg(), gridExtractor.getImg(), new Size(600, 600));

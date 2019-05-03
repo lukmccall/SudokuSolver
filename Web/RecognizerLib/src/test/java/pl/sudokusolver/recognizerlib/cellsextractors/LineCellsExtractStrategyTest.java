@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib._TestUtility_;
+import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.extractors.digits.ContoursDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
@@ -24,7 +25,7 @@ import static org.opencv.imgproc.Imgproc.cvtColor;
 class LineCellsExtractStrategyTest {
 
     @Test
-    void extractTest() throws IOException {
+    void extractTest() throws IOException, CellsExtractionFailedException {
         String url = _TestUtility_.getAllImages().get(4);
         CellsExtractStrategy cellsExtractStrategy = new LineCellsExtractStrategy();
 

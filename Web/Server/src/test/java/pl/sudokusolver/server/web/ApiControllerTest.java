@@ -13,7 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration()
 @ContextConfiguration(classes = {WebConfig.class})
-public class MainControllerTest {
+public class ApiControllerTest {
     @Autowired
     private Logger LOGGER;
 

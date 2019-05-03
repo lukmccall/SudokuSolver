@@ -16,11 +16,7 @@ import java.util.List;
 
 public class Utility {
     public static final Ordering<Point> SORT = Ordering.natural().nullsFirst().onResultOf(
-            new Function<Point, Integer>() {
-                public Integer apply(Point foo) {
-                    return (int) (foo.x+foo.y);
-                }
-            }
+            (Function<Point, Integer>) foo -> (int) (foo.x+foo.y)
     );
 
     public static MatOfPoint2f orderPoints(MatOfPoint2f mat) {

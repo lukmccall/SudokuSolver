@@ -19,7 +19,7 @@ import java.util.Arrays;
 
 public class Recognizer {
     private String openCVUrl;
-    private SudokuExtractor sudokuExtractor;
+    private IRecognizer recognizer;
     @Autowired
     private Logger LOGGER;
     public Recognizer(String openCVUrl){
@@ -30,19 +30,10 @@ public class Recognizer {
     public void init(){
         LOGGER.info("Loading openCV from " + this.openCVUrl);
         Init.init(this.openCVUrl);
-        IRecognizer ann = new ANN("../RecognizerLib/ann.xml");
-        this.sudokuExtractor = new SudokuExtractor(
-                new DefaultGridExtractStrategy(),
-                new SizeCellsExtractStrategy(),
-                new FastDigitExtractStrategy(),
-                ann,
-                null,
-                Arrays.asList(new CleanLinesFilter()),
-                null
-        );
+        this.recognizer = new ANN("../RecognizerLib/ann.xml");
     }
 
-    public SudokuExtractor getDetector() {
-        return sudokuExtractor;
+    public IRecognizer getRecognizer() {
+        return this.recognizer;
     }
 }

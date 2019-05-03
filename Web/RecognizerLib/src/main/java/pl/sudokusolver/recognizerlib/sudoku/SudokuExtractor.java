@@ -1,7 +1,8 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
 import org.opencv.core.*;
-import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
+import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
+import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractStrategy;
@@ -63,9 +64,12 @@ public class SudokuExtractor {
         this.preDigitsFilters = preDigitsFilters;
     }
 
-    public Sudoku extract(String url) throws NotFoundSudokuExceptions {
+    public Sudoku extract(String url) throws NotFoundSudokuException, CellsExtractionFailedException {
         Mat img = imread(url);
+        return extract(img);
+    }
 
+    public Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException {
         Utility.applyFilters(img, preGridFilters);
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
 
@@ -73,7 +77,7 @@ public class SudokuExtractor {
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
 
         //todo: make exception
-        if(cells == null) return new Sudoku();
+        if(cells == null) throw new CellsExtractionFailedException();
 
         Sudoku sudoku = new Sudoku();
         for(int i = 0; i < cells.size(); i++){
@@ -85,7 +89,6 @@ public class SudokuExtractor {
                 sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i/9, i%9);
         }
         return sudoku;
-
     }
 
 }

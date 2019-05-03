@@ -1,6 +1,7 @@
 package pl.sudokusolver.recognizerlib.extractors.cells;
 
 import org.opencv.core.*;
+import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.comparators.CenterLinesComparator;
 import pl.sudokusolver.recognizerlib.utility.comparators.PointComparator;
@@ -20,7 +21,7 @@ import static org.opencv.imgproc.Imgproc.putText;
 
 public class LineCellsExtractStrategy implements CellsExtractStrategy{
     @Override
-    public List<Mat> extract(Mat grid) {
+    public List<Mat> extract(Mat grid) throws CellsExtractionFailedException {
         Mat canimg = new Mat(grid.size(), grid.type());
         Canny(grid, canimg, 30, 90);
 
@@ -59,7 +60,7 @@ public class LineCellsExtractStrategy implements CellsExtractStrategy{
 
                 List<Point> points = getPoint(vlines, hlines);
 
-                if (points.size() != 100) return null;
+                if (points.size() != 100) throw new CellsExtractionFailedException();
                 Collections.sort(points, new PointComparator());
 //                for debugging
 //                int z = 0;
@@ -77,7 +78,7 @@ public class LineCellsExtractStrategy implements CellsExtractStrategy{
             }
 
         }
-        return null;
+        throw new CellsExtractionFailedException();
     }
 
     private List<Mat> cutGrid(Mat grid, List<Point> interPoints){

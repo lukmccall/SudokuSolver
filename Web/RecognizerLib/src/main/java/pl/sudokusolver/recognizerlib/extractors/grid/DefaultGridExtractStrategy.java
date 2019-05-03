@@ -2,7 +2,7 @@ package pl.sudokusolver.recognizerlib.extractors.grid;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
-import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuExceptions;
+import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
 import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
@@ -26,7 +26,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
     }
 
     @Override
-    public Mat extractGrid(Mat img) throws NotFoundSudokuExceptions {
+    public Mat extractGrid(Mat img) throws NotFoundSudokuException {
             Mat outbox = img.clone();
             new ToGrayFilter().apply(outbox);
             blurFilter.apply(outbox);
@@ -60,7 +60,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         return ret;
     }
 
-    protected Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuExceptions {
+    protected Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuException {
         MatOfPoint poly = new MatOfPoint(contours);
         MatOfPoint2f dst = new MatOfPoint2f();
         MatOfPoint2f src = new MatOfPoint2f();
@@ -92,7 +92,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
         }
 
-        throw new NotFoundSudokuExceptions();
+        throw new NotFoundSudokuException();
 
     }
 
