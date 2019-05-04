@@ -19,13 +19,12 @@ import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
 import pl.sudokusolver.recognizerlib.filters.CleanLinesFilter;
+import pl.sudokusolver.recognizerlib.sudoku.BaseSudokuExtractor;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
-import pl.sudokusolver.recognizerlib.sudoku.SudokuExtractor;
 import pl.sudokusolver.server.bean.DigitRecognizer;
 import pl.sudokusolver.server.exceptions.SolvingFailedException;
 import pl.sudokusolver.server.models.GridModel;
 import pl.sudokusolver.server.utility.Utility;
-import pl.sudokusolver.solver.BrutalSolver;
 import pl.sudokusolver.solver.ISolver;
 
 import java.io.IOException;
@@ -75,7 +74,7 @@ public class ApiController {
         if(!inputImg.getContentType().equals("image/jpeg") && !inputImg.getContentType().equals("image/png"))
             throw new IllegalArgumentException("Expected jpg/png get " + inputImg.getContentType());
 
-        SudokuExtractor sudokuExtractor = new SudokuExtractor(
+        BaseSudokuExtractor baseSudokuExtractor = new BaseSudokuExtractor(
             new DefaultGridExtractStrategy(new BlurFilter(blurSize,blurBlockSize,blurC)),
             new SizeCellsExtractStrategy(),
             new FastDigitExtractStrategy(),
@@ -86,7 +85,7 @@ public class ApiController {
         );
 
         Mat mat = Utility.multipartFileToMat(inputImg);
-        Sudoku sudoku = sudokuExtractor.extract(mat);
+        Sudoku sudoku = baseSudokuExtractor.extract(mat);
         return new Gson().toJson(new GridModel(1, sudoku.getGrid()));
     }
 }

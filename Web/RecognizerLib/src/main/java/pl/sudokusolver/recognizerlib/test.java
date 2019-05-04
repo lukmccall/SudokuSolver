@@ -36,7 +36,7 @@ public class test {
         new DisplayHelper().apply(source);
 //        IRecognizer ann = new ANN("RecognizerLib/ann.xml");
 
-//        SudokuExtractor sudokuExtractor = new SudokuExtractor(
+//        BaseSudokuExtractor sudokuExtractor = new BaseSudokuExtractor(
 //                new DefaultGridExtractStrategy(),
 //                new LineCellsExtractStrategy(),
 //                new ContoursDigitExtractStrategy(),

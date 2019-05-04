@@ -1,6 +1,6 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
-import org.opencv.core.*;
+import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
@@ -8,87 +8,89 @@ import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.IFilter;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
-import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.opencv.highgui.HighGui.waitKey;
-import static org.opencv.imgcodecs.Imgcodecs.imread;
-import static org.opencv.imgproc.Imgproc.cvtColor;
+/**
+ * Podstawowa klasa udostępniana użytkowikowi. Lączy ona wszystkie funckjionalności.
+ * Umożliwa w pelni personalizację poszczególnych kroków extrakcji sudoku oraz zmiany używanych filtrów.
+ */
+public abstract class SudokuExtractor {
+    protected GridExtractStrategy gridExtractStrategy;
+    protected CellsExtractStrategy cellsExtractStrategy;
+    protected DigitsExtractStrategy digitsExtractStrategy;
+    protected IRecognizer recognizer;
 
-public class SudokuExtractor {
-    private GridExtractStrategy gridExtractStrategy;
-    private CellsExtractStrategy cellsExtractStrategy;
-    private DigitsExtractStrategy digitsExtractStrategy;
-    private IRecognizer recognizer;
+    protected List<IFilter> preGridFilters;
+    protected List<IFilter> preCellsFilters;
+    protected List<IFilter> preDigitsFilters;
 
-    private List<IFilter> preGridFilters;
-    private List<IFilter> preCellsFilters;
-    private List<IFilter> preDigitsFilters;
-
-
-    private static boolean containsDigit (Mat input) {
-        double tl = input.size().height/3;
-        double br = input.size().width - input.size().width/3;
-
-        Rect cut = new Rect(new Point(tl,tl), new Point(br,br));
-
-        return Core.countNonZero(new Mat(input, cut)) > 20;
-    }
-
-
-    public SudokuExtractor(GridExtractStrategy gridExtractStrategy, CellsExtractStrategy cellsExtractStrategy,
-                            DigitsExtractStrategy digitsExtractStrategy, IRecognizer recognizer){
+    protected SudokuExtractor(GridExtractStrategy gridExtractStrategy, CellsExtractStrategy cellsExtractStrategy,
+                           DigitsExtractStrategy digitsExtractStrategy, IRecognizer recognizer) {
         this.gridExtractStrategy = gridExtractStrategy;
         this.cellsExtractStrategy = cellsExtractStrategy;
         this.digitsExtractStrategy = digitsExtractStrategy;
         this.recognizer = recognizer;
-
-        this.preCellsFilters = null;
-        this.preDigitsFilters = null;
-        this.preGridFilters = null;
     }
 
-    public SudokuExtractor(GridExtractStrategy gridExtractStrategy, CellsExtractStrategy cellsExtractStrategy,
+    protected SudokuExtractor(GridExtractStrategy gridExtractStrategy, CellsExtractStrategy cellsExtractStrategy,
                            DigitsExtractStrategy digitsExtractStrategy, IRecognizer recognizer,
                            List<IFilter> preGridFilters, List<IFilter> preCellsFilters,
                            List<IFilter> preDigitsFilters) {
         this.gridExtractStrategy = gridExtractStrategy;
         this.cellsExtractStrategy = cellsExtractStrategy;
         this.digitsExtractStrategy = digitsExtractStrategy;
-
         this.recognizer = recognizer;
         this.preGridFilters = preGridFilters;
         this.preCellsFilters = preCellsFilters;
         this.preDigitsFilters = preDigitsFilters;
     }
 
-    public Sudoku extract(String url) throws NotFoundSudokuException, CellsExtractionFailedException {
-        Mat img = imread(url);
-        return extract(img);
+    /**
+     * @param url absolutna ?cie?ka do zdj?cia z sudoku
+     * @return sudoku stworzone na podstawie zdj?cia
+     * @throws NotFoundSudokuException gdy nie uda si? znale?? sudoku na zdj?ciu
+     * @throws CellsExtractionFailedException gdy nie uda si? wyci?? komórek ze zdj?cia
+     */
+    public abstract Sudoku extract(String url) throws NotFoundSudokuException, CellsExtractionFailedException;
+
+    /**
+     * @param img macierz z zdj?ciem
+     * @return sudoku stworzone na podstawie zdj?cia
+     * @throws NotFoundSudokuException gdy nie uda si? znale?? sudoku na zdj?ciu
+     * @throws CellsExtractionFailedException gdy nie uda si? wyci?? komórek ze zdj?cia
+     */
+    public abstract Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException;
+
+    public GridExtractStrategy getGridExtractStrategy() {
+        return gridExtractStrategy;
     }
 
-    public Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException {
-        Utility.applyFilters(img, preGridFilters);
-        Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
-
-        Utility.applyFilters(sudokuGrid, preCellsFilters);
-        List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
-
-        //todo: make exception
-        if(cells == null) throw new CellsExtractionFailedException();
-
-        Sudoku sudoku = new Sudoku();
-        for(int i = 0; i < cells.size(); i++){
-            Mat cell = cells.get(i);
-            Utility.applyFilters(cell, preDigitsFilters);
-            Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
-
-            if (digit.isPresent())
-                sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i/9, i%9);
-        }
-        return sudoku;
+    public void setGridExtractStrategy(GridExtractStrategy gridExtractStrategy) {
+        this.gridExtractStrategy = gridExtractStrategy;
     }
 
+    public CellsExtractStrategy getCellsExtractStrategy() {
+        return cellsExtractStrategy;
+    }
+
+    public void setCellsExtractStrategy(CellsExtractStrategy cellsExtractStrategy) {
+        this.cellsExtractStrategy = cellsExtractStrategy;
+    }
+
+    public DigitsExtractStrategy getDigitsExtractStrategy() {
+        return digitsExtractStrategy;
+    }
+
+    public void setDigitsExtractStrategy(DigitsExtractStrategy digitsExtractStrategy) {
+        this.digitsExtractStrategy = digitsExtractStrategy;
+    }
+
+    public IRecognizer getRecognizer() {
+        return recognizer;
+    }
+
+    public void setRecognizer(IRecognizer recognizer) {
+        this.recognizer = recognizer;
+    }
 }
