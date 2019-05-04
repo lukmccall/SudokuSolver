@@ -36,7 +36,7 @@ class SudokuExtractorTest {
         );
 
         for(String img : images){
-            sudokuExtractor.extract(img).printSudoku();
+            sudokuExtractor.extract(img);
         }
     }
 
