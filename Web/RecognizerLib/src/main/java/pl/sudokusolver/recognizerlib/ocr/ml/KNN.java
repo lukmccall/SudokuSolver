@@ -6,6 +6,9 @@ import pl.sudokusolver.recognizerlib.data.IData;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
+/**
+ * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">k-nearest neighbors algorithm</a>
+ */
 public class KNN extends MLWrapper {
     private KNearest knn;
 
@@ -16,7 +19,7 @@ public class KNN extends MLWrapper {
     }
 
     public Pair<Integer, Double> recognize(Mat img) {
-        Mat wraped = applyFilter(img);
+        Mat wraped = applyDigitFilter(img);
         Mat result = new Mat();
         Mat dist = new Mat();
 

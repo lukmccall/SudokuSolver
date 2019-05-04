@@ -1,6 +1,9 @@
 package pl.sudokusolver.recognizerlib.extractors.cells;
 
-import org.opencv.core.*;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.TermCriteria;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.comparators.CenterLinesComparator;
@@ -10,15 +13,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opencv.core.Core.*;
+import static org.opencv.core.Core.KMEANS_RANDOM_CENTERS;
+import static org.opencv.core.Core.kmeans;
 import static org.opencv.core.CvType.CV_32F;
 import static org.opencv.core.CvType.CV_8U;
-import static org.opencv.highgui.HighGui.imshow;
-import static org.opencv.highgui.HighGui.waitKey;
 import static org.opencv.imgproc.Imgproc.Canny;
 import static org.opencv.imgproc.Imgproc.HoughLines;
-import static org.opencv.imgproc.Imgproc.putText;
 
+/**
+ * Implementacja algorytmu wycinającego komórki z sudoku.
+ * <p>
+ * Wycinanie odbywa się po przez znalezienie wszytkich lini oraz z grupowanie ich.
+ * Dzięki temu otrzymujemy 100 lini, które tworzą siatkę. Następnie wycinamy przestrzenie ograniczone przez te linie.
+ * </p>
+ *
+ *     Użyte algorytmy:
+ *     <ul>
+ *         <li><a href="https://pl.wikipedia.org/wiki/Transformacja_Hougha">Transformacja Houga</a> - wykrywanie lini</li>
+ *         <li><a href="https://pl.wikipedia.org/wiki/Algorytm_centroid%C3%B3w">k-means</a> - grupowanie lini</li>
+ *     </ul>
+
+ *     <b>Uwagi</b>
+ *     <ul>
+ *         <li>Na danych wejściowy nie można zastosować wcześniej filtru {@link pl.sudokusolver.recognizerlib.filters.CleanLinesFilter}</li>
+ *     </ul>
+
+ */
 public class LineCellsExtractStrategy implements CellsExtractStrategy{
     @Override
     public List<Mat> extract(Mat grid) throws CellsExtractionFailedException {

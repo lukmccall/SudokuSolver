@@ -1,10 +1,6 @@
 package pl.sudokusolver.recognizerlib.data;
 
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Size;
+import org.opencv.core.*;
 import org.opencv.ml.Ml;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
@@ -12,21 +8,43 @@ import static org.opencv.imgcodecs.Imgcodecs.IMREAD_UNCHANGED;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 public class SimpleRowData implements IData{
+    /**
+     * Próbki
+     */
     private Mat samples;
+
+    /**
+     * Etykiety w formacie {@link pl.sudokusolver.recognizerlib.data.DataType#Simple}
+     */
     private Mat labels;
+
+    /**
+     * Rozmiar pojedynczej próbki (jest to kwadrat sampleSize x sampleSize)
+     */
     private short sampleSize;
 
+    /**
+     * Tworzy obiekt korzystając z podanych parametrów
+     * @param samples próbki
+     * @param labels etykiety
+     * @param sampleSize rozmiar pojedynczej próbki
+     */
     public SimpleRowData(Mat samples, Mat labels, short sampleSize){
         this.samples = samples;
         this.labels = labels;
         this.sampleSize = sampleSize;
     }
 
-    public SimpleRowData(String url, short size){
+    /**
+     * @param url absolutna scieżka do pliku
+     * @param size rozmiar jednej cyfr w pliku
+     * @throws CvException gdy nie udało się otworzyć pliku
+     */
+    public SimpleRowData(String url, short size) throws CvException {
         loadFromSheet(url,size);
     }
 
-    private void loadFromSheet(String url, short size) {
+    private void loadFromSheet(String url, short size) throws CvException {
         //todo: check if file exist
         Mat img = imread(url, IMREAD_UNCHANGED);
 
@@ -70,6 +88,9 @@ public class SimpleRowData implements IData{
         return labels;
     }
 
+    /**
+     * @return M1.ROW_SAMPLE. Więcej informacji możesz znaleźć na <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/ml/Ml.html">openCV</a>
+     */
     @Override
     public int getSampleType() {
         return Ml.ROW_SAMPLE;
@@ -80,6 +101,9 @@ public class SimpleRowData implements IData{
         return sampleSize;
     }
 
+    /**
+     * @return {@link pl.sudokusolver.recognizerlib.data.DataType#Simple}
+     */
     @Override
     public DataType getDataType() { return DataType.Simple; }
 

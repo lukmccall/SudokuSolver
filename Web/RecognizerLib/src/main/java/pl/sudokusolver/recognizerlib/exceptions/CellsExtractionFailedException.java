@@ -1,7 +1,5 @@
 package pl.sudokusolver.recognizerlib.exceptions;
 
-import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
-
 public class CellsExtractionFailedException extends Exception {
 
     public CellsExtractionFailedException(){

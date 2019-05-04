@@ -2,22 +2,36 @@ package pl.sudokusolver.recognizerlib.filters;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
 
 import static org.opencv.imgproc.Imgproc.*;
-import static org.opencv.imgproc.Imgproc.THRESH_BINARY_INV;
 
+/**
+ * Filter służący do nakładanie rozmycia
+ * <p>
+ *     <b>Uwaga</b><br>
+ *     Zdjęcie wejściowe musi być czarno-białe (np. CV_8UC1)
+ * </p>
+ */
 public class BlurFilter implements IFilter {
     private int size;
     private int blockSize;
     private int c;
 
+    /**
+     * Domyśle parametry filtra
+     */
     public BlurFilter(){
         size = 5;
         blockSize = 19;
         c = 3;
     }
 
+    /**
+     * Dodatkowe infomacje <a href="https://docs.opencv.org/4.0.1/d4/d86/group__imgproc__filter.html#gaabe8c836e97159a9193fb0b11ac52cf1">GaussianBlur</a> oraz <a href="https://docs.opencv.org/4.0.1/d7/d1b/group__imgproc__misc.html#ga72b913f352e4a1b1b397736707afcde3">adaptiveThreshold</a>
+     * @param size wielkość rozmycia
+     * @param blockSize wielkość bloku, używanego do obliczania różnicy po między pixelami
+     * @param c stała odejmowana od różnicy
+     */
     public BlurFilter(int size, int blockSize, int c) {
         this.size = size;
         this.blockSize = blockSize;

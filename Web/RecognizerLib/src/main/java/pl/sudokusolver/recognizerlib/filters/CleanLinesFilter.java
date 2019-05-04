@@ -3,17 +3,20 @@ package pl.sudokusolver.recognizerlib.filters;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import static org.opencv.imgproc.Imgproc.adaptiveThreshold;
 import static org.opencv.imgproc.Imgproc.line;
 
+/**
+ * Filter służący do usuwania lini
+ */
 public class CleanLinesFilter implements IFilter {
     private int threshold;
     private int minLineSize;
     private int lineGap;
     private BlurFilter blurFilter;
+
+
     public CleanLinesFilter() {
         lineGap = 20;
         minLineSize = 200;
@@ -22,6 +25,11 @@ public class CleanLinesFilter implements IFilter {
         blurFilter = new BlurFilter(11,5,2);
     }
 
+    /**
+     * @param threshold parametr używany w <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     * @param minLineSize parametr używany w <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     * @param lineGap parametr używany w <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     */
     public CleanLinesFilter(int threshold, int minLineSize, int lineGap) {
         this.threshold = threshold;
         this.minLineSize = minLineSize;
@@ -32,7 +40,6 @@ public class CleanLinesFilter implements IFilter {
 
     @Override
     public void apply(Mat input) {
-        new ToGrayFilter().apply(input);
         blurFilter.apply(input);
 
         Mat lines = new Mat();

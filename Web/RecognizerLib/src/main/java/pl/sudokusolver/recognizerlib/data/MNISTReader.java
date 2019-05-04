@@ -13,8 +13,60 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+/**
+ * Klasa służąca do czytania i przedtwarzania danych w formacie <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>
+ */
 public class MNISTReader {
+    /**
+     * Rozmiar pojedynczej próbki
+     */
     private static final short size = 28;
+
+    /**
+     * @param dataUrl absolutna sieżka do pliku z danymi
+     * @param labelUrl absolutna sieżka do pliku z etykietami
+     * @param type typ w jakim chcemy otrzymać dane wyjściowe<br>
+     *             Możesz użyć:<br>
+     *             <ul>
+     *                  <li>{@link pl.sudokusolver.recognizerlib.data.DataType#Simple}</li>
+     *                  <li>{@link pl.sudokusolver.recognizerlib.data.DataType#SimpleSVM}</li>
+     *                  <li>{@link pl.sudokusolver.recognizerlib.data.DataType#Complex}</li>
+     *             </ul>
+     * @return Odczytane i przedtworzone dane w podanym formacie.
+     * @throws VersionMismatchException gdy pliki z danymi nie są zgodne z etykietami
+     * @throws IOException gdzy nie udało się otworzyć plików
+     * @throws IllegalArgumentException gdzy podany typ danych wyjściowych nie jest obsługiwany
+     */
+    public static IData read(String dataUrl, String labelUrl, DataType type)
+            throws VersionMismatchException, IOException, IllegalArgumentException {
+        ByteBuffer imgBuffer = loadFileToByteBuffer(dataUrl);
+        ByteBuffer labelBuffer = loadFileToByteBuffer(labelUrl);
+
+        if(imgBuffer.getInt() != labelBuffer.getInt())
+            throw new VersionMismatchException("MNIST files don't have same version.");
+
+        // IMAGES LOAD
+        int imgNumber = imgBuffer.getInt();
+        int imgRows = imgBuffer.getInt();
+        int imgCols = imgBuffer.getInt();
+
+        // LABELS LOAD
+        labelBuffer.getInt(); // iteams number
+
+        Mat trainData = Mat.zeros(imgNumber, size*size, CvType.CV_32FC1);
+        Mat labels = createLabel(imgNumber, type);
+
+        if(labels == null)
+            throw new IllegalArgumentException("Invalid data type");
+
+        for(int n = 0; n < imgNumber; n++) {
+            putLabel(labels, labelBuffer.get() & 0xFF, n, type);
+
+            Mat img = loadImg(imgBuffer, imgRows, imgCols);
+            putImg(trainData, img, n);
+        }
+        return new SimpleRowData(trainData, labels, size);
+    }
 
     private static ByteBuffer loadFileToByteBuffer(String infile) throws IOException {
         RandomAccessFile f = new RandomAccessFile(infile, "r");
@@ -101,34 +153,8 @@ public class MNISTReader {
         return img;
     }
 
-    public static IData read(String dataUrl, String labelUrl, DataType type)
-            throws VersionMismatchException, IOException, IllegalArgumentException {
-        ByteBuffer imgBuffer = loadFileToByteBuffer(dataUrl);
-        ByteBuffer labelBuffer = loadFileToByteBuffer(labelUrl);
-
-        if(imgBuffer.getInt() != labelBuffer.getInt())
-            throw new VersionMismatchException("MNIST files don't have same version.");
-
-        // IMAGES LOAD
-        int imgNumber = imgBuffer.getInt();
-        int imgRows = imgBuffer.getInt();
-        int imgCols = imgBuffer.getInt();
-
-        // LABELS LOAD
-        labelBuffer.getInt(); // iteams number
-
-        Mat trainData = Mat.zeros(imgNumber, size*size, CvType.CV_32FC1);
-        Mat labels = createLabel(imgNumber, type);
-
-        if(labels == null)
-            throw new IllegalArgumentException("Invalid data type");
-
-        for(int n = 0; n < imgNumber; n++) {
-            putLabel(labels, labelBuffer.get() & 0xFF, n, type);
-
-            Mat img = loadImg(imgBuffer, imgRows, imgCols);
-            putImg(trainData, img, n);
-        }
-        return new SimpleRowData(trainData, labels, size);
-    }
+    /**
+     * Nie można utworzyć obiektu tej klasy
+     */
+    private MNISTReader(){}
 }

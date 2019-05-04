@@ -1,19 +1,24 @@
 package pl.sudokusolver.recognizerlib.utility;
 
+/**
+ * Stryktura danych przechowująca parę elementów.
+ * @param <U> typ pierwszego element
+ * @param <V> typ drugiego element
+ */
 public class Pair<U, V> {
 
     /**
-     * The first element of this <code>Pair</code>
+     * Pierwszy element <code>Pair</code>
      */
     private U first;
 
     /**
-     * The second element of this <code>Pair</code>
+     * Drugi element <code>Pair</code>
      */
     private V second;
 
     /**
-     * Constructs a new <code>Pair</code> with the given values.
+     * Tworzenie nowej <code>Pair</code> z podanymi wartościami
      *
      * @param first  the first element
      * @param second the second element

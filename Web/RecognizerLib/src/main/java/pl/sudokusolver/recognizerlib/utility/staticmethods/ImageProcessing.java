@@ -12,7 +12,19 @@ import org.opencv.imgproc.Moments;
 import static org.opencv.core.CvType.CV_32FC1;
 import static org.opencv.imgproc.Imgproc.*;
 
+/**
+ * Zbiór funkcji operujących na zjdęciach.<br>
+ * Autorem części z nich jest: <br>
+ * -José Luis Diaz (github: <a href="https://github.com/joseluisdiaz/sudoku-solver">joseluisdiaz</a>)
+ *
+ */
 public class ImageProcessing {
+    /**
+     * Metoda obracająca zdjęcia
+     * @param img macierz z zdjęciem wejściowym
+     * @param size rozmiar zdjęcia wyjściowego
+     * @return obrócone zdjęcie wejściowe
+     */
     public static Mat deskew(Mat img, short size) {
         Moments m = moments(img);
 
@@ -30,6 +42,12 @@ public class ImageProcessing {
         return result;
     }
 
+    /**
+     * @param img macierz z zdjęciem (musi to być macierz kwadratowa)
+     * @param size rozmiar tego zdjęcia
+     * @return macierz posiadająca tylko <code>jene</code> wiersz i <code>size * size</code> kolumn, w których
+     *         ułożone są poszczególne komórki macierzy wejściowej. Wyjście jest typu CV_32FC1
+     */
     public static Mat procSimple(Mat img, short size) {
         Mat result = Mat.zeros(1, size * size, CV_32FC1);
 
@@ -44,6 +62,11 @@ public class ImageProcessing {
         return result;
     }
 
+    /**
+     * @param digit macierz z zdjęciem
+     * @param size rozmiar zdjęcia wyjściowego
+     * @return macierz z wycentrowanym zdjęciem wejściowym (<code>rozmiar to size * size</code>)
+     */
     public static Mat center(Mat digit, short size) {
         Mat res = Mat.zeros(digit.size(), CV_32FC1);
 
@@ -68,6 +91,11 @@ public class ImageProcessing {
         return res;
     }
 
+    /**
+     * @param image macierz, ze zdjęciem wejściowym
+     * @param poly maska w postaci macierzy
+     * @return macierz wejściowej po aplikacji maski
+     */
     public static Mat applyMask(Mat image, MatOfPoint poly) {
         Mat mask = Mat.zeros(image.size(), CvType.CV_8UC1);
 
@@ -79,5 +107,7 @@ public class ImageProcessing {
 
         return dst;
     }
+
+    private ImageProcessing(){}
 
 }

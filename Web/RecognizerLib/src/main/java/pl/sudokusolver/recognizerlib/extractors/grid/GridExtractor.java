@@ -5,7 +5,7 @@ import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
-// Strategy
+
 public class GridExtractor {
     private Mat sudokuImg;
     private GridExtractStrategy gridExtractStrategy;

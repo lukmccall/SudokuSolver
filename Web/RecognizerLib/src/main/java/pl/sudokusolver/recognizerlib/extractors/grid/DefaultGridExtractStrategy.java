@@ -14,13 +14,35 @@ import java.util.List;
 
 import static org.opencv.imgproc.Imgproc.*;
 
+/**
+ * Abstrakcyjna reprezentacja algorytmów do extrakcji siatki sudoku.<br>
+ *
+ *     Algorytm ekstrakcji:
+ *     <ul>
+ *         <li>Nałożenie rozmycia</li>
+ *         <li>Znalezienie wszytkich konturów</li>
+ *         <li>Wybranie największego z nich (ze względu na pole)</li>
+ *         <li>Wycięcie konturu oraz zmiana perspektywy zdjęcia</li>
+ *         <li>Przekonwertowanie na czarno-białe zdjęcie</li>
+ *     </ul>
+ *
+ */
 public class DefaultGridExtractStrategy implements GridExtractStrategy {
+    /**
+     * Filter nakładający rozymie na zdjęcie
+     */
     private BlurFilter blurFilter;
 
+    /**
+     * Tworzy algorytm korzystający z domyślnego rozmycia ({@link pl.sudokusolver.recognizerlib.filters.BlurFilter})
+     */
     public DefaultGridExtractStrategy(){
         blurFilter = new BlurFilter();
     }
 
+    /**
+     * @param blurFilter algorytm rozmycia używany w algorytmie
+     */
     public DefaultGridExtractStrategy(BlurFilter blurFilter) {
         this.blurFilter = blurFilter;
     }
@@ -33,11 +55,12 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
             List<MatOfPoint> contours = getContours(outbox);
             Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
-
-            return perspectiveWrap(img, approx);
+            Mat m = perspectiveWrap(img, approx);
+            new ToGrayFilter().apply(m);
+            return m;
     }
 
-    protected int getBiggestBlobIndex(List<MatOfPoint> contours){
+    private int getBiggestBlobIndex(List<MatOfPoint> contours){
         double area;
         double maxarea = 0;
         int p = -1;
@@ -53,14 +76,14 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         return p;
     }
 
-    protected List<MatOfPoint> getContours(Mat img){
+    private List<MatOfPoint> getContours(Mat img){
         List<MatOfPoint> ret = new ArrayList<>();
         Mat heirarchy = new Mat();
         findContours(img, ret, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
         return ret;
     }
 
-    protected Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuException {
+    private Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuException {
         MatOfPoint poly = new MatOfPoint(contours);
         MatOfPoint2f dst = new MatOfPoint2f();
         MatOfPoint2f src = new MatOfPoint2f();
@@ -96,7 +119,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
     }
 
-    protected Mat perspectiveWrap(Mat sudoku, Pair<MatOfPoint, MatOfPoint2f> approx){
+    private Mat perspectiveWrap(Mat sudoku, Pair<MatOfPoint, MatOfPoint2f> approx){
         MatOfPoint poly = approx.getFirst();
         MatOfPoint2f dst = approx.getSecond();
 

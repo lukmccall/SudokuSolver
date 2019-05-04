@@ -14,11 +14,18 @@ import java.util.Collections;
 import java.util.List;
 
 
+/**
+ * Zbiór funckji pomocniczych
+ */
 public class Utility {
-    public static final Ordering<Point> SORT = Ordering.natural().nullsFirst().onResultOf(
+    private static final Ordering<Point> SORT = Ordering.natural().nullsFirst().onResultOf(
             (Function<Point, Integer>) foo -> (int) (foo.x+foo.y)
     );
 
+    /**
+     * @param mat macierz punktów
+     * @return posortowana, ze względu na pierwszą współrzędną, macierz punktów
+     */
     public static MatOfPoint2f orderPoints(MatOfPoint2f mat) {
         List<Point> pointList = SORT.sortedCopy(mat.toList());
 
@@ -32,12 +39,20 @@ public class Utility {
         return s;
     }
 
+    /**
+     * @param poly wektor zawierający dwa punkty
+     * @return całkowita część euklidesowejj odległości punktów w wektorze
+     */
     public static int distance(MatOfPoint2f poly) {
         Point[] a =  poly.toArray();
         return (int)Math.sqrt((a[0].x - a[1].x)*(a[0].x - a[1].x) +
                 (a[0].y - a[1].y)*(a[0].y - a[1].y));
     }
 
+    /**
+     * @param frame macierz
+     * @return buffor zawierający przekonwertowaną macierz
+     */
     public static BufferedImage matToBufferedImage(Mat frame) {
         int type = 0;
         if (frame.channels() == 1) {
@@ -53,6 +68,11 @@ public class Utility {
         return image;
     }
 
+    /**
+     * Nakłada filtry na macierz przekazaną jako parametr
+     * @param input macierz, na którą będą nakładane filtry
+     * @param filters lista filtrów
+     */
     public static void applyFilters(Mat input, List<IFilter> filters){
         if(filters != null) {
             for (IFilter filter : filters)

@@ -8,6 +8,12 @@ import org.opencv.core.Size;
 
 import java.util.List;
 
+/**
+ * Implementacja algorytmu wycinającego komórki z sudoku.
+ * <p>
+ * Wycinanie odbywa się po przez podzielenie obrazu na 81 indetycznych kwadratów.
+ * </p>
+ */
 public class SizeCellsExtractStrategy implements CellsExtractStrategy{
     @Override
     public List<Mat> extract(Mat grid) {

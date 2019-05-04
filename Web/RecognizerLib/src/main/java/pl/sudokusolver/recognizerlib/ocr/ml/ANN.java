@@ -9,6 +9,9 @@ import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import static java.lang.Math.sqrt;
 import static org.opencv.core.CvType.CV_32FC1;
 
+/**
+ * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/Artificial_neural_network">Artificial neural network</a>
+ */
 public class ANN extends MLWrapper implements ILoader{
     private ANN_MLP ann;
 
@@ -45,7 +48,7 @@ public class ANN extends MLWrapper implements ILoader{
 
     @Override
     public Pair<Integer,Double> recognize(Mat img) {
-        Mat wraped = applyFilter(img);
+        Mat wraped = applyDigitFilter(img);
         Mat result = new Mat();
         ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
         int pre = 0;

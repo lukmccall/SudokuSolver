@@ -14,6 +14,15 @@ import java.util.Optional;
 
 import static org.opencv.imgproc.Imgproc.*;
 
+/**
+ * Implementacja algorytmu znajdującego cyfrę.
+ * <p>
+ * Korzysta on z metody <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/imgproc/Imgproc.html#findContours-org.opencv.core.Mat-java.util.List-org.opencv.core.Mat-int-int-">findContours</a>.
+ * Za pomocą, której znajduje wszytkie kontury, z których następnie liczone są ograniczające prostokąty.
+ * Brane pod uwagę są tylko te, których współczynnik proporcji znajduje się w zakresie (0.1 , 10).
+ * Następnie za pomocą detekcji lini wybierany jest odpowiedni prostokąt.
+ * </p>
+ */
 public class DigitBoxByteSum implements IDigitBox {
     public Optional<Rect> getDigitBox(Mat input) {
         List<MatOfPoint> cont = Lists.newArrayList();

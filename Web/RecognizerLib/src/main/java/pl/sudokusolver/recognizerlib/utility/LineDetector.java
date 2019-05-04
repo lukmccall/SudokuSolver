@@ -3,10 +3,15 @@ package pl.sudokusolver.recognizerlib.utility;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
+
+/**
+ * <a href="https://github.com/joseluisdiaz/sudoku-solver">joseluisdiaz</a>
+ * @author José Luis Diaz (diazjoseluis at gmail dot com)
+ */
 public class LineDetector {
-    /*
-     * 'true' means row-iterator
-     * 'false' mean col-iterator
+    /**
+     * <code>true</code> - iteracja przez wiersze<br>
+     * <code>false</code> - iteracja przez kolumny
      */
     private boolean aggregator;
 
@@ -27,14 +32,18 @@ public class LineDetector {
     }
 
     /**
-     * Creates a detector based on 'm' matrix, and iterate throw cols
+     * Tworzy detektor w oparciu o macierz oraz iteruje przez columny
+     * @param m macierz wejściowa
+     * @return detektor
      */
     public static LineDetector col(Mat m) {
         return new LineDetector(m, false);
     }
 
     /**
-     * Creates a detector based on 'm' matrix, and iterate throw rows
+     * Tworzy detektor w oparciu o macierz oraz iteruje przez wiersze
+     * @param m macierz wejściowa
+     * @return detektor
      */
     public static LineDetector row(Mat m) {
         return new LineDetector(m, true);

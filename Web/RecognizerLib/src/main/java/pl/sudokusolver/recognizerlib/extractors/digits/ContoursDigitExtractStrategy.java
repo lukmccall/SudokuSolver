@@ -1,17 +1,25 @@
 package pl.sudokusolver.recognizerlib.extractors.digits;
 
 import com.google.common.collect.Lists;
-import org.opencv.core.*;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.opencv.core.Core.bitwise_not;
-import static org.opencv.core.Core.copyMakeBorder;
 import static org.opencv.imgproc.Imgproc.*;
 
+/**
+ * Implementacja algorytmu extrakcji cyfry.
+ * <p>
+ *     Podobnie jak w {@link pl.sudokusolver.recognizerlib.digitbox.DigitBoxContoures}.
+ *     Różnia jest w użytych warunka oraz w wyborze odpowiedniego ograniczenia
+ * </p>
+ */
 public class ContoursDigitExtractStrategy implements DigitsExtractStrategy {
     @Override
     public Optional<Mat> extractDigit(Mat cell) {

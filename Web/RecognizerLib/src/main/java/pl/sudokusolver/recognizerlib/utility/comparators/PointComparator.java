@@ -1,10 +1,13 @@
 package pl.sudokusolver.recognizerlib.utility.comparators;
 
-import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
 import java.util.Comparator;
 
+/**
+ * Porównuje punkty ze względu na odległość Y a następnie ze względu na X.<br>
+ * Punkty odległe o maksymalnie 10 na osi Y traktowane są tak jakby miały tą są wartość na tej osi.
+ */
 public class PointComparator implements Comparator<Point> {
     private int compareY(double y1, double y2){
         if(Math.abs(y1-y2) < 10) return 0;

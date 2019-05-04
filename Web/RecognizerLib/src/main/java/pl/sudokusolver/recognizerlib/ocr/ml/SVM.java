@@ -5,6 +5,9 @@ import pl.sudokusolver.recognizerlib.data.IData;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
+/**
+ * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/Support-vector_machine">Support-vector machine</a>
+ */
 public class SVM extends MLWrapper implements ILoader{
     private org.opencv.ml.SVM svm;
 
@@ -28,7 +31,7 @@ public class SVM extends MLWrapper implements ILoader{
     }
 
     public Pair<Integer, Double> recognize(Mat img) {
-        Mat wraped = applyFilter(img);
+        Mat wraped = applyDigitFilter(img);
         Mat result = new Mat();
 
         double dist = svm.predict(ImageProcessing.procSimple(wraped,sampleSize), result,1);

@@ -1,10 +1,7 @@
 package pl.sudokusolver.recognizerlib.data;
 
 import com.google.common.collect.Lists;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Rect;
+import org.opencv.core.*;
 import org.opencv.ml.Ml;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
 import pl.sudokusolver.recognizerlib.filters.ResizeFilter;
@@ -19,11 +16,30 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgproc.Imgproc.*;
 
 public class LearnData implements IData {
+    /**
+     * Próbki
+     */
     private Mat samples;
+
+    /**
+     * Etykiety w formacie {@link pl.sudokusolver.recognizerlib.data.DataType#Simple}
+     */
     private Mat labels;
+
+    /**
+     * Rozmiar pojedynczej próbki (jest to kwadrat sampleSize x sampleSize)
+     */
     private short sampleSize;
 
-    public LearnData(List<String> files){
+    /**
+     * @param files lista scieżek do 9 plików zawierających obrazki różnych cyfr.
+     *              Pliki powinny być posortowane ze względu na cyfry, które przedstawiają.
+     *              Na zdjęciu cyfry powinny być w kolorze białym a tło czarne.
+     * @throws CvException gdy nie uda się otworzyć jednego z plików.
+     * @throws IllegalArgumentException gdy na liście nie znajduje się 9 plików.
+     */
+    public LearnData(List<String> files) throws CvException, IllegalArgumentException {
+        if(files.size() != 9) throw new IllegalArgumentException("LearnData need 9 files");
         List<List<Rect>> allSamples = new LinkedList<>();
         int numberOfRect = 0;
 
@@ -74,16 +90,25 @@ public class LearnData implements IData {
         return labels;
     }
 
+    /**
+     * @return M1.ROW_SAMPLE. Więcej informacji możesz znaleźć na <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/ml/Ml.html">openCV</a>
+     */
     @Override
     public int getSampleType() {
         return Ml.ROW_SAMPLE;
     }
 
+    /**
+     * @return 28 jeżeli obiekt został poprawnie stworzony, w przeciwnym wypadku 0
+     */
     @Override
     public short getSize() {
         return sampleSize;
     }
 
+    /**
+     * @return {@link pl.sudokusolver.recognizerlib.data.DataType#Simple}
+     */
     @Override
     public DataType getDataType() {
         return DataType.Simple;

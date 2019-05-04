@@ -6,6 +6,12 @@ import pl.sudokusolver.recognizerlib.digitbox.DigitBoxContoures;
 
 import java.util.Optional;
 
+/**
+ * Implementacja algorytmu extrakcji cyfry.
+ * <p>
+ *     Korzysta z {@link pl.sudokusolver.recognizerlib.digitbox.DigitBoxContoures}
+ * </p>
+ */
 public class FastDigitExtractStrategy extends DigitBoxContoures implements DigitsExtractStrategy {
     @Override
     public Optional<Mat> extractDigit(Mat cell) {
