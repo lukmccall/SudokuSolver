@@ -6,7 +6,8 @@ public class Values {
     public static Theme THEME;
     public static OpenStages<Stage> openStages;
 
-    public static String SAVE_FILE = "settings.txt";
+    public static String SAVE_FILE = "App\\settings.txt";
+    public static String INITIAL_IMAGE = "App\\initial_image.png";
 
     public static String NAME = "SUDOKU SOLVER";
 
@@ -41,6 +42,14 @@ public class Values {
 
     public static String SET = "SET";
     public static String DEFAULT = "DEFAULT";
+
+    public static String E001 = "WRONG JAVA VERSION";
+    public static String E002 = "WRONG FILE EXTENSION";
+    public static String E003 = "COULDN'T RECOGNIZE SUDOKU";
+    public static String E004 = "SUDOKU ISN'T SOLVABLE";
+    public static String E005 = "NO INTERNET CONNECTION";
+    public static String E006 = "SERVER IS DOWN";
+    public static String E007 = "FILE DOESN'T EXIST";
 
 
 }

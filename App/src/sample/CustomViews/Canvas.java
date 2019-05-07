@@ -11,7 +11,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 
 
     private double SIZE_REC = 50;
-    private GameBoard gameboard;
+    public GameBoard gameboard;
 
     public Canvas(){
         gameboard = new GameBoard();
@@ -84,6 +84,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 
         // draw the numbers from our GameBoard instance
         int[][] initial = gameboard.getInitial();
+        int[][] player = gameboard.getPlayer();
 
         for(int row = 0; row < 9; row++) {
             for(int col = 0; col < 9; col++) {
@@ -91,12 +92,21 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 
                 double position_x = col * SIZE_REC + SIZE_REC / 2 - SIZE_REC / 2 / 4;
 
-                context.setFill(Color.BLACK);
+                if (initial[row][col] != 0){
+                    context.setFill(Color.BLACK);
+                }
+                else if (player[row][col] != 0){
+                    context.setFill(Color.RED);
+                }
+
 
                 context.setFont(new Font(SIZE_REC / 2));
 
                 if(initial[row][col] != 0) {
                     context.fillText(initial[row][col] + "", position_x, position_y);
+                }
+                else if (player[row][col] != 0){
+                    context.fillText(player[row][col] + "", position_x, position_y);
                 }
             }
         }

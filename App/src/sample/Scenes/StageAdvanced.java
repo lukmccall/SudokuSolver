@@ -1,5 +1,6 @@
 package App.src.sample.Scenes;
 
+import App.src.sample.ParametersListener;
 import App.src.sample.Theme;
 import App.src.sample.Values;
 import javafx.beans.value.ObservableValue;
@@ -29,9 +30,22 @@ public class StageAdvanced extends Stage {
     private Slider sliderProging;
     private Slider sliderDistance;
     private Slider sliderGauss;
+    private VBox hBox;
 
-    StageAdvanced(){
+    private ParametersListener parametersListener;
+
+    StageAdvanced(ParametersListener parametersListener){
+        this.parametersListener = parametersListener;
         init();
+    }
+
+    public void change(){
+        if (Values.THEME == Theme.LIGHT){
+            hBox.setStyle("-fx-background-color: #F0F0F0;");
+        }
+        else{
+            hBox.setStyle("-fx-background-color: #34495E;");
+        }
     }
 
     private void init(){
@@ -112,16 +126,10 @@ public class StageAdvanced extends Stage {
         buttons.setAlignment(Pos.CENTER);
 
 
-        VBox hBox = new VBox(vBoxTop, vBoxBottom, buttons);
+        hBox = new VBox(vBoxTop, vBoxBottom, buttons);
         hBox.setSpacing(25);
 
-        if (Values.THEME == Theme.LIGHT){
-            hBox.setStyle("-fx-background-color: #F0F0F0;");
-        }
-        else{
-            hBox.setStyle("-fx-background-color: #34495E;");
-        }
-
+        change();
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
 
@@ -143,7 +151,7 @@ public class StageAdvanced extends Stage {
         def.setPrefWidth(100);
 
         set.setOnAction((event) -> {
-
+            parametersListener.parameters(lineThickness, proging, distance, gauss);
             this.close();
         });
 

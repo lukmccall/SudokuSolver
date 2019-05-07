@@ -1,18 +1,17 @@
 package App.src.sample.Scenes;
 
+import App.src.sample.Parameters;
+import App.src.sample.ParametersListener;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -31,23 +30,43 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 
-public class SceneImage extends Stage {
+public class StageImage extends Stage implements ParametersListener {
 
-    private Image image;
+    private Parameters parameters = new Parameters();
     private ImageView imageView;
     private final Rectangle rectBound = new Rectangle(0, 0);
-    private Stage stageAdvanced;
-    RubberBandSelection rubberBandSelection;
+    private StageAdvanced stageAdvanced;
+    private RubberBandSelection rubberBandSelection;
+    private BorderPane temp;
+    private ImageListener imageListener;
 
-    public SceneImage(){
+    public StageImage(ImageListener imageListener){
         super();
+        this.imageListener = imageListener;
+    }
+
+    @Override
+    public void parameters(double a, double b, double c, double d){
+        parameters.set(a, b, c, d);
+    }
+
+    public void change(){
+        if (stageAdvanced != null){
+            stageAdvanced.change();
+        }
+        if (Values.THEME == Theme.LIGHT){
+            temp.setStyle("-fx-background-color: #F0F0F0;");
+        }
+        else{
+            temp.setStyle("-fx-background-color: #34495E;");
+        }
     }
 
 
-    public void init(File file, ImageListener imageListener, double width, double height) throws FileNotFoundException {
+    public void init(File file, double width, double height) throws FileNotFoundException {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-        image = new Image(new FileInputStream(file.getPath()));
+        Image image = new Image(new FileInputStream(file.getPath()));
         imageView = new ImageView(image);
 
         if (height < width){
@@ -65,87 +84,12 @@ public class SceneImage extends Stage {
         rectBound.setStroke(Color.RED);
 
         Pane imageViewParent = new Pane();
-        //imageViewParent.setStyle("-fx-border-color: black; -fx-border-width: 2;");
 
         imageViewParent.getChildren().add(imageView);
 
-        //Group imageLayer = new Group(imageView);
         rubberBandSelection = new RubberBandSelection(imageViewParent, imageView);
 
-        /*imageLayer.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.isSecondaryButtonDown()) {
-                    contextMenu.show(imageLayer, event.getScreenX(), event.getScreenY());
-                }
-            }
-        });*/
-        /*Pane imageViewParent = new Pane();
-        imageViewParent.setStyle("-fx-border-color: black; -fx-border-width: 2;");
-
-        imageViewParent.getChildren().add(imageView);
-
-        imageViewParent.addEventFilter(MouseEvent.ANY, event ->  {
-            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-
-                rectBound.setWidth(0.0);
-                rectBound.setHeight(0.0);
-                rectBound.setLayoutX(event.getX());
-                rectBound.setLayoutY(event.getY());
-
-                if (rectBound.getParent() == null){
-                    imageViewParent.getChildren().add(rectBound);
-                }
-
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-                double tempX = event.getX();
-                double tempY = event.getY();
-
-                if (tempX < imageView.getX()){
-                    tempX = imageView.getX();
-                }
-                if (tempY < imageView.getY()){
-                    tempY = imageView.getY();
-                }
-
-                if (tempX > imageView.getX() + imageView.getBoundsInParent().getWidth()){
-                    tempX = imageView.getX() + imageView.getBoundsInParent().getWidth();
-                }
-                if (tempY > imageView.getY() + imageView.getBoundsInParent().getHeight()){
-                    tempY = imageView.getY() + imageView.getBoundsInParent().getHeight();
-                }
-
-
-                if (tempX - rectBound.getLayoutX() > 0){
-                    rectBound.setWidth(tempX - rectBound.getLayoutX());
-                }
-                else{
-                    double tempp = rectBound.getLayoutX();
-                    rectBound.setLayoutX(tempX);
-                    rectBound.setWidth(tempp - rectBound.getLayoutX());
-                }
-
-                if (tempY - rectBound.getLayoutY() > 0){
-                    rectBound.setHeight(tempY - rectBound.getLayoutY());
-                }
-                else{
-                    double tempp = rectBound.getLayoutY();
-                    rectBound.setLayoutY(tempY);
-                    rectBound.setHeight(tempp - rectBound.getLayoutY());
-                }
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_CLICKED
-                    && event.getButton() == MouseButton.SECONDARY) {
-                if (rectBound.getParent() != null) {
-                    imageViewParent.getChildren().remove(rectBound);
-                }
-            }
-
-        });*/
-
-
-        BorderPane temp = new BorderPane();
+        temp = new BorderPane();
 
         if (Values.THEME == Theme.LIGHT){
             temp.setStyle("-fx-background-color: #F0F0F0;");
@@ -180,6 +124,12 @@ public class SceneImage extends Stage {
                 Values.openStages.focusStage(this);
             }
         });
+
+        this.setOnCloseRequest(event -> {
+            if (stageAdvanced != null) stageAdvanced.close();
+        });
+
+        this.show();
     }
 
     private javafx.scene.layout.HBox getButtons(ImageListener imageListener){
@@ -213,12 +163,12 @@ public class SceneImage extends Stage {
                 else stageAdvanced.show();
                 return;
             }
-            stageAdvanced = new StageAdvanced();
+            stageAdvanced = new StageAdvanced(this);
 
         });
 
         accept.setOnAction((event) -> {
-            imageListener.accepted(imageView.getImage());
+            imageListener.accepted(imageView.getImage(), parameters);
             this.close();
         });
 

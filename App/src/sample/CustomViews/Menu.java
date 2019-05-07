@@ -138,7 +138,6 @@ public class Menu extends MenuBar {
 
                     authorsStage.toBack();
                 }
-//                authors.fire();
 
                 if (aboutStage != null){
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -149,7 +148,6 @@ public class Menu extends MenuBar {
 
                     aboutStage.toBack();
                 }
-//                about.fire();
                 test.changed();
 
                 Utilities.saveFile("Theme: LIGHT");
@@ -169,7 +167,6 @@ public class Menu extends MenuBar {
 
                     authorsStage.toBack();
                 }
-//                authors.fire();
 
                 if (aboutStage != null){
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();

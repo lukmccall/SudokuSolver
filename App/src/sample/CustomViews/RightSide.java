@@ -1,10 +1,12 @@
 package App.src.sample.CustomViews;
 
+import App.src.sample.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,50 +15,61 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
-import App.src.sample.ImageListener;
-import App.src.sample.Scenes.SceneImage;
-import App.src.sample.Values;
+import App.src.sample.Scenes.StageImage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class RightSide extends BorderPane implements ImageListener {
+public class RightSide extends VBox implements ImageListener {
 
+    private Parameters parameters = new Parameters();
+    private Sender sender;
     private ImageView imageView;
+    private StageImage stage;
+    private FileChooser.ExtensionFilter imageFilter;
 
-    public RightSide(double a, double b){
+    public RightSide(Sender sender, double a, double b){
+        this.sender = sender;
         try{
             init(a, b);
         }
         catch (FileNotFoundException e){
-
+            Utilities.log(Values.E007);
         }
+    }
+
+    public void change(){
+        if (stage != null)
+            stage.change();
     }
 
     @Override
-    public void accepted(Image image){
+    public void accepted(Image image, Parameters parameters){
+        this.parameters = parameters;
         imageView.setImage(image);
     }
 
-    private void init(double a, double b) throws FileNotFoundException {
-        //this.setAlignment(Pos.CENTER);
+    private void init(double width, double height) throws FileNotFoundException {
         Text temp = new Text(Values.NAME);
-        temp.setStyle("-fx-font: 32 arial;");
+        temp.setStyle("-fx-font: 32 arial;" + "-fx-font-weight: bold;");
 
-        Image image = new Image(new FileInputStream("C:\\Users\\Thomas\\Desktop\\hasloxDD.png"));
+        Image image = new Image(new FileInputStream(Values.INITIAL_IMAGE));
         imageView = new ImageView(image);
 
-        if (a > b){
-            imageView.setFitWidth(b * 0.75f);
-            imageView.setFitHeight(b * 0.75f);
+        if (width > height){
+            imageView.setFitWidth(height * 0.66f);
+            imageView.setFitHeight(height * 0.66f);
         }
         else{
-            imageView.setFitWidth(a * 0.75f);
-            imageView.setFitHeight(a * 0.75f);
+            imageView.setFitWidth(width * 0.66f);
+            imageView.setFitHeight(width * 0.66f);
         }
 
         imageView.setPreserveRatio(true);
@@ -70,11 +83,9 @@ public class RightSide extends BorderPane implements ImageListener {
         javafx.scene.layout.HBox hBox = getButtons();
         hBox.setAlignment(Pos.CENTER);
 
-        this.setTop(vBox1);
-        this.setCenter(vBox2);
-        this.setBottom(hBox);
-
-        //this.getChildren().addAll(temp, imageView, hBox);
+        this.setSpacing(10);
+        this.setAlignment(Pos.CENTER);
+        this.getChildren().addAll(vBox1, vBox2, hBox);
     }
 
     private javafx.scene.layout.HBox getButtons(){
@@ -84,13 +95,9 @@ public class RightSide extends BorderPane implements ImageListener {
         load.setPrefWidth(100);
         solve.setPrefWidth(100);
 
-        load.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SceneImage stage = new SceneImage();
-                FileChooser.ExtensionFilter imageFilter
-                        = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
-
+        load.setOnAction((event) -> {
+            if (imageFilter == null){
+                imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
 
                 final FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().add(imageFilter);
@@ -98,45 +105,28 @@ public class RightSide extends BorderPane implements ImageListener {
                 File file = fileChooser.showOpenDialog(stage);
                 if (file != null) {
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+                    stage = new StageImage(RightSide.this);
                     try{
                         double width = primaryScreenBounds.getWidth() * 0.375f;
                         double height = primaryScreenBounds.getHeight() * 0.66f;
-                        stage.init(file, RightSide.this, width, height);
+                        stage.init(file, width, height);
                     }
-                    catch (Exception e){
-
+                    catch (FileNotFoundException e){
+                        Utilities.log(Values.E007);
                     }
-
-                    /*Scene secondScene = new Scene(new SceneImage(file, RightSide.this,
-                            primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f),
-                            primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
-
-
-                    stage.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                        if (newValue) {
-                            Values.openStages.focusStage(stage);
-                        }
-                    });
-
-
-                    stage.setTitle("Image");
-                    stage.setScene(secondScene);
-
-                    stage.setWidth(primaryScreenBounds.getWidth() * 0.375f);
-                    stage.setHeight(primaryScreenBounds.getHeight() * 0.75f);
-
-                    stage.setMinWidth(primaryScreenBounds.getWidth() * 0.375f);
-                    stage.setMinHeight(primaryScreenBounds.getHeight() * 0.75f);*/
-
-                    stage.show();
                 }
                 else{
-
+                    Utilities.log(Values.E002);
                 }
+
+                imageFilter = null;
             }
         });
 
         solve.setOnAction(event ->  {
+
+            BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
+            sender.send(bImage, parameters);
 
         });
 
@@ -145,6 +135,10 @@ public class RightSide extends BorderPane implements ImageListener {
         hBox.getChildren().addAll(load, solve);
 
         return hBox;
+    }
+
+    void getSuccessful(int[][] array){
+
     }
 
 

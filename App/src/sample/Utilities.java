@@ -53,4 +53,8 @@ public class Utilities {
         }
     }
 
+    public static void log(String error){
+        logger.log(Level.SEVERE, error);
+    }
+
 }

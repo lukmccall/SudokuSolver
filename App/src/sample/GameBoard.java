@@ -31,16 +31,15 @@ public class GameBoard {
         // 0's will be rendered as empty space and will be editable by player
         initial = new int[][]
                 {
-                        {0,0,0,4,0,0,0,9,0},
-                        {6,0,7,0,0,0,8,0,4},
-                        {0,1,0,7,0,9,0,0,3},
-                        {9,0,1,0,7,0,0,3,0},
-                        {0,0,2,0,0,0,9,0,0},
-                        {0,5,0,0,4,0,1,0,7},
-                        {3,0,0,5,0,2,0,7,0},
-                        {4,0,6,0,0,0,3,0,1},
-                        {0,7,0,0,0,4,0,0,0}
-
+                        {0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0},
                 };
 
         // player's array is initialized as a 9x9 full of zeroes
@@ -69,6 +68,17 @@ public class GameBoard {
      */
     public int[][] getPlayer() {
         return player;
+    }
+
+
+    public void modifyPlayer(int[][] array){
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                if (initial[i][j] == 0){
+                    player[i][j] = array[i][j];
+                }
+            }
+        }
     }
 
     /***
