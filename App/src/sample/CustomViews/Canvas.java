@@ -12,6 +12,8 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 
     private double SIZE_REC = 50;
     public GameBoard gameboard;
+    public double offset_y;
+    public int playerCol, playerRow;
 
     public Canvas(){
         gameboard = new GameBoard();
@@ -47,7 +49,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
         if (SIZE_REC  * 9 > getWidth()){
             SIZE_REC = (getWidth()) / 9;
         }
-        double offset_y = (getHeight() - SIZE_REC * 9) / 2;
+        offset_y = (getHeight() - SIZE_REC * 9) / 2;
 
         GraphicsContext context = this.getGraphicsContext2D();
 
@@ -77,10 +79,13 @@ public class Canvas extends javafx.scene.canvas.Canvas {
                     context.setFill(Color.web("4F6F8F"));
                 }
 
-
                 context.fillRect(position_x, position_y, width, width);
             }
         }
+
+        context.setStroke(Color.RED);
+        context.setLineWidth(5);
+        context.strokeRect(playerCol * SIZE_REC + 2, playerRow * SIZE_REC + 2 + offset_y, 46, 46);
 
         // draw the numbers from our GameBoard instance
         int[][] initial = gameboard.getInitial();

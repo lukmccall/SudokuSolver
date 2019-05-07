@@ -7,6 +7,8 @@ import App.src.sample.CustomViews.RightSide;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -34,20 +36,7 @@ public class StageMain extends Stage implements Test, Sender {
     }
 
     public void recieved(int[][] array){
-        int[][] solution = new int[][]
-                {
-                        {5,3,8,4,6,1,7,9,2},
-                        {6,9,7,3,2,5,8,1,4},
-                        {2,1,4,7,8,9,5,6,3},
-                        {9,4,1,2,7,8,6,3,5},
-                        {7,6,2,1,5,3,9,4,8},
-                        {8,5,3,9,4,6,1,2,7},
-                        {3,8,9,5,1,2,4,7,6},
-                        {4,2,6,8,9,7,3,5,1},
-                        {1,7,5,6,3,4,2,8,9}
-                };
-
-        canvas.gameboard.modifyPlayer(solution);
+        canvas.gameboard.modifyPlayer(array);
         canvas.update();
     }
 
@@ -71,6 +60,16 @@ public class StageMain extends Stage implements Test, Sender {
         Menu menu = new Menu(this, this);
         canvas = new Canvas();
 
+        canvas.setOnMouseClicked((event) -> {
+            double mouseX = event.getX();
+            double mouseY = event.getY() - canvas.offset_y;
+
+            canvas.playerCol = (int) (mouseX / 50);
+            canvas.playerRow = (int) (mouseY / 50);
+
+            canvas.update();
+        });
+
         this.setX(primaryScreenBounds.getMinX());
         this.setY(primaryScreenBounds.getMinY());
 
@@ -90,14 +89,56 @@ public class StageMain extends Stage implements Test, Sender {
 
         changed();
 
+        Scene scene = new Scene(vBox);
+
+        scene.setOnKeyPressed(e -> {
+            KeyCode keyCode = e.getCode();
+            if (keyCode == KeyCode.DIGIT1 || keyCode == KeyCode.NUMPAD1) {
+                canvas.gameboard.modifyInitial(1, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.DIGIT2 || keyCode == KeyCode.NUMPAD2) {
+                canvas.gameboard.modifyInitial(2, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.DIGIT3 || keyCode == KeyCode.NUMPAD3) {
+                canvas.gameboard.modifyInitial(3, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.DIGIT4 || keyCode == KeyCode.NUMPAD4) {
+                canvas.gameboard.modifyInitial(4, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.DIGIT5 || keyCode == KeyCode.NUMPAD5) {
+                canvas.gameboard.modifyInitial(5, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.DIGIT6 || keyCode == KeyCode.NUMPAD6) {
+                canvas.gameboard.modifyInitial(6, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.DIGIT7 || keyCode == KeyCode.NUMPAD7) {
+                canvas.gameboard.modifyInitial(7, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.DIGIT8 || keyCode == KeyCode.NUMPAD8) {
+                canvas.gameboard.modifyInitial(8, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.DIGIT9 || keyCode == KeyCode.NUMPAD9) {
+                canvas.gameboard.modifyInitial(9, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+
+        });
+
         this.setTitle(Values.NAME);
-        this.setScene(new Scene(vBox));
+        this.setScene(scene);
         this.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 Values.openStages.focusStage(this);
             }
         });
-
 
         this.setOnCloseRequest((event) -> {
             Platform.exit();
