@@ -6,10 +6,7 @@ public class Values {
     public static Theme THEME;
     public static OpenStages<Stage> openStages;
 
-
     public static String SAVE_FILE = "settings.txt";
-
-
 
     public static String NAME = "SUDOKU SOLVER";
 
@@ -36,5 +33,14 @@ public class Values {
     public static String TESTERS_NAMES = "Nikodem Kwaśniak\nDawid Szczerba";
 
     public static String DESCRIPTION = "Aplikacja jaką zrobiliśmy na przedmiot Inżynieria Oprogramowania";
+
+    public static String LINE_THICKNESS = "GRUBOŚĆ LINII";
+    public static String PROGING = "PROGOWANIE";
+    public static String DISTANCE = "ODLEGŁOŚĆ";
+    public static String GAUSSIAN_BLUR = "ROZMYCIE GAUSSA";
+
+    public static String SET = "SET";
+    public static String DEFAULT = "DEFAULT";
+
 
 }

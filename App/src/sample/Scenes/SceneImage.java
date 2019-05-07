@@ -1,16 +1,16 @@
 package App.src.sample.Scenes;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import App.src.sample.ImageListener;
@@ -34,7 +35,9 @@ public class SceneImage extends Stage {
 
     private Image image;
     private ImageView imageView;
-    final Rectangle rectBound = new Rectangle(0, 0);
+    private final Rectangle rectBound = new Rectangle(0, 0);
+    private Stage stageAdvanced;
+    RubberBandSelection rubberBandSelection;
 
     public SceneImage(){
         super();
@@ -44,13 +47,9 @@ public class SceneImage extends Stage {
     public void init(File file, ImageListener imageListener, double width, double height) throws FileNotFoundException {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-        image = new Image(new FileInputStream(file.getPath()),
-                primaryScreenBounds.getWidth(), primaryScreenBounds.getWidth(), false, false);
+        image = new Image(new FileInputStream(file.getPath()));
         imageView = new ImageView(image);
 
-        imageView.setFitWidth(primaryScreenBounds.getWidth());
-        imageView.setFitHeight(primaryScreenBounds.getWidth());
-        //imageView.
         if (height < width){
             imageView.setFitWidth(width * 0.75f);
             imageView.setFitHeight(width * 0.75f);
@@ -62,77 +61,91 @@ public class SceneImage extends Stage {
 
         imageView.setPreserveRatio(true);
 
-        //hBox.setMa(new Insets( -height * 0.05f, 0, 0, 0));
-
         rectBound.setFill(Color.TRANSPARENT);
         rectBound.setStroke(Color.RED);
-        //ScrollPane scp = new ScrollPane();
-        HBox root = new HBox(15);
-        //scp.setContent(root);
-        //root.setOrientation(Orientation.HORIZONTAL);
 
         Pane imageViewParent = new Pane();
-        imageViewParent.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+        //imageViewParent.setStyle("-fx-border-color: black; -fx-border-width: 2;");
 
-        //imageView1.setLayoutX(0.0);imageView1.setLayoutY(0.0);
         imageViewParent.getChildren().add(imageView);
 
-        imageViewParent.addEventFilter(MouseEvent.ANY, new EventHandler<MouseEvent>() {
+        //Group imageLayer = new Group(imageView);
+        rubberBandSelection = new RubberBandSelection(imageViewParent, imageView);
+
+        /*imageLayer.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-
-                    //imageViewParent.getChildren().removeAll();
-
-                    rectBound.setWidth(0.0); rectBound.setHeight(0.0);
-                    rectBound.setLayoutX(event.getX());
-                    rectBound.setLayoutY(event.getY()); // setX or setY
-
-                    if (rectBound.getParent() == null){
-                        imageViewParent.getChildren().add(rectBound);
-                    }
-
-                }
-                else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
-
-                }
-                else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-                    double tempX = event.getX();
-                    double tempY = event.getY();
-
-                    if (tempX < imageView.getX()){
-                        tempX = imageView.getX();
-                    }
-
-                    if (tempY < imageView.getY()){
-                        tempY = imageView.getY();
-                    }
-
-                    if (tempX > imageView.getX() + imageView.getBoundsInParent().getWidth()){
-                        tempX = imageView.getX() + imageView.getBoundsInParent().getWidth();
-                    }
-                    if (tempY > imageView.getY() + imageView.getBoundsInParent().getHeight()){
-                        tempY = imageView.getY() + imageView.getBoundsInParent().getHeight();
-                    }
-
-                    rectBound.setWidth(tempX - rectBound.getLayoutX());
-                    rectBound.setHeight(tempY - rectBound.getLayoutY());
-                    System.out.println(rectBound.getWidth());
-                }
-                else if (event.getEventType() == MouseEvent.MOUSE_CLICKED
-                        && event.getButton() == MouseButton.SECONDARY) {
-                    if (rectBound.getParent() != null) {
-                        imageViewParent.getChildren().remove(rectBound);
-                    }
+                if (event.isSecondaryButtonDown()) {
+                    contextMenu.show(imageLayer, event.getScreenX(), event.getScreenY());
                 }
             }
-        });
+        });*/
+        /*Pane imageViewParent = new Pane();
+        imageViewParent.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+
+        imageViewParent.getChildren().add(imageView);
+
+        imageViewParent.addEventFilter(MouseEvent.ANY, event ->  {
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+
+                rectBound.setWidth(0.0);
+                rectBound.setHeight(0.0);
+                rectBound.setLayoutX(event.getX());
+                rectBound.setLayoutY(event.getY());
+
+                if (rectBound.getParent() == null){
+                    imageViewParent.getChildren().add(rectBound);
+                }
+
+            }
+            else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+                double tempX = event.getX();
+                double tempY = event.getY();
+
+                if (tempX < imageView.getX()){
+                    tempX = imageView.getX();
+                }
+                if (tempY < imageView.getY()){
+                    tempY = imageView.getY();
+                }
+
+                if (tempX > imageView.getX() + imageView.getBoundsInParent().getWidth()){
+                    tempX = imageView.getX() + imageView.getBoundsInParent().getWidth();
+                }
+                if (tempY > imageView.getY() + imageView.getBoundsInParent().getHeight()){
+                    tempY = imageView.getY() + imageView.getBoundsInParent().getHeight();
+                }
+
+
+                if (tempX - rectBound.getLayoutX() > 0){
+                    rectBound.setWidth(tempX - rectBound.getLayoutX());
+                }
+                else{
+                    double tempp = rectBound.getLayoutX();
+                    rectBound.setLayoutX(tempX);
+                    rectBound.setWidth(tempp - rectBound.getLayoutX());
+                }
+
+                if (tempY - rectBound.getLayoutY() > 0){
+                    rectBound.setHeight(tempY - rectBound.getLayoutY());
+                }
+                else{
+                    double tempp = rectBound.getLayoutY();
+                    rectBound.setLayoutY(tempY);
+                    rectBound.setHeight(tempp - rectBound.getLayoutY());
+                }
+            }
+            else if (event.getEventType() == MouseEvent.MOUSE_CLICKED
+                    && event.getButton() == MouseButton.SECONDARY) {
+                if (rectBound.getParent() != null) {
+                    imageViewParent.getChildren().remove(rectBound);
+                }
+            }
+
+        });*/
 
 
         BorderPane temp = new BorderPane();
-
-        //temp.setSpacing(50);
 
         if (Values.THEME == Theme.LIGHT){
             temp.setStyle("-fx-background-color: #F0F0F0;");
@@ -141,9 +154,7 @@ public class SceneImage extends Stage {
             temp.setStyle("-fx-background-color: #34495E;");
         }
 
-        root.getChildren().add(imageViewParent);
-        //temp.setAlignment(Pos.TOP_CENTER);
-
+        //root.getChildren().add(imageViewParent);
 
         HBox hBox = getButtons(imageListener);
         HBox imageHBox = new HBox(imageViewParent);
@@ -181,29 +192,29 @@ public class SceneImage extends Stage {
         accept.setPrefWidth(100);
 
         cut.setOnAction((event) -> {
-            System.out.println(rectBound.getWidth());
 
-            /*PixelReader reader = imageView.getImage().getPixelReader();
-            WritableImage newImage = new WritableImage(reader,
-                    (int) rectBound.getLayoutX(),
-                    (int) rectBound.getLayoutY(),
-                    (int) rectBound.getWidth(),
-                    (int) rectBound.getHeight());
-*/
+            Rectangle2D rectangle2D = rubberBandSelection.getRectangle();
+
             SnapshotParameters parameters = new SnapshotParameters();
             parameters.setFill(Color.TRANSPARENT);
-            parameters.setViewport(new Rectangle2D(rectBound.getLayoutX(), rectBound.getLayoutY(), rectBound.getWidth(), rectBound.getHeight()));
+            parameters.setViewport(rectangle2D);
 
-            WritableImage wi = new WritableImage((int)rectBound.getWidth(), (int)rectBound.getHeight());
+            WritableImage wi = new WritableImage((int)rectangle2D.getWidth(), (int)rectangle2D.getHeight());
             Image croppedImage = imageView.snapshot(parameters, wi);
 
-            rectBound.setWidth(0.0);
-            rectBound.setHeight(0.0);
             imageView.setImage(croppedImage);
 
         });
 
         advanced.setOnAction((event) -> {
+            if (stageAdvanced != null) {
+                //stageAdvanced.setScene(secondScene);
+                if (stageAdvanced.isShowing()) stageAdvanced.toFront();
+                else stageAdvanced.show();
+                return;
+            }
+            stageAdvanced = new StageAdvanced();
+
         });
 
         accept.setOnAction((event) -> {
@@ -218,4 +229,112 @@ public class SceneImage extends Stage {
 
         return hBox;
     }
+
+    public static class RubberBandSelection {
+
+        final DragContext dragContext = new DragContext();
+        Rectangle rect;
+
+        Pane group;
+        ImageView imageView;
+
+        Rectangle2D getRectangle(){
+            Rectangle2D temp = new Rectangle2D(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+            rect.setX(0);
+            rect.setY(0);
+            rect.setWidth(0);
+            rect.setHeight(0);
+            return temp;
+        }
+
+        RubberBandSelection(Pane group, ImageView imageView) {
+
+            this.group = group;
+            this.imageView = imageView;
+
+            rect = new Rectangle( 0,0,0,0);
+            rect.setStroke(Color.BLUE);
+            rect.setStrokeWidth(1);
+            rect.setStrokeLineCap(StrokeLineCap.ROUND);
+            rect.setFill(Color.LIGHTBLUE.deriveColor(0, 1.2, 1, 0.6));
+
+            group.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressedEventHandler);
+            group.addEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseDraggedEventHandler);
+        }
+
+        EventHandler<MouseEvent> onMousePressedEventHandler = (event) -> {
+            if( event.isSecondaryButtonDown())
+                return;
+
+            // remove old rect
+            rect.setX(0);
+            rect.setY(0);
+            rect.setWidth(0);
+            rect.setHeight(0);
+
+            group.getChildren().remove(rect);
+
+
+            // prepare new drag operation
+            dragContext.mouseAnchorX = event.getX();
+            dragContext.mouseAnchorY = event.getY();
+
+            rect.setX(dragContext.mouseAnchorX);
+            rect.setY(dragContext.mouseAnchorY);
+            rect.setWidth(0);
+            rect.setHeight(0);
+
+            group.getChildren().add( rect);
+
+        };
+
+        EventHandler<MouseEvent> onMouseDraggedEventHandler = (event) -> {
+            if (event.isSecondaryButtonDown())
+                return;
+
+            double tempX = event.getX();
+            double tempY = event.getY();
+
+            if (tempX > imageView.getX() + imageView.getBoundsInParent().getWidth()){
+                tempX = imageView.getX() + imageView.getBoundsInParent().getWidth();
+            }
+            if (tempY > imageView.getY() + imageView.getBoundsInParent().getHeight()){
+                tempY = imageView.getY() + imageView.getBoundsInParent().getHeight();
+            }
+
+            if (tempX - dragContext.mouseAnchorX > 0){
+                rect.setX(dragContext.mouseAnchorX);
+                rect.setWidth(tempX - dragContext.mouseAnchorX);
+            }
+            else {
+                if (tempX < imageView.getX()){
+                    tempX = imageView.getX();
+                }
+
+                rect.setX(tempX);
+                rect.setWidth(dragContext.mouseAnchorX - rect.getX());
+            }
+
+            if (tempY - dragContext.mouseAnchorY > 0) {
+                rect.setHeight(tempY - dragContext.mouseAnchorY);
+                rect.setY(dragContext.mouseAnchorY);
+            }
+            else {
+                if (tempY < imageView.getY()){
+                    tempY = imageView.getY();
+
+                }
+
+                rect.setY(tempY);
+                rect.setHeight(dragContext.mouseAnchorY - rect.getY());
+            }
+        };
+
+
+        private static final class DragContext {
+            double mouseAnchorX;
+            double mouseAnchorY;
+        }
+    }
+
 }

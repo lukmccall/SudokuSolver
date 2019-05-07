@@ -136,17 +136,13 @@ public class RightSide extends BorderPane implements ImageListener {
             }
         });
 
-        solve.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        solve.setOnAction(event ->  {
 
-            }
         });
 
         javafx.scene.layout.HBox hBox = new javafx.scene.layout.HBox();
         hBox.setSpacing(25);
         hBox.getChildren().addAll(load, solve);
-        //hBox.setAlignment(Pos.CENTER);
 
         return hBox;
     }
