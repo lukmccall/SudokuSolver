@@ -32,7 +32,7 @@ public class StageMain extends Stage implements Test, Sender {
      */
     @Override
     public void send(BufferedImage image, Parameters parameters){
-        recieved(null);
+        //recieved(null);
     }
 
     public void recieved(int[][] array){
@@ -64,8 +64,8 @@ public class StageMain extends Stage implements Test, Sender {
             double mouseX = event.getX();
             double mouseY = event.getY() - canvas.offset_y;
 
-            canvas.playerCol = (int) (mouseX / 50);
-            canvas.playerRow = (int) (mouseY / 50);
+            canvas.playerCol = (int) (mouseX / canvas.SIZE_REC);
+            canvas.playerRow = (int) (mouseY / canvas.SIZE_REC);
 
             canvas.update();
         });
