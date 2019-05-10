@@ -15,6 +15,7 @@
     <packaging>war</packaging>
     <version>1.0</version>
     <properties>
+        <warName>SudokuServer-${project.version}</warName>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <springVersion>5.1.6.RELEASE</springVersion>
     </properties>
@@ -105,6 +106,7 @@
     </dependencies>
 
     <build>
+        <finalName>${warName}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -112,6 +114,7 @@
                     <version>3.2.2</version>
                     <configuration>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
+                        <!--<outputDirectory>${basedir}/docker</outputDirectory>-->
                     </configuration>
                 </plugin>
 
@@ -125,7 +128,6 @@
                         <ignorePackaging>true</ignorePackaging>
                     </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
