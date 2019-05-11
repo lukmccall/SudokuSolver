@@ -2,34 +2,24 @@ package App.src.sample.CustomViews;
 
 import App.src.sample.*;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import App.src.sample.Scenes.StageImage;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class RightSide extends VBox implements ImageListener {
 
-    private Parameters parameters = new Parameters();
     private Sender sender;
     private ImageView imageView;
     private StageImage stage;
@@ -52,8 +42,10 @@ public class RightSide extends VBox implements ImageListener {
 
     @Override
     public void accepted(Image image, Parameters parameters){
-        this.parameters = parameters;
         imageView.setImage(image);
+
+        BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
+        sender.send(bImage, parameters);
     }
 
     private void init(double width, double height) throws FileNotFoundException {
@@ -123,12 +115,7 @@ public class RightSide extends VBox implements ImageListener {
             }
         });
 
-        solve.setOnAction(event ->  {
-
-            BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
-            sender.send(bImage, parameters);
-
-        });
+        solve.setOnAction(event -> sender.solve());
 
         javafx.scene.layout.HBox hBox = new javafx.scene.layout.HBox();
         hBox.setSpacing(25);
@@ -136,10 +123,4 @@ public class RightSide extends VBox implements ImageListener {
 
         return hBox;
     }
-
-    void getSuccessful(int[][] array){
-
-    }
-
-
 }

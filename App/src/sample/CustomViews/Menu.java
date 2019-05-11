@@ -9,8 +9,6 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import App.src.sample.Scenes.SceneAbout;
-import App.src.sample.Scenes.SceneAuthors;
 import App.src.sample.Test;
 import App.src.sample.Theme;
 import App.src.sample.Utilities;
@@ -40,7 +38,7 @@ public class Menu extends MenuBar {
         about.setOnAction((event) -> {
             Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-            Scene secondScene = new Scene(new SceneAbout(),
+            Scene secondScene = new Scene(new ViewAbout(),
                     primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
 
             if (aboutStage != null) {
@@ -81,7 +79,7 @@ public class Menu extends MenuBar {
         authors.setOnAction((event) -> {
             Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-            Scene secondScene = new Scene(new SceneAuthors(),
+            Scene secondScene = new Scene(new ViewAuthors(),
                     primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
 
             if (authorsStage != null) {
@@ -132,7 +130,7 @@ public class Menu extends MenuBar {
                 if (authorsStage != null){
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-                    Scene secondScene = new Scene(new SceneAuthors(),
+                    Scene secondScene = new Scene(new ViewAuthors(),
                             primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
                     authorsStage.setScene(secondScene);
 
@@ -142,7 +140,7 @@ public class Menu extends MenuBar {
                 if (aboutStage != null){
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-                    Scene secondScene = new Scene(new SceneAbout(),
+                    Scene secondScene = new Scene(new ViewAbout(),
                             primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
                     aboutStage.setScene(secondScene);
 
@@ -161,7 +159,7 @@ public class Menu extends MenuBar {
                 if (authorsStage != null){
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-                    Scene secondScene = new Scene(new SceneAuthors(),
+                    Scene secondScene = new Scene(new ViewAuthors(),
                             primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
                     authorsStage.setScene(secondScene);
 
@@ -171,7 +169,7 @@ public class Menu extends MenuBar {
                 if (aboutStage != null){
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-                    Scene secondScene = new Scene(new SceneAbout(),
+                    Scene secondScene = new Scene(new ViewAbout(),
                             primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
                     aboutStage.setScene(secondScene);
 

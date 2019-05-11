@@ -1,4 +1,4 @@
-package App.src.sample.Scenes;
+package App.src.sample.CustomViews;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
@@ -7,9 +7,9 @@ import javafx.scene.text.TextAlignment;
 import App.src.sample.Theme;
 import App.src.sample.Values;
 
-public class SceneAuthors extends VBox {
+class ViewAuthors extends VBox {
 
-    public SceneAuthors(){
+    ViewAuthors(){
         init();
     }
 
