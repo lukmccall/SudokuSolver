@@ -23,7 +23,10 @@ import pl.sudokusolver.solver.ISolver;
 public class WebConfig implements WebMvcConfigurer{
 
     @Value("${openCVUrlWin}")
-    private String openCVUrl;
+    private String openCVUrlWin;
+
+    @Value("${openCVUrlLinux}")
+    private String openCVUrlLinux;
 
     public void configureViewResolvers(ViewResolverRegistry registry) {
         // directory to views folder
@@ -49,9 +52,9 @@ public class WebConfig implements WebMvcConfigurer{
     @Bean
     public DigitRecognizer digitRecognizer(){
         if(Init.getOperatingSystemType() == Init.OSType.Linux)
-            return new DigitRecognizer("");
+            return new DigitRecognizer(openCVUrlLinux);
         else
-            return new DigitRecognizer(openCVUrl);
+            return new DigitRecognizer(openCVUrlWin);
     }
 
     @Bean

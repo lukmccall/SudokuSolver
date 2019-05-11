@@ -36,16 +36,19 @@ public class Init {
      * @param url absolutna ścieżka do folderu, gdzie znajduje się openCV
      */
     public static void init(String url){
-        String libPath = Paths.get(url,Core.NATIVE_LIBRARY_NAME).toString();
+        String libPath = "";
         switch (getOperatingSystemType()){
             case Windows:
+                libPath = Paths.get(url,Core.NATIVE_LIBRARY_NAME).toString();
                 libPath += ".dll";
             break;
             case Linux:
+                libPath = Paths.get(url,"lib"+Core.NATIVE_LIBRARY_NAME).toString();
                 libPath += ".so";
             break;
             case MacOS:
-                libPath += ".so";
+                libPath = Paths.get(url,"lib"+Core.NATIVE_LIBRARY_NAME).toString();
+                libPath += ".dylib";
             break;
 //            default:
                 //todo throw exception

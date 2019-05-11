@@ -1,4 +1,4 @@
-FROM serverbase
+FROM baseserver
 
 VOLUME /tmp
 COPY SudokuServer-1.0.war /usr/local/tomcat/webapps/app.war

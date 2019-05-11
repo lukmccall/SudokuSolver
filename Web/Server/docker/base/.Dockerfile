@@ -1,16 +1,20 @@
 FROM openjdk:8-jdk-stretch
 
 # install depedency for opencv-4.0.1
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y build-essential && apt-get install -y cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev && \
+RUN apt-get update -y && apt-get upgrade -y && \
+	apt-get install -y build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev && \
 	apt-get install -y python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff5-dev libdc1394-22-dev && \
 	apt-get install ant -y
-
+	
 # downloading and building opencv 
 RUN cd /tmp && wget https://github.com/opencv/opencv/archive/4.0.1.tar.gz -q --show-progress && \
     tar xzf 4.0.1.tar.gz && rm -f 4.0.1.tar.gz && cd opencv-4.0.1 && mkdir build && \
-    cd build/ && cmake -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF .. && make -j "$(nproc)" && make install && cp lib/libopencv_java401.so  /usr/local/lib/libopencv_java401.so
+    cd build/ && cmake -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF .. && make -j "$(nproc)" && make install && \
+	cp lib/libopencv_java401.so  /usr/local/lib/libopencv_java401.so && cd / && rm -rf /tmp/opencv-4.0.1
 
+# cleaning depedency
+RUN apt-get purge -y build-essential cmake pkg-config python-dev python-numpy ant
+RUN apt-get autoremove -y
 	
 # Tomcat installetion create on https://github.com/docker-library/tomcat/blob/9bfd9b313303a607aff9a837d95609c67e7c9da6/9.0/jre8/Dockerfile
 ENV CATALINA_HOME /usr/local/tomcat
