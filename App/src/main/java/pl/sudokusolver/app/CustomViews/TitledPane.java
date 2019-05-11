@@ -1,9 +1,9 @@
-package App.src.sample.CustomViews;
+package pl.sudokusolver.app.CustomViews;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import App.src.sample.Values;
+import pl.sudokusolver.app.Values;
 
 public class TitledPane extends HBox {
 

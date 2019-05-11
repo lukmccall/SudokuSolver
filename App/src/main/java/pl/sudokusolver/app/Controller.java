@@ -1,4 +1,4 @@
-package App.src.sample;
+package pl.sudokusolver.app;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

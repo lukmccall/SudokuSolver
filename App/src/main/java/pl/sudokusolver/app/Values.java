@@ -1,12 +1,12 @@
-package App.src.sample;
+package pl.sudokusolver.app;
 
 import javafx.stage.Stage;
 
 public class Values {
     public static Theme THEME;
 
-    public static String SAVE_FILE = "App\\settings.txt";
-    public static String INITIAL_IMAGE = "App\\initial_image.png";
+    public static String SAVE_FILE = "settings.txt";
+    public static String INITIAL_IMAGE = "initial_image.png";
 
     public static String NAME = "SUDOKU SOLVER";
 

@@ -1,7 +1,7 @@
-package App.src.sample.Scenes;
+package pl.sudokusolver.app.Scenes;
 
-import App.src.sample.Parameters;
-import App.src.sample.ParametersListener;
+import pl.sudokusolver.app.Parameters;
+import pl.sudokusolver.app.ParametersListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,9 +21,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import App.src.sample.ImageListener;
-import App.src.sample.Theme;
-import App.src.sample.Values;
+import pl.sudokusolver.app.ImageListener;
+import pl.sudokusolver.app.Theme;
+import pl.sudokusolver.app.Values;
 
 import java.io.File;
 import java.io.FileInputStream;

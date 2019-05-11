@@ -1,11 +1,11 @@
-package App.src.sample.CustomViews;
+package pl.sudokusolver.app.CustomViews;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import App.src.sample.Theme;
-import App.src.sample.Values;
+import pl.sudokusolver.app.Theme;
+import pl.sudokusolver.app.Values;
 
 public class ViewAuthors extends VBox {
 

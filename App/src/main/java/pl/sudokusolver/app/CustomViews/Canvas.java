@@ -1,11 +1,11 @@
-package App.src.sample.CustomViews;
+package pl.sudokusolver.app.CustomViews;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import App.src.sample.GameBoard;
-import App.src.sample.Theme;
-import App.src.sample.Values;
+import pl.sudokusolver.app.GameBoard;
+import pl.sudokusolver.app.Theme;
+import pl.sudokusolver.app.Values;
 
 public class Canvas extends javafx.scene.canvas.Canvas {
 

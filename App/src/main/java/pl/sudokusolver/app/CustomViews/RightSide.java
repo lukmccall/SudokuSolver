@@ -1,6 +1,6 @@
-package App.src.sample.CustomViews;
+package pl.sudokusolver.app.CustomViews;
 
-import App.src.sample.*;
+import pl.sudokusolver.app.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
-import App.src.sample.Scenes.StageImage;
+import pl.sudokusolver.app.Scenes.StageImage;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

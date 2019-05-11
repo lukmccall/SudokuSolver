@@ -1,17 +1,17 @@
-package App.src.sample.CustomViews;
+package pl.sudokusolver.app.CustomViews;
 
-import App.src.sample.Scenes.StageAbout;
-import App.src.sample.Scenes.StageAuthors;
-import App.src.sample.ThemeChangeListener;
+import pl.sudokusolver.app.Scenes.StageAbout;
+import pl.sudokusolver.app.Scenes.StageAuthors;
+import pl.sudokusolver.app.ThemeChangeListener;
 import javafx.application.Platform;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import App.src.sample.Theme;
-import App.src.sample.Utilities;
-import App.src.sample.Values;
+import pl.sudokusolver.app.Theme;
+import pl.sudokusolver.app.Utilities;
+import pl.sudokusolver.app.Values;
 
 public class Menu extends MenuBar {
 

@@ -1,4 +1,4 @@
-package App.src.sample;
+package pl.sudokusolver.app;
 
 public interface ThemeChangeListener {
     void changed();

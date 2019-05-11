@@ -1,4 +1,4 @@
-package App.src.sample;
+package pl.sudokusolver.app;
 
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;

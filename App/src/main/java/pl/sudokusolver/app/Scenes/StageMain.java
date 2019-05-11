@@ -1,9 +1,9 @@
-package App.src.sample.Scenes;
+package pl.sudokusolver.app.Scenes;
 
-import App.src.sample.*;
-import App.src.sample.CustomViews.Canvas;
-import App.src.sample.CustomViews.Menu;
-import App.src.sample.CustomViews.RightSide;
+import pl.sudokusolver.app.*;
+import pl.sudokusolver.app.CustomViews.Canvas;
+import pl.sudokusolver.app.CustomViews.Menu;
+import pl.sudokusolver.app.CustomViews.RightSide;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;

@@ -1,8 +1,8 @@
-package App.src.sample.Scenes;
+package pl.sudokusolver.app.Scenes;
 
-import App.src.sample.ParametersListener;
-import App.src.sample.Theme;
-import App.src.sample.Values;
+import pl.sudokusolver.app.ParametersListener;
+import pl.sudokusolver.app.Theme;
+import pl.sudokusolver.app.Values;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

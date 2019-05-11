@@ -1,4 +1,4 @@
-package App.src.sample;
+package pl.sudokusolver.app;
 
 import javafx.scene.image.Image;
 
