@@ -27,7 +27,7 @@ public class StageMain extends Stage implements Test, Sender {
 
     //TODO ukasz ukasz ukasz
     @Override
-    public void solve(){
+    public void solve() throws Exception{
         //input to canvas.gameboard.getInitial();
         //recievedSolved(outputFunkcji);
     }
@@ -37,7 +37,7 @@ public class StageMain extends Stage implements Test, Sender {
      * LUKASZ KOSMATY TUTAJ DODAJE SWOJ KOD OKAY?
      */
     @Override
-    public void send(BufferedImage image, Parameters parameters){
+    public void send(BufferedImage image, Parameters parameters) throws Exception{
         //recievedInitial(outputFunkcji);
     }
 

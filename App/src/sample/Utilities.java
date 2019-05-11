@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Utilities {
-    final static Logger logger = Logger.getLogger("Logger");
+    final static private Logger logger = Logger.getLogger("Logger");
 
     public static void saveFile(String input){
         Writer writer = null;

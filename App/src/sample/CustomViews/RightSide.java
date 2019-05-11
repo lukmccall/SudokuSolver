@@ -45,7 +45,14 @@ public class RightSide extends VBox implements ImageListener {
         imageView.setImage(image);
 
         BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
-        sender.send(bImage, parameters);
+        try{
+            sender.send(bImage, parameters);
+        }
+        catch (Exception e){
+            //TODO error codes handiling ukasz musi mi powiedziec jak wygladaja exception zebym wiecial co logowac
+            Utilities.log(e.toString());
+        }
+
     }
 
     private void init(double width, double height) throws FileNotFoundException {
@@ -115,7 +122,16 @@ public class RightSide extends VBox implements ImageListener {
             }
         });
 
-        solve.setOnAction(event -> sender.solve());
+        solve.setOnAction(event -> {
+            try{
+                sender.solve();
+            }
+            catch (Exception e){
+                //TODO error codes handiling ukasz musi mi powiedziec jak wygladaja exception zebym wiecial co logowac
+                Utilities.log(e.toString());
+            }
+
+        });
 
         javafx.scene.layout.HBox hBox = new javafx.scene.layout.HBox();
         hBox.setSpacing(25);
