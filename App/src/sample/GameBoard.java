@@ -81,6 +81,14 @@ public class GameBoard {
         }
     }
 
+    public void modifyInitial(int[][] array){
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                initial[i][j] = array[i][j];
+            }
+        }
+    }
+
     /***
      *
      * @param val the integer to insert in the player array

@@ -27,16 +27,27 @@ public class StageMain extends Stage implements Test, Sender {
 
 
     //TODO ukasz ukasz ukasz
+    @Override
+    public void solve(int [][] sudoku){
+        //recievedSolved(outputFunkcji);
+    }
+
+    //TODO ukasz ukasz ukasz
     /*
      * LUKASZ KOSMATY TUTAJ DODAJE SWOJ KOD OKAY?
      */
     @Override
     public void send(BufferedImage image, Parameters parameters){
-        //recieved(null);
+        //recievedInitial(outputFunkcji);
     }
 
-    public void recieved(int[][] array){
+    public void recievedSolved(int[][] array){
         canvas.gameboard.modifyPlayer(array);
+        canvas.update();
+    }
+
+    public void recievedInitial(int[][] array){
+        canvas.gameboard.modifyInitial(array);
         canvas.update();
     }
 
