@@ -119,12 +119,6 @@ public class StageImage extends Stage implements ParametersListener {
         this.setMinWidth(primaryScreenBounds.getWidth() * 0.375f);
         this.setMinHeight(primaryScreenBounds.getHeight() * 0.75f);
 
-        this.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                Values.openStages.focusStage(this);
-            }
-        });
-
         this.setOnCloseRequest(event -> {
             if (stageAdvanced != null) stageAdvanced.close();
         });

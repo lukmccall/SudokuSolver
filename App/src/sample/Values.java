@@ -4,7 +4,6 @@ import javafx.stage.Stage;
 
 public class Values {
     public static Theme THEME;
-    public static OpenStages<Stage> openStages;
 
     public static String SAVE_FILE = "App\\settings.txt";
     public static String INITIAL_IMAGE = "App\\initial_image.png";

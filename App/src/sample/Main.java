@@ -30,7 +30,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage){
-        Values.openStages = new OpenStages<>();
         Utilities.readFile();
         new StageMain();
     }

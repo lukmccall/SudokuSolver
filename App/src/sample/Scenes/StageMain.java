@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import java.awt.image.BufferedImage;
 
-public class StageMain extends Stage implements Test, Sender {
+public class StageMain extends Stage implements ThemeChangeListener, Sender {
 
     private BorderPane vBox;
     private Canvas canvas;
@@ -145,11 +145,6 @@ public class StageMain extends Stage implements Test, Sender {
 
         this.setTitle(Values.NAME);
         this.setScene(scene);
-        this.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                Values.openStages.focusStage(this);
-            }
-        });
 
         this.setOnCloseRequest((event) -> {
             Platform.exit();

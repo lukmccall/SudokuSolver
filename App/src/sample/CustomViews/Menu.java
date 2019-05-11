@@ -1,30 +1,29 @@
 package App.src.sample.CustomViews;
 
+import App.src.sample.Scenes.StageAbout;
+import App.src.sample.Scenes.StageAuthors;
+import App.src.sample.ThemeChangeListener;
 import javafx.application.Platform;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import App.src.sample.Test;
 import App.src.sample.Theme;
 import App.src.sample.Utilities;
 import App.src.sample.Values;
 
 public class Menu extends MenuBar {
 
-    private Stage aboutStage;
-    private Stage authorsStage;
+    private StageAbout aboutStage;
+    private StageAuthors authorsStage;
 
-    public Menu(Stage stage, Test test){
+    public Menu(Stage stage, ThemeChangeListener themeChangeListener){
         super();
-        init(stage, test);
+        init(stage, themeChangeListener);
     }
 
-    private void init(Stage stage, Test test){
+    private void init(Stage stage, ThemeChangeListener themeChangeListener){
         javafx.scene.control.Menu helpMenu = new javafx.scene.control.Menu(Values.HELP);
 
         MenuItem about = new MenuItem(Values.ABOUT);
@@ -36,79 +35,29 @@ public class Menu extends MenuBar {
         helpMenu.getItems().add(authors);
 
         about.setOnAction((event) -> {
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
-            Scene secondScene = new Scene(new ViewAbout(),
-                    primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
-
             if (aboutStage != null) {
                 if (aboutStage.isShowing()) aboutStage.toFront();
                 else aboutStage.show();
-                aboutStage.setScene(secondScene);
                 return;
             }
 
-            aboutStage = new Stage();
-
-            aboutStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                if (aboutStage != null && newValue) {
-                    Values.openStages.focusStage(aboutStage);
-                }
-            });
-
-            aboutStage.setTitle(Values.AUTHORS);
-            aboutStage.setScene(secondScene);
-
-            aboutStage.setWidth(primaryScreenBounds.getWidth() * 0.375f);
-            aboutStage.setHeight(primaryScreenBounds.getHeight() * 0.75f);
-
-            aboutStage.setMinWidth(primaryScreenBounds.getWidth() * 0.375f);
-            aboutStage.setMinHeight(primaryScreenBounds.getHeight() * 0.75f);
-            aboutStage.setResizable(false);
-
-            aboutStage.show();
+            aboutStage = new StageAbout();
         });
 
         exit.setOnAction((event) -> {
             stage.close();
             Platform.exit();
             System.exit(0);
-            //outputTextArea.appendText("Button Action\n");
         });
 
         authors.setOnAction((event) -> {
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
-            Scene secondScene = new Scene(new ViewAuthors(),
-                    primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
-
             if (authorsStage != null) {
-                authorsStage.setScene(secondScene);
                 if (authorsStage.isShowing()) authorsStage.toFront();
                 else authorsStage.show();
                 return;
             }
 
-
-            authorsStage = new Stage();
-
-            authorsStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                if (authorsStage != null && newValue) {
-                    Values.openStages.focusStage(authorsStage);
-                }
-            });
-
-            authorsStage.setTitle(Values.AUTHORS);
-            authorsStage.setScene(secondScene);
-
-            authorsStage.setWidth(primaryScreenBounds.getWidth() * 0.375f);
-            authorsStage.setHeight(primaryScreenBounds.getHeight() * 0.75f);
-
-            authorsStage.setMinWidth(primaryScreenBounds.getWidth() * 0.375f);
-            authorsStage.setMinHeight(primaryScreenBounds.getHeight() * 0.75f);
-            authorsStage.setResizable(false);
-
-            authorsStage.show();
+            authorsStage = new StageAuthors();
         });
 
         javafx.scene.control.Menu themesMenu = new javafx.scene.control.Menu(Values.THEMES);
@@ -128,26 +77,16 @@ public class Menu extends MenuBar {
                 Values.THEME = Theme.LIGHT;
 
                 if (authorsStage != null){
-                    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
-                    Scene secondScene = new Scene(new ViewAuthors(),
-                            primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
-                    authorsStage.setScene(secondScene);
-
+                    authorsStage.change();
                     authorsStage.toBack();
                 }
 
                 if (aboutStage != null){
-                    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
-                    Scene secondScene = new Scene(new ViewAbout(),
-                            primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
-                    aboutStage.setScene(secondScene);
-
+                    aboutStage.change();
                     aboutStage.toBack();
                 }
-                test.changed();
 
+                themeChangeListener.changed();
                 Utilities.saveFile("Theme: LIGHT");
             }
         });
@@ -157,25 +96,15 @@ public class Menu extends MenuBar {
                 Values.THEME = Theme.DARK;
 
                 if (authorsStage != null){
-                    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
-                    Scene secondScene = new Scene(new ViewAuthors(),
-                            primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
-                    authorsStage.setScene(secondScene);
-
+                    authorsStage.change();
                     authorsStage.toBack();
                 }
 
                 if (aboutStage != null){
-                    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
-                    Scene secondScene = new Scene(new ViewAbout(),
-                            primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
-                    aboutStage.setScene(secondScene);
-
+                    aboutStage.change();
                     aboutStage.toBack();
                 }
-                test.changed();
+                themeChangeListener.changed();
 
                 Utilities.saveFile("Theme: DARK");
             }

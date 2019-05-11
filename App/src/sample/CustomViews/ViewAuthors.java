@@ -7,9 +7,9 @@ import javafx.scene.text.TextAlignment;
 import App.src.sample.Theme;
 import App.src.sample.Values;
 
-class ViewAuthors extends VBox {
+public class ViewAuthors extends VBox {
 
-    ViewAuthors(){
+    public ViewAuthors(){
         init();
     }
 
@@ -48,13 +48,6 @@ class ViewAuthors extends VBox {
 
         this.setAlignment(Pos.CENTER);
         this.setSpacing(15);
-
-        if (Values.THEME == Theme.LIGHT){
-            this.setStyle("-fx-background-color: #F0F0F0;");
-        }
-        else{
-            this.setStyle("-fx-background-color: #34495E;");
-        }
 
         this.getChildren().addAll(boxProjectManager, boxSystemEngineer, boxProgrammers, boxTesters);
 
