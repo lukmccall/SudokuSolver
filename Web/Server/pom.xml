@@ -114,7 +114,7 @@
                     <version>3.2.2</version>
                     <configuration>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
-                        <!--<outputDirectory>${basedir}/docker</outputDirectory>-->
+                        <outputDirectory>${basedir}/docker/server</outputDirectory>
                     </configuration>
                 </plugin>
 

@@ -1,5 +1,6 @@
 package pl.sudokusolver.recognizerlib;
 
+import javafx.scene.input.KeyCode;
 import org.opencv.core.Core;
 
 import java.nio.file.Paths;
@@ -40,7 +41,15 @@ public class Init {
             case Windows:
                 libPath += ".dll";
             break;
-            //todo: add linux support
+            case Linux:
+                libPath += ".so";
+            break;
+            case MacOS:
+                libPath += ".so";
+            break;
+//            default:
+                //todo throw exception
+//            break;
         }
         System.load(libPath);
     }

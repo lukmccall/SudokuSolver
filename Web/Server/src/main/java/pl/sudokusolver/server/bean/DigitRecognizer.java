@@ -19,8 +19,16 @@ public class DigitRecognizer {
 
     @PostConstruct
     public void init(){
-        LOGGER.info("Loading openCV from " + this.openCVUrl);
-        Init.init(this.openCVUrl);
+        LOGGER.info("*********** OpenCV 4.0.1 ***********");
+        if(this.openCVUrl.isEmpty()){
+            LOGGER.info("Loading openCV from default path");
+            LOGGER.info( org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+            Init.init();
+
+        } else {
+            LOGGER.info("Loading openCV from " + this.openCVUrl);
+            Init.init(this.openCVUrl);
+        }
         this.recognizer = new ANN("../RecognizerLib/ann.xml");
     }
 

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.server.bean.DigitRecognizer;
 import pl.sudokusolver.solver.BrutalSolver;
 import pl.sudokusolver.solver.ISolver;
@@ -21,7 +22,7 @@ import pl.sudokusolver.solver.ISolver;
 @PropertySource("classpath:config.properties")
 public class WebConfig implements WebMvcConfigurer{
 
-    @Value("${openCVUrl}")
+    @Value("${openCVUrlWin}")
     private String openCVUrl;
 
     public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -47,7 +48,10 @@ public class WebConfig implements WebMvcConfigurer{
 
     @Bean
     public DigitRecognizer digitRecognizer(){
-        return new DigitRecognizer(openCVUrl);
+        if(Init.getOperatingSystemType() == Init.OSType.Linux)
+            return new DigitRecognizer("");
+        else
+            return new DigitRecognizer(openCVUrl);
     }
 
     @Bean
