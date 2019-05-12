@@ -47,6 +47,9 @@ public class Values {
     public static final String SET = "SET";
     public static final String DEFAULT = "DEFAULT";
 
+    public static final String CLEAR = "CLEAR";
+    public static final String SUDOKU = "SUDOKU";
+
     public static final String E001 = "WRONG JAVA VERSION";
     public static final String E002 = "WRONG FILE EXTENSION";
     public static final String E003 = "COULDN'T RECOGNIZE SUDOKU";

@@ -71,6 +71,15 @@ public class GameBoard {
     }
 
 
+    public void clear(){
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                player[i][j] = 0;
+                initial[i][j] = 0;
+            }
+        }
+    }
+
     public void modifyPlayer(int[][] array){
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){

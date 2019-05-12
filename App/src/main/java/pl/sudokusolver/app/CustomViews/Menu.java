@@ -1,29 +1,32 @@
 package pl.sudokusolver.app.CustomViews;
 
+import pl.sudokusolver.app.*;
 import pl.sudokusolver.app.Scenes.StageAbout;
 import pl.sudokusolver.app.Scenes.StageAuthors;
-import pl.sudokusolver.app.ThemeChangeListener;
 import javafx.application.Platform;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import pl.sudokusolver.app.Theme;
-import pl.sudokusolver.app.Utilities;
-import pl.sudokusolver.app.Values;
 
 public class Menu extends MenuBar {
 
     private StageAbout aboutStage;
     private StageAuthors authorsStage;
+    private MenuListener menuListener;
+    private ThemeChangeListener themeChangeListener;
 
-    public Menu(Stage stage, ThemeChangeListener themeChangeListener){
+    public Menu(Stage stage, MenuListener menuListener, ThemeChangeListener themeChangeListener){
         super();
-        init(stage, themeChangeListener);
+        this.menuListener = menuListener;
+        this.themeChangeListener = themeChangeListener;
+
+        init(stage);
     }
 
-    private void init(Stage stage, ThemeChangeListener themeChangeListener){
+    private void init(Stage stage){
+
         javafx.scene.control.Menu helpMenu = new javafx.scene.control.Menu(Values.HELP);
 
         MenuItem about = new MenuItem(Values.ABOUT);
@@ -31,8 +34,8 @@ public class Menu extends MenuBar {
         MenuItem authors = new MenuItem(Values.AUTHORS);
 
         helpMenu.getItems().add(about);
-        helpMenu.getItems().add(exit);
         helpMenu.getItems().add(authors);
+        helpMenu.getItems().add(exit);
 
         about.setOnAction((event) -> {
             if (aboutStage != null) {
@@ -117,6 +120,15 @@ public class Menu extends MenuBar {
         themesMenu.getItems().add(lightTheme);
         themesMenu.getItems().add(darkTheme);
 
-        this.getMenus().addAll(helpMenu, themesMenu);
+        javafx.scene.control.Menu clearMenu = new javafx.scene.control.Menu(Values.SUDOKU);
+        MenuItem clear = new MenuItem(Values.CLEAR);
+
+        clear.setOnAction((event) -> {
+            menuListener.clear();
+        });
+
+        clearMenu.getItems().add(clear);
+
+        this.getMenus().addAll(helpMenu, themesMenu, clearMenu);
     }
 }

@@ -85,7 +85,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
 
         context.setStroke(Color.RED);
         context.setLineWidth(5);
-        if (playerRow < 9 && playerRow > 0)
+        if (playerRow < 9 && playerRow >= 0)
             context.strokeRect(playerCol * SIZE_REC + 2, playerRow * SIZE_REC + 2 + offset_y, SIZE_REC - 2*2, SIZE_REC - 2*2);
 
         // draw the numbers from our GameBoard instance

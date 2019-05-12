@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
-public class StageMain extends Stage implements ThemeChangeListener, Sender {
+public class StageMain extends Stage implements MenuListener, ThemeChangeListener, Sender {
 
     private BorderPane vBox;
     private Canvas canvas;
@@ -96,13 +96,19 @@ public class StageMain extends Stage implements ThemeChangeListener, Sender {
 
     }
 
-    public void recievedSolved(int[][] array){
+    void recievedSolved(int[][] array){
         canvas.gameboard.modifyPlayer(array);
         canvas.update();
     }
 
-    public void recievedInitial(int[][] array){
+    void recievedInitial(int[][] array){
         canvas.gameboard.modifyInitial(array);
+        canvas.update();
+    }
+
+    @Override
+    public void clear(){
+        canvas.gameboard.clear();
         canvas.update();
     }
 
@@ -123,7 +129,7 @@ public class StageMain extends Stage implements ThemeChangeListener, Sender {
     private void init(){
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         temp = new RightSide(this, primaryScreenBounds.getWidth() * 0.75f, primaryScreenBounds.getHeight() * 0.75f);
-        Menu menu = new Menu(this, this);
+        Menu menu = new Menu(this, this, this);
         canvas = new Canvas();
 
         canvas.setOnMouseClicked((event) -> {
@@ -193,6 +199,10 @@ public class StageMain extends Stage implements ThemeChangeListener, Sender {
             }
             else if (keyCode == KeyCode.DIGIT9 || keyCode == KeyCode.NUMPAD9) {
                 canvas.gameboard.modifyInitial(9, canvas.playerRow, canvas.playerCol);
+                canvas.update();
+            }
+            else if (keyCode == KeyCode.BACK_SPACE || keyCode == KeyCode.DELETE){
+                canvas.gameboard.modifyInitial(0, canvas.playerRow, canvas.playerCol);
                 canvas.update();
             }
 
