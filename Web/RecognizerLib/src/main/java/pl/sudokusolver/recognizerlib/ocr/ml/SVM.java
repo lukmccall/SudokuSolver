@@ -11,15 +11,23 @@ import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 public class SVM extends MLWrapper implements ILoader{
     private org.opencv.ml.SVM svm;
 
+    public SVM(String url){
+        load(url);
+        sampleSize = (short) Math.sqrt((double) svm.getVarCount());
+    }
+
+
     public SVM(IData data){
         svm = org.opencv.ml.SVM.create();
         sampleSize = data.getSize();
-        svm.trainAuto(data.getData(),data.getSampleType(), data.getLabels(), 3);
-    }
 
-    public SVM(String url, short sampleSize){
-        this.sampleSize = sampleSize;
-        load(url);
+        svm.setType(org.opencv.ml.SVM.C_SVC);
+        svm.setKernel(org.opencv.ml.SVM.POLY);
+        svm.setC(2.0);
+        svm.setGamma(2);
+        svm.setDegree(5);
+
+        svm.train(data.getData(),data.getSampleType(), data.getLabels());
     }
 
     public void load(String url) {

@@ -5,6 +5,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
+import pl.sudokusolver.recognizerlib.filters.BlurFilter;
+import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 import java.io.ByteArrayOutputStream;
@@ -12,6 +14,10 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+
+import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
+import static org.opencv.imgproc.Imgproc.GaussianBlur;
+import static org.opencv.imgproc.Imgproc.cvtColor;
 
 /**
  * Klasa służąca do czytania i przedtwarzania danych w formacie <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>
@@ -42,8 +48,10 @@ public class MNISTReader {
         ByteBuffer imgBuffer = loadFileToByteBuffer(dataUrl);
         ByteBuffer labelBuffer = loadFileToByteBuffer(labelUrl);
 
-        if(imgBuffer.getInt() != labelBuffer.getInt())
-            throw new VersionMismatchException("MNIST files don't have same version.");
+        int m1 = imgBuffer.getInt();
+        int m2 = labelBuffer.getInt();
+        if(m1 == 2049 && m2 == 2051)
+            throw new VersionMismatchException("MNIST files don't have same version. Images have " + m1 + ", labels have "+m2+".");
 
         // IMAGES LOAD
         int imgNumber = imgBuffer.getInt();
