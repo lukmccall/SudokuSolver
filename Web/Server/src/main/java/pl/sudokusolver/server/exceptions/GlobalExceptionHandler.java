@@ -85,6 +85,14 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.InvalidParameter, "Invalid json: " + exception.getMessage());
     }
 
+    @ExceptionHandler({org.opencv.core.CvException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ErrorResponse hadneleCvException(org.opencv.core.CvException ex){
+        ex.printStackTrace();
+        return new ErrorResponse(ErrorCodes.Unknown, "Unknown error");
+    }
+
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody

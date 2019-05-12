@@ -108,6 +108,31 @@ public class ImageProcessing {
         return dst;
     }
 
+    /**
+     * @param image obraz do przeskalowania
+     * @param maxSize maksymalne wymiary jakie bedzie miało zdjęcie wyjściowe
+     * @return przeskalowany obraz
+     */
+    public static Mat resizeToMaxSize(Mat image, Size maxSize){
+        double height = image.size().height;
+        double width = image.size().width;
+
+        double ratio;
+
+        if( height <= maxSize.height && width <= maxSize.width )
+            ratio = 1;
+        else if (height > width)
+            ratio = maxSize.height / height;
+        else if (width > height)
+            ratio = maxSize.width / width;
+        else ratio = 1;
+
+        Mat ret = new Mat();
+        resize(image,ret, new Size((int)(ratio * width), (int)(ratio * height)));
+        return ret;
+
+    }
+
     private ImageProcessing(){}
 
 }

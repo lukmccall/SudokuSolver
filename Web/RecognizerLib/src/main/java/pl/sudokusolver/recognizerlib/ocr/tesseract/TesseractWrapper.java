@@ -30,9 +30,9 @@ public class TesseractWrapper implements IRecognizer {
             e.printStackTrace();
             return new Pair<>(0, 0.0);
         }
-
-        return new Pair<>(Integer.parseInt(text), 1.0);
+        text = text.replaceAll("[^0-9]", "");
+        int g = Integer.parseInt(text)%10;
+        return new Pair<>(g, 1.0);
     }
 
-    private TesseractWrapper(){};
 }

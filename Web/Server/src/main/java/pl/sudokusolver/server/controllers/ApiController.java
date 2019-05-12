@@ -19,6 +19,8 @@ import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
 import pl.sudokusolver.recognizerlib.filters.CleanLinesFilter;
+import pl.sudokusolver.recognizerlib.filters.MaxResizeFilter;
+import pl.sudokusolver.recognizerlib.filters.NotFilter;
 import pl.sudokusolver.recognizerlib.sudoku.BaseSudokuExtractor;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
 import pl.sudokusolver.server.bean.DigitRecognizer;
@@ -64,9 +66,9 @@ public class ApiController {
             @RequestParam(value = "lineThreshold", required = false, defaultValue = "80") int lineTreshold,
             @RequestParam(value = "minLineSize", required = false, defaultValue = "200") int minLineSize,
             @RequestParam(value = "lineGap", required = false, defaultValue = "20") int lineGap,
-            @RequestParam(value = "blurSize", required = false, defaultValue = "5") int blurSize,
-            @RequestParam(value = "blurBlockSize", required = false, defaultValue = "19") int blurBlockSize,
-            @RequestParam(value = "blurC", required = false, defaultValue = "3") int blurC
+            @RequestParam(value = "blurSize", required = false, defaultValue = "11") int blurSize,
+            @RequestParam(value = "blurBlockSize", required = false, defaultValue = "5") int blurBlockSize,
+            @RequestParam(value = "blurC", required = false, defaultValue = "2") int blurC
     ) throws IllegalArgumentException, IOException, NotFoundSudokuException, CellsExtractionFailedException {
 
         LOGGER.trace("Send "+inputImg.getContentType()+" which have " + inputImg.getSize() +" bits");
@@ -80,7 +82,7 @@ public class ApiController {
             new SizeCellsExtractStrategy(),
             new FastDigitExtractStrategy(),
             digitRecognizer.getRecognizer(),
-            null,
+            Collections.singletonList(new MaxResizeFilter()),
             Collections.singletonList(new CleanLinesFilter(lineTreshold, minLineSize, lineGap)),
             null
         );

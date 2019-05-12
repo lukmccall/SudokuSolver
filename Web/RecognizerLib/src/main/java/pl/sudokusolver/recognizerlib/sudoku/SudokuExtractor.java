@@ -15,7 +15,7 @@ import java.util.List;
  * Podstawowa klasa udostępniana użytkowikowi. Lączy ona wszystkie funckjionalności.
  * Umożliwa w pelni personalizację poszczególnych kroków extrakcji sudoku oraz zmiany używanych filtrów.
  */
-public abstract class SudokuExtractor {
+public abstract class SudokuExtractor implements ISudokuExtractor {
     protected GridExtractStrategy gridExtractStrategy;
     protected CellsExtractStrategy cellsExtractStrategy;
     protected DigitsExtractStrategy digitsExtractStrategy;
@@ -45,22 +45,6 @@ public abstract class SudokuExtractor {
         this.preCellsFilters = preCellsFilters;
         this.preDigitsFilters = preDigitsFilters;
     }
-
-    /**
-     * @param url absolutna ?cie?ka do zdj?cia z sudoku
-     * @return sudoku stworzone na podstawie zdj?cia
-     * @throws NotFoundSudokuException gdy nie uda si? znale?? sudoku na zdj?ciu
-     * @throws CellsExtractionFailedException gdy nie uda si? wyci?? komórek ze zdj?cia
-     */
-    public abstract Sudoku extract(String url) throws NotFoundSudokuException, CellsExtractionFailedException;
-
-    /**
-     * @param img macierz z zdj?ciem
-     * @return sudoku stworzone na podstawie zdj?cia
-     * @throws NotFoundSudokuException gdy nie uda si? znale?? sudoku na zdj?ciu
-     * @throws CellsExtractionFailedException gdy nie uda si? wyci?? komórek ze zdj?cia
-     */
-    public abstract Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException;
 
     public GridExtractStrategy getGridExtractStrategy() {
         return gridExtractStrategy;
