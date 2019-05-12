@@ -1,5 +1,7 @@
 package pl.sudokusolver.app.Scenes;
 
+import com.google.gson.Gson;
+import okhttp3.*;
 import pl.sudokusolver.app.*;
 import pl.sudokusolver.app.CustomViews.Canvas;
 import pl.sudokusolver.app.CustomViews.Menu;
@@ -11,8 +13,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import pl.sudokusolver.app.Api.ErrorResponse;
+import pl.sudokusolver.app.Api.SolveRequest;
+import pl.sudokusolver.app.Api.SudokuResponse;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 
 public class StageMain extends Stage implements ThemeChangeListener, Sender {
 
@@ -28,17 +35,63 @@ public class StageMain extends Stage implements ThemeChangeListener, Sender {
     //TODO ukasz ukasz ukasz
     @Override
     public void solve() throws Exception{
-        //input to canvas.gameboard.getInitial();
-        //recievedSolved(outputFunkcji);
+        HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
+                             .addPathSegment("api").addPathSegment("solve").build();
+
+        OkHttpClient client = new OkHttpClient();
+        SolveRequest solveRequest = new SolveRequest(canvas.gameboard.getInitial());
+        Gson gson = new Gson();
+        RequestBody body = RequestBody.create(Values.SERVER_REQUEST_TYPE, gson.toJson(solveRequest, solveRequest.getClass()));
+        Request request = new Request.Builder()
+                                     .url(url)
+                                     .post(body)
+                                     .build();
+        try (Response response = client.newCall(request).execute()) {
+            if(response.isSuccessful()){
+                SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
+                recievedSolved(sudokuResponse.sudoku);
+            } else {
+                ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
+                System.out.println(errorResponse);
+                //todo:> error handling - DJ Bomasz
+            }
+        }
     }
 
-    //TODO ukasz ukasz ukasz
     /*
-     * LUKASZ KOSMATY TUTAJ DODAJE SWOJ KOD OKAY?
+     * LUKASZ KOSMATY TUTAJ DODAJE SWOJ KOD OKAY? - OKEY ;)
      */
     @Override
     public void send(BufferedImage image, Parameters parameters) throws Exception{
-        //recievedInitial(outputFunkcji);
+        HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
+                .addPathSegment("api").addPathSegment("extractfromimg").build();
+
+        OkHttpClient client = new OkHttpClient();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", outputStream);
+        Gson gson = new Gson();
+        RequestBody requestBody = new MultipartBody.Builder()
+                                    .setType(MultipartBody.FORM)
+                                    .addFormDataPart("sudoku", "sudoku.jpg",
+                                            RequestBody.create(Values.SERVER_IMG_TYPE, outputStream.toByteArray()))
+                                    .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if(response.isSuccessful()){
+                SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
+                recievedInitial(sudokuResponse.sudoku);
+            } else {
+                ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
+                System.out.println(errorResponse);
+                //todo:> error handling - DJ Bomasz
+            }
+        }
+
     }
 
     public void recievedSolved(int[][] array){

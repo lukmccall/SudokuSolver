@@ -71,8 +71,9 @@ public class ApiController {
 
         LOGGER.trace("Send "+inputImg.getContentType()+" which have " + inputImg.getSize() +" bits");
 
-        if(!inputImg.getContentType().equals("image/jpeg") && !inputImg.getContentType().equals("image/png"))
-            throw new IllegalArgumentException("Expected jpg/png get " + inputImg.getContentType());
+        if(!inputImg.getContentType().equals("image/jpeg") && !inputImg.getContentType().equals("image/png")
+                && !inputImg.getContentType().equals("image/jpg"))
+            throw new IllegalArgumentException("Expected jpg or png get " + inputImg.getContentType());
 
         BaseSudokuExtractor baseSudokuExtractor = new BaseSudokuExtractor(
             new DefaultGridExtractStrategy(new BlurFilter(blurSize,blurBlockSize,blurC)),
