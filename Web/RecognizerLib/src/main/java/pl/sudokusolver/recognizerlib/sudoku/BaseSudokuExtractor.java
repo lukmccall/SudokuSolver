@@ -98,6 +98,33 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         return sudoku;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static Builder simpleBuilderRecipe(IRecognizer recognizer){
+        return builder().setGridStrategy(new DefaultGridExtractStrategy())
+                .setCellsStrategy(new SizeCellsExtractStrategy())
+                .setDigitsStrategy(new FastDigitExtractStrategy())
+                .setRecognizer(recognizer)
+                .addPreCellsFilters(new CleanLinesFilter());
+    }
+
+    public static Builder simpleBuilderRecipe(IRecognizer recognizer, BlurFilter blurFilter, CleanLinesFilter cleanLinesFilter){
+        return builder().setGridStrategy(new DefaultGridExtractStrategy(blurFilter))
+                .setCellsStrategy(new SizeCellsExtractStrategy())
+                .setDigitsStrategy(new FastDigitExtractStrategy())
+                .setRecognizer(recognizer)
+                .addPreCellsFilters(cleanLinesFilter);
+    }
+
+    public static Builder complexBuilderRecipe(IRecognizer recognizer){
+        return builder().setGridStrategy(new DefaultGridExtractStrategy())
+                .setCellsStrategy(new LineCellsExtractStrategy())
+                .setDigitsStrategy(new ContoursDigitExtractStrategy())
+                .setRecognizer(recognizer)
+                .addPreCellsFilters(new BlurFilter());
+    }
 
     /**
      * Builder klasy <code>BaseSudokuExtractor</code>.
@@ -128,34 +155,6 @@ public class BaseSudokuExtractor extends SudokuExtractor {
 
             return new BaseSudokuExtractor(gridExtractStrategy, cellsExtractStrategy, digitsExtractStrategy,
                     recognizer, preGridFilters, preCellsFilters, preDigitsFilters);
-        }
-
-        public static Builder builder() {
-            return new Builder();
-        }
-
-        public static Builder simpleBuilderRecipe(IRecognizer recognizer){
-            return builder().setGridStrategy(new DefaultGridExtractStrategy())
-                             .setCellsStrategy(new SizeCellsExtractStrategy())
-                             .setDigitsStrategy(new FastDigitExtractStrategy())
-                             .setRecognizer(recognizer)
-                             .addPreCellsFilters(new CleanLinesFilter());
-        }
-
-        public static Builder simpleBuilderRecipe(IRecognizer recognizer, BlurFilter blurFilter, CleanLinesFilter cleanLinesFilter){
-            return builder().setGridStrategy(new DefaultGridExtractStrategy(blurFilter))
-                    .setCellsStrategy(new SizeCellsExtractStrategy())
-                    .setDigitsStrategy(new FastDigitExtractStrategy())
-                    .setRecognizer(recognizer)
-                    .addPreCellsFilters(cleanLinesFilter);
-        }
-
-        public static Builder complexBuilderRecipe(IRecognizer recognizer){
-            return builder().setGridStrategy(new DefaultGridExtractStrategy())
-                            .setCellsStrategy(new LineCellsExtractStrategy())
-                            .setDigitsStrategy(new ContoursDigitExtractStrategy())
-                            .setRecognizer(recognizer)
-                            .addPreCellsFilters(new BlurFilter());
         }
 
         public Builder setGridStrategy(GridExtractStrategy gridExtractStrategy) {

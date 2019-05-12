@@ -87,6 +87,7 @@ public class ApiController {
             null
         );
 
+
         Mat mat = Utility.multipartFileToMat(inputImg);
         Sudoku sudoku = baseSudokuExtractor.extract(mat);
         return new Gson().toJson(new GridModel(1, sudoku.getGrid()));

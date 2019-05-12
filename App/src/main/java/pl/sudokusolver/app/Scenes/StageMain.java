@@ -32,7 +32,6 @@ public class StageMain extends Stage implements ThemeChangeListener, Sender {
     }
 
 
-    //TODO ukasz ukasz ukasz
     @Override
     public void solve() throws Exception{
         HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
@@ -42,10 +41,12 @@ public class StageMain extends Stage implements ThemeChangeListener, Sender {
         SolveRequest solveRequest = new SolveRequest(canvas.gameboard.getInitial());
         Gson gson = new Gson();
         RequestBody body = RequestBody.create(Values.SERVER_REQUEST_TYPE, gson.toJson(solveRequest, solveRequest.getClass()));
+
         Request request = new Request.Builder()
                                      .url(url)
                                      .post(body)
                                      .build();
+
         try (Response response = client.newCall(request).execute()) {
             if(response.isSuccessful()){
                 SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
@@ -71,11 +72,12 @@ public class StageMain extends Stage implements ThemeChangeListener, Sender {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ImageIO.write(image, "jpg", outputStream);
         Gson gson = new Gson();
+
         RequestBody requestBody = new MultipartBody.Builder()
-                                    .setType(MultipartBody.FORM)
-                                    .addFormDataPart("sudoku", "sudoku.jpg",
+                                        .setType(MultipartBody.FORM)
+                                        .addFormDataPart("sudoku", "sudoku.jpg",
                                             RequestBody.create(Values.SERVER_IMG_TYPE, outputStream.toByteArray()))
-                                    .build();
+                                        .build();
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
