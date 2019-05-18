@@ -78,17 +78,16 @@ public class test {
 
 
         BaseSudokuExtractor baseSudokuExtractor = new BaseSudokuExtractor(
-                new DefaultGridExtractStrategy(new MedianBlur(3,11,2)),
+                new DefaultGridExtractStrategy(new MedianBlur(3,21,4)),
                 new SizeCellsExtractStrategy(),
                 new FastDigitExtractStrategy(),
                 svm,
                 Collections.singletonList(new MaxResizeFilter()),
-                Collections.singletonList(new CleanLinesFilter(20, 150, 20,new MedianBlur(9,21, 5))),
+                Collections.singletonList(new CleanLinesFilter(20, 100, 20,new MedianBlur(3,21, 9))),
                 null
         );
 
-
-        String path2 = "../../Data/"+12+".jpg";
+        String path2 = "../Data/sudoku2.jpg";
         Mat img2 = imread(path2);
 
         System.out.println(path2);
@@ -96,8 +95,7 @@ public class test {
         testSudoku2.printSudoku();
         img2 = imread(path2);
         new DisplayHelper().apply(img2,path2);
-
-        for(int i = 30; i <100; i++)
+        for(int i = 0; i <100; i++)
         {
 
             String path = "../../Data/"+i+".jpg";
@@ -107,8 +105,9 @@ public class test {
             Sudoku testSudoku = baseSudokuExtractor.extract(img);
             testSudoku.printSudoku();
             img = imread(path);
-          new DisplayHelper().apply(img,path);
+            new DisplayHelper().apply(img,path);
         }
+
 
 
 
