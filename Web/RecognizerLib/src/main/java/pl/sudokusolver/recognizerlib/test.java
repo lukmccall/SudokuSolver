@@ -83,7 +83,7 @@ public class test {
                 new FastDigitExtractStrategy(),
                 svm,
                 Collections.singletonList(new MaxResizeFilter()),
-                Collections.singletonList(new CleanLinesFilter(20, 150, 20,new MedianBlur(7,21, 5))),
+                Collections.singletonList(new CleanLinesFilter(20, 150, 20,new MedianBlur(9,21, 5))),
                 null
         );
 
