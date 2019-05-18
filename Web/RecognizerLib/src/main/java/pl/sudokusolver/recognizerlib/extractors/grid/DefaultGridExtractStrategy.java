@@ -4,6 +4,7 @@ import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
+import pl.sudokusolver.recognizerlib.filters.IFilter;
 import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.Pair;
@@ -31,7 +32,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
     /**
      * Filter nakładający rozymie na zdjęcie
      */
-    private BlurFilter blurFilter;
+    private IFilter blurFilter;
 
     /**
      * Tworzy algorytm korzystający z domyślnego rozmycia ({@link pl.sudokusolver.recognizerlib.filters.BlurFilter})
@@ -43,7 +44,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
     /**
      * @param blurFilter algorytm rozmycia używany w algorytmie
      */
-    public DefaultGridExtractStrategy(BlurFilter blurFilter) {
+    public DefaultGridExtractStrategy(IFilter blurFilter) {
         this.blurFilter = blurFilter;
     }
 

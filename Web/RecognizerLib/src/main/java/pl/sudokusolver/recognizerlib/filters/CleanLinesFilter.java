@@ -14,7 +14,7 @@ public class CleanLinesFilter implements IFilter {
     private int threshold;
     private int minLineSize;
     private int lineGap;
-    private BlurFilter blurFilter;
+    private IFilter blurFilter;
 
 
     public CleanLinesFilter() {
@@ -36,6 +36,14 @@ public class CleanLinesFilter implements IFilter {
         this.lineGap = lineGap;
 
         blurFilter = new BlurFilter(11,5,2);
+    }
+
+
+    public CleanLinesFilter(int threshold, int minLineSize, int lineGap, IFilter filtr) {
+        this.threshold = threshold;
+        this.minLineSize = minLineSize;
+        this.lineGap = lineGap;
+        this.blurFilter = filtr;
     }
 
     @Override

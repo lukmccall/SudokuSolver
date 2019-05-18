@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.opencv.imgcodecs.Imgcodecs.imread;
-import static org.opencv.imgproc.Imgproc.resize;
+import static org.opencv.imgproc.Imgproc.*;
 
 /**
  * Podstawowa implementacja <code>sudoku extractora</code>. Nie zawiera ona konkretnych strategi oraz filtórw.
@@ -77,10 +77,15 @@ public class BaseSudokuExtractor extends SudokuExtractor {
     @Override
     public Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException {
         Utility.applyFilters(img, preGridFilters);
-        Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
 
+
+        Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
+        new DisplayHelper().apply(sudokuGrid);
         Utility.applyFilters(sudokuGrid, preCellsFilters);
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
+
+        new DisplayHelper().apply(sudokuGrid);
+       // new DisplayHelper().apply(sudokuGrid);
 
         //todo: make exception
         if(cells == null) throw new CellsExtractionFailedException();
@@ -90,9 +95,15 @@ public class BaseSudokuExtractor extends SudokuExtractor {
             Mat cell = cells.get(i);
             Utility.applyFilters(cell, preDigitsFilters);
             Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
-
+           // new DisplayHelper().apply(cell);
             if (digit.isPresent())
+            {
+
                 sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i / 9, i % 9);
+                System.out.println(sudoku.getDigit(i / 9, i % 9));
+              //  new DisplayHelper().apply(digit.get());
+            }
+
 
         }
         return sudoku;

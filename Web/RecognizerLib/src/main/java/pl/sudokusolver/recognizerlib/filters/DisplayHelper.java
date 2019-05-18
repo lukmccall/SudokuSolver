@@ -16,4 +16,11 @@ public class DisplayHelper implements IFilter {
         imshow("Debug", input);
         waitKey();
     }
+
+    public void apply(Mat input, String path)
+    {
+        imshow(path, input);
+        waitKey();
+
+    }
 }
