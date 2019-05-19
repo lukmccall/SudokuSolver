@@ -33,7 +33,7 @@ public class DigitBoxContoures implements IDigitBox {
             double aspect = rect.height / (double) rect.width;
             double area = rect.area();
 
-            if (aspect > 0.2 && aspect < 10 && area > 30) {
+            if (aspect > 0.5 && aspect < 10 && area > 30) {
                 lp.add(rect.tl());
                 lp.add(rect.br());
             }
@@ -45,10 +45,15 @@ public class DigitBoxContoures implements IDigitBox {
             points.fromList(lp);
 
             Rect rect = boundingRect(points);
-            if(rect.x+rect.width > input.width())
+            if(rect.x+rect.width >= input.width())
                 rect.x = input.width() - rect.width;
-            if(rect.y+rect.height > input.height())
+            if(rect.y+rect.height >= input.height())
                 rect.y = input.height() - rect.height;
+
+            if(rect.x < 0) rect.x = 0;
+            if(rect.y < 0) rect.y = 0;
+            if(rect.width > input.width()) rect.width = input.width();
+            if(rect.height > input.height()) rect.height = input.height();
 
             return Optional.of(rect);
         }

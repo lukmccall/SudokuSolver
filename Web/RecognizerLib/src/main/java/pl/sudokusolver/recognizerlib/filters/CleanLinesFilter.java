@@ -48,14 +48,14 @@ public class CleanLinesFilter implements IFilter {
 
     @Override
     public void apply(Mat input) {
-        Mat copy = input.clone();
-        adaptiveThreshold(input, input, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 19, 4);
+//        Mat copy = input.clone();
+//        adaptiveThreshold(input, input, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 19, 4);
 
-        blurFilter.apply(copy);
+        blurFilter.apply(input);
 
         Mat lines = new Mat();
 
-        Imgproc.HoughLinesP(copy, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
+        Imgproc.HoughLinesP(input, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
         for (int x = 0; x < lines.rows(); x++) {
             double[] vec = lines.get(x, 0);

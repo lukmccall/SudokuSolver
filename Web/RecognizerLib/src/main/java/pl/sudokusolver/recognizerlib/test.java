@@ -78,14 +78,15 @@ public class test {
         IRecognizer svm = new SVM("../Data/svm.xml");
 
         SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
-                                                    .setGridStrategy(new DefaultGridExtractStrategy(new MedianBlur(3,21,4)))
-                                                    .setCellsStrategy(new SizeCellsExtractStrategy())
-                                                    .setDigitsStrategy(new FastDigitExtractStrategy())
-                                                    .setRecognizer(svm)
-                                                    .addPreGridFilters(new ResizeFilter(new Size(1000,1000)))
-                                                    .addPreCellsFilters(new CleanLinesFilter(20, 100, 20,new MedianBlur(3,21, 9)))
-                                                    .build();
+                    .setGridStrategy(new DefaultGridExtractStrategy(new MedianBlur(3,21,4)))
+                    .setCellsStrategy(new SizeCellsExtractStrategy())
+                    .setDigitsStrategy(new FastDigitExtractStrategy())
+                    .setRecognizer(svm)
+                    .addPreGridFilters(new ResizeFilter(new Size(1000,1000)))
+                    .addPreCellsFilters(new CleanLinesFilter(80, 200, 20,new MedianBlur(3,21, 9)))
+                    .build();
         double avg = 0;
+        int expections = 0;
         for(int i = 0; i < 100; i++){
 
             String path = "../Data/TestImgs/"+i+".jpg";
@@ -96,7 +97,8 @@ public class test {
             try{
                 testSudoku = baseSudokuExtractor.extract(img);
             } catch (Exception e){
-
+                System.out.println(e.getMessage());
+                expections++;
             }
             if(testSudoku != null) {
                 Sudoku goodAnsSudoku = null;
@@ -111,8 +113,11 @@ public class test {
             }
             else System.out.println("Score " + 0.0 + " <- cause by exception");
         }
-        System.out.println("Avg: " + (avg/100.0));
-
+        System.out.println();
+        System.out.println("**********");
+        System.out.println("All: " + (avg/(100.0)));
+        System.out.println("Errors " + expections);
+        System.out.println("Without errors: " + (avg/(100.0-(double) expections)));
 
 
     }

@@ -16,9 +16,8 @@ public class FastDigitExtractStrategy extends DigitBoxContoures implements Digit
     @Override
     public Optional<Mat> extractDigit(Mat cell) {
         Optional<Rect> rect = getDigitBox(cell);
-        if(rect.isPresent()){
+        if(rect.isPresent())
             return Optional.of(new Mat(cell, rect.get()));
-        }
         return Optional.empty();
     }
 }
