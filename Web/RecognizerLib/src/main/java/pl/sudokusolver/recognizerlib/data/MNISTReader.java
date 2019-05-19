@@ -6,6 +6,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
+import pl.sudokusolver.recognizerlib.filters.DisplayHelper;
 import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
@@ -68,9 +69,17 @@ public class MNISTReader {
             throw new IllegalArgumentException("Invalid data type");
 
         for(int n = 0; n < imgNumber; n++) {
-            putLabel(labels, labelBuffer.get() & 0xFF, n, type);
+            int i = labelBuffer.get() & 0xFF;
+
+
 
             Mat img = loadImg(imgBuffer, imgRows, imgCols);
+            if(i == 0)
+            {
+               continue;
+            }
+
+           putLabel(labels, i, n, type);
             putImg(trainData, img, n);
         }
         return new SimpleRowData(trainData, labels, size);

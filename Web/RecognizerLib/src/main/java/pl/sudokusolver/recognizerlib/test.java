@@ -34,7 +34,7 @@ public class test {
     public static void main(String[] args) throws NotFoundSudokuException, CellsExtractionFailedException {
         System.out.println("Rec Lib Test");
 
-        Init.init("C:\\opencv4.0.1\\opencv\\build\\java\\x64");
+        Init.init("D:\\SyfPulpit\\ProjektIO\\opencv\\build\\java\\x64");
 
         if(train)
         {
@@ -78,13 +78,24 @@ public class test {
         IRecognizer svm = new SVM("../Data/svm.xml");
 
         SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
-                    .setGridStrategy(new DefaultGridExtractStrategy(new MedianBlur(3,21,4)))
-                    .setCellsStrategy(new SizeCellsExtractStrategy())
-                    .setDigitsStrategy(new FastDigitExtractStrategy())
-                    .setRecognizer(svm)
-                    .addPreGridFilters(new ResizeFilter(new Size(1000,1000)))
-                    .addPreCellsFilters(new CleanLinesFilter(80, 200, 20,new MedianBlur(3,21, 9)))
-                    .build();
+                .setGridStrategy(new DefaultGridExtractStrategy(new MedianBlur(3,21,2)))
+                .setCellsStrategy(new SizeCellsExtractStrategy())
+                .setDigitsStrategy(new FastDigitExtractStrategy())
+                .setRecognizer(svm)
+                .addPreGridFilters(new ResizeFilter(new Size(1000,1000)))
+                .addPreCellsFilters(new CleanLinesFilter(10, 80, 10,new MedianBlur(3,21, 11)))
+                .build();
+
+        String path2 = "../Data/TestImgs/"+64+".jpg";
+
+        Mat img2 = imread(path2);
+        Sudoku testSudoku2 = null;
+        try{
+            testSudoku2 = baseSudokuExtractor.extract(img2);
+        } catch (Exception e){
+
+        }
+        int full =0;
         double avg = 0;
         int expections = 0;
         for(int i = 0; i < 100; i++){
@@ -92,11 +103,12 @@ public class test {
             String path = "../Data/TestImgs/"+i+".jpg";
             String pathToDat = "../Data/TestImgs/"+i+".dat";
             Mat img = imread(path);
-            System.out.println(path);
+           // System.out.println(path);
             Sudoku testSudoku = null;
             try{
                 testSudoku = baseSudokuExtractor.extract(img);
             } catch (Exception e){
+                System.out.println(path);
                 System.out.println(e.getMessage());
                 expections++;
             }
@@ -108,14 +120,22 @@ public class test {
                     e.printStackTrace();
                 }
                 double s = goodAnsSudoku.score(testSudoku);
-                System.out.println("Score " + s);
+               //
+                if(s < 0.7f)
+                {
+                    System.out.println(path);
+                    System.out.println("Score " + s);
+                }
+                if(s == 1.0f)
+                    full++;
                 avg += s;
             }
-            else System.out.println("Score " + 0.0 + " <- cause by exception");
+           // else System.out.println("Score " + 0.0 + " <- cause by exception");
         }
         System.out.println();
         System.out.println("**********");
         System.out.println("All: " + (avg/(100.0)));
+        System.out.println("Full " + full);
         System.out.println("Errors " + expections);
         System.out.println("Without errors: " + (avg/(100.0-(double) expections)));
 
