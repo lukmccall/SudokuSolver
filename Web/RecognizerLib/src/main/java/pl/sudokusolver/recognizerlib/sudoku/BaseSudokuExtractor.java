@@ -18,6 +18,7 @@ import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,18 +79,16 @@ public class BaseSudokuExtractor extends SudokuExtractor {
     public Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException {
         Utility.applyFilters(img, preGridFilters);
 
-
-
-            resize(img,img, new Size(1500f,1500f));
-        new DisplayHelper().apply(img);
+//        resize(img,img, new Size(1500f,1500f));
+//        new DisplayHelper().apply(img);
 
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
         resize(sudokuGrid,sudokuGrid,new Size(600f,600f));
-        new DisplayHelper().apply(sudokuGrid);
+//        new DisplayHelper().apply(sudokuGrid);
         Utility.applyFilters(sudokuGrid, preCellsFilters);
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
 
-      new DisplayHelper().apply(sudokuGrid);
+//      new DisplayHelper().apply(sudokuGrid);
        // new DisplayHelper().apply(sudokuGrid);
 
         //todo: make exception
@@ -98,7 +97,7 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         Sudoku sudoku = new Sudoku();
         for(int i = 0; i < cells.size(); i++){
             Mat cell = cells.get(i);
-            resize(cell,cell,new Size(50f,50f));
+//            resize(cell,cell,new Size(50f,50f));
             Utility.applyFilters(cell, preDigitsFilters);
             Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
            // new DisplayHelper().apply(cell);
@@ -106,7 +105,7 @@ public class BaseSudokuExtractor extends SudokuExtractor {
             {
 
                 sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i / 9, i % 9);
-                System.out.println(sudoku.getDigit(i / 9, i % 9)+" "+cell.size().height+" "+cell.size().width);
+//                System.out.println(sudoku.getDigit(i / 9, i % 9)+" "+cell.size().height+" "+cell.size().width);
                // new DisplayHelper().apply(digit.get());
 
             }
@@ -201,8 +200,10 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         }
 
         public Builder addPreGridFilters(IFilter filter){
-            if(preGridFilters == null)
-                preGridFilters = Collections.singletonList(filter);
+            if(preGridFilters == null){
+                preGridFilters = new LinkedList<>();
+                preGridFilters.add(filter);
+            }
             else
                 preGridFilters.add(filter);
             return this;
@@ -214,8 +215,10 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         }
 
         public Builder addPreCellsFilters(IFilter filter){
-            if(preCellsFilters == null)
-                preCellsFilters = Collections.singletonList(filter);
+            if(preCellsFilters == null){
+                preCellsFilters = new LinkedList<>();
+                preCellsFilters.add(filter);
+            }
             else
                 preCellsFilters.add(filter);
             return this;
@@ -227,8 +230,10 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         }
 
         public Builder addPreDigitsFilters(IFilter filter){
-            if(preDigitsFilters == null)
-                preDigitsFilters = Collections.singletonList(filter);
+            if(preDigitsFilters == null){
+                preDigitsFilters = new LinkedList<>();
+                preDigitsFilters.add(filter);
+            }
             else
                 preDigitsFilters.add(filter);
             return this;

@@ -18,6 +18,7 @@ import pl.sudokusolver.recognizerlib.ocr.ml.MLWrapper;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
 import pl.sudokusolver.recognizerlib.sudoku.BaseSudokuExtractor;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
+import pl.sudokusolver.recognizerlib.sudoku.SudokuExtractor;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -33,7 +34,7 @@ public class test {
     public static void main(String[] args) throws NotFoundSudokuException, CellsExtractionFailedException {
         System.out.println("Rec Lib Test");
 
-        Init.init("D:\\SyfPulpit\\ProjektIO\\opencv\\build\\java\\x64");
+        Init.init("C:\\opencv4.0.1\\opencv\\build\\java\\x64");
 
         if(train)
         {
@@ -76,40 +77,41 @@ public class test {
 
         IRecognizer svm = new SVM("../Data/svm.xml");
 
+        SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
+                                                    .setGridStrategy(new DefaultGridExtractStrategy(new MedianBlur(3,21,4)))
+                                                    .setCellsStrategy(new SizeCellsExtractStrategy())
+                                                    .setDigitsStrategy(new FastDigitExtractStrategy())
+                                                    .setRecognizer(svm)
+                                                    .addPreGridFilters(new ResizeFilter(new Size(1000,1000)))
+                                                    .addPreCellsFilters(new CleanLinesFilter(20, 100, 20,new MedianBlur(3,21, 9)))
+                                                    .build();
+        double avg = 0;
+        for(int i = 0; i < 100; i++){
 
-        BaseSudokuExtractor baseSudokuExtractor = new BaseSudokuExtractor(
-                new DefaultGridExtractStrategy(new MedianBlur(3,21,4)),
-                new SizeCellsExtractStrategy(),
-                new FastDigitExtractStrategy(),
-                svm,
-                Collections.singletonList(new MaxResizeFilter()),
-                Collections.singletonList(new CleanLinesFilter(20, 100, 20,new MedianBlur(3,21, 9))),
-                null
-        );
-
-        String path2 = "../Data/sudoku2.jpg";
-        Mat img2 = imread(path2);
-
-        System.out.println(path2);
-        Sudoku testSudoku2 = baseSudokuExtractor.extract(img2);
-        testSudoku2.printSudoku();
-        img2 = imread(path2);
-        new DisplayHelper().apply(img2,path2);
-        for(int i = 0; i <100; i++)
-        {
-
-            String path = "../../Data/"+i+".jpg";
+            String path = "../Data/TestImgs/"+i+".jpg";
+            String pathToDat = "../Data/TestImgs/"+i+".dat";
             Mat img = imread(path);
-
             System.out.println(path);
-            Sudoku testSudoku = baseSudokuExtractor.extract(img);
-            testSudoku.printSudoku();
-            img = imread(path);
-            new DisplayHelper().apply(img,path);
+            Sudoku testSudoku = null;
+            try{
+                testSudoku = baseSudokuExtractor.extract(img);
+            } catch (Exception e){
+
+            }
+            if(testSudoku != null) {
+                Sudoku goodAnsSudoku = null;
+                try {
+                    goodAnsSudoku = Sudoku.readFromDat(pathToDat);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                double s = goodAnsSudoku.score(testSudoku);
+                System.out.println("Score " + s);
+                avg += s;
+            }
+            else System.out.println("Score " + 0.0 + " <- cause by exception");
         }
-
-
-
+        System.out.println("Avg: " + (avg/100.0));
 
 
 

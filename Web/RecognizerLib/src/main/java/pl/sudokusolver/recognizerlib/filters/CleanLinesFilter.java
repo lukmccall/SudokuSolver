@@ -5,7 +5,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-import static org.opencv.imgproc.Imgproc.line;
+import static org.opencv.imgproc.Imgproc.*;
 
 /**
  * Filter służący do usuwania lini
@@ -48,11 +48,14 @@ public class CleanLinesFilter implements IFilter {
 
     @Override
     public void apply(Mat input) {
-        blurFilter.apply(input);
+        Mat copy = input.clone();
+        adaptiveThreshold(input, input, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 19, 4);
+
+        blurFilter.apply(copy);
 
         Mat lines = new Mat();
 
-        Imgproc.HoughLinesP(input, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
+        Imgproc.HoughLinesP(copy, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
         for (int x = 0; x < lines.rows(); x++) {
             double[] vec = lines.get(x, 0);
