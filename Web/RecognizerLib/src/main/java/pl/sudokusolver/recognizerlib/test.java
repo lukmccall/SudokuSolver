@@ -78,15 +78,15 @@ public class test {
         IRecognizer svm = new SVM("../Data/svm.xml");
 
         SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
-                .setGridStrategy(new DefaultGridExtractStrategy(new BlurFilter(3,21,2)))
+                .setGridStrategy(new DefaultGridExtractStrategy(new MedianBlur(3,21,2)))
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(svm)
                 .addPreGridFilters(new ResizeFilter(new Size(1500,1500)))
-                .addPreCellsFilters(new CleanLinesFilter(35, 80, 10,new MedianBlur(3,21, 11)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 80, 5,new MedianBlur(3,31, 15)))
                 .build();
 
-        String path2 = "../Data/TestImgs/"+64+".jpg";
+        String path2 = "../Data/TestImgs/"+8+".jpg";
 
         Mat img2 = imread(path2);
         Sudoku testSudoku2 = null;
@@ -95,6 +95,8 @@ public class test {
         } catch (Exception e){
 
         }
+        testSudoku2.printSudoku();
+        new DisplayHelper().apply(img2);
         int full =0;
         double avg = 0;
         int expections = 0;
@@ -121,13 +123,14 @@ public class test {
                 }
                 double s = goodAnsSudoku.score(testSudoku);
                //
-                if(s < 0.7f)
+
+                if(s == 1.0f)
+                    full++;
+                else
                 {
                     System.out.println(path);
                     System.out.println("Score " + s);
                 }
-                if(s == 1.0f)
-                    full++;
                 avg += s;
             }
            // else System.out.println("Score " + 0.0 + " <- cause by exception");

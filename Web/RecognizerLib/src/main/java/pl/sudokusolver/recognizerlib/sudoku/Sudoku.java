@@ -84,10 +84,16 @@ public class Sudoku {
 
     public double score(Sudoku outer){
         int same = 0;
+        int numbers = 0;
         for(int i = 0; i < 9; i++)
             for(int j = 0; j < 9; j++)
-                if(grid[i][j] == outer.grid[i][j]) same++;
-        return (double)same/81.0;
+                if(grid[i][j]!= 0) {
+                    numbers++;
+                    if (grid[i][j] == outer.grid[i][j]) {
+                        same++;
+                    }
+                }
+        return (double)same/numbers;
     }
 
     @Override

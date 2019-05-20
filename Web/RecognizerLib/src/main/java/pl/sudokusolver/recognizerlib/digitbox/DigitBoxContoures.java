@@ -23,7 +23,7 @@ public class DigitBoxContoures implements IDigitBox {
     public Optional<Rect> getDigitBox(Mat input) {
         List<MatOfPoint> cont = Lists.newArrayList();
 
-        findContours(input, cont, new Mat(), RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+        findContours(input, cont, new Mat(), RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
         List<Point> lp = Lists.newArrayList();
 
@@ -33,7 +33,7 @@ public class DigitBoxContoures implements IDigitBox {
             double aspect = rect.height / (double) rect.width;
             double area = rect.area();
 
-            if (aspect > 0.3 && aspect < 4 && area > 50) {
+            if (aspect > 0.3 && aspect < 4 && area > 100) {
                 lp.add(rect.tl());
                 lp.add(rect.br());
             }

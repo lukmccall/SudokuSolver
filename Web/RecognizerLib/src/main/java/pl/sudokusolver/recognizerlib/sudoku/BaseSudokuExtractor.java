@@ -142,7 +142,7 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
      //  new DisplayHelper().apply(sudokuGrid);
 //      new DisplayHelper().apply(sudokuGrid);
-       // new DisplayHelper().apply(sudokuGrid);
+
 
         //todo: make exception
         if(cells == null) throw new CellsExtractionFailedException();
@@ -152,14 +152,15 @@ public class BaseSudokuExtractor extends SudokuExtractor {
             Mat cell = cells.get(i);
            resize(cell,cell,new Size(50f,50f)); // ZOSTAW MI TO!
             Utility.applyFilters(cell, preDigitsFilters);
+
             Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
-           // new DisplayHelper().apply(cell);
+
             if (digit.isPresent())
             {
 
                 sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i / 9, i % 9);
-          //    System.out.println(sudoku.getDigit(i / 9, i % 9)+" "+cell.size().height+" "+cell.size().width);
-           //   new DisplayHelper().apply(digit.get());
+             //System.out.println(sudoku.getDigit(i / 9, i % 9)+" "+cell.size().height+" "+cell.size().width);
+            //  new DisplayHelper().apply(digit.get());
 
             }
 
