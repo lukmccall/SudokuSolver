@@ -3,7 +3,9 @@ package pl.sudokusolver.recognizerlib.filters;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.photo.Photo;
 
 import static org.opencv.imgproc.Imgproc.*;
 
@@ -48,15 +50,19 @@ public class CleanLinesFilter implements IFilter {
 
     @Override
     public void apply(Mat input) {
+        blurFilter.apply(input);
 //        Mat copy = input.clone();
 //        adaptiveThreshold(input, input, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 19, 4);
 
-        blurFilter.apply(input);
+      // new DisplayHelper().apply(input);
+       // Photo.fastNlMeansDenoising(input,input,100,5,2);
+       // adaptiveThreshold(input, input, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 4);
+
 
         Mat lines = new Mat();
 
         Imgproc.HoughLinesP(input, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
-
+     //   new DisplayHelper().apply(input);
         for (int x = 0; x < lines.rows(); x++) {
             double[] vec = lines.get(x, 0);
             double x1 = vec[0],
@@ -69,5 +75,16 @@ public class CleanLinesFilter implements IFilter {
             line(input, start, end, Scalar.all(0), 3);
 
         }
+
+    //    new DisplayHelper().apply(input);
+        int erosion_size = 1;
+        Mat element = getStructuringElement( MORPH_RECT,
+                new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
+                new Point( erosion_size, erosion_size ) );
+
+
+      //  erode( input, input, element );
+      // dilate(input,input,element);
+       // new DisplayHelper().apply(input);
     }
 }

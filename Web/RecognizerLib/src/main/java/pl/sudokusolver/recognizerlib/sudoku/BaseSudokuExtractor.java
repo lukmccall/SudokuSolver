@@ -1,7 +1,12 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
+import com.google.common.collect.Lists;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Size;
+import org.opencv.core.Point;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.photo.Photo;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
@@ -17,6 +22,7 @@ import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
+import javax.print.attribute.standard.Media;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -78,16 +84,61 @@ public class BaseSudokuExtractor extends SudokuExtractor {
     @Override
     public Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException {
 
-        //Utility.applyFilters(img, preGridFilters);
-     // new DisplayHelper().apply(img);
-//        resize(img,img, new Size(1500f,1500f));
-//        new DisplayHelper().apply(img);
+      //  new DisplayHelper().apply(img);
+      //  Utility.applyFilters(img, preGridFilters);
+       // new DisplayHelper().apply(img);
 
+        double ratio = img.size().height/img.size().width;
+        resize(img,img, new Size(1000f,1000f*ratio));
+      //  new DisplayHelper().apply(img);
+
+
+        /*=============================KOD */
+      //  Mat test = img.clone();
+    //    new ToGrayFilter().apply(test);
+
+      //  Photo.fastNlMeansDenoising(test,test,16,5,10);
+      //  adaptiveThreshold(test, test, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 15, 2);
+        /*
+        //GaussianBlur(test,test, new Size(3,3),0);
+
+
+
+       // medianBlur(test,test, 3);
+       // new BlurFilter(3,21,2).apply(test);
+
+
+
+        int width = 1;
+        int height = 1;
+        Mat kernel = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(2 * width + 1, 2 * height + 1), new Point(width,height));
+
+        Imgproc.dilate(test,test,kernel);
+
+
+        List<MatOfPoint> cont = Lists.newArrayList();
+        findContours(test, cont, new Mat(), RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+        MatOfPoint max = cont.get(0);
+
+        for (MatOfPoint p : cont) {
+          if(contourArea(p)>contourArea(max))
+          {
+              max = p;
+          }
+        }
+*/
+
+      //  new DisplayHelper().apply(test);
+
+
+        /*===============================KOD */
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
+
   //      new DisplayHelper().apply(sudokuGrid);
         resize(sudokuGrid,sudokuGrid,new Size(600f,600f));
-
+     //   new DisplayHelper().apply(sudokuGrid);
         Utility.applyFilters(sudokuGrid, preCellsFilters);
+    //    new DisplayHelper().apply(sudokuGrid);
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
      //  new DisplayHelper().apply(sudokuGrid);
 //      new DisplayHelper().apply(sudokuGrid);
@@ -107,8 +158,8 @@ public class BaseSudokuExtractor extends SudokuExtractor {
             {
 
                 sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i / 9, i % 9);
-             // System.out.println(sudoku.getDigit(i / 9, i % 9)+" "+cell.size().height+" "+cell.size().width);
-            ///    new DisplayHelper().apply(digit.get());
+          //    System.out.println(sudoku.getDigit(i / 9, i % 9)+" "+cell.size().height+" "+cell.size().width);
+           //   new DisplayHelper().apply(digit.get());
 
             }
 

@@ -2,8 +2,10 @@ package pl.sudokusolver.recognizerlib.extractors.grid;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.photo.Photo;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
+import pl.sudokusolver.recognizerlib.filters.DisplayHelper;
 import pl.sudokusolver.recognizerlib.filters.IFilter;
 import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
@@ -51,13 +53,19 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
     @Override
     public Mat extractGrid(Mat img) throws NotFoundSudokuException {
             Mat outbox = img.clone();
-            new ToGrayFilter().apply(outbox);
-            blurFilter.apply(outbox);
+        new ToGrayFilter().apply(outbox);
 
-            List<MatOfPoint> contours = getContours(outbox);
+        Photo.fastNlMeansDenoising(outbox,outbox,50,5,10);
+        adaptiveThreshold(outbox, outbox, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 33, 2);
+      //  new DisplayHelper().apply(outbox);
+       // Canny(outbox,outbox,50,150);
+     //  new DisplayHelper().apply(outbox);
+            List<MatOfPoint> contours = getContours(outbox,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
             Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
             Mat m = perspectiveWrap(img, approx);
+   //     new DisplayHelper().apply(m);
             new ToGrayFilter().apply(m);
+           // new DisplayHelper().apply(m);
             return m;
     }
 
@@ -75,6 +83,13 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
             }
         }
         return p;
+    }
+
+    private List<MatOfPoint> getContours(Mat img, int mode,int method){
+        List<MatOfPoint> ret = new ArrayList<>();
+        Mat heirarchy = new Mat();
+        findContours(img, ret, heirarchy, mode, method);
+        return ret;
     }
 
     private List<MatOfPoint> getContours(Mat img){
