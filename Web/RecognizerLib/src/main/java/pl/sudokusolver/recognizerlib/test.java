@@ -83,7 +83,7 @@ public class test {
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(svm)
                 .addPreGridFilters(new ResizeFilter(new Size(1500,1500)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 80, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 80, 5,new MedianBlur(3,31, 9)))
                 .build();
 
         String path2 = "../Data/TestImgs/"+8+".jpg";

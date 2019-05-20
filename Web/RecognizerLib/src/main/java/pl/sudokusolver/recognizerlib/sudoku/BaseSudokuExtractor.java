@@ -151,7 +151,22 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         for(int i = 0; i < cells.size(); i++){
             Mat cell = cells.get(i);
            resize(cell,cell,new Size(50f,50f)); // ZOSTAW MI TO!
-            Utility.applyFilters(cell, preDigitsFilters);
+            //Utility.applyFilters(cell, preDigitsFilters);
+
+            //new DisplayHelper().apply(cell);
+            double erosion_size = 5f;
+
+            Mat structImage = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1.5,1.5));
+
+            Mat element = getStructuringElement( MORPH_RECT,
+                    new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
+                    new Point( erosion_size, erosion_size ) );
+
+
+            morphologyEx(cell,cell,MORPH_OPEN, structImage);
+          //  System.out.println("Hehe");
+            //new DisplayHelper().apply(cell);
+
 
             Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
 

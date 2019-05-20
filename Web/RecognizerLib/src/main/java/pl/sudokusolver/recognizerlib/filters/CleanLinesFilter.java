@@ -76,15 +76,11 @@ public class CleanLinesFilter implements IFilter {
 
         }
 
-    //    new DisplayHelper().apply(input);
-        double erosion_size = 0.5f;
-        Mat element = getStructuringElement( MORPH_RECT,
-                new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
-                new Point( erosion_size, erosion_size ) );
+    //
 
 
-     //   erode( input, input, element );
-     //  dilate(input,input,element);
+
+
        // new DisplayHelper().apply(input);
     }
 }
