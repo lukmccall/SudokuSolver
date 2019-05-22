@@ -76,8 +76,7 @@ public class CleanLinesFilter implements IFilter {
 
         }
 
-    //
-
+    //    new DisplayHelper().apply(input);
 
 
 

@@ -87,7 +87,7 @@ public class Sudoku {
         int numbers = 0;
         for(int i = 0; i < 9; i++)
             for(int j = 0; j < 9; j++)
-                if(grid[i][j]!= 0) {
+                if(grid[i][j]!= -1) {
                     numbers++;
                     if (grid[i][j] == outer.grid[i][j]) {
                         same++;

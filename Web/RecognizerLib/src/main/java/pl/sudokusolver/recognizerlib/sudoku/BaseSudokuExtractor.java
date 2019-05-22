@@ -1,10 +1,7 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
 import com.google.common.collect.Lists;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Size;
-import org.opencv.core.Point;
+import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.photo.Photo;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
@@ -23,13 +20,11 @@ import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 import javax.print.attribute.standard.Media;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgproc.Imgproc.*;
+import static org.opencv.imgproc.Imgproc.contourArea;
 
 /**
  * Podstawowa implementacja <code>sudoku extractora</code>. Nie zawiera ona konkretnych strategi oraz filtórw.
@@ -81,8 +76,14 @@ public class BaseSudokuExtractor extends SudokuExtractor {
      * @throws NotFoundSudokuException gdy nie uda się znaleźć sudoku na zdjęciu
      * @throws CellsExtractionFailedException gdy nie uda się wyciąć komórek ze zdjęcia
      */
+
     @Override
     public Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException {
+
+       return extract(img,"Debug");
+    }
+    @Override
+    public Sudoku extract(Mat img, String path) throws NotFoundSudokuException, CellsExtractionFailedException {
 
       //  new DisplayHelper().apply(img);
       //  Utility.applyFilters(img, preGridFilters);
@@ -94,8 +95,57 @@ public class BaseSudokuExtractor extends SudokuExtractor {
 
 
         /*=============================KOD */
-      //  Mat test = img.clone();
-    //    new ToGrayFilter().apply(test);
+        Mat test = img.clone();
+       // new DisplayHelper().apply(test);
+        new ToGrayFilter().apply(test);
+        Mat test2 = test.clone();
+     //   new DisplayHelper().apply(test);
+        Photo.fastNlMeansDenoising(test,test,50,10,10);
+     //   new DisplayHelper().apply(test);
+        Core.addWeighted(test2,1.5f,test,-0.5f,0.5f,test);
+      //  new DisplayHelper().apply(test);
+        Photo.fastNlMeansDenoising(test,test,50,10,10);
+      //  new DisplayHelper().apply(test);
+
+        adaptiveThreshold(test, test, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
+
+       // new DisplayHelper().apply(test);
+
+        double erosion_size = 2;
+        Mat structImage = Imgproc.getStructuringElement(MORPH_RECT, new Size(erosion_size,erosion_size));
+        morphologyEx(test,test,MORPH_OPEN, structImage);
+
+
+         erosion_size = 1f;
+        Mat element = getStructuringElement( MORPH_RECT,
+                new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
+                new Point( erosion_size, erosion_size ) );
+
+
+       // morphologyEx(element,element,MORPH_CLOSE, element);
+        erode( test, test, element );
+        dilate( test, test, element );
+
+
+
+       // new DisplayHelper().apply(test);
+        List<MatOfPoint> ret = new ArrayList<>();
+        Mat heirarchy = new Mat();
+        findContours(test, ret, heirarchy,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
+
+        int max = 0;
+        for(int i = 1; i <ret.size();i++)
+        {
+            if(contourArea(ret.get(max),false)<contourArea(ret.get(i)))
+                max = i;
+
+
+        }
+
+        drawContours(img,ret,max,new Scalar(0,0,0),3);
+
+
+    //
 
       //  Photo.fastNlMeansDenoising(test,test,16,5,10);
       //  adaptiveThreshold(test, test, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 15, 2);
@@ -128,12 +178,12 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         }
 */
 
-      //  new DisplayHelper().apply(test);
+      //
 
-
+     //   new DisplayHelper().apply(img,path);
         /*===============================KOD */
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
-
+     //  new DisplayHelper().apply(sudokuGrid,path);
   //      new DisplayHelper().apply(sudokuGrid);
         resize(sudokuGrid,sudokuGrid,new Size(600f,600f));
      //   new DisplayHelper().apply(sudokuGrid);
@@ -151,19 +201,10 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         for(int i = 0; i < cells.size(); i++){
             Mat cell = cells.get(i);
            resize(cell,cell,new Size(50f,50f)); // ZOSTAW MI TO!
-            //Utility.applyFilters(cell, preDigitsFilters);
+            Utility.applyFilters(cell, preDigitsFilters);
 
             //new DisplayHelper().apply(cell);
-            double erosion_size = 5f;
 
-            Mat structImage = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1.5,1.5));
-
-            Mat element = getStructuringElement( MORPH_RECT,
-                    new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
-                    new Point( erosion_size, erosion_size ) );
-
-
-            morphologyEx(cell,cell,MORPH_OPEN, structImage);
           //  System.out.println("Hehe");
             //new DisplayHelper().apply(cell);
 

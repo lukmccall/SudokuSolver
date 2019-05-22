@@ -21,4 +21,6 @@ public interface ISudokuExtractor {
      */
     Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException;
 
+    Sudoku extract(Mat img,String path) throws NotFoundSudokuException, CellsExtractionFailedException;
+
 }

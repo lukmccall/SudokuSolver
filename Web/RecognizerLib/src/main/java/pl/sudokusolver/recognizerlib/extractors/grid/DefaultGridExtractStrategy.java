@@ -56,14 +56,15 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         new ToGrayFilter().apply(outbox);
 
         Photo.fastNlMeansDenoising(outbox,outbox,50,5,10);
-        adaptiveThreshold(outbox, outbox, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 33, 2);
-      //  new DisplayHelper().apply(outbox);
+        adaptiveThreshold(outbox, outbox, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
+        new DisplayHelper().apply(outbox);
        // Canny(outbox,outbox,50,150);
      //  new DisplayHelper().apply(outbox);
             List<MatOfPoint> contours = getContours(outbox,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
             Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
+
             Mat m = perspectiveWrap(img, approx);
-   //     new DisplayHelper().apply(m);
+        new DisplayHelper().apply(m);
             new ToGrayFilter().apply(m);
            // new DisplayHelper().apply(m);
             return m;
