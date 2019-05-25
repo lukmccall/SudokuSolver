@@ -2,34 +2,39 @@ package pl.sudokusolver.app.CustomViews;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import pl.sudokusolver.app.CustomViews.Texts.About;
 import pl.sudokusolver.app.Theme;
 import pl.sudokusolver.app.Values;
 
+/**
+ * About scene layout
+ */
 public class ViewAbout extends VBox {
 
     public ViewAbout(){
         init();
     }
 
+    /**
+     * Function to initialize whole layout
+     */
     private void init(){
-        Text name = new Text(Values.NAME);
-        name.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 24;");
-        Text description = new Text(Values.DESCRIPTION);
-        description.setStyle("-fx-font-size: 18;");
-        description.setTextAlignment(TextAlignment.CENTER);
-        description.wrappingWidthProperty().bind(this.widthProperty());
+        setAlignment(Pos.CENTER);
+        setSpacing(15);
+        setTheme();
 
-        this.setAlignment(Pos.CENTER);
-        this.setSpacing(15);
+        getChildren().addAll(new About());
+    }
+
+    /**
+     * Function to set scene theme
+     */
+    public void setTheme(){
         if (Values.THEME == Theme.LIGHT){
-            this.setStyle("-fx-background-color: #F0F0F0;");
+            setStyle("-fx-background-color: #F0F0F0;");
         }
         else{
-            this.setStyle("-fx-background-color: #34495E;");
+            setStyle("-fx-background-color: #34495E;");
         }
-        this.getChildren().addAll(name, description);
-
     }
 }

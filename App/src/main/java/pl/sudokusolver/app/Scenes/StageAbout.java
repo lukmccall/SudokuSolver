@@ -19,12 +19,7 @@ public class StageAbout extends Stage {
 
 
     public void change(){
-        if (Values.THEME == Theme.LIGHT){
-            viewAbout.setStyle("-fx-background-color: #F0F0F0;");
-        }
-        else{
-            viewAbout.setStyle("-fx-background-color: #34495E;");
-        }
+        viewAbout.setTheme();
     }
 
     private void init(){
@@ -35,17 +30,17 @@ public class StageAbout extends Stage {
         Scene secondScene = new Scene(viewAbout,
                 primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
 
-        this.setTitle(Values.AUTHORS);
-        this.setScene(secondScene);
+        setTitle(Values.AUTHORS);
+        setScene(secondScene);
 
-        this.setWidth(primaryScreenBounds.getWidth() * 0.375f);
-        this.setHeight(primaryScreenBounds.getHeight() * 0.75f);
+        setWidth(primaryScreenBounds.getWidth() * 0.375f);
+        setHeight(primaryScreenBounds.getHeight() * 0.75f);
 
-        this.setMinWidth(primaryScreenBounds.getWidth() * 0.375f);
-        this.setMinHeight(primaryScreenBounds.getHeight() * 0.75f);
-        this.setResizable(false);
+        setMinWidth(primaryScreenBounds.getWidth() * 0.375f);
+        setMinHeight(primaryScreenBounds.getHeight() * 0.75f);
+        setResizable(false);
 
-        this.show();
+        show();
 
     }
 }

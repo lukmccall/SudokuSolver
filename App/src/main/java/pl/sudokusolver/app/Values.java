@@ -37,7 +37,7 @@ public class Values {
     public static final String TESTERS = "Testers:";
     public static final String TESTERS_NAMES = "Nikodem Kwaśniak\nDawid Szczerba";
 
-    public static final String DESCRIPTION = "Aplikacja jaką zrobiliśmy na przedmiot Inżynieria Oprogramowania";
+    public static final String DESCRIPTION = "Aplikacja przygotowana na przedmiot:\nInżynieria Oprogramowania";
 
     public static final String LINE_THICKNESS = "GRUBOŚĆ LINII";
     public static final String PROGING = "PROGOWANIE";
