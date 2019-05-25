@@ -1,46 +1,58 @@
 package pl.sudokusolver.app.Scenes;
 
 import pl.sudokusolver.app.CustomViews.ViewAbout;
-import pl.sudokusolver.app.Theme;
 import pl.sudokusolver.app.Values;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * About screen available to open from menu
+ */
 public class StageAbout extends Stage {
 
     private ViewAbout viewAbout;
+    private Scene aboutScene;
 
     public StageAbout(){
         super();
         init();
     }
 
+    /**
+     * Function to initialize whole screen
+     */
+    private void init(){
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
+        viewAbout = new ViewAbout();
+        aboutScene = new Scene(viewAbout, screenBounds.getWidth() * 0.375f, screenBounds.getHeight() * 0.66f);
+
+        setDimensions(screenBounds);
+        setTitle(Values.AUTHORS);
+        setScene(aboutScene);
+        setResizable(false);
+        change();
+        show();
+    }
+
+    /**
+     * Function to control theme changing and it's effects
+     */
     public void change(){
         viewAbout.setTheme();
     }
 
-    private void init(){
-        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    /**
+     * Function to set dimensions of the main stage
+     * @param screenBounds  bounds of the whole available screen
+     */
+    private void setDimensions(Rectangle2D screenBounds){
+        setWidth(screenBounds.getWidth() * 0.375f);
+        setHeight(screenBounds.getHeight() * 0.75f);
 
-        viewAbout = new ViewAbout();
-
-        Scene secondScene = new Scene(viewAbout,
-                primaryScreenBounds.getWidth() * 0.375f, primaryScreenBounds.getHeight() * 0.66f);
-
-        setTitle(Values.AUTHORS);
-        setScene(secondScene);
-
-        setWidth(primaryScreenBounds.getWidth() * 0.375f);
-        setHeight(primaryScreenBounds.getHeight() * 0.75f);
-
-        setMinWidth(primaryScreenBounds.getWidth() * 0.375f);
-        setMinHeight(primaryScreenBounds.getHeight() * 0.75f);
-        setResizable(false);
-
-        show();
-
+        setMinWidth(screenBounds.getWidth() * 0.375f);
+        setMinHeight(screenBounds.getHeight() * 0.75f);
     }
 }
