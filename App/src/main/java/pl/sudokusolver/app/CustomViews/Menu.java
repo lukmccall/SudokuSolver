@@ -3,7 +3,6 @@ package pl.sudokusolver.app.CustomViews;
 import pl.sudokusolver.app.*;
 import pl.sudokusolver.app.Scenes.StageAbout;
 import pl.sudokusolver.app.Scenes.StageAuthors;
-import javafx.application.Platform;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
@@ -15,17 +14,17 @@ public class Menu extends MenuBar {
     private StageAbout aboutStage;
     private StageAuthors authorsStage;
     private MenuListener menuListener;
-    private ThemeChangeListener themeChangeListener;
+    //private ThemeChangeListener themeChangeListener;
 
-    public Menu(Stage stage, MenuListener menuListener, ThemeChangeListener themeChangeListener){
+    public Menu(MenuListener menuListener){
         super();
         this.menuListener = menuListener;
-        this.themeChangeListener = themeChangeListener;
+        //this.themeChangeListener = themeChangeListener;
 
-        init(stage);
+        init();
     }
 
-    private void init(Stage stage){
+    private void init(){
 
         javafx.scene.control.Menu helpMenu = new javafx.scene.control.Menu(Values.HELP);
 
@@ -48,9 +47,7 @@ public class Menu extends MenuBar {
         });
 
         exit.setOnAction((event) -> {
-            stage.close();
-            Platform.exit();
-            System.exit(0);
+            menuListener.exit();
         });
 
         authors.setOnAction((event) -> {
@@ -89,7 +86,8 @@ public class Menu extends MenuBar {
                     aboutStage.toBack();
                 }
 
-                themeChangeListener.changed();
+                menuListener.change();
+                //themeChangeListener.changed();
                 Utilities.saveFile("Theme: LIGHT");
             }
         });
@@ -107,7 +105,8 @@ public class Menu extends MenuBar {
                     aboutStage.change();
                     aboutStage.toBack();
                 }
-                themeChangeListener.changed();
+                menuListener.change();
+                //themeChangeListener.changed();
 
                 Utilities.saveFile("Theme: DARK");
             }

@@ -22,18 +22,23 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
 /**
- *
+ * Controls appearance of main screen and logic connected with sending and receiving sudoku
  */
-public class StageMain extends Stage implements MenuListener, ThemeChangeListener, Sender {
+public class StageMain extends Stage implements MenuListener, Sender {
 
     private BorderPane vBox;
     private Canvas canvas;
     private RightSide rightSide;
+    private Menu menu;
 
     public StageMain(){
         init();
     }
 
+    /**
+     * Function that sends solve request and waits for a respond from server
+     * @throws Exception in case anything went badly
+     */
     @Override
     public void solve() throws Exception{
         HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
@@ -61,6 +66,10 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
         }
     }
 
+    /**
+     * Function that sends recognize request and waits for a respond from server
+     * @throws Exception in case anything went badly
+     */
     @Override
     public void send(BufferedImage image, Parameters parameters) throws Exception{
         HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
@@ -95,22 +104,35 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
 
     }
 
+    /**
+     * Function that controls what happens when we receive response after send request
+     * @param array array received from server
+     */
     private void receivedSolved(int[][] array){
         canvas.modifySolution(array);
     }
 
+    /**
+     * Function that controls what happens when we receive response after recognize request
+     * @param array array received from server
+     */
     private void receivedInitial(int[][] array){
         canvas.modifyInitial(array);
     }
 
+    /**
+     * Function inherited from MenuListener, it is called after clear is clicked in menu
+     */
     @Override
     public void clear(){
         canvas.clear();
     }
 
-
+    /**
+     * Function inherited from MenuListener, it updates whole application theme
+     */
     @Override
-    public void changed(){
+    public void change(){
         canvas.update();
         if (rightSide != null)
             rightSide.change();
@@ -122,47 +144,57 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
         }
     }
 
+    /**
+     * Function inherited from MenuListener, it closes the whole application
+     */
+    @Override
+    public void exit(){
+        close();
+        Platform.exit();
+        System.exit(0);
+    }
+
+    /**
+     * Function to initialize screen appearance
+     */
     private void init(){
-        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        rightSide = new RightSide(this, primaryScreenBounds.getWidth() * 0.75f, primaryScreenBounds.getHeight() * 0.75f);
-        Menu menu = new Menu(this, this, this);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
+        rightSide = new RightSide(this, screenBounds.getWidth() * 0.75f, screenBounds.getHeight() * 0.75f);
+        menu = new Menu(this);
         canvas = new Canvas();
-        canvas.setOnMouseClicked((event) -> {
-            double mouseX = event.getX();
-            double mouseY = event.getY() - canvas.getOffsetY();
-
-            canvas.mouseClick(mouseX, mouseY);
-        });
-
-        this.setX(primaryScreenBounds.getMinX());
-        this.setY(primaryScreenBounds.getMinY());
-
-        this.setWidth(primaryScreenBounds.getWidth() * 0.75f);
-        this.setHeight(primaryScreenBounds.getHeight() * 0.75f);
-
-        this.setMinWidth(primaryScreenBounds.getWidth() * 0.66f);
-        this.setMinHeight(primaryScreenBounds.getHeight() * 0.75f);
-
         vBox = new BorderPane();
-        vBox.setTop(menu);
-        vBox.setCenter(rightSide);
-        vBox.setLeft(canvas);
 
-        canvas.widthProperty().bind(vBox.widthProperty().multiply(0.45f));
-        canvas.heightProperty().bind(vBox.heightProperty().multiply(0.95f));
+        initCanvas();
+        initVBox();
+        initScene();
+    }
 
-        changed();
-
-        Scene scene = new Scene(vBox);
+    /**
+     * Function to initialize main scene
+     */
+    private void initScene(){
         Controls controls = new Controls(canvas);
+        Scene scene = new Scene(vBox);
 
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
             controls.onKeyPressed(keyCode);
         });
 
+        initStage(scene);
+    }
+
+    /**
+     * A function to initialize main stage of the application
+     * @param scene main scene previously initialized
+     */
+    private void initStage(Scene scene){
         setTitle(Values.NAME);
+
+        setDimensions(Screen.getPrimary().getVisualBounds());
+
+        change();
         setScene(scene);
 
         setOnCloseRequest((event) -> {
@@ -171,5 +203,44 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
         });
 
         show();
+    }
+
+    /**
+     * Function to set dimensions of the main stage
+     * @param screenBounds  bounds of the whole available screen
+     */
+    private void setDimensions(Rectangle2D screenBounds){
+        setX(screenBounds.getMinX());
+        setY(screenBounds.getMinY());
+
+        setWidth(screenBounds.getWidth() * 0.75f);
+        setHeight(screenBounds.getHeight() * 0.75f);
+
+        setMinWidth(screenBounds.getWidth() * 0.66f);
+        setMinHeight(screenBounds.getHeight() * 0.75f);
+    }
+
+    /**
+     * Function to initialize canvas
+     */
+    private void initCanvas(){
+        canvas.widthProperty().bind(vBox.widthProperty().multiply(0.45f));
+        canvas.heightProperty().bind(vBox.heightProperty().multiply(0.95f));
+
+        canvas.setOnMouseClicked((event) -> {
+            double mouseX = event.getX();
+            double mouseY = event.getY() - canvas.getOffsetY();
+
+            canvas.mouseClick(mouseX, mouseY);
+        });
+    }
+
+    /**
+     * Function to initialize main VBox
+     */
+    private void initVBox(){
+        vBox.setTop(menu);
+        vBox.setCenter(rightSide);
+        vBox.setLeft(canvas);
     }
 }
