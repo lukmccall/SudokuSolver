@@ -2,8 +2,6 @@ package pl.sudokusolver.app.CustomViews;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import pl.sudokusolver.app.CustomViews.Texts.Programmers;
 import pl.sudokusolver.app.CustomViews.Texts.ProjectManager;
 import pl.sudokusolver.app.CustomViews.Texts.SystemEngineer;
