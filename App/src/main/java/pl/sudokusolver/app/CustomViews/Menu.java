@@ -7,34 +7,43 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
-import javafx.stage.Stage;
 
+/**
+ * Menu that can be used by user in the main stage
+ */
 public class Menu extends MenuBar {
 
     private StageAbout aboutStage;
     private StageAuthors authorsStage;
     private MenuListener menuListener;
-    //private ThemeChangeListener themeChangeListener;
 
     public Menu(MenuListener menuListener){
         super();
-        this.menuListener = menuListener;
-        //this.themeChangeListener = themeChangeListener;
 
-        init();
+        this.menuListener = menuListener;
+        getMenus().addAll(initHelpMenu(), initThemesMenu(), initClearMenu());
     }
 
-    private void init(){
-
+    /**
+     * Function to initialize help menu
+     * @return  completely created help menu
+     */
+    private javafx.scene.control.Menu initHelpMenu(){
         javafx.scene.control.Menu helpMenu = new javafx.scene.control.Menu(Values.HELP);
 
-        MenuItem about = new MenuItem(Values.ABOUT);
-        MenuItem exit = new MenuItem(Values.EXIT);
-        MenuItem authors = new MenuItem(Values.AUTHORS);
+        helpMenu.getItems().add(initAbout());
+        helpMenu.getItems().add(initAuthors());
+        helpMenu.getItems().add(initExit());
 
-        helpMenu.getItems().add(about);
-        helpMenu.getItems().add(authors);
-        helpMenu.getItems().add(exit);
+        return helpMenu;
+    }
+
+    /**
+     * Function to initialize about tab in help menu
+     * @return  completely created about tab
+     */
+    private MenuItem initAbout(){
+        MenuItem about = new MenuItem(Values.ABOUT);
 
         about.setOnAction((event) -> {
             if (aboutStage != null) {
@@ -46,9 +55,15 @@ public class Menu extends MenuBar {
             aboutStage = new StageAbout();
         });
 
-        exit.setOnAction((event) -> {
-            menuListener.exit();
-        });
+        return about;
+    }
+
+    /**
+     * Function to initialize authors tab in help menu
+     * @return  completely created authors tab
+     */
+    private MenuItem initAuthors(){
+        MenuItem authors = new MenuItem(Values.AUTHORS);
 
         authors.setOnAction((event) -> {
             if (authorsStage != null) {
@@ -60,16 +75,48 @@ public class Menu extends MenuBar {
             authorsStage = new StageAuthors();
         });
 
+        return authors;
+    }
+
+    /**
+     * Function to initialize exit tab in help menu
+     * @return  completely created exit tab
+     */
+    private MenuItem initExit(){
+        MenuItem exit = new MenuItem(Values.EXIT);
+
+        exit.setOnAction((event) -> menuListener.exit());
+
+        return exit;
+    }
+
+    /**
+     * Function to initialize themes menu
+     * @return  completely created themes menu
+     */
+    private javafx.scene.control.Menu initThemesMenu(){
         javafx.scene.control.Menu themesMenu = new javafx.scene.control.Menu(Values.THEMES);
 
+        RadioMenuItem lightTheme = initLightTheme();
+        RadioMenuItem darkTheme = initDarkTheme();
+
+        initToggleGroup(lightTheme, darkTheme);
+
+        themesMenu.getItems().add(lightTheme);
+        themesMenu.getItems().add(darkTheme);
+
+        return themesMenu;
+    }
+
+    /**
+     * Function to initialize light theme tab in themes menu
+     * @return  completely created light theme tab
+     */
+    private RadioMenuItem initLightTheme(){
         RadioMenuItem lightTheme = new RadioMenuItem(Values.BRIGHT);
-        RadioMenuItem darkTheme = new RadioMenuItem(Values.DARK);
 
         if (Values.THEME == Theme.LIGHT){
             lightTheme.setSelected(true);
-        }
-        else{
-            darkTheme.setSelected(true);
         }
 
         lightTheme.setOnAction((event) -> {
@@ -87,10 +134,23 @@ public class Menu extends MenuBar {
                 }
 
                 menuListener.change();
-                //themeChangeListener.changed();
                 Utilities.saveFile("Theme: LIGHT");
             }
         });
+
+        return lightTheme;
+    }
+
+    /**
+     * Function to initialize dark theme tab in themes menu
+     * @return  completely created dark theme tab
+     */
+    private RadioMenuItem initDarkTheme(){
+        RadioMenuItem darkTheme = new RadioMenuItem(Values.DARK);
+
+        if (Values.THEME == Theme.DARK){
+            darkTheme.setSelected(true);
+        }
 
         darkTheme.setOnAction((event) -> {
             if (Values.THEME != Theme.DARK){
@@ -106,28 +166,46 @@ public class Menu extends MenuBar {
                     aboutStage.toBack();
                 }
                 menuListener.change();
-                //themeChangeListener.changed();
 
                 Utilities.saveFile("Theme: DARK");
             }
         });
 
+        return darkTheme;
+    }
+
+    /**
+     * Function to create toggle group of light and dark theme in themes menu
+     * @param lightTheme    light theme from themes menu
+     * @param darkTheme     dark theme from themes menu
+     */
+    private void initToggleGroup(RadioMenuItem lightTheme, RadioMenuItem darkTheme){
         ToggleGroup toggleGroup = new ToggleGroup();
         toggleGroup.getToggles().add(lightTheme);
         toggleGroup.getToggles().add(darkTheme);
+    }
 
-        themesMenu.getItems().add(lightTheme);
-        themesMenu.getItems().add(darkTheme);
-
+    /**
+     * Function to initialize clear menu
+     * @return  completely created clear menu
+     */
+    private javafx.scene.control.Menu initClearMenu(){
         javafx.scene.control.Menu clearMenu = new javafx.scene.control.Menu(Values.SUDOKU);
+
+        clearMenu.getItems().add(initClear());
+
+        return clearMenu;
+    }
+
+    /**
+     * Function to initialize clear tab in clear menu
+     * @return  completely created clear tab
+     */
+    private MenuItem initClear(){
         MenuItem clear = new MenuItem(Values.CLEAR);
 
-        clear.setOnAction((event) -> {
-            menuListener.clear();
-        });
+        clear.setOnAction((event) -> menuListener.clear());
 
-        clearMenu.getItems().add(clear);
-
-        this.getMenus().addAll(helpMenu, themesMenu, clearMenu);
+        return clear;
     }
 }

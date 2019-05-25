@@ -4,8 +4,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import pl.sudokusolver.app.Scenes.StageMain;
 
-//import javafx.scene.control.Menu;
-
 public class Main extends Application {
 
     @Override
