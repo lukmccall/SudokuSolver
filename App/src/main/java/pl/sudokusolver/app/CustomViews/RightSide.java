@@ -133,6 +133,9 @@ public class RightSide extends VBox implements ImageListener {
 
         });
 
+        load.setFocusTraversable(false);
+        solve.setFocusTraversable(false);
+
         javafx.scene.layout.HBox hBox = new javafx.scene.layout.HBox();
         hBox.setSpacing(25);
         hBox.getChildren().addAll(load, solve);

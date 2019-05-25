@@ -21,16 +21,18 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
+/**
+ *
+ */
 public class StageMain extends Stage implements MenuListener, ThemeChangeListener, Sender {
 
     private BorderPane vBox;
     private Canvas canvas;
-    private RightSide temp;
+    private RightSide rightSide;
 
     public StageMain(){
         init();
     }
-
 
     @Override
     public void solve() throws Exception{
@@ -38,7 +40,7 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
                              .addPathSegment("api").addPathSegment("solve").build();
 
         OkHttpClient client = new OkHttpClient();
-        SolveRequest solveRequest = new SolveRequest(canvas.gameboard.getInitial());
+        SolveRequest solveRequest = new SolveRequest(canvas.getInitial());
         Gson gson = new Gson();
         RequestBody body = RequestBody.create(Values.SERVER_REQUEST_TYPE, gson.toJson(solveRequest, solveRequest.getClass()));
 
@@ -50,7 +52,7 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
         try (Response response = client.newCall(request).execute()) {
             if(response.isSuccessful()){
                 SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
-                recievedSolved(sudokuResponse.sudoku);
+                receivedSolved(sudokuResponse.sudoku);
             } else {
                 ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
                 System.out.println(errorResponse);
@@ -59,9 +61,6 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
         }
     }
 
-    /*
-     * LUKASZ KOSMATY TUTAJ DODAJE SWOJ KOD OKAY? - OKEY ;)
-     */
     @Override
     public void send(BufferedImage image, Parameters parameters) throws Exception{
         HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
@@ -86,7 +85,7 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
         try (Response response = client.newCall(request).execute()) {
             if(response.isSuccessful()){
                 SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
-                recievedInitial(sudokuResponse.sudoku);
+                receivedInitial(sudokuResponse.sudoku);
             } else {
                 ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
                 System.out.println(errorResponse);
@@ -96,28 +95,25 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
 
     }
 
-    void recievedSolved(int[][] array){
-        canvas.gameboard.modifyPlayer(array);
-        canvas.update();
+    private void receivedSolved(int[][] array){
+        canvas.modifySolution(array);
     }
 
-    void recievedInitial(int[][] array){
-        canvas.gameboard.modifyInitial(array);
-        canvas.update();
+    private void receivedInitial(int[][] array){
+        canvas.modifyInitial(array);
     }
 
     @Override
     public void clear(){
-        canvas.gameboard.clear();
-        canvas.update();
+        canvas.clear();
     }
 
 
     @Override
     public void changed(){
         canvas.update();
-        if (temp != null)
-            temp.change();
+        if (rightSide != null)
+            rightSide.change();
         if (Values.THEME == Theme.LIGHT){
             vBox.setStyle("-fx-background-color: #F0F0F0;");
         }
@@ -128,18 +124,15 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
 
     private void init(){
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        temp = new RightSide(this, primaryScreenBounds.getWidth() * 0.75f, primaryScreenBounds.getHeight() * 0.75f);
+        rightSide = new RightSide(this, primaryScreenBounds.getWidth() * 0.75f, primaryScreenBounds.getHeight() * 0.75f);
         Menu menu = new Menu(this, this, this);
-        canvas = new Canvas();
 
+        canvas = new Canvas();
         canvas.setOnMouseClicked((event) -> {
             double mouseX = event.getX();
-            double mouseY = event.getY() - canvas.offset_y;
+            double mouseY = event.getY() - canvas.getOffsetY();
 
-            canvas.playerCol = (int) (mouseX / canvas.SIZE_REC);
-            canvas.playerRow = (int) (mouseY / canvas.SIZE_REC);
-
-            canvas.update();
+            canvas.mouseClick(mouseX, mouseY);
         });
 
         this.setX(primaryScreenBounds.getMinX());
@@ -153,7 +146,7 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
 
         vBox = new BorderPane();
         vBox.setTop(menu);
-        vBox.setCenter(temp);
+        vBox.setCenter(rightSide);
         vBox.setLeft(canvas);
 
         canvas.widthProperty().bind(vBox.widthProperty().multiply(0.45f));
@@ -162,60 +155,21 @@ public class StageMain extends Stage implements MenuListener, ThemeChangeListene
         changed();
 
         Scene scene = new Scene(vBox);
+        Controls controls = new Controls(canvas);
 
-        scene.setOnKeyPressed(e -> {
-            KeyCode keyCode = e.getCode();
-            if (keyCode == KeyCode.DIGIT1 || keyCode == KeyCode.NUMPAD1) {
-                canvas.gameboard.modifyInitial(1, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.DIGIT2 || keyCode == KeyCode.NUMPAD2) {
-                canvas.gameboard.modifyInitial(2, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.DIGIT3 || keyCode == KeyCode.NUMPAD3) {
-                canvas.gameboard.modifyInitial(3, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.DIGIT4 || keyCode == KeyCode.NUMPAD4) {
-                canvas.gameboard.modifyInitial(4, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.DIGIT5 || keyCode == KeyCode.NUMPAD5) {
-                canvas.gameboard.modifyInitial(5, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.DIGIT6 || keyCode == KeyCode.NUMPAD6) {
-                canvas.gameboard.modifyInitial(6, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.DIGIT7 || keyCode == KeyCode.NUMPAD7) {
-                canvas.gameboard.modifyInitial(7, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.DIGIT8 || keyCode == KeyCode.NUMPAD8) {
-                canvas.gameboard.modifyInitial(8, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.DIGIT9 || keyCode == KeyCode.NUMPAD9) {
-                canvas.gameboard.modifyInitial(9, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-            else if (keyCode == KeyCode.BACK_SPACE || keyCode == KeyCode.DELETE){
-                canvas.gameboard.modifyInitial(0, canvas.playerRow, canvas.playerCol);
-                canvas.update();
-            }
-
+        scene.setOnKeyPressed(event -> {
+            KeyCode keyCode = event.getCode();
+            controls.onKeyPressed(keyCode);
         });
 
-        this.setTitle(Values.NAME);
-        this.setScene(scene);
+        setTitle(Values.NAME);
+        setScene(scene);
 
-        this.setOnCloseRequest((event) -> {
+        setOnCloseRequest((event) -> {
             Platform.exit();
             System.exit(0);
         });
 
-        this.show();
+        show();
     }
 }

@@ -7,13 +7,19 @@ import pl.sudokusolver.app.GameBoard;
 import pl.sudokusolver.app.Theme;
 import pl.sudokusolver.app.Values;
 
+/**
+ * Canvas that is used for graphical sudoku visualization
+ */
 public class Canvas extends javafx.scene.canvas.Canvas {
 
+    private double SIZE_REC = 50;
+    private int MAX_COL = 8;
+    private int MAX_ROW = 8;
 
-    public double SIZE_REC = 50;
-    public GameBoard gameboard;
-    public double offset_y;
-    public int playerCol, playerRow;
+    private double offset_y;
+    private int playerCol, playerRow;
+
+    private GameBoard gameboard;
 
     public Canvas(){
         gameboard = new GameBoard();
@@ -22,97 +28,206 @@ public class Canvas extends javafx.scene.canvas.Canvas {
         heightProperty().addListener(evt -> draw());
     }
 
+    /**
+     * Function to get numbers input by player
+     * @return 2d array of numbers that have already been input
+     */
+    public int[][] getInitial(){
+        return gameboard.getInitial();
+    }
+
+    /**
+     * Function to remove every digit from sudoku
+     */
+    public void clear(){
+        gameboard.clear();
+        update();
+    }
+
+    /**
+     * Function to get how much canvas is offset form top
+     * @return height offset of sudoku
+     */
+    public double getOffsetY(){
+        return offset_y;
+    }
+
+    /**
+     * Function that redraws the sudoku to allow user to see changes that happened
+     */
     public void update(){
         draw();
     }
 
+    /**
+     * Function to update solution array and display it to user
+     * @param array containing solved sudoku
+     */
+    public void modifySolution(int [][] array){
+        gameboard.modifySolution(array);
+        update();
+    }
+
+    /**
+     * Function to update initial array and display it to user
+     * @param array containing initial version of sudoku
+     */
+    public void modifyInitial(int [][] array){
+        gameboard.modifyInitial(array);
+        update();
+    }
+
+    /**
+     * Function that calculates which field user clicked and shows it to user
+     * @param mouseX horizontal position of mouse
+     * @param mouseY vertical position of mouse
+     */
+    public void mouseClick(double mouseX, double mouseY){
+        playerCol = (int) (mouseX / SIZE_REC);
+        playerRow = (int) (mouseY / SIZE_REC);
+
+        update();
+    }
+
+    /**
+     * Function that modifies initial array because of user input
+     * @param value value inserted by user
+     */
+    public void onValueInserted(int value){
+        gameboard.modifyInitial(value, playerRow, playerCol);
+        update();
+    }
+
+    /**
+     * Function that changes position of field focused by user to one up
+     */
+    public void movePlayerUp(){
+        if (playerRow > 0) playerRow--;
+        update();
+    }
+
+    /**
+     * Function that changes position of field focused by user to one down
+     */
+    public void movePlayerDown(){
+        if (playerRow < MAX_ROW) playerRow++;
+        update();
+    }
+
+    /**
+     * Function that changes position of field focused by user to one left
+     */
+    public void movePlayerLeft(){
+        if (playerCol > 0) playerCol--;
+        update();
+    }
+
+    /**
+     * Function that changes position of field focused by user to one right
+     */
+    public void movePlayerRight(){
+        if (playerCol < MAX_COL) playerCol++;
+        update();
+    }
+
+    /**
+     * Inherited function that tells if the canvas can be resized over time
+     * @return true if it can be resized, false otherwise
+     */
     @Override
     public boolean isResizable() {
         return true;
     }
 
+    /**
+     * Inherited function that returns preferable width with given height
+     * @param height    height of window
+     * @return  preferable width of window
+     */
     @Override
     public double prefWidth(double height) {
         return getWidth();
     }
 
+    /**
+     * Inherited function that returns preferable height with given width
+     * @param width    width of window
+     * @return  preferable height of window
+     */
     @Override
     public double prefHeight(double width) {
         return getHeight();
     }
 
     /**
-     * Method draws with data from the GameBoard instance of the Controller class
+     * Function to draw sudoku and digits on canvas
      */
     private void draw() {
-        SIZE_REC = getHeight() / 9;
-        if (SIZE_REC  * 9 > getWidth()){
-            SIZE_REC = (getWidth()) / 9;
-        }
-        offset_y = (getHeight() - SIZE_REC * 9) / 2;
-
         GraphicsContext context = this.getGraphicsContext2D();
 
+        //setting size of a single field
+        SIZE_REC = getHeight() > getWidth() ? getWidth() / 9 : getHeight() / 9;
+
+        //calculating offset of the sudoku so that it can be vertically in center of the window
+        offset_y = (getHeight() - SIZE_REC * 9) / 2;
+
+        //coloring the whole canvas appropriate to chosen color theme
         if (Values.THEME == Theme.LIGHT){
             context.setFill(Color.web("F1F0F0"));
         }
         else{
             context.setFill(Color.web("34495E"));
         }
-
         context.fillRect(0, 0, getWidth() * 8, getWidth() * 8);
 
-        // draw white rounded rectangles for our board
+
+        //drawing colored rectangles that represent fields
         for(int row = 0; row < 9; row++) {
             for(int col = 0; col < 9; col++) {
 
+                //calculating position of fields
                 double position_y = row * SIZE_REC + 2 + offset_y;
-
                 double position_x = col * SIZE_REC + 2;
 
                 double width = SIZE_REC - 2 * 2;
 
+                //choosing the color depending of theme
                 if (Values.THEME == Theme.LIGHT){
                     context.setFill(Color.WHITE);
                 }
                 else{
                     context.setFill(Color.web("4F6F8F"));
                 }
-
                 context.fillRect(position_x, position_y, width, width);
             }
         }
 
+        //drawing a red border to indicate which field is focused by player
         context.setStroke(Color.RED);
         context.setLineWidth(5);
         if (playerRow < 9 && playerRow >= 0)
             context.strokeRect(playerCol * SIZE_REC + 2, playerRow * SIZE_REC + 2 + offset_y, SIZE_REC - 2*2, SIZE_REC - 2*2);
 
-        // draw the numbers from our GameBoard instance
         int[][] initial = gameboard.getInitial();
-        int[][] player = gameboard.getPlayer();
+        int[][] solution = gameboard.getSolution();
 
+        //drawing digits onto fields
         for(int row = 0; row < 9; row++) {
             for(int col = 0; col < 9; col++) {
-                double position_y = row * SIZE_REC + offset_y + SIZE_REC / 2 + SIZE_REC / 5;// + SIZE_REC / 2; //SIZE_REC / 2 / 2 + offset_y;
-
+                double position_y = row * SIZE_REC + offset_y + SIZE_REC / 2 + SIZE_REC / 5;
                 double position_x = col * SIZE_REC + SIZE_REC / 2 - SIZE_REC / 2 / 4;
-
-                if (initial[row][col] != 0){
-                    context.setFill(Color.BLACK);
-                }
-                else if (player[row][col] != 0){
-                    context.setFill(Color.RED);
-                }
-
 
                 context.setFont(new Font(SIZE_REC / 2));
 
+                //if the digit is entered by user or detected while image input use one color to draw it
                 if(initial[row][col] != 0) {
+                    context.setFill(Color.BLACK);
                     context.fillText(initial[row][col] + "", position_x, position_y);
                 }
-                else if (player[row][col] != 0){
-                    context.fillText(player[row][col] + "", position_x, position_y);
+                //otherwise use another color
+                else if (solution[row][col] != 0){
+                    context.setFill(Color.RED);
+                    context.fillText(solution[row][col] + "", position_x, position_y);
                 }
             }
         }
