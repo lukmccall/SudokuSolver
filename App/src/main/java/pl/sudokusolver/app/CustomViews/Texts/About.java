@@ -26,7 +26,7 @@ public class About extends VBox {
 
     /**
      * Function to initialize text with application name
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initNameText(){
         Text name = new Text(Values.NAME);
@@ -36,7 +36,7 @@ public class About extends VBox {
 
     /**
      * Function to initialize text describing what this application is about
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initDescriptionText(){
         Text description = new Text(Values.DESCRIPTION);

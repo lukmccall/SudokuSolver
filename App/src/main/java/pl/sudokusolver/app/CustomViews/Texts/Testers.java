@@ -25,7 +25,7 @@ public class Testers extends VBox {
 
     /**
      * Function to initialize text saying 'Testers'
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initTestersText(){
         Text testersText = new Text(Values.TESTERS);
@@ -35,7 +35,7 @@ public class Testers extends VBox {
 
     /**
      * Function to initialize text saying names of Testers
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initTestersName(){
         Text testersNames = new Text(Values.TESTERS_NAMES);

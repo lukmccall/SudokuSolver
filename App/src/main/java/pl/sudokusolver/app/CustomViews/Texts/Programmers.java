@@ -25,7 +25,7 @@ public class Programmers extends VBox {
 
     /**
      * Function to initialize text saying 'Programmers'
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initProgrammersText(){
         Text programmersText = new Text(Values.PROGRAMMERS);

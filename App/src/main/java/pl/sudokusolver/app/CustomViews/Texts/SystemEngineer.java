@@ -24,7 +24,7 @@ public class SystemEngineer extends VBox {
 
     /**
      * Function to initialize text saying 'System Engineer'
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initSystemEngineerText(){
         Text systemEngineerText = new Text(Values.SYSTEM_ENGINEER);
@@ -34,7 +34,7 @@ public class SystemEngineer extends VBox {
 
     /**
      * Function to initialize text saying name of System Engineer
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initSystemEngineerName(){
         Text systemEngineerName = new Text(Values.SYSTEM_ENGINEER_NAME);

@@ -24,7 +24,7 @@ public class ProjectManager extends VBox {
 
     /**
      * Function to initialize text saying 'Project Manager'
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initProjectManagerText(){
         Text projectManagerText = new Text(Values.PROJECT_MANAGER);
@@ -34,7 +34,7 @@ public class ProjectManager extends VBox {
 
     /**
      * Function to initialize text saying name of Project Manager
-     * @return  completely create text
+     * @return  completely created text
      */
     private Text initProjectManagerName(){
         Text projectManagerName = new Text(Values.PROJECT_MANAGER_NAME);
