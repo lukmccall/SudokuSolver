@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
+import pl.sudokusolver.app.Listeners.ImageListener;
+import pl.sudokusolver.app.Listeners.Sender;
 import pl.sudokusolver.app.Scenes.StageImage;
 
 import java.awt.image.BufferedImage;

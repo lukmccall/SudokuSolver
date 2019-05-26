@@ -1,4 +1,4 @@
-package pl.sudokusolver.app;
+package pl.sudokusolver.app.Listeners;
 
 public interface MenuListener {
     void clear();

@@ -1,4 +1,6 @@
-package pl.sudokusolver.app;
+package pl.sudokusolver.app.Listeners;
+
+import pl.sudokusolver.app.Parameters;
 
 import java.awt.image.BufferedImage;
 

@@ -1,8 +1,8 @@
 package pl.sudokusolver.app.Scenes;
 
-import pl.sudokusolver.app.ButtonsListener;
+import pl.sudokusolver.app.Listeners.ButtonsListener;
 import pl.sudokusolver.app.CustomViews.ViewAdvanced;
-import pl.sudokusolver.app.ParametersListener;
+import pl.sudokusolver.app.Listeners.ParametersListener;
 import pl.sudokusolver.app.Values;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

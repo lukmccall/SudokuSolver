@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
-import pl.sudokusolver.app.ButtonsListener;
+import pl.sudokusolver.app.Listeners.ButtonsListener;
 import pl.sudokusolver.app.CustomViews.Sliders.Distance;
 import pl.sudokusolver.app.CustomViews.Sliders.GaussianBlur;
 import pl.sudokusolver.app.CustomViews.Sliders.LineThickness;

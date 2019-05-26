@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 import pl.sudokusolver.app.Api.ErrorResponse;
 import pl.sudokusolver.app.Api.SolveRequest;
 import pl.sudokusolver.app.Api.SudokuResponse;
+import pl.sudokusolver.app.Listeners.MenuListener;
+import pl.sudokusolver.app.Listeners.Sender;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

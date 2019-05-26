@@ -1,6 +1,7 @@
 package pl.sudokusolver.app.CustomViews;
 
 import pl.sudokusolver.app.*;
+import pl.sudokusolver.app.Listeners.MenuListener;
 import pl.sudokusolver.app.Scenes.StageAbout;
 import pl.sudokusolver.app.Scenes.StageAuthors;
 import javafx.scene.control.MenuBar;
