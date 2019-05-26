@@ -1,5 +1,6 @@
 package pl.sudokusolver.solver.utility;
 
+import javafx.util.Pair;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,16 @@ class UtilityTest {
             { 9, 4, 0, 1, 0, 8, 5, 0, 0 },
             { 7, 0, 0, 0, 0, 6, 0, 0, 0 },
             { 6, 8, 2, 0, 0, 0, 0, 9, 0 } };
+
+    int grid2[][] = { { 1, 9, 1, 1, 1, 1, 8, 5, 3 },
+            { 8, 6, 5, 8, 1, 1, 1, 1, 4 },
+            { 2, 3, 8, 2, 7, 3, 2, 6, 9 },
+            { 5, 7, 4, 1, 2, 2, 3, 4, 5 },
+            { 8, 6, 5, 8, 1, 1, 1, 1, 4 },
+            { 2, 3, 8, 2, 7, 3, 2, 6, 9 },
+            { 5, 7, 4, 1, 2, 2, 3, 4, 5 },
+            { 5, 7, 4, 1, 2, 2, 3, 4, 5 },
+            { 8, 6, 5, 8, 1, 1, 1, 1, 4 } };
 
     @Test
     void usedInRow0TestTrue() {
@@ -255,31 +266,100 @@ class UtilityTest {
     }
 
     @Test
-    void canPlaceDigit1() {
+    void canPlaceDigitTestTrue() {  // sprawdza czy nie ma takiej liczby w kolumnie,wierszu,boksie
+        assertTrue(Utility.canPlaceDigit(grid,0,0,1));
+        assertTrue(Utility.canPlaceDigit(grid,1,1,1));
+        assertTrue(Utility.canPlaceDigit(grid,2,2,1));
+        assertTrue(Utility.canPlaceDigit(grid,0,4,1));
+        assertTrue(Utility.canPlaceDigit(grid,8,8,1));
+        assertTrue(Utility.canPlaceDigit(grid,7,7,1));
+        assertTrue(Utility.canPlaceDigit(grid,0,5,1));
     }
 
     @Test
-    void getUnassignedLocation1() {
+    void canPlaceDigitTestFalse() {  // sprawdza czy jest taka liczba w kolumnie,wierszu,boksie
+        assertFalse(Utility.canPlaceDigit(grid,0,0,0));
+        assertFalse(Utility.canPlaceDigit(grid,1,1,0));
+        assertFalse(Utility.canPlaceDigit(grid,2,2,0));
+        assertFalse(Utility.canPlaceDigit(grid,0,4,0));
+        assertFalse(Utility.canPlaceDigit(grid,8,8,9));
+        assertFalse(Utility.canPlaceDigit(grid,7,7,5));
+        assertFalse(Utility.canPlaceDigit(grid,0,5,8));
     }
 
     @Test
-    void gridToString1() {
+    void canPlaceDigitIndexOutOfBoundExceptionTest() {
+        boolean thrown1 = false;
+
+
+        try {
+            Utility.canPlaceDigit(grid, -1, -1, 0);
+        } catch (IndexOutOfBoundsException e) {
+            thrown1 = true;
+        }
+        Assert.assertTrue(thrown1);
+    }
+
+
+    @Test
+    void getUnassignedLocationTrue() {
+        Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid);
+        boolean test = false;
+
+        if (a.equals(new Pair<>(0,0))) test = true;
+        assertTrue(test);
+    }
+
+
+    @Test
+    void getUnassignedLocationFalse() {
+        Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid);
+        boolean test = false;
+
+        if (a.equals(new Pair<>(7,7))) test = true;
+        assertFalse(test);
+    }
+
+
+    @Test
+    void getUnassignedLocation9x9() {
+
+        Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid2);
+        boolean test = false;
+
+        if (a.equals(new Pair<>(9,9))) test = true;
+
+        assertTrue(test);
     }
 
     @Test
-    void usedInBox() {
+    void getUnassignedLocationGrid2True() {
+        grid2[5][5]=0;
+        Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid2);
+        boolean test = false;
+
+        if (a.equals(new Pair<>(5,5))) test = true;
+        assertTrue(test);
     }
 
-    @Test
-    void canPlaceDigit() {
-    }
+
 
     @Test
-    void getUnassignedLocation() {
-    }
+    void gridToStringTrue() {
 
-    @Test
-    void gridToString() {
+      StringBuilder grid1 = new StringBuilder();
+      grid1.append("[0, 9, 0, 0, 0, 0, 8, 5, 3]").append(System.getProperty("line.separator"))
+              .append("[0, 0, 0, 8, 0, 0, 0, 0, 4]").append(System.getProperty("line.separator"))
+        .append("[0, 0, 8, 2, 0, 3, 0, 6, 9]").append(System.getProperty("line.separator"))
+        .append("[5, 7, 4, 0, 0, 2, 0, 0, 0]").append(System.getProperty("line.separator"))
+        .append("[0, 0, 0, 0, 0, 0, 0, 0, 0]").append(System.getProperty("line.separator"))
+        .append("[0, 0, 0, 9, 0, 0, 6, 3, 7]").append(System.getProperty("line.separator"))
+        .append("[9, 4, 0, 1, 0, 8, 5, 0, 0]").append(System.getProperty("line.separator"))
+        .append("[7, 0, 0, 0, 0, 6, 0, 0, 0]").append(System.getProperty("line.separator"))
+        .append("[6, 8, 2, 0, 0, 0, 0, 9, 0]").append(System.getProperty("line.separator"));
+
+        assertEquals(grid1.toString(),Utility.gridToString(grid));
+
     }
 
 }
