@@ -17,6 +17,6 @@ public class MaxResizeFilter implements IFilter {
 
     @Override
     public void apply(Mat input) {
-        input = ImageProcessing.resizeToMaxSize(input, maxSize);
+        ImageProcessing.resizeToMaxSize(input, maxSize);
     }
 }
