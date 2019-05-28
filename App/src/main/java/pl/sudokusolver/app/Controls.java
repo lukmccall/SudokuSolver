@@ -19,6 +19,7 @@ public class Controls {
      * @param keyCode user input
      */
     public void onKeyPressed(KeyCode keyCode){
+        if (Singleton.getInstance().isBlocked()) return;
         //inserting into Sudoku
         if (keyCode == KeyCode.DIGIT1 || keyCode == KeyCode.NUMPAD1) {
             canvas.onValueInserted(1);

@@ -27,6 +27,7 @@ public class StageImage extends Stage implements ParametersListener, ImageListen
     @Override
     public void accepted(Image image, Parameters parameters){
         imageListener.accepted(image, parameters);
+        close();
     }
 
 

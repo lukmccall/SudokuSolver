@@ -13,14 +13,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import pl.sudokusolver.app.*;
 import pl.sudokusolver.app.Listeners.ImageListener;
 import pl.sudokusolver.app.Listeners.ParametersListener;
-import pl.sudokusolver.app.Parameters;
 import pl.sudokusolver.app.Scenes.StageAdvanced;
 import pl.sudokusolver.app.Scenes.StageError;
-import pl.sudokusolver.app.Theme;
-import pl.sudokusolver.app.Utilities;
-import pl.sudokusolver.app.Values;
 
 import java.io.File;
 import java.io.FileInputStream;

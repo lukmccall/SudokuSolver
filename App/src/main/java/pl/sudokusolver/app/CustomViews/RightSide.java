@@ -1,7 +1,6 @@
 package pl.sudokusolver.app.CustomViews;
 
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
 import pl.sudokusolver.app.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -66,6 +65,7 @@ public class RightSide extends VBox implements ImageListener {
         }
         catch (Exception e){
             //TODO error codes handiling ukasz musi mi powiedziec jak wygladaja exception zebym wiecial co logowac
+            Singleton.getInstance().unblock();
             Utilities.log(e.toString());
         }
 
@@ -147,6 +147,8 @@ public class RightSide extends VBox implements ImageListener {
         load.setFocusTraversable(false);
 
         load.setOnAction((event) -> {
+            if (Singleton.getInstance().isBlocked()) return;
+
             if (imageFilter == null){
                 imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
 
@@ -162,7 +164,9 @@ public class RightSide extends VBox implements ImageListener {
                     stageImage.init(file, width, height);
                 }
                 else{
-                    Utilities.log(Values.E002);
+                    new StageError(2);
+                    return;
+                    //Utilities.log(Values.E002);
                 }
 
                 imageFilter = null;
@@ -182,11 +186,14 @@ public class RightSide extends VBox implements ImageListener {
         solve.setFocusTraversable(false);
 
         solve.setOnAction(event -> {
+            if (Singleton.getInstance().isBlocked()) return;
+
             try{
                 sender.solve();
             }
             catch (Exception e){
                 //TODO error codes handiling ukasz musi mi powiedziec jak wygladaja exception zebym wiecial co logowac
+                Singleton.getInstance().unblock();
                 Utilities.log(e.toString());
             }
 

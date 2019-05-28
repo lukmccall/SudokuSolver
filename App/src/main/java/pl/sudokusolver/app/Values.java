@@ -1,9 +1,9 @@
 package pl.sudokusolver.app;
 
-import javafx.stage.Stage;
 import okhttp3.MediaType;
 
 public class Values {
+
     // Server variable
     public static final String SERVER_URL = "http://localhost:8080/";
     public static final MediaType SERVER_REQUEST_TYPE = MediaType.get("application/json; charset=utf-8");

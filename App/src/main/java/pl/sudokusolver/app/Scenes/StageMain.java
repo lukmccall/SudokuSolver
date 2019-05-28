@@ -32,6 +32,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
     private Canvas canvas;
     private RightSide rightSide;
     private Menu menu;
+    private Controls controls;
 
     public StageMain(){
         init();
@@ -43,6 +44,8 @@ public class StageMain extends Stage implements MenuListener, Sender {
      */
     @Override
     public void solve() throws Exception{
+        block();
+
         HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
                              .addPathSegment("api").addPathSegment("solve").build();
 
@@ -57,6 +60,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
                                      .build();
 
         try (Response response = client.newCall(request).execute()) {
+            unblock();
             if(response.isSuccessful()){
                 SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
                 receivedSolved(sudokuResponse.sudoku);
@@ -74,6 +78,8 @@ public class StageMain extends Stage implements MenuListener, Sender {
      */
     @Override
     public void send(BufferedImage image, Parameters parameters) throws Exception{
+        block();
+
         HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
                 .addPathSegment("api").addPathSegment("extractfromimg").build();
 
@@ -94,6 +100,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
+            unblock();
             if(response.isSuccessful()){
                 SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
                 receivedInitial(sudokuResponse.sudoku);
@@ -104,6 +111,15 @@ public class StageMain extends Stage implements MenuListener, Sender {
             }
         }
 
+    }
+
+
+    private void block(){
+        Singleton.getInstance().block();
+    }
+
+    private void unblock(){
+        Singleton.getInstance().unblock();
     }
 
     /**
@@ -176,7 +192,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
      * Function to initialize main scene
      */
     private void initScene(){
-        Controls controls = new Controls(canvas);
+        controls = new Controls(canvas);
         Scene scene = new Scene(vBox);
 
         scene.setOnKeyPressed(event -> {
