@@ -61,6 +61,7 @@ public class StageAdvanced extends Stage implements ButtonsListener {
         setTitle(Values.ADVANCED);
         setResizable(false);
         setScene(scene);
+        change();
         show();
     }
 

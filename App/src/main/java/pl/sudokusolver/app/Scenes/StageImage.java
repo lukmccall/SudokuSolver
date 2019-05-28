@@ -55,6 +55,7 @@ public class StageImage extends Stage implements ParametersListener, ImageListen
 
         setMinWidth(primaryScreenBounds.getWidth() * 0.375f);
         setMinHeight(primaryScreenBounds.getHeight() * 0.75f);
+        change();
         show();
     }
 }
