@@ -59,6 +59,7 @@ public class Values {
     public static final String E006 = "SERVER IS DOWN";
     public static final String E007 = "FILE DOESN'T EXIST";
     public static final String E008 = "CAN'T INSERT INTO THIS FIELD";
+    public static final String E009 = "CAN'T CUT WITH EMPTY SELECTION";
 
 
 }

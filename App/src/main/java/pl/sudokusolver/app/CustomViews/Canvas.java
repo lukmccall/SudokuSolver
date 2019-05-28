@@ -212,7 +212,6 @@ public class Canvas extends javafx.scene.canvas.Canvas {
         }
         context.fillRect(0, 0, getWidth() * 8, getWidth() * 8);
 
-
         //drawing colored rectangles that represent fields
         for(int row = 0; row < 9; row++) {
             for(int col = 0; col < 9; col++) {
@@ -231,7 +230,19 @@ public class Canvas extends javafx.scene.canvas.Canvas {
                     context.setFill(Color.web("4F6F8F"));
                 }
                 context.fillRect(position_x, position_y, width, width);
+                ///context.setFill(Color.BLACK);
+                //context.fillRect(position_x, position_y + width, width, 4);
             }
+        }
+
+        for (int i = 0; i <= 9; i+=3){
+            double position_y = i * SIZE_REC + 2 + offset_y;
+            double position_x = i * SIZE_REC + 2;
+
+            context.setFill(Color.BLACK);
+            context.fillRect(0, position_y - 4, SIZE_REC * 9 + 4, 4);
+            context.fillRect(position_x - 4, offset_y, 4, SIZE_REC * 9);
+
         }
 
         //drawing a red border to indicate which field is focused by player

@@ -230,7 +230,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
         canvas.heightProperty().bind(vBox.heightProperty().multiply(0.95f));
 
         canvas.setOnMouseClicked((event) -> {
-            double mouseX = event.getX();
+            double mouseX = event.getX();// - canvas.getOffsetX();
             double mouseY = event.getY() - canvas.getOffsetY();
 
             canvas.mouseClick(mouseX, mouseY);

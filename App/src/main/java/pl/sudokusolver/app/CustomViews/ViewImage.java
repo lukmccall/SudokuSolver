@@ -17,7 +17,9 @@ import pl.sudokusolver.app.Listeners.ImageListener;
 import pl.sudokusolver.app.Listeners.ParametersListener;
 import pl.sudokusolver.app.Parameters;
 import pl.sudokusolver.app.Scenes.StageAdvanced;
+import pl.sudokusolver.app.Scenes.StageError;
 import pl.sudokusolver.app.Theme;
+import pl.sudokusolver.app.Utilities;
 import pl.sudokusolver.app.Values;
 
 import java.io.File;
@@ -149,8 +151,12 @@ public class ViewImage extends BorderPane implements ParametersListener {
         cut.setPrefWidth(100);
 
         cut.setOnAction((event) -> {
-
             Rectangle2D rectangle2D = rubberBandSelection.getRectangle();
+
+            if (!Utilities.isValid(rectangle2D)){
+                new StageError(9);
+                return;
+            }
 
             SnapshotParameters parameters = new SnapshotParameters();
             parameters.setFill(Color.TRANSPARENT);

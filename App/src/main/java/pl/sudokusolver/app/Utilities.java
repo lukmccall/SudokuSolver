@@ -1,5 +1,7 @@
 package pl.sudokusolver.app;
 
+import javafx.geometry.Rectangle2D;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
@@ -11,6 +13,10 @@ public class Utilities {
 
     static boolean isJavaValid(){
         return getVersion() == 8;
+    }
+
+    public static boolean isValid(Rectangle2D rectangle2D){
+        return rectangle2D.getWidth() > 0 && rectangle2D.getHeight() > 0;
     }
 
     private static int getVersion() {
@@ -41,6 +47,8 @@ public class Utilities {
                 return Values.E007;
             case 8:
                 return Values.E008;
+            case 9:
+                return Values.E009;
         }
         return null;
     }

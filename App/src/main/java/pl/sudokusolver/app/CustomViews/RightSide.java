@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import pl.sudokusolver.app.Listeners.ImageListener;
 import pl.sudokusolver.app.Listeners.Sender;
+import pl.sudokusolver.app.Scenes.StageError;
 import pl.sudokusolver.app.Scenes.StageImage;
 
 import java.awt.image.BufferedImage;
@@ -38,7 +39,7 @@ public class RightSide extends VBox implements ImageListener {
             init(a, b);
         }
         catch (FileNotFoundException e){
-            Utilities.log(Values.E007);
+            new StageError(7);
         }
     }
 
