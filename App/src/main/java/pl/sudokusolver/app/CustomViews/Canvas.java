@@ -122,7 +122,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
      */
     public void onValueInserted(int value){
         if (!isValid(value)){
-            new StageError(8);
+            new StageError("pAASKA");
             return;
         }
 

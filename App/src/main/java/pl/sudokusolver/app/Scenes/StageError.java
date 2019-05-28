@@ -15,16 +15,45 @@ public class StageError extends Stage {
 
     private ViewError viewError;
     private Scene aboutScene;
+    private int errorID;
+    private String error;
 
     public StageError(int error){
         super();
+        //this.errorID = error;
+        init(error);
+    }
+
+    public StageError(String error){
+        super();
+        //this.error = error;
         init(error);
     }
 
     /**
      * Function to initialize whole screen
+     * @param error error id
      */
     private void init(int error){
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+        viewError = new ViewError(error);
+        aboutScene = new Scene(viewError, screenBounds.getWidth() * 0.25f, screenBounds.getHeight() * 0.5f);
+
+        initModality(Modality.APPLICATION_MODAL);
+        setDimensions(screenBounds);
+        setTitle(Values.ERROR);
+        setScene(aboutScene);
+        setResizable(false);
+        change();
+        show();
+    }
+
+    /**
+     * Function to initialize whole screen
+     * @param error error string
+     */
+    private void init(String error){
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
         viewError = new ViewError(error);

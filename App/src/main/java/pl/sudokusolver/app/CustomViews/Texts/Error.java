@@ -12,19 +12,26 @@ import pl.sudokusolver.app.Values;
  */
 public class Error extends VBox {
 
-    private int error;
-
     public Error(int error){
-        this.error = error;
-        initAbout();
+        initAbout(error);
+    }
+
+    public Error(String error){
+        initAbout(error);
     }
 
     /**
      * Function to initialize whole layout
      */
-    private void initAbout(){
+    private void initAbout(int errorID){
         setSpacing(30);
-        getChildren().addAll(initErrorText(), initErrorDescription());
+        getChildren().addAll(initErrorText(errorID), initErrorDescription(errorID));
+        setAlignment(Pos.CENTER);
+    }
+
+    private void initAbout(String error){
+        setSpacing(30);
+        getChildren().addAll(initErrorDescription(error));
         setAlignment(Pos.CENTER);
     }
 
@@ -32,8 +39,8 @@ public class Error extends VBox {
      * Function to initialize text with error value
      * @return  completely created text
      */
-    private Text initErrorText(){
-        Text name = new Text("Error 00" + error + ":");
+    private Text initErrorText(int errorID){
+        Text name = new Text("Error 00" + errorID + ":");
         name.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 24;");
         return name;
     }
@@ -42,11 +49,24 @@ public class Error extends VBox {
      * Function to initialize text describing the error
      * @return  completely created text
      */
-    private Text initErrorDescription(){
-        Text description = new Text(Utilities.getError(error));
+    private Text initErrorDescription(int errorID){
+        Text description = new Text(Utilities.getError(errorID));
         description.setStyle("-fx-font-size: 18;");
         description.setTextAlignment(TextAlignment.CENTER);
         description.wrappingWidthProperty().bind(widthProperty());
         return description;
     }
+
+    /**
+     * Function to initialize text describing the error
+     * @return  completely created text
+     */
+    private Text initErrorDescription(String error){
+        Text description = new Text(error);
+        description.setStyle("-fx-font-size: 18;");
+        description.setTextAlignment(TextAlignment.CENTER);
+        description.wrappingWidthProperty().bind(widthProperty());
+        return description;
+    }
+
 }

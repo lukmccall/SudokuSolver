@@ -12,6 +12,18 @@ public class ViewError extends VBox {
         init(error);
     }
 
+    public ViewError(String error){
+        init(error);
+    }
+
+    private void init(String error){
+        setAlignment(Pos.CENTER);
+        setSpacing(15);
+        setTheme();
+
+        getChildren().addAll(new Error(error));
+    }
+
     private void init(int error){
         setAlignment(Pos.CENTER);
         setSpacing(15);
