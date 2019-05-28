@@ -15,18 +15,14 @@ public class StageError extends Stage {
 
     private ViewError viewError;
     private Scene aboutScene;
-    private int errorID;
-    private String error;
 
     public StageError(int error){
         super();
-        //this.errorID = error;
         init(error);
     }
 
     public StageError(String error){
         super();
-        //this.error = error;
         init(error);
     }
 

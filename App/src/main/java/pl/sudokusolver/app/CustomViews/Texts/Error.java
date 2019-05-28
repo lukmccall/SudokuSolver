@@ -5,7 +5,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import pl.sudokusolver.app.Utilities;
-import pl.sudokusolver.app.Values;
 
 /**
  * Error layout
