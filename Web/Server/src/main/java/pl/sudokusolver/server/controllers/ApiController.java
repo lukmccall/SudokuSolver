@@ -3,6 +3,7 @@ package pl.sudokusolver.server.controllers;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.Logger;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -17,12 +18,10 @@ import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.SizeCellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
-import pl.sudokusolver.recognizerlib.filters.BlurFilter;
-import pl.sudokusolver.recognizerlib.filters.CleanLinesFilter;
-import pl.sudokusolver.recognizerlib.filters.MaxResizeFilter;
-import pl.sudokusolver.recognizerlib.filters.NotFilter;
+import pl.sudokusolver.recognizerlib.filters.*;
 import pl.sudokusolver.recognizerlib.sudoku.BaseSudokuExtractor;
 import pl.sudokusolver.recognizerlib.sudoku.Sudoku;
+import pl.sudokusolver.recognizerlib.sudoku.SudokuExtractor;
 import pl.sudokusolver.server.bean.DigitRecognizer;
 import pl.sudokusolver.server.exceptions.SolvingFailedException;
 import pl.sudokusolver.server.models.GridModel;
@@ -77,16 +76,18 @@ public class ApiController {
                 && !inputImg.getContentType().equals("image/jpg"))
             throw new IllegalArgumentException("Expected jpg or png get " + inputImg.getContentType());
 
-        BaseSudokuExtractor baseSudokuExtractor = new BaseSudokuExtractor(
-            new DefaultGridExtractStrategy(new BlurFilter(blurSize,blurBlockSize,blurC)),
-            new SizeCellsExtractStrategy(),
-            new FastDigitExtractStrategy(),
-            digitRecognizer.getRecognizer(),
-            Collections.singletonList(new MaxResizeFilter()),
-            Collections.singletonList(new CleanLinesFilter(lineTreshold, minLineSize, lineGap)),
-            null
-        );
-
+        //todo: add parameters to extractor
+        SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
+                .setGridStrategy(new DefaultGridExtractStrategy(new MedianBlur(3,21,2)))
+                .setCellsStrategy(new SizeCellsExtractStrategy())
+                .setDigitsStrategy(new FastDigitExtractStrategy())
+                .setRecognizer(digitRecognizer.getRecognizer())
+                .addPreGridFilters(new FixedWidthResizeFilter())
+                .addPreCellsFilters(new ToGrayFilter())
+                .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
+                .build();
 
         Mat mat = Utility.multipartFileToMat(inputImg);
         Sudoku sudoku = baseSudokuExtractor.extract(mat);

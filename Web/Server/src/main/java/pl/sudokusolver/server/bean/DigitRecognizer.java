@@ -30,6 +30,7 @@ public class DigitRecognizer {
             LOGGER.info("Loading openCV from " + this.openCVUrl);
             Init.init(this.openCVUrl);
         }
+
         this.recognizer = new SVM("..\\..\\Data\\svm.xml");
 //        this.recognizer = new TesseractWrapper();
     }

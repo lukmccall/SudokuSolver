@@ -85,141 +85,26 @@ public class BaseSudokuExtractor extends SudokuExtractor {
     @Override
     public Sudoku extract(Mat img, String path) throws NotFoundSudokuException, CellsExtractionFailedException {
 
-      //  new DisplayHelper().apply(img);
-      //  Utility.applyFilters(img, preGridFilters);
-       // new DisplayHelper().apply(img);
-
-        double ratio = img.size().height/img.size().width;
-        resize(img,img, new Size(1000f,1000f*ratio));
-      //  new DisplayHelper().apply(img);
-
-
-        /*=============================KOD */
-        Mat test = img.clone();
-       // new DisplayHelper().apply(test);
-        new ToGrayFilter().apply(test);
-        Mat test2 = test.clone();
-     //   new DisplayHelper().apply(test);
-        Photo.fastNlMeansDenoising(test,test,50,10,10);
-     //   new DisplayHelper().apply(test);
-        Core.addWeighted(test2,1.5f,test,-0.5f,0.5f,test);
-      //  new DisplayHelper().apply(test);
-        Photo.fastNlMeansDenoising(test,test,50,10,10);
-      //  new DisplayHelper().apply(test);
-
-        adaptiveThreshold(test, test, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
-
-       // new DisplayHelper().apply(test);
-
-        double erosion_size = 2;
-        Mat structImage = Imgproc.getStructuringElement(MORPH_RECT, new Size(erosion_size,erosion_size));
-        morphologyEx(test,test,MORPH_OPEN, structImage);
-
-
-         erosion_size = 1f;
-        Mat element = getStructuringElement( MORPH_RECT,
-                new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
-                new Point( erosion_size, erosion_size ) );
-
-
-       // morphologyEx(element,element,MORPH_CLOSE, element);
-        erode( test, test, element );
-        dilate( test, test, element );
-
-
-
-       // new DisplayHelper().apply(test);
-        List<MatOfPoint> ret = new ArrayList<>();
-        Mat heirarchy = new Mat();
-        findContours(test, ret, heirarchy,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
-
-        int max = 0;
-        for(int i = 1; i <ret.size();i++)
-        {
-            if(contourArea(ret.get(max),false)<contourArea(ret.get(i)))
-                max = i;
-
-
-        }
-
-        drawContours(img,ret,max,new Scalar(0,0,0),3);
-
-
-    //
-
-      //  Photo.fastNlMeansDenoising(test,test,16,5,10);
-      //  adaptiveThreshold(test, test, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 15, 2);
-        /*
-        //GaussianBlur(test,test, new Size(3,3),0);
-
-
-
-       // medianBlur(test,test, 3);
-       // new BlurFilter(3,21,2).apply(test);
-
-
-
-        int width = 1;
-        int height = 1;
-        Mat kernel = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(2 * width + 1, 2 * height + 1), new Point(width,height));
-
-        Imgproc.dilate(test,test,kernel);
-
-
-        List<MatOfPoint> cont = Lists.newArrayList();
-        findContours(test, cont, new Mat(), RETR_CCOMP, CHAIN_APPROX_SIMPLE);
-        MatOfPoint max = cont.get(0);
-
-        for (MatOfPoint p : cont) {
-          if(contourArea(p)>contourArea(max))
-          {
-              max = p;
-          }
-        }
-*/
-
-      //
-
-     //   new DisplayHelper().apply(img,path);
-        /*===============================KOD */
+        Utility.applyFilters(img, preGridFilters);
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
-     //  new DisplayHelper().apply(sudokuGrid,path);
-  //      new DisplayHelper().apply(sudokuGrid);
+
         resize(sudokuGrid,sudokuGrid,new Size(600f,600f));
-     //   new DisplayHelper().apply(sudokuGrid);
+
         Utility.applyFilters(sudokuGrid, preCellsFilters);
-    //    new DisplayHelper().apply(sudokuGrid);
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
-     //  new DisplayHelper().apply(sudokuGrid);
-//      new DisplayHelper().apply(sudokuGrid);
 
 
-        //todo: make exception
         if(cells == null) throw new CellsExtractionFailedException();
 
         Sudoku sudoku = new Sudoku();
         for(int i = 0; i < cells.size(); i++){
             Mat cell = cells.get(i);
-           resize(cell,cell,new Size(50f,50f)); // ZOSTAW MI TO!
             Utility.applyFilters(cell, preDigitsFilters);
-
-            //new DisplayHelper().apply(cell);
-
-          //  System.out.println("Hehe");
-            //new DisplayHelper().apply(cell);
-
 
             Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
 
             if (digit.isPresent())
-            {
-
                 sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i / 9, i % 9);
-             //System.out.println(sudoku.getDigit(i / 9, i % 9)+" "+cell.size().height+" "+cell.size().width);
-            //  new DisplayHelper().apply(digit.get());
-
-            }
-
 
         }
         return sudoku;

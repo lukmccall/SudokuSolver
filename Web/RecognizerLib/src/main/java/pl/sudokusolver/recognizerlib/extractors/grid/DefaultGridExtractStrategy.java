@@ -50,24 +50,56 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         this.blurFilter = blurFilter;
     }
 
+    //todo: update doc
     @Override
     public Mat extractGrid(Mat img) throws NotFoundSudokuException {
-            Mat outbox = img.clone();
+        Mat sudokuGridFinder = preCutProcessing(img);
+        List<MatOfPoint> ret = getContours(sudokuGridFinder,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
+        int max = getBiggestBlobIndex(ret);
+
+
+        drawContours(img,ret,max,new Scalar(0,0,0),3); // magical fix
+
+        Mat outbox = img.clone();
         new ToGrayFilter().apply(outbox);
 
         Photo.fastNlMeansDenoising(outbox,outbox,50,5,10);
 
         adaptiveThreshold(outbox, outbox, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 33, 2);
-      //  new DisplayHelper().apply(outbox);
-       // Canny(outbox,outbox,50,150);
-     //  new DisplayHelper().apply(outbox);
-            List<MatOfPoint> contours = getContours(outbox,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
-            Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
-            Mat m = perspectiveWrap(img, approx);
-   //     new DisplayHelper().apply(m);
-            new ToGrayFilter().apply(m);
-           // new DisplayHelper().apply(m);
-            return m;
+
+        List<MatOfPoint> contours = getContours(outbox,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
+        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
+
+        return perspectiveWrap(img, approx);
+    }
+
+    private Mat preCutProcessing(Mat img){
+        Mat sudokuGridFinder = img.clone();
+        new ToGrayFilter().apply(sudokuGridFinder);
+        Mat sudokuGridFinder2 = sudokuGridFinder.clone();
+
+        Photo.fastNlMeansDenoising(sudokuGridFinder,sudokuGridFinder,50,10,10);
+        Core.addWeighted(sudokuGridFinder2,1.5f,sudokuGridFinder,-0.5f,0.5f,sudokuGridFinder);
+
+        Photo.fastNlMeansDenoising(sudokuGridFinder,sudokuGridFinder,50,10,10);
+
+        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
+
+        double erosion_size = 2;
+        Mat structImage = Imgproc.getStructuringElement(MORPH_RECT, new Size(erosion_size,erosion_size));
+        morphologyEx(sudokuGridFinder,sudokuGridFinder,MORPH_OPEN, structImage);
+
+
+        erosion_size = 1f;
+        Mat element = getStructuringElement( MORPH_RECT,
+                new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
+                new Point( erosion_size, erosion_size ) );
+
+
+        erode( sudokuGridFinder, sudokuGridFinder, element );
+        dilate( sudokuGridFinder, sudokuGridFinder, element );
+
+        return sudokuGridFinder;
     }
 
     private int getBiggestBlobIndex(List<MatOfPoint> contours){

@@ -34,7 +34,7 @@ public class test {
     public static void main(String[] args) throws NotFoundSudokuException, CellsExtractionFailedException {
         System.out.println("Rec Lib Test");
 
-        Init.init("D:\\SyfPulpit\\ProjektIO\\opencv\\build\\java\\x64");
+        Init.init("C:\\opencv4.0.1\\opencv\\build\\java\\x64");
 
         if(train)
         {
@@ -82,21 +82,13 @@ public class test {
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(svm)
-                .addPreGridFilters(new ResizeFilter(new Size(1500,1500)))
+                .addPreGridFilters(new FixedWidthResizeFilter())
+                .addPreCellsFilters(new ToGrayFilter())
+                .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
                 .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
-        String path2 = "../Data/TestImgs/"+64+".jpg";
-
-        Mat img2 = imread(path2);
-        Sudoku testSudoku2 = null;
-        try{
-            testSudoku2 = baseSudokuExtractor.extract(img2,path2);
-        } catch (Exception e){
-
-        }
-//        testSudoku2.printSudoku();
-      //  new DisplayHelper().apply(img2);
         int full =0;
         double avg = 0;
         int expections = 0;
