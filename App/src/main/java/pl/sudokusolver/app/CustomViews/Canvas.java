@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import pl.sudokusolver.app.GameBoard;
+import pl.sudokusolver.app.Scenes.StageError;
 import pl.sudokusolver.app.Theme;
 import pl.sudokusolver.app.Utilities;
 import pl.sudokusolver.app.Values;
@@ -121,7 +122,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
      */
     public void onValueInserted(int value){
         if (!isValid(value)){
-            Utilities.log("nie wolmo tag robić");
+            new StageError(8);
             return;
         }
 

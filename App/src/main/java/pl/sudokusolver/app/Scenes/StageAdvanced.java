@@ -47,7 +47,6 @@ public class StageAdvanced extends Stage implements ButtonsListener {
      * Function to change theme
      */
     void change(){
-        System.out.println("asas");
         viewAdvanced.setTheme();
     }
 

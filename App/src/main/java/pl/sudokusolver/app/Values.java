@@ -15,6 +15,7 @@ public class Values {
 
     public static String NAME = "SUDOKU SOLVER";
 
+    public static final String ERROR = "ERROR";
     public static final String LOAD = "LOAD";
     public static final String SOLVE = "SOLVE";
     public static final String ABOUT = "ABOUT";
@@ -39,10 +40,10 @@ public class Values {
 
     public static final String DESCRIPTION = "Aplikacja przygotowana na przedmiot:\nInżynieria Oprogramowania";
 
-    public static final String LINE_THICKNESS = "GRUBOŚĆ LINII";
-    public static final String PROGING = "PROGOWANIE";
-    public static final String DISTANCE = "ODLEGŁOŚĆ";
-    public static final String GAUSSIAN_BLUR = "ROZMYCIE GAUSSA";
+    public static final String LINE_THICKNESS = "LINE THICKNESS";
+    public static final String PROGING = "PROGING";
+    public static final String DISTANCE = "DISTANCE";
+    public static final String GAUSSIAN_BLUR = "GAUSSIAN BLUR";
 
     public static final String SET = "SET";
     public static final String DEFAULT = "DEFAULT";
@@ -57,6 +58,7 @@ public class Values {
     public static final String E005 = "NO INTERNET CONNECTION";
     public static final String E006 = "SERVER IS DOWN";
     public static final String E007 = "FILE DOESN'T EXIST";
+    public static final String E008 = "CAN'T INSERT INTO THIS FIELD";
 
 
 }
