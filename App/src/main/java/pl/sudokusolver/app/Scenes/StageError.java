@@ -33,7 +33,7 @@ public class StageError extends Stage {
     private void init(int error){
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
-        viewError = new ViewError(error);
+        viewError = new ViewError(error, screenBounds.getWidth() * 0.25f);
         aboutScene = new Scene(viewError, screenBounds.getWidth() * 0.25f, screenBounds.getHeight() * 0.5f);
 
         initModality(Modality.APPLICATION_MODAL);
@@ -52,7 +52,7 @@ public class StageError extends Stage {
     private void init(String error){
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
-        viewError = new ViewError(error);
+        viewError = new ViewError(error, screenBounds.getWidth() * 0.25f);
         aboutScene = new Scene(viewError, screenBounds.getWidth() * 0.25f, screenBounds.getHeight() * 0.5f);
 
         initModality(Modality.APPLICATION_MODAL);
@@ -67,7 +67,7 @@ public class StageError extends Stage {
     /**
      * Function to control theme changing and it's effects
      */
-    void change(){
+    private void change(){
         viewError.setTheme();
     }
 

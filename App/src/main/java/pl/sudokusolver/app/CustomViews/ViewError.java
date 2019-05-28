@@ -8,28 +8,28 @@ import pl.sudokusolver.app.Values;
 
 public class ViewError extends VBox {
 
-    public ViewError(int error){
-        init(error);
+    public ViewError(int error, double width){
+        init(error, width);
     }
 
-    public ViewError(String error){
-        init(error);
+    public ViewError(String error, double width){
+        init(error, width);
     }
 
-    private void init(String error){
+    private void init(String error, double width){
         setAlignment(Pos.CENTER);
         setSpacing(15);
         setTheme();
 
-        getChildren().addAll(new Error(error));
+        getChildren().addAll(new Error(error, width));
     }
 
-    private void init(int error){
+    private void init(int error, double width){
         setAlignment(Pos.CENTER);
         setSpacing(15);
         setTheme();
 
-        getChildren().addAll(new Error(error));
+        getChildren().addAll(new Error(error, width));
     }
 
     /**
