@@ -1,6 +1,7 @@
 package pl.sudokusolver.app.CustomViews;
 
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import pl.sudokusolver.app.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -154,8 +155,9 @@ public class RightSide extends VBox implements ImageListener {
 
                 final FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().add(imageFilter);
+                //fileChooser.showOpenDialog((Stage) sender);
 
-                File file = fileChooser.showOpenDialog(stageImage);
+                File file = fileChooser.showOpenDialog((Stage) sender);
                 if (file != null) {
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
                     stageImage = new StageImage(RightSide.this);
