@@ -1,5 +1,7 @@
 package pl.sudokusolver.app.CustomViews;
 
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import pl.sudokusolver.app.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -20,11 +22,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Appearance of right side of main screen
+ */
 public class RightSide extends VBox implements ImageListener {
 
     private Sender sender;
     private ImageView imageView;
-    private StageImage stage;
+    private StageImage stageImage;
     private FileChooser.ExtensionFilter imageFilter;
 
     public RightSide(Sender sender, double a, double b){
@@ -37,11 +42,19 @@ public class RightSide extends VBox implements ImageListener {
         }
     }
 
+    /**
+     * Function to change application theme
+     */
     public void change(){
-        if (stage != null)
-            stage.change();
+        if (stageImage != null)
+            stageImage.change();
     }
 
+    /**
+     * Function inherited from ImageListener, it is called when user accepts the image
+     * @param image accepted image
+     * @param parameters accepted parameters
+     */
     @Override
     public void accepted(Image image, Parameters parameters){
         imageView.setImage(image);
@@ -57,10 +70,27 @@ public class RightSide extends VBox implements ImageListener {
 
     }
 
+    /**
+     * Function to initialize whole layout
+     * @param width preferable width of image
+     * @param height preferable height of image
+     * @throws FileNotFoundException in case path to image isn't valid
+     */
     private void init(double width, double height) throws FileNotFoundException {
-        Text temp = new Text(Values.NAME);
-        temp.setStyle("-fx-font: 32 arial;" + "-fx-font-weight: bold;");
+        initImage(width, height);
 
+        setSpacing(10);
+        getChildren().addAll(initTextBox(), initImageBox(), getButtons());
+        setAlignment(Pos.CENTER);
+    }
+
+    /**
+     * Function to init image
+     * @param width preferable width of image
+     * @param height preferable height of image
+     * @throws FileNotFoundException in case path to image isn't valid
+     */
+    private void initImage(double width, double height) throws FileNotFoundException{
         Image image = new Image(new FileInputStream(Values.INITIAL_IMAGE));
         imageView = new ImageView(image);
 
@@ -74,27 +104,46 @@ public class RightSide extends VBox implements ImageListener {
         }
 
         imageView.setPreserveRatio(true);
-
-        VBox vBox1 = new VBox(temp);
-        vBox1.setAlignment(Pos.CENTER);
-
-        VBox vBox2 = new VBox(imageView);
-        vBox2.setAlignment(Pos.CENTER);
-
-        javafx.scene.layout.HBox hBox = getButtons();
-        hBox.setAlignment(Pos.CENTER);
-
-        this.setSpacing(10);
-        this.setAlignment(Pos.CENTER);
-        this.getChildren().addAll(vBox1, vBox2, hBox);
     }
 
-    private javafx.scene.layout.HBox getButtons(){
-        Button load = new Button(Values.LOAD);
-        Button solve = new Button(Values.SOLVE);
+    /**
+     * Function to initialize box wrapper for image
+     * @return completely initialized box wrapper
+     */
+    private VBox initImageBox(){
+        VBox vBox = new VBox(imageView);
+        vBox.setAlignment(Pos.CENTER);
+        return vBox;
+    }
 
+    /**
+     * Function to initialize text with name of the app
+     * @return completely initialized text
+     */
+    private Text initText(){
+        Text text = new Text(Values.NAME);
+        text.setStyle("-fx-font: 32 arial;" + "-fx-font-weight: bold;");
+        return text;
+    }
+
+    /**
+     * Function to initialize box wrapper for text
+     * @return completely initialized box wrapper
+     */
+    private VBox initTextBox(){
+        VBox vBox = new VBox(initText());
+        vBox.setAlignment(Pos.CENTER);
+        return vBox;
+    }
+
+    /**
+     * Function to initialize button used to loading images
+     * @return completely initialized button
+     */
+    private Button initLoad(){
+        Button load = new Button(Values.LOAD);
         load.setPrefWidth(100);
-        solve.setPrefWidth(100);
+        load.setFocusTraversable(false);
 
         load.setOnAction((event) -> {
             if (imageFilter == null){
@@ -103,18 +152,13 @@ public class RightSide extends VBox implements ImageListener {
                 final FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().add(imageFilter);
 
-                File file = fileChooser.showOpenDialog(stage);
+                File file = fileChooser.showOpenDialog(stageImage);
                 if (file != null) {
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-                    stage = new StageImage(RightSide.this);
-                    try{
-                        double width = primaryScreenBounds.getWidth() * 0.375f;
-                        double height = primaryScreenBounds.getHeight() * 0.66f;
-                        stage.init(file, width, height);
-                    }
-                    catch (FileNotFoundException e){
-                        Utilities.log(Values.E007);
-                    }
+                    stageImage = new StageImage(RightSide.this);
+                    double width = primaryScreenBounds.getWidth() * 0.375f;
+                    double height = primaryScreenBounds.getHeight() * 0.66f;
+                    stageImage.init(file, width, height);
                 }
                 else{
                     Utilities.log(Values.E002);
@@ -123,6 +167,18 @@ public class RightSide extends VBox implements ImageListener {
                 imageFilter = null;
             }
         });
+
+        return load;
+    }
+
+    /**
+     * Function to initialize button used to solve sudoku
+     * @return  completely initialized button
+     */
+    private Button initSolve(){
+        Button solve = new Button(Values.SOLVE);
+        solve.setPrefWidth(100);
+        solve.setFocusTraversable(false);
 
         solve.setOnAction(event -> {
             try{
@@ -135,12 +191,18 @@ public class RightSide extends VBox implements ImageListener {
 
         });
 
-        load.setFocusTraversable(false);
-        solve.setFocusTraversable(false);
+        return solve;
+    }
 
-        javafx.scene.layout.HBox hBox = new javafx.scene.layout.HBox();
+    /**
+     * Function to align buttons next to each other and wrap them in a box
+     * @return completely initialized box wrapper
+     */
+    private HBox getButtons(){
+        HBox hBox = new HBox();
         hBox.setSpacing(25);
-        hBox.getChildren().addAll(load, solve);
+        hBox.getChildren().addAll(initLoad(), initSolve());
+        hBox.setAlignment(Pos.CENTER);
 
         return hBox;
     }

@@ -1,5 +1,6 @@
 package pl.sudokusolver.app.Scenes;
 
+import javafx.stage.Modality;
 import pl.sudokusolver.app.Listeners.ButtonsListener;
 import pl.sudokusolver.app.CustomViews.ViewAdvanced;
 import pl.sudokusolver.app.Listeners.ParametersListener;
@@ -10,14 +11,14 @@ import javafx.stage.Stage;
 /**
  * Controls appearance of Advanced screen
  */
-class StageAdvanced extends Stage implements ButtonsListener {
+public class StageAdvanced extends Stage implements ButtonsListener {
 
     private ViewAdvanced viewAdvanced;
     private Scene scene;
 
     private ParametersListener parametersListener;
 
-    StageAdvanced(ParametersListener parametersListener){
+    public StageAdvanced(ParametersListener parametersListener){
         this.parametersListener = parametersListener;
         init();
     }
@@ -46,6 +47,7 @@ class StageAdvanced extends Stage implements ButtonsListener {
      * Function to change theme
      */
     void change(){
+        System.out.println("asas");
         viewAdvanced.setTheme();
     }
 
@@ -56,6 +58,7 @@ class StageAdvanced extends Stage implements ButtonsListener {
         viewAdvanced = new ViewAdvanced(this);
         scene = new Scene(viewAdvanced);
 
+        initModality(Modality.APPLICATION_MODAL);
         setTitle(Values.ADVANCED);
         setResizable(false);
         setScene(scene);

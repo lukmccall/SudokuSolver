@@ -1,5 +1,6 @@
 package pl.sudokusolver.app.Scenes;
 
+import javafx.stage.Modality;
 import pl.sudokusolver.app.CustomViews.ViewAuthors;
 import pl.sudokusolver.app.Values;
 import javafx.geometry.Rectangle2D;
@@ -29,6 +30,7 @@ public class StageAuthors extends Stage {
 
         authorsScene = new Scene(viewAuthors, screenBounds.getWidth() * 0.375f, screenBounds.getHeight() * 0.66f);
 
+        initModality(Modality.APPLICATION_MODAL);
         setDimensions(screenBounds);
         setTitle(Values.AUTHORS);
         setScene(authorsScene);

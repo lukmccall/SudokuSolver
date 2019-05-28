@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import pl.sudokusolver.app.GameBoard;
 import pl.sudokusolver.app.Theme;
+import pl.sudokusolver.app.Utilities;
 import pl.sudokusolver.app.Values;
 
 /**
@@ -90,10 +91,40 @@ public class Canvas extends javafx.scene.canvas.Canvas {
     }
 
     /**
+     * Function to check if the digit can be placed at the current spot
+     * @param value value to be inserted to sudoku
+     * @return  true if it can be, false otherwise
+     */
+    private boolean isValid(int value){
+        if (value < 0 || value > 9) return false;
+        int[][] sudoku = gameboard.getInitial();
+
+        for (int i = 0; i < MAX_ROW; i++){
+            if (sudoku[i][playerCol] == value) return false;
+            if (sudoku[playerRow][i] == value) return false;
+        }
+
+        int startRow = playerRow - playerRow % 3;
+        int startCol = playerCol - playerCol % 3;
+        for (int row = 0; row < 3; row++){
+            for (int col = 0; col < 3; col++){
+                if (sudoku[row + startRow][col + startCol] == value) return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Function that modifies initial array because of user input
      * @param value value inserted by user
      */
     public void onValueInserted(int value){
+        if (!isValid(value)){
+            Utilities.log("nie wolmo tag robić");
+            return;
+        }
+
         gameboard.modifyInitial(value, playerRow, playerCol);
         update();
     }

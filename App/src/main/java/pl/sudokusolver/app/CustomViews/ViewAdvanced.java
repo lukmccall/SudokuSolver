@@ -128,8 +128,8 @@ public class ViewAdvanced extends VBox {
         double width = primaryScreenBounds.getWidth();
         double height = primaryScreenBounds.getHeight();
 
-        HBox.setMargin(top, new Insets(height / 20, width / 40, 0, width / 40));
-        HBox.setMargin(bottom, new Insets(0, width / 40, 0, width / 40));
-        HBox.setMargin(buttons, new Insets(0, width / 40, height / 20, width / 40));
+        VBox.setMargin(top, new Insets(height / 20, width / 40, 0, width / 40));
+        VBox.setMargin(bottom, new Insets(0, width / 40, 0, width / 40));
+        VBox.setMargin(buttons, new Insets(0, width / 40, height / 20, width / 40));
     }
 }
