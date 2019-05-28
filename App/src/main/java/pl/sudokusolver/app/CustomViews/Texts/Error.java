@@ -5,33 +5,37 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import pl.sudokusolver.app.Utilities;
-import pl.sudokusolver.app.Values;
 
 /**
  * Error layout
  */
 public class Error extends VBox {
 
-    public Error(int error){
-        initAbout(error);
+    public Error(int error, double width){
+        initError(error, width);
     }
 
-    public Error(String error){
-        initAbout(error);
+    public Error(String error, double width){
+        initError(error, width);
     }
 
     /**
      * Function to initialize whole layout
+     * @param errorID id of the error
      */
-    private void initAbout(int errorID){
+    private void initError(int errorID, double width){
         setSpacing(30);
-        getChildren().addAll(initErrorText(errorID), initErrorDescription(errorID));
+        getChildren().addAll(initErrorText(errorID, width), initErrorDescription(errorID, width));
         setAlignment(Pos.CENTER);
     }
 
-    private void initAbout(String error){
+    /**
+     * Function to initialize whole layout
+     * @param error string describing the error
+     */
+    private void initError(String error, double width){
         setSpacing(30);
-        getChildren().addAll(initErrorDescription(error));
+        getChildren().addAll(initErrorDescription(error, width));
         setAlignment(Pos.CENTER);
     }
 
@@ -39,9 +43,10 @@ public class Error extends VBox {
      * Function to initialize text with error value
      * @return  completely created text
      */
-    private Text initErrorText(int errorID){
+    private Text initErrorText(int errorID, double width){
         Text name = new Text("Error 00" + errorID + ":");
         name.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 24;");
+        name.setWrappingWidth(width * 0.95f);
         return name;
     }
 
@@ -49,11 +54,11 @@ public class Error extends VBox {
      * Function to initialize text describing the error
      * @return  completely created text
      */
-    private Text initErrorDescription(int errorID){
+    private Text initErrorDescription(int errorID, double width){
         Text description = new Text(Utilities.getError(errorID));
         description.setStyle("-fx-font-size: 18;");
         description.setTextAlignment(TextAlignment.CENTER);
-        description.wrappingWidthProperty().bind(widthProperty());
+        description.setWrappingWidth(width * 0.95f);
         return description;
     }
 
@@ -61,11 +66,11 @@ public class Error extends VBox {
      * Function to initialize text describing the error
      * @return  completely created text
      */
-    private Text initErrorDescription(String error){
+    private Text initErrorDescription(String error, double width){
         Text description = new Text(error);
         description.setStyle("-fx-font-size: 18;");
         description.setTextAlignment(TextAlignment.CENTER);
-        description.wrappingWidthProperty().bind(widthProperty());
+        description.setWrappingWidth(width * 0.95f);
         return description;
     }
 
