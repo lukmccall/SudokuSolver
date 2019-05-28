@@ -22,6 +22,9 @@ import pl.sudokusolver.app.Listeners.Sender;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Controls appearance of main screen and logic connected with sending and receiving sudoku
@@ -44,32 +47,38 @@ public class StageMain extends Stage implements MenuListener, Sender {
      */
     @Override
     public void solve() throws Exception{
+
         block();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
 
-        HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
-                             .addPathSegment("api").addPathSegment("solve").build();
+            HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
+                    .addPathSegment("api").addPathSegment("solve").build();
 
-        OkHttpClient client = new OkHttpClient();
-        SolveRequest solveRequest = new SolveRequest(canvas.getInitial());
-        Gson gson = new Gson();
-        RequestBody body = RequestBody.create(Values.SERVER_REQUEST_TYPE, gson.toJson(solveRequest, solveRequest.getClass()));
+            OkHttpClient client = new OkHttpClient();
+            SolveRequest solveRequest = new SolveRequest(canvas.getInitial());
+            Gson gson = new Gson();
+            RequestBody body = RequestBody.create(Values.SERVER_REQUEST_TYPE, gson.toJson(solveRequest, solveRequest.getClass()));
 
-        Request request = new Request.Builder()
-                                     .url(url)
-                                     .post(body)
-                                     .build();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            unblock();
-            if(response.isSuccessful()){
-                SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
-                receivedSolved(sudokuResponse.sudoku);
-            } else {
-                ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
-                System.out.println(errorResponse);
-                //todo:> error handling - DJ Bomasz
+            try (Response response = client.newCall(request).execute()) {
+                if(response.isSuccessful()){
+                    SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
+                    receivedSolved(sudokuResponse.sudoku);
+                } else {
+                    ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
+                    new StageError(errorResponse.errorMessage);
+                }
+            } catch (IOException e) {
+                new StageError("Couldn't open file");
+            } finally {
+                unblock();
             }
-        }
+        });
     }
 
     /**
@@ -80,36 +89,49 @@ public class StageMain extends Stage implements MenuListener, Sender {
     public void send(BufferedImage image, Parameters parameters) throws Exception{
         block();
 
-        HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
-                .addPathSegment("api").addPathSegment("extractfromimg").build();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+            HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
+                    .addPathSegment("api").addPathSegment("extractfromimg").build();
 
-        OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient();
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(image, "jpg", outputStream);
-        Gson gson = new Gson();
-
-        RequestBody requestBody = new MultipartBody.Builder()
-                                        .setType(MultipartBody.FORM)
-                                        .addFormDataPart("sudoku", "sudoku.jpg",
-                                            RequestBody.create(Values.SERVER_IMG_TYPE, outputStream.toByteArray()))
-                                        .build();
-        Request request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            unblock();
-            if(response.isSuccessful()){
-                SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
-                receivedInitial(sudokuResponse.sudoku);
-            } else {
-                ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
-                System.out.println(errorResponse);
-                //todo:> error handling - DJ Bomasz
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(image, "jpg", outputStream);
+            } catch (IOException e) {
+                new StageError("Couldn't open file");
+                unblock();
+                return;
             }
-        }
+            Gson gson = new Gson();
+
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("sudoku", "sudoku.jpg",
+                            RequestBody.create(Values.SERVER_IMG_TYPE, outputStream.toByteArray()))
+                    .build();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody)
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                unblock();
+                if(response.isSuccessful()){
+                    SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
+                    receivedInitial(sudokuResponse.sudoku);
+                } else {
+                    ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
+                    new StageError(errorResponse.errorMessage);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                new StageError("Couldn't open file");
+            }
+
+        });
 
     }
 
