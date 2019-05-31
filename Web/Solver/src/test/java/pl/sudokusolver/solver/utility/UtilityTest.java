@@ -38,14 +38,10 @@ class UtilityTest {
     }
     @Test
     void usedInRowTestIndexOutOfBoundException() {
-        boolean thrown = false;
 
-        try {
-            Utility.usedInRow(grid,-1,0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown = true;
-        }
-        assertTrue(thrown);
+        assertThrows(IndexOutOfBoundsException.class, ()->{
+            Utility.canPlaceDigit(grid, -1, -1, 0);
+        });
     }
 
     @Test
@@ -128,14 +124,9 @@ class UtilityTest {
 
     @Test
     void usedInColTestIndexOutOfBoundException() {
-        boolean thrown = false;
-
-        try {
+        assertThrows(IndexOutOfBoundsException.class, ()->{
             Utility.usedInCol(grid,9,0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown = true;
-        }
-        assertTrue(thrown);
+        });
     }
 
     //usedInBox sprawdza czy cyfra znajduje sie w kwadracie 3x3
@@ -194,74 +185,41 @@ class UtilityTest {
         Assert.assertFalse(Utility.usedInBox(grid,6,6,1));
     }
 
-    @Test   // INDEKS 7 - PROBLEM
-    void usedInBoxIndexOutOfBoundExceptionForIndeks7() {
-        boolean thrown1 = false;
 
-
-        try {
-            Utility.usedInBox(grid, 7, 0, 0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown1 = true;
-        }
-        assertTrue(thrown1);
-        try {
-            Utility.usedInBox(grid, 0, 7, 0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown1 = true;
-        }
-        assertTrue(thrown1);
-        try {
-            Utility.usedInBox(grid, 7, 7, 0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown1 = true;
-        }
-        assertTrue(thrown1);
-    }
-
-
-
-
-        @Test   // wszystkie przypadki oprocz indeksu 7
+    @Test
     void usedInBoxIndexOutOfBoundException(){
-        boolean thrown2 = false;
-        boolean thrown3 = false;
-        boolean thrown5 = false;
-        boolean thrown6 = false;
-        boolean thrown7 = false;
 
+        assertThrows(IndexOutOfBoundsException.class, ()->{
+            Utility.usedInBox(grid, 7, 0, 0);
+        });
 
-        try {
-            Utility.usedInBox(grid,8,0,0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown2 = true;
-        }
-        assertTrue(thrown2);
-        try {
+        assertThrows(IndexOutOfBoundsException.class, ()->{
+            Utility.usedInBox(grid, 0, 7, 0);
+        });
+
+        assertThrows(IndexOutOfBoundsException.class, ()->{
+            Utility.usedInBox(grid, 7, 7, 0);
+        });
+
+        assertThrows(IndexOutOfBoundsException.class, ()->{
+            Utility.usedInBox(grid, 8, 0,0);
+        });
+
+        assertThrows(IndexOutOfBoundsException.class, ()->{
             Utility.usedInBox(grid,9,0,0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown3 = true;
-        }
-        assertTrue(thrown3);
+        });
 
-        try {
+        assertThrows(IndexOutOfBoundsException.class, ()->{
             Utility.usedInBox(grid,0,8,0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown5 = true;
-        }
-        assertTrue(thrown5);
-        try {
+        });
+
+        assertThrows(IndexOutOfBoundsException.class, ()->{
             Utility.usedInBox(grid,0,9,0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown6 = true;
-        }
-        assertTrue(thrown6);
-        try {
+        });
+
+        assertThrows(IndexOutOfBoundsException.class, ()->{
             Utility.usedInBox(grid,-1,-1,0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown7 = true;
-        }
-        assertTrue(thrown7);
+        });
 
     }
 
@@ -289,15 +247,10 @@ class UtilityTest {
 
     @Test
     void canPlaceDigitIndexOutOfBoundExceptionTest() {
-        boolean thrown1 = false;
 
-
-        try {
+        assertThrows(IndexOutOfBoundsException.class, ()->{
             Utility.canPlaceDigit(grid, -1, -1, 0);
-        } catch (IndexOutOfBoundsException e) {
-            thrown1 = true;
-        }
-        Assert.assertTrue(thrown1);
+        });
     }
 
 
