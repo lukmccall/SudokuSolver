@@ -18,3 +18,7 @@ Web/.idea/
 App/.idea/
 App/target/
 App/app.iml
+
+Web/RecognizerLib/recognizerlib.iml
+Web/Server/server.iml
+Web/Solver/solver.iml
