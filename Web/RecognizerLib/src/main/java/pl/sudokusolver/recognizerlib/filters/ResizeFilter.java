@@ -15,6 +15,7 @@ public class ResizeFilter implements IFilter{
      * @param size wielkość macierzy wyjściowej
      */
     public ResizeFilter(Size size) {
+        if(size.height <= 0 || size.width <= 0) throw new IllegalArgumentException();
         this.size = size;
     }
 
@@ -22,6 +23,7 @@ public class ResizeFilter implements IFilter{
      * @param size wielkość macierzy wyjściowej (kwadrat: size x size)
      */
     public ResizeFilter(int size){
+        if(size <= 0) throw new IllegalArgumentException();
         this.size = new Size(size, size);
     }
 

@@ -12,6 +12,7 @@ public class MaxResizeFilter implements IFilter {
     }
 
     public MaxResizeFilter(Size maxSize) {
+        if(maxSize.width <= 0 || maxSize.height <= 0) throw new IllegalArgumentException();
         this.maxSize = maxSize;
     }
 

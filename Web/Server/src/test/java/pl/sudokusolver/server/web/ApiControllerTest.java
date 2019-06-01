@@ -22,9 +22,4 @@ public class ApiControllerTest {
         Assert.assertNotNull("Logger isn't set",LOGGER);
     }
 
-    @Test
-    void testAdd() {
-        int a = 1, b = 1;
-        Assertions.assertEquals(2, a + b);
-    }
 }

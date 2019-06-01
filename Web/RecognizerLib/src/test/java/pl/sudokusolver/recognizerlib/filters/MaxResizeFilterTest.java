@@ -1,12 +1,12 @@
 package pl.sudokusolver.recognizerlib.filters;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib._INIT_;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.core.CvType.CV_8UC1;
@@ -40,7 +40,7 @@ class MaxResizeFilterTest {
 
     @Test
     void invalidCreations(){
-        assertThrows(InvalidArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, ()->{
             new MaxResizeFilter(new Size(-10, -20));
             new MaxResizeFilter(new Size(100, 0));
 

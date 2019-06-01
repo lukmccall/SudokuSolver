@@ -1,5 +1,6 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Mat;
@@ -26,6 +27,7 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 class BaseSudokuExtractorTest {
 
     @Test
+    @Ignore
     void procTest(){
         IRecognizer svm = new SVM("../../Data/svm.xml");
 

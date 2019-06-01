@@ -33,6 +33,7 @@ public class BlurFilter implements IFilter {
      * @param c stała odejmowana od różnicy
      */
     public BlurFilter(int size, int blockSize, int c) {
+        if(size < 0 || blockSize < 2 || c < 0 || size % 2 != 1) throw new IllegalArgumentException();
         this.size = size;
         this.blockSize = blockSize;
         this.c = c;

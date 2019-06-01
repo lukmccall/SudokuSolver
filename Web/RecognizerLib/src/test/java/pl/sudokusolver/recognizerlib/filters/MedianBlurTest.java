@@ -1,6 +1,5 @@
 package pl.sudokusolver.recognizerlib.filters;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,8 +45,16 @@ class MedianBlurTest {
     void blurDefParameters(){
         MedianBlur blurFilter = new MedianBlur();
         blurFilter.apply(matrix);
-        Assert.assertEquals("Expected matrix only with zeros",matrix.dump(), Mat.zeros(3,3, CV_8UC1).dump());
-    }
+
+        Assert.assertEquals(255.0, matrix.get(0,0)[0], 1e-15);
+        Assert.assertEquals(255.0, matrix.get(0,1)[0], 1e-15);
+        Assert.assertEquals(255.0, matrix.get(0,2)[0], 1e-15);
+        Assert.assertEquals(0.0, matrix.get(1,0)[0], 1e-15);
+        Assert.assertEquals(0.0, matrix.get(1,1)[0], 1e-15);
+        Assert.assertEquals(0.0, matrix.get(1,2)[0], 1e-15);
+        Assert.assertEquals(0.0, matrix.get(2,0)[0], 1e-15);
+        Assert.assertEquals(0.0, matrix.get(2,1)[0], 1e-15);
+        Assert.assertEquals(0.0, matrix.get(2,2)[0], 1e-15); }
 
     @Test
     void wrongTypeOfMatrix(){
@@ -58,15 +65,15 @@ class MedianBlurTest {
 
     @Test
     void wrongCreation(){
-        assertThrows(InvalidArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new MedianBlur(-1,-1,-1);
         }, "Expected invalid argument exception for BlurFilter(-1, -1, -1) - arguments below 0");
 
-        assertThrows(InvalidArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new MedianBlur(9,1,3);
         }, "Expected invalid argument exception for BlurFilter(9, 1, 3) - blockSize must be greater then 1");
 
-        assertThrows(InvalidArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new MedianBlur(8,9,3);
         }, "Expected invalid argument exception for BlurFilter(8, 9, 3) - size must be odd");
     }

@@ -1,6 +1,5 @@
 package pl.sudokusolver.recognizerlib.filters;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,15 +57,15 @@ class BlurFilterTest {
 
     @Test
     void wrongCreation(){
-        assertThrows(InvalidArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new BlurFilter(-1,-1,-1);
         }, "Expected invalid argument exception for BlurFilter(-1, -1, -1) - arguments below 0");
 
-        assertThrows(InvalidArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new BlurFilter(9,1,3);
         }, "Expected invalid argument exception for BlurFilter(9, 1, 3) - blockSize must be greater then 1");
 
-        assertThrows(InvalidArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new BlurFilter(8,9,3);
         }, "Expected invalid argument exception for BlurFilter(8, 9, 3) - size must be odd");
     }

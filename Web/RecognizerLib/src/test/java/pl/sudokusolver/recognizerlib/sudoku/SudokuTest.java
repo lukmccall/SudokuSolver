@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith({_INIT_.class})
 public class SudokuTest {
-
-
     @Test
     void sudokuOnCreateHaveEmptyGrid() {
         Sudoku sudoku = new Sudoku();
