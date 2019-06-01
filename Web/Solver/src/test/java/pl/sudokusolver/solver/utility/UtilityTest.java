@@ -188,29 +188,8 @@ class UtilityTest {
 
     @Test
     void usedInBoxIndexOutOfBoundException(){
-
-        assertThrows(IndexOutOfBoundsException.class, ()->{
-            Utility.usedInBox(grid, 7, 0, 0);
-        });
-
-        assertThrows(IndexOutOfBoundsException.class, ()->{
-            Utility.usedInBox(grid, 0, 7, 0);
-        });
-
-        assertThrows(IndexOutOfBoundsException.class, ()->{
-            Utility.usedInBox(grid, 7, 7, 0);
-        });
-
-        assertThrows(IndexOutOfBoundsException.class, ()->{
-            Utility.usedInBox(grid, 8, 0,0);
-        });
-
         assertThrows(IndexOutOfBoundsException.class, ()->{
             Utility.usedInBox(grid,9,0,0);
-        });
-
-        assertThrows(IndexOutOfBoundsException.class, ()->{
-            Utility.usedInBox(grid,0,8,0);
         });
 
         assertThrows(IndexOutOfBoundsException.class, ()->{
@@ -251,6 +230,15 @@ class UtilityTest {
         assertThrows(IndexOutOfBoundsException.class, ()->{
             Utility.canPlaceDigit(grid, -1, -1, 0);
         });
+
+        assertThrows(IndexOutOfBoundsException.class, ()->{
+            Utility.canPlaceDigit(grid, 9, 6, 0);
+        });
+
+        assertThrows(IndexOutOfBoundsException.class, ()->{
+            Utility.canPlaceDigit(grid, 5, 9, 0);
+        });
+
     }
 
 
