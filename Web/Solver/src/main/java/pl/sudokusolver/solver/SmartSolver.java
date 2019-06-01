@@ -45,6 +45,9 @@ public class SmartSolver implements ISolver {
 
     @Override
     final public boolean solve(final int[][] sudoku) {
+        canPlace = new LinkedList[9][9];
+        changeAble = new LinkedList<>();
+
         if(!preSolve(sudoku)) return false;
         if(changeAble.size() == 0) return true;
 
@@ -67,6 +70,7 @@ public class SmartSolver implements ISolver {
             }
             if(!place){
                 sudoku[x][y] = 0;
+                if (canPlace[x][y] == null){System.out.println("cos"); System.out.println(x+" "+y); };
                 element.setSecond(canPlace[x][y].iterator());
                 it.previous();
                 if(!it.hasPrevious()) return false;
