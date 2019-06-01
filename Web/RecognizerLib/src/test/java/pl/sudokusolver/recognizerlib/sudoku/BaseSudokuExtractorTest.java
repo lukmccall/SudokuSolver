@@ -41,7 +41,7 @@ class BaseSudokuExtractorTest {
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
-        int full =0;
+        int full = 0;
         double avgCorrectness = 0;
         int expections = 0;
 

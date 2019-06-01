@@ -13,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.server.bean.DigitRecognizer;
-import pl.sudokusolver.solver.BrutalSolver;
 import pl.sudokusolver.solver.ISolver;
+import pl.sudokusolver.solver.SmartSolver;
 
 @Configuration
 @EnableWebMvc
@@ -59,7 +59,7 @@ public class WebConfig implements WebMvcConfigurer{
 
     @Bean
     public ISolver solver(){
-        return new BrutalSolver();
+        return new SmartSolver();
     }
 
 

@@ -7,11 +7,7 @@ import org.opencv.core.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
@@ -29,9 +25,6 @@ import pl.sudokusolver.server.utility.Utility;
 import pl.sudokusolver.solver.ISolver;
 
 import java.io.IOException;
-import java.util.Collections;
-
-import static org.opencv.highgui.HighGui.waitKey;
 
 @RestController
 @RequestMapping("/api/")
@@ -60,7 +53,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/extractfromimg", method = RequestMethod.POST)
-    public String solve(
+    public String extract(
             @RequestParam("sudoku") MultipartFile inputImg,
             @RequestParam(value = "lineThreshold", required = false, defaultValue = "80") int lineTreshold,
             @RequestParam(value = "minLineSize", required = false, defaultValue = "200") int minLineSize,
