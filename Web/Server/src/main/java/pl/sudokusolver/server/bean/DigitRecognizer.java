@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
-import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractWrapper;
 
 import javax.annotation.PostConstruct;
 
@@ -32,7 +31,6 @@ public class DigitRecognizer {
         }
 
         this.recognizer = new SVM("..\\..\\Data\\svm.xml");
-//        this.recognizer = new TesseractWrapper();
     }
 
     public IRecognizer getRecognizer() {

@@ -1,15 +1,11 @@
 package pl.sudokusolver.recognizerlib.extractors.grid;
 
 import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.photo.Photo;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
-import pl.sudokusolver.recognizerlib.filters.BlurFilter;
-import pl.sudokusolver.recognizerlib.filters.DisplayHelper;
-import pl.sudokusolver.recognizerlib.filters.IFilter;
 import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
-import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.Pair;
+import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 import java.util.ArrayList;
@@ -31,23 +27,18 @@ import static org.opencv.imgproc.Imgproc.*;
  *
  */
 public class DefaultGridExtractStrategy implements GridExtractStrategy {
-    /**
-     * Filter nakładający rozymie na zdjęcie
-     */
-    private IFilter blurFilter;
 
-    /**
-     * Tworzy algorytm korzystający z domyślnego rozmycia ({@link pl.sudokusolver.recognizerlib.filters.BlurFilter})
-     */
+    private int blockSize;
+    private int c;
+
     public DefaultGridExtractStrategy(){
-        blurFilter = new BlurFilter();
+        blockSize = 33;
+        c = 9;
     }
 
-    /**
-     * @param blurFilter algorytm rozmycia używany w algorytmie
-     */
-    public DefaultGridExtractStrategy(IFilter blurFilter) {
-        this.blurFilter = blurFilter;
+    public DefaultGridExtractStrategy(int blockSize, int c) {
+        this.blockSize = blockSize;
+        this.c = c;
     }
 
     //todo: update doc
@@ -65,7 +56,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
         Photo.fastNlMeansDenoising(outbox,outbox,50,5,10);
 
-        adaptiveThreshold(outbox, outbox, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 33, 2);
+        adaptiveThreshold(outbox, outbox, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, blockSize, c);
 
         List<MatOfPoint> contours = getContours(outbox,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
         Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
@@ -86,7 +77,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
 
         double erosion_size = 2;
-        Mat structImage = Imgproc.getStructuringElement(MORPH_RECT, new Size(erosion_size,erosion_size));
+        Mat structImage = getStructuringElement(MORPH_RECT, new Size(erosion_size,erosion_size));
         morphologyEx(sudokuGridFinder,sudokuGridFinder,MORPH_OPEN, structImage);
 
 
@@ -104,15 +95,13 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
     private int getBiggestBlobIndex(List<MatOfPoint> contours){
         double area;
-        double maxarea = 0;
+        double maxArea = 0;
         int p = -1;
         for (int i = 0; i < contours.size(); i++) {
             area = contourArea(contours.get(i), false);
-            if (area > 50) {
-                if (area > maxarea) {
-                    maxarea = area;
-                    p = i;
-                }
+            if (area > 50 && area > maxArea) {
+                maxArea = area;
+                p = i;
             }
         }
         return p;
@@ -125,12 +114,6 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         return ret;
     }
 
-    private List<MatOfPoint> getContours(Mat img){
-        List<MatOfPoint> ret = new ArrayList<>();
-        Mat heirarchy = new Mat();
-        findContours(img, ret, heirarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
-        return ret;
-    }
 
     private Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuException {
         MatOfPoint poly = new MatOfPoint(contours);
@@ -142,7 +125,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         final int corners = 4;
 
         // default value
-        double arcLength = Imgproc.arcLength(src, true);
+        double arcLength = arcLength(src, true);
         approxPolyDP(src, dst, 0.02 * arcLength, true);
         if(dst.rows() == corners)
             return new Pair<>(poly, dst);

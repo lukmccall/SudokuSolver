@@ -35,7 +35,7 @@ public class DigitBoxByteSum implements IDigitBox {
             double aspect = rect.height / (double) rect.width;
 
             if (aspect < 0.1 || aspect > 10) {
-                Imgproc.rectangle(m, rect.tl(), rect.br(), Scalar.all(0), -1);
+                rectangle(m, rect.tl(), rect.br(), Scalar.all(0), -1);
             }
 
         }

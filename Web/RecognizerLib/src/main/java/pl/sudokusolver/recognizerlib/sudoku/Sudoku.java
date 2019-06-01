@@ -1,7 +1,6 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 

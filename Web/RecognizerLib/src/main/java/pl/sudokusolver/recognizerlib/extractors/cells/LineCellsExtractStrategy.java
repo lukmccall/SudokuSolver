@@ -13,10 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opencv.core.Core.KMEANS_RANDOM_CENTERS;
-import static org.opencv.core.Core.kmeans;
-import static org.opencv.core.CvType.CV_32F;
-import static org.opencv.core.CvType.CV_8U;
+import static org.opencv.core.Core.*;
+import static org.opencv.core.CvType.*;
 import static org.opencv.imgproc.Imgproc.Canny;
 import static org.opencv.imgproc.Imgproc.HoughLines;
 
@@ -112,7 +110,7 @@ public class LineCellsExtractStrategy implements CellsExtractStrategy{
                 Point get2 = interPoints.get(i + 11);
                 Rect r1 = new Rect(get, get2);
 
-                if ((r1.x + r1.width <= grid.cols()) && (r1.y + r1.height <= grid.rows()) && r1.x >= 0 && r1.y >= 0) {
+                if (r1.x + r1.width <= grid.cols() && r1.y + r1.height <= grid.rows() && r1.x >= 0 && r1.y >= 0) {
                     Mat s = new Mat(grid, r1).clone();
                     list.add(s);
                 }
@@ -174,7 +172,7 @@ public class LineCellsExtractStrategy implements CellsExtractStrategy{
     }
 
     private double getDistance(Point p1, Point p2) {
-        return Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
+        return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
     }
 
     private Point parametricIntersect(Double r1, Double t1, Double r2, Double t2) {

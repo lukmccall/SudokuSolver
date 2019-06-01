@@ -1,6 +1,5 @@
 package pl.sudokusolver.recognizerlib;
 
-import javafx.scene.input.KeyCode;
 import org.opencv.core.Core;
 
 import java.nio.file.Paths;
@@ -28,7 +27,7 @@ public class Init {
      * Dll jest szukany w plikach systemowych.
      */
     public static void init(){
-        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
     /**
@@ -63,7 +62,8 @@ public class Init {
     public static OSType getOperatingSystemType() {
         if (detectedOS == null) {
             String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
-            if ((OS.contains("mac")) || (OS.contains("darwin"))) {
+            if (OS.contains("mac")
+                || OS.contains("darwin")) {
                 detectedOS = OSType.MacOS;
             } else if (OS.contains("win")) {
                 detectedOS = OSType.Windows;

@@ -5,7 +5,7 @@ public enum ErrorCodes {
     SudokuNotFound(5), CellsExtractionFailed(6), SolverFailed(7);
 
     private final int code;
-    private ErrorCodes(int value) {
+    ErrorCodes(int value) {
         this.code = value;
     }
 

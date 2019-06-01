@@ -1,7 +1,6 @@
 package pl.sudokusolver.recognizerlib.filters;
 
 import org.opencv.core.Mat;
-import org.opencv.core.Size;
 
 import static org.opencv.imgproc.Imgproc.*;
 

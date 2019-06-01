@@ -1,7 +1,6 @@
 package pl.sudokusolver.server.exceptions;
 
 public class ErrorResponse {
-    private final int status = 0;
     private int errorCode;
     private String errorMessage;
 

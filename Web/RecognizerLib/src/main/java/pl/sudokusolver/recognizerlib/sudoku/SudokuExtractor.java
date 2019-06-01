@@ -1,8 +1,5 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
-import org.opencv.core.Mat;
-import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
-import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractStrategy;

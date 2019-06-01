@@ -3,7 +3,6 @@ package pl.sudokusolver.solver;
 import pl.sudokusolver.solver.utility.Pair;
 import pl.sudokusolver.solver.utility.Utility;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;

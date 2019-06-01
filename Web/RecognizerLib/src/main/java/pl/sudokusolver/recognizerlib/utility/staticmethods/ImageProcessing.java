@@ -1,12 +1,7 @@
 package pl.sudokusolver.recognizerlib.utility.staticmethods;
 
 import com.google.common.collect.ImmutableList;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
+import org.opencv.core.*;
 import org.opencv.imgproc.Moments;
 
 import static org.opencv.core.CvType.CV_32FC1;
@@ -37,7 +32,7 @@ public class ImageProcessing {
 
         M.put(0, 0, 1, skew, -0.5 * size * skew, 0, 1, 0);
 
-        warpAffine(img, result, M, new Size(size, size), Imgproc.WARP_INVERSE_MAP | Imgproc.INTER_LINEAR);
+        warpAffine(img, result, M, new Size(size, size), WARP_INVERSE_MAP | INTER_LINEAR);
 
         return result;
     }
@@ -87,7 +82,7 @@ public class ImageProcessing {
         A.put(0,0, s, 0, t_0);
         A.put(1,0, 0, s, t_1);
 
-        warpAffine(digit, res, A, new Size(size, size), Imgproc.WARP_INVERSE_MAP | Imgproc.INTER_LINEAR);
+        warpAffine(digit, res, A, new Size(size, size), WARP_INVERSE_MAP | INTER_LINEAR);
         return res;
     }
 
@@ -99,8 +94,8 @@ public class ImageProcessing {
     public static Mat applyMask(Mat image, MatOfPoint poly) {
         Mat mask = Mat.zeros(image.size(), CvType.CV_8UC1);
 
-        Imgproc.drawContours(mask, ImmutableList.of(poly), 0, Scalar.all(255), -1);
-        Imgproc.drawContours(mask, ImmutableList.of(poly), 0, Scalar.all(0), 2);
+        drawContours(mask, ImmutableList.of(poly), 0, Scalar.all(255), -1);
+        drawContours(mask, ImmutableList.of(poly), 0, Scalar.all(0), 2);
 
         Mat dst = new Mat();
         image.copyTo(dst, mask);

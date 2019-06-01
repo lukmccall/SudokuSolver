@@ -5,9 +5,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
-import pl.sudokusolver.recognizerlib.filters.BlurFilter;
-import pl.sudokusolver.recognizerlib.filters.DisplayHelper;
-import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 import java.io.ByteArrayOutputStream;
@@ -15,10 +12,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-
-import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
-import static org.opencv.imgproc.Imgproc.GaussianBlur;
-import static org.opencv.imgproc.Imgproc.cvtColor;
 
 /**
  * Klasa służąca do czytania i przedtwarzania danych w formacie <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>

@@ -16,7 +16,7 @@ public class PointComparator implements Comparator<Point> {
     @Override
     public int compare(Point o1, Point o2) {
        if(o1.equals(o2)) return 0;
-       if(compareY(o1.y,o2.y) == 0) return (Double.compare(o1.x, o2.x));
+       if(compareY(o1.y,o2.y) == 0) return Double.compare(o1.x, o2.x);
        return compareY(o1.y, o2.y);
     }
 }

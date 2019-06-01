@@ -71,7 +71,7 @@ public class ApiController {
 
         //todo: add parameters to extractor
         SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
-                .setGridStrategy(new DefaultGridExtractStrategy(new MedianBlur(3,21,2)))
+                .setGridStrategy(new DefaultGridExtractStrategy())
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(digitRecognizer.getRecognizer())

@@ -1,9 +1,7 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
-import com.google.common.collect.Lists;
-import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.photo.Photo;
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
@@ -14,17 +12,18 @@ import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractStrategy;
-import pl.sudokusolver.recognizerlib.filters.*;
+import pl.sudokusolver.recognizerlib.filters.BlurFilter;
+import pl.sudokusolver.recognizerlib.filters.CleanLinesFilter;
+import pl.sudokusolver.recognizerlib.filters.IFilter;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
-import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
-import javax.print.attribute.standard.Media;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.opencv.imgcodecs.Imgcodecs.imread;
-import static org.opencv.imgproc.Imgproc.*;
-import static org.opencv.imgproc.Imgproc.contourArea;
+import static org.opencv.imgproc.Imgproc.resize;
 
 /**
  * Podstawowa implementacja <code>sudoku extractora</code>. Nie zawiera ona konkretnych strategi oraz filtórw.
@@ -122,8 +121,8 @@ public class BaseSudokuExtractor extends SudokuExtractor {
                 .addPreCellsFilters(new CleanLinesFilter());
     }
 
-    public static Builder simpleBuilderRecipe(IRecognizer recognizer, BlurFilter blurFilter, CleanLinesFilter cleanLinesFilter){
-        return builder().setGridStrategy(new DefaultGridExtractStrategy(blurFilter))
+    public static Builder simpleBuilderRecipe(IRecognizer recognizer, CleanLinesFilter cleanLinesFilter){
+        return builder().setGridStrategy(new DefaultGridExtractStrategy())
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(recognizer)
