@@ -8,11 +8,20 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 public class SmartSolver implements ISolver {
+    /**
+     * Wyznacza możliwe wartości pól.
+     */
     private LinkedList[][] canPlace = new LinkedList[9][9];
-    private LinkedList<Pair<Pair<Integer,Integer>, Iterator>> changeAble
+    /**
+     * Wyznacza pola do wypełnienia oraz iteratory do poszczególnych list w <code>canPlace</code>.
+     */
+    private LinkedList<Pair<Pair<Integer, Integer>, Iterator>> changeAble
                                                                 = new LinkedList<>();
-
-    public boolean preSolve(int [][]sudoku){
+    /**
+     * @param sudoku - grid wejściowy
+     * @return <code>true</code> gdy da się rozwiązać sudoku, <code>false</code> w przeciwnym wypadku
+     */
+    final public boolean preSolve(final int[][] sudoku){
         for(int i = 0; i < 9; i++)
             for(int j = 0; j < 9; j++){
                 if(sudoku[i][j] != 0) canPlace[i][j] = null;
@@ -25,9 +34,9 @@ public class SmartSolver implements ISolver {
 
                     if(canPlace[i][j].size() == 0) return false;
                     if(canPlace[i][j].size() == 1){
-                        sudoku[i][j] = (int)canPlace[i][j].get(0);
+                        sudoku[i][j] = (int) canPlace[i][j].get(0);
                     }else{
-                        changeAble.add(new Pair<>(new Pair<>(i,j), canPlace[i][j].iterator()));
+                        changeAble.add(new Pair<>(new Pair<>(i, j), canPlace[i][j].iterator()));
                     }
                 }
             }
@@ -35,7 +44,7 @@ public class SmartSolver implements ISolver {
     }
 
     @Override
-    public boolean solve(int[][] sudoku) {
+    final public boolean solve(final int[][] sudoku) {
         if(!preSolve(sudoku)) return false;
         if(changeAble.size() == 0) return true;
 
@@ -49,8 +58,8 @@ public class SmartSolver implements ISolver {
 
             boolean place = false;
             while (innerIt.hasNext()){
-                int nextValue = (int)innerIt.next();
-                if(Utility.canPlaceDigit(sudoku,x,y,nextValue)) {
+                int nextValue = (int) innerIt.next();
+                if(Utility.canPlaceDigit(sudoku, x, y, nextValue)) {
                     sudoku[x][y] = nextValue;
                     place = true;
                     break;

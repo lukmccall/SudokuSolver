@@ -1,12 +1,7 @@
 package pl.sudokusolver.recognizerlib.digitbox;
 
 import com.google.common.collect.Lists;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
+import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib.utility.LineDetector;
 
 import java.util.List;
