@@ -5,6 +5,7 @@ import com.google.common.collect.Ordering;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
+import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.recognizerlib.filters.IFilter;
 
 import java.awt.image.BufferedImage;
@@ -78,5 +79,9 @@ public class Utility {
             for (IFilter filter : filters)
                 filter.apply(input);
         }
+    }
+
+    public static String getSVMDump(){
+        return Init.class.getResource("/svm.xml").toString().substring(6);
     }
 }

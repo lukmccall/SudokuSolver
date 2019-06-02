@@ -1,5 +1,6 @@
 package pl.sudokusolver.recognizerlib.utility.staticmethods;
 
+import org.apache.pdfbox.pdmodel.common.function.type4.Parser;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,6 +8,7 @@ import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib.filters.NotFilter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,7 +72,12 @@ public class UtilityTest {
 
         Utility.applyFilters(mat, Collections.singletonList(new NotFilter()));
         Assert.assertEquals(Mat.zeros(5,5,CV_8UC1).dump(), mat.dump());
+    }
 
+    @Test
+    void getSVM(){
+        File file = new File(Utility.getSVMDump());
+        Assert.assertTrue("SVM dump should be in resources", file.exists());
     }
 
 }
