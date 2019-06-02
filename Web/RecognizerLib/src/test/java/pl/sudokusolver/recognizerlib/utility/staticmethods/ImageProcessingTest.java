@@ -32,7 +32,7 @@ class ImageProcessingTest {
         for(int i = 0; i < size * size; i++)
             Assert.assertEquals(1.0, newMat.get(0,i)[0], 1e-10);
     }
-    
+
     @Test
     void applyMask() {
         short size = 30;
