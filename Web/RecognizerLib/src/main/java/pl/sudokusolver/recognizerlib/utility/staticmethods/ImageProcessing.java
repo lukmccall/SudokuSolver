@@ -124,6 +124,9 @@ public class ImageProcessing {
         resize(image,image, new Size((int)(ratio * width), (int)(ratio * height)));
     }
 
+    /**
+     * Obiekt z metodami statycznymi.
+     */
     private ImageProcessing(){}
 
 }
