@@ -59,10 +59,12 @@ public class RightSide extends VBox implements ImageListener {
     @Override
     public void accepted(Image image, Parameters parameters){
         imageView.setImage(image);
+        Utilities.log(parameters.getRecognition());
 
         BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
         try{
             sender.send(bImage, parameters);
+            Singleton.getInstance().unblock();
         }
         catch (Exception e){
             //TODO error codes handiling ukasz musi mi powiedziec jak wygladaja exception zebym wiecial co logowac

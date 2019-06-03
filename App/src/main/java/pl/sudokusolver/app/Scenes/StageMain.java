@@ -64,8 +64,8 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     .url(url)
                     .post(body)
                     .build();
-
             try (Response response = client.newCall(request).execute()) {
+
                 if(response.isSuccessful()){
                     SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
                     receivedSolved(sudokuResponse.sudoku);

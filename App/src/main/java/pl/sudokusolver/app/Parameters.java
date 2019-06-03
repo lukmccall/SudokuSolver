@@ -123,7 +123,7 @@ public class Parameters {
      * Function to return recognition
      * @return recognition
      */
-    private String getRecognition() {
+    public String getRecognition() {
         return recognition;
     }
 }
