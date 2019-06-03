@@ -6,7 +6,6 @@ import javafx.scene.text.Font;
 import pl.sudokusolver.app.GameBoard;
 import pl.sudokusolver.app.Scenes.StageError;
 import pl.sudokusolver.app.Theme;
-import pl.sudokusolver.app.Utilities;
 import pl.sudokusolver.app.Values;
 
 /**
@@ -98,6 +97,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
      */
     private boolean isValid(int value){
         if (value < 0 || value > 9) return false;
+        if (value == 0) return true;
         int[][] sudoku = gameboard.getInitial();
 
         for (int i = 0; i < MAX_ROW; i++){
@@ -122,7 +122,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
      */
     public void onValueInserted(int value){
         if (!isValid(value)){
-            new StageError("pAASKAssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+            new StageError(Values.E008);
             return;
         }
 
