@@ -2,6 +2,7 @@ package pl.sudokusolver.recognizerlib.data;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Rect;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
@@ -46,13 +47,13 @@ public class MNISTReader {
         int m2 = labelBuffer.getInt();
         if(m1 == 2049 && m2 == 2051)
             throw new VersionMismatchException("MNIST files don't have same version. Images have " + m1 + ", labels have "+m2+".");
-        final int numberOfZeroes = 5923; // todo: make it better, because this is stupid :\
+
         // todo: make bug report
         // IMAGES LOAD
-        int imgNumber = imgBuffer.getInt() - numberOfZeroes;
+        int iterations = imgBuffer.getInt();
+        int imgNumber = iterations == 10000 ? iterations - 980 : iterations - 5923;
         int imgRows = imgBuffer.getInt();
         int imgCols = imgBuffer.getInt();
-
         // LABELS LOAD
         labelBuffer.getInt(); // iteams number
 
@@ -61,20 +62,18 @@ public class MNISTReader {
 
         if(labels == null)
             throw new IllegalArgumentException("Invalid data type");
-        int cout = 0;
-        for(int n = 0; n < imgNumber + numberOfZeroes; n++) {
+
+        for(int n = 0; n < iterations; n++) {
             int i = labelBuffer.get() & 0xFF;
 
 
 
             Mat img = loadImg(imgBuffer, imgRows, imgCols);
             if(i == 0)
-            {
-                cout++;
-               continue;
-            }
+                continue;
 
-           putLabel(labels, i, n, type);
+
+            putLabel(labels, i, n, type);
             putImg(trainData, img, n);
         }
         return new SimpleRowData(trainData, labels, size);

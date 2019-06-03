@@ -31,8 +31,8 @@ class BaseSudokuExtractorTest {
     @Test
     @Ignore
     void procTest(){
-        IRecognizer svm = new ANN("../../Data/ann.xml");
-//        IRecognizer svm = new SVM("../../Data/svm.xml");
+//        IRecognizer svm = new ANN("../../Data/ann.xml");
+        IRecognizer svm = new SVM("../../Data/svm.xml");
 //        IRecognizer svm = new TesseractWrapper();
 
         SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()

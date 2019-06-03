@@ -4,6 +4,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.TermCriteria;
 import org.opencv.ml.ANN_MLP;
 import pl.sudokusolver.recognizerlib.data.IData;
+import pl.sudokusolver.recognizerlib.ocr.ml.config.annConfig;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
@@ -13,8 +14,12 @@ import static org.opencv.core.CvType.CV_32FC1;
 /**
  * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/Artificial_neural_network">Artificial neural network</a>
  */
+
+
 public class ANN extends MLWrapper implements ILoader{
     private ANN_MLP ann;
+
+    public ANN() {}
 
     public ANN(IData data){
         ann = ANN_MLP.create();
@@ -29,6 +34,13 @@ public class ANN extends MLWrapper implements ILoader{
         ann.setTermCriteria(new TermCriteria(TermCriteria.COUNT + TermCriteria.EPS, 5000, 1e-5));
         ann.setActivationFunction(ANN_MLP.SIGMOID_SYM);
 
+        ann.train(data.getData(), data.getSampleType(), data.getLabels());
+    }
+
+    public ANN(IData data, annConfig f){
+        ann = ANN_MLP.create();
+        sampleSize = data.getSize();
+        f.config(ann);
         ann.train(data.getData(), data.getSampleType(), data.getLabels());
     }
 
@@ -50,6 +62,7 @@ public class ANN extends MLWrapper implements ILoader{
     @Override
     public Pair<Integer,Double> recognize(Mat img) {
         Mat wraped = applyDigitFilter(img);
+
         Mat result = new Mat();
         ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
         int pre = 0;

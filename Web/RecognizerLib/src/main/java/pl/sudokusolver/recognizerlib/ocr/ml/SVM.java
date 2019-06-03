@@ -11,6 +11,8 @@ import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 public class SVM extends MLWrapper implements ILoader{
     private org.opencv.ml.SVM svm;
 
+    public SVM(){}
+
     public SVM(String url){
         load(url);
         sampleSize = (short) Math.sqrt((double) svm.getVarCount());
@@ -45,5 +47,9 @@ public class SVM extends MLWrapper implements ILoader{
         double dist = svm.predict(ImageProcessing.procSimple(wraped,sampleSize), result,1);
 
         return new Pair<>((int) result.get(0,0)[0],dist);
+    }
+
+    public org.opencv.ml.SVM getML(){
+        return svm;
     }
 }
