@@ -65,16 +65,15 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     .post(body)
                     .build();
             try (Response response = client.newCall(request).execute()) {
-
                 if(response.isSuccessful()){
                     SudokuResponse sudokuResponse = gson.fromJson(response.body().charStream(),SudokuResponse.class);
                     receivedSolved(sudokuResponse.sudoku);
                 } else {
                     ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
-                    new StageError(errorResponse.errorMessage);
+                    Platform.runLater(() -> new StageError(errorResponse.errorMessage));
                 }
             } catch (IOException e) {
-                new StageError("Couldn't open file");
+                Platform.runLater(() -> new StageError("Couldn't open file"));
             } finally {
                 unblock();
             }
@@ -100,7 +99,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
             try {
                 ImageIO.write(image, "jpg", outputStream);
             } catch (IOException e) {
-                new StageError("Couldn't open file");
+                Platform.runLater(() -> new StageError("Couldn't open file"));
                 unblock();
                 return;
             }
@@ -123,12 +122,12 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     receivedInitial(sudokuResponse.sudoku);
                 } else {
                     ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
-                    new StageError(errorResponse.errorMessage);
+                    Platform.runLater(() -> new StageError(errorResponse.errorMessage));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                new StageError("Couldn't open file");
+                Platform.runLater(() -> new StageError("Couldn't open file"));
             }
 
         });
