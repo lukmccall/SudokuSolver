@@ -9,6 +9,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage){
+        //check if java version is correct
         if (!Utilities.isJavaValid()) {
             new StageError(1);
             return;

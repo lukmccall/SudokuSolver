@@ -6,6 +6,9 @@ import pl.sudokusolver.app.CustomViews.Texts.Error;
 import pl.sudokusolver.app.Theme;
 import pl.sudokusolver.app.Values;
 
+/**
+ * Layout of Error
+ */
 public class ViewError extends VBox {
 
     public ViewError(int error, double width){
@@ -16,6 +19,11 @@ public class ViewError extends VBox {
         init(error, width);
     }
 
+    /**
+     * Function to initialize error layout
+     * @param error error message
+     * @param width maximal width of error window
+     */
     private void init(String error, double width){
         setAlignment(Pos.CENTER);
         setSpacing(15);
@@ -24,6 +32,11 @@ public class ViewError extends VBox {
         getChildren().addAll(new Error(error, width));
     }
 
+    /**
+     * Function to initialize error layout
+     * @param error error id
+     * @param width maximal width of error window
+     */
     private void init(int error, double width){
         setAlignment(Pos.CENTER);
         setSpacing(15);

@@ -8,17 +8,24 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class containing publicly used functions
+ */
 public class Utilities {
     final static private Logger logger = Logger.getLogger("Logger");
 
+    /**
+     * Checks if the java version is equals to 8
+     * @return true if is, otherwise false
+     */
     static boolean isJavaValid(){
         return getVersion() == 8;
     }
 
-    public static boolean isValid(Rectangle2D rectangle2D){
-        return rectangle2D.getWidth() > 0 && rectangle2D.getHeight() > 0;
-    }
-
+    /**
+     * Function to read java function
+     * @return java function
+     */
     private static int getVersion() {
         String version = System.getProperty("java.version");
         if(version.startsWith("1.")) {
@@ -29,6 +36,20 @@ public class Utilities {
         } return Integer.parseInt(version);
     }
 
+    /**
+     * Function to check if rectangle can be used in cutting the image
+     * @param rectangle2D rectangle selected by user
+     * @return true if it is, otherwise false
+     */
+    public static boolean isValid(Rectangle2D rectangle2D){
+        return rectangle2D.getWidth() > 0 && rectangle2D.getHeight() > 0;
+    }
+
+    /**
+     * Function to get error string from error code
+     * @param error error code
+     * @return error string
+     */
     public static String getError(int error){
         switch (error){
             case 1:
@@ -53,6 +74,10 @@ public class Utilities {
         return null;
     }
 
+    /**
+     * Function to save file
+     * @param input what to save
+     */
     public static void saveFile(String input){
         Writer writer = null;
         try {
@@ -72,6 +97,9 @@ public class Utilities {
         }
     }
 
+    /**
+     * Function to read file containing information about theme chosen
+     */
     static void readFile(){
         File file = new File(Values.SAVE_FILE);
         try{
@@ -97,6 +125,10 @@ public class Utilities {
         }
     }
 
+    /**
+     * Function to log what error occured
+     * @param error error string
+     */
     public static void log(String error){
         logger.log(Level.SEVERE, error);
     }

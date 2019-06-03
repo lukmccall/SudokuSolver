@@ -1,5 +1,8 @@
 package pl.sudokusolver.app;
 
+/**
+ * Class that stores all parameters that are chosen by user used to process the image
+ */
 public class Parameters {
 
     private int lineThreshold;
@@ -22,6 +25,17 @@ public class Parameters {
         this.recognition = "SVM";
     }
 
+    /**
+     * Function to set values
+     * @param lineThreshold line threshold value
+     * @param lineGap line gap value
+     * @param minLineSize minimum line size value
+     * @param blurSize blur size value
+     * @param blurBlockSize blur block size value
+     * @param blurC blur C value
+     * @param scaling scaling option
+     * @param recognition recognition option
+     */
     public void set(int lineThreshold, int lineGap, int minLineSize, int blurSize, int blurBlockSize, int blurC,
                     String scaling, String recognition){
         this.lineThreshold = lineThreshold;
@@ -34,6 +48,10 @@ public class Parameters {
         this.recognition = recognition;
     }
 
+    /**
+     * Function to set values
+     * @param parameters new parameters
+     */
     public void set(Parameters parameters){
         this.lineThreshold = parameters.getLineThreshold();
         this.lineGap = parameters.getLineGap();
@@ -45,34 +63,66 @@ public class Parameters {
         this.recognition = parameters.getRecognition();
     }
 
+    /**
+     * Function to return line threshold
+     * @return line threshold
+     */
     private int getLineThreshold() {
         return lineThreshold;
     }
 
+    /**
+     * Function to return line gap
+     * @return line gap
+     */
     private int getLineGap() {
         return lineGap;
     }
 
+    /**
+     * Function to return minimal line size
+     * @return minimal line size
+     */
     private int getMinLineSize() {
         return minLineSize;
     }
 
+    /**
+     * Function to return blur size
+     * @return blur size
+     */
     private int getBlurSize() {
         return blurSize;
     }
 
+    /**
+     * Funtion to return blur block size
+     * @return blur block size
+     */
     private int getBlurBlockSize() {
         return blurBlockSize;
     }
 
+    /**
+     * Function to return blur c
+     * @return blur c
+     */
     private int getBlurC() {
         return blurC;
     }
 
+    /**
+     * Function to return scaling
+     * @return scaling
+     */
     private String getScaling() {
         return scaling;
     }
 
+    /**
+     * Function to return recognition
+     * @return recognition
+     */
     private String getRecognition() {
         return recognition;
     }
