@@ -62,19 +62,17 @@ public class MNISTReader {
 
         if(labels == null)
             throw new IllegalArgumentException("Invalid data type");
-
+        int curr = 0;
         for(int n = 0; n < iterations; n++) {
             int i = labelBuffer.get() & 0xFF;
-
-
 
             Mat img = loadImg(imgBuffer, imgRows, imgCols);
             if(i == 0)
                 continue;
 
 
-            putLabel(labels, i, n, type);
-            putImg(trainData, img, n);
+            putLabel(labels, i, curr, type);
+            putImg(trainData, img, curr++);
         }
         return new SimpleRowData(trainData, labels, size);
     }

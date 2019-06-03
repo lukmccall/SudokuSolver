@@ -71,4 +71,8 @@ public class ANN extends MLWrapper implements ILoader{
                 pre = i;
         return new Pair<>(pre, result.get(0,pre)[0]);
     }
+
+    public ANN_MLP getML(){
+        return ann;
+    }
 }

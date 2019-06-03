@@ -11,17 +11,12 @@ import pl.sudokusolver.recognizerlib.data.DataType;
 import pl.sudokusolver.recognizerlib.data.IData;
 import pl.sudokusolver.recognizerlib.data.MNISTReader;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
-import pl.sudokusolver.recognizerlib.filters.ResizeFilter;
-import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.core.CvType.CV_32FC1;
 import static org.opencv.core.CvType.CV_8UC1;
-import static org.opencv.highgui.HighGui.imshow;
-import static org.opencv.highgui.HighGui.waitKey;
 
 @ExtendWith({_INIT_.class})
 class ANNTest {
@@ -29,46 +24,55 @@ class ANNTest {
     void learnAndTest() throws VersionMismatchException, IOException {
         // learn
 
-
-//        IData data = MNISTReader.read("..\\..\\Data\\images","..\\..\\Data\\labels", DataType.Complex);
-//        ANN ml = new ANN(data, (ann) -> {
-//            Mat layers = new Mat(1 , 4 , CV_32FC1);
-//            layers.put(0, 0, data.getSize()*data.getSize());
-//            layers.put(0, 1, 80);
-//            layers.put(0, 2, 40);
-//            layers.put(0, 3, 9);
-//            ann.setLayerSizes(layers);
-//            ann.setTermCriteria(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 5000, 0.001));
-//            ann.setActivationFunction(ANN_MLP.SIGMOID_SYM,0,0);
-//            ann.setTrainMethod(ANN_MLP.BACKPROP, 0.0001);
-//        });
-//
-//        ml.dump("../../Data/ann.xml");
-        SVM ml = new SVM("../../Data/svm.xml");
-
+        IData data = MNISTReader.read("..\\..\\Data\\images", "..\\..\\Data\\labels", DataType.Complex);
         IData testData = MNISTReader.read(
                 _TestUtility_.getPathToResource("/mnisttest/images"),
                 _TestUtility_.getPathToResource("/mnisttest/labels"), DataType.Simple
         );
-        int good = 0;
-        short sampleSize = testData.getSize();
-        for(int i = 0; i < testData.getData().rows(); i++){
-            Mat img = new Mat(28,28, CV_8UC1);
-            int curr = 0;
-            for(int x = 0; x < 28; x++)
-                for(int y = 0; y < 28; y++)
-                    img.put(x, y, testData.getData().get(i, curr++)[0] * 255.0);
 
-            Mat wraped = ImageProcessing.deskew(img.clone(),sampleSize);
-            Mat result = new Mat();
+        for (int k = 10; k < 128; k += 5) {
+            for (int l = 10; l <= k; l += 10) {
+                final int kL = k;
+                final int lL = l;
+                ANN ml = new ANN(data, (ann) -> {
+                    Mat layers = new Mat(1, 4, CV_32FC1);
+                    layers.put(0, 0, data.getSize() * data.getSize());
+                    layers.put(0, 1, kL);
+                    layers.put(0, 2, lL);
+                    layers.put(0, 3, 9);
+                    ann.setLayerSizes(layers);
+                    ann.setTermCriteria(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 10000, 0.0001));
+                    ann.setActivationFunction(ANN_MLP.SIGMOID_SYM, 0, 0);
+                });
 
-            double dist = ml.getML().predict(ImageProcessing.procSimple(wraped,sampleSize), result,1);
-            int gest  = (int) result.get(0,0)[0];
+//                ml.dump("../../Data/ann.xml");
 
+                int good = 0;
+                short sampleSize = testData.getSize();
+                for (int i = 0; i < testData.getData().rows(); i++) {
+                    Mat img = new Mat(28, 28, CV_8UC1);
+                    int curr = 0;
+                    for (int x = 0; x < 28; x++)
+                        for (int y = 0; y < 28; y++)
+                            img.put(x, y, testData.getData().get(i, curr++)[0] * 255.0);
+                    Mat result = new Mat();
 
-            if(gest == (int) testData.getLabels().get(i,0)[0])
-                good++;
+//            for svm
+//            double dist = ml.getML().predict(ImageProcessing.procSimple(img.clone(),sampleSize), result,1);
+//            int gest  = (int) result.get(0,0)[0];
+
+                    ml.getML().predict(ImageProcessing.procSimple(img, sampleSize), result);
+                    int pre = 0;
+                    for (int u = 1; u < 9; u++)
+                        if (result.get(0, pre)[0] < result.get(0, u)[0])
+                            pre = u;
+                    int gest = pre;
+                    if (gest == (int) testData.getLabels().get(i, 0)[0])
+                        good++;
+                }
+                System.out.println(k + " " + l);
+                System.out.println("Score: " + ((double) good / (double) testData.getData().rows()));
+            }
         }
-        System.out.println("Score: " + ((double)good/(double)testData.getData().rows()));
     }
 }
