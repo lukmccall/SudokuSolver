@@ -32,8 +32,9 @@ public class StageImage extends Stage implements ParametersListener, ImageListen
 
 
     @Override
-    public void parameters(double a, double b, double c, double d){
-        parameters.set(a, b, c, d);
+    public void parameters(int lineThreshold, int lineGap, int minLineSize, int blurSize, int blurBlockSize, int blurC,
+                           String scaling, String recognition){
+        parameters.set(lineThreshold, lineGap, minLineSize, blurSize, blurBlockSize, blurC, scaling, recognition);
     }
 
     public void change(){

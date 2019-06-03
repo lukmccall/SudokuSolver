@@ -1,50 +1,79 @@
 package pl.sudokusolver.app;
 
-import javafx.scene.image.Image;
-
-import java.io.InputStream;
-
 public class Parameters {
 
-    private double lineThickness;
-    private double proging;
-    private double distance;
-    private double gauss;
+    private int lineThreshold;
+    private int lineGap;
+    private int minLineSize;
+    private int blurSize;
+    private int blurBlockSize;
+    private int blurC;
+    private String scaling;
+    private String recognition;
 
     public Parameters(){
-        this.lineThickness = 1.0;
-        this.proging = 1.0;
-        this.distance = 1.0;
-        this.gauss = 1.0;
+        this.lineThreshold = 50;
+        this.lineGap = 5;
+        this.minLineSize = 100;
+        this.blurSize = 3;
+        this.blurBlockSize = 31;
+        this.blurC = 15;
+        this.scaling= "Fixed Width Resize";
+        this.recognition = "SVM";
     }
 
-    public void set(double a, double b, double c, double d){
-        this.lineThickness = a;
-        this.proging = b;
-        this.distance = c;
-        this.gauss = d;
+    public void set(int lineThreshold, int lineGap, int minLineSize, int blurSize, int blurBlockSize, int blurC,
+                    String scaling, String recognition){
+        this.lineThreshold = lineThreshold;
+        this.lineGap = lineGap;
+        this.minLineSize = minLineSize;
+        this.blurSize = blurSize;
+        this.blurBlockSize = blurBlockSize;
+        this.blurC = blurC;
+        this.scaling = scaling;
+        this.recognition = recognition;
     }
 
     public void set(Parameters parameters){
-        this.lineThickness = parameters.getLineThickness();
-        this.proging = parameters.getProging();
-        this.distance = parameters.getDistance();
-        this.gauss = parameters.getGauss();
+        this.lineThreshold = parameters.getLineThreshold();
+        this.lineGap = parameters.getLineGap();
+        this.minLineSize = parameters.getMinLineSize();
+        this.blurSize = parameters.getBlurSize();
+        this.blurBlockSize = parameters.getBlurBlockSize();
+        this.blurC = parameters.getBlurC();
+        this.scaling = parameters.getScaling();
+        this.recognition = parameters.getRecognition();
     }
 
-    public double getLineThickness(){
-        return lineThickness;
+    private int getLineThreshold() {
+        return lineThreshold;
     }
 
-    public double getProging() {
-        return proging;
+    private int getLineGap() {
+        return lineGap;
     }
 
-    public double getDistance() {
-        return distance;
+    private int getMinLineSize() {
+        return minLineSize;
     }
 
-    public double getGauss() {
-        return gauss;
+    private int getBlurSize() {
+        return blurSize;
+    }
+
+    private int getBlurBlockSize() {
+        return blurBlockSize;
+    }
+
+    private int getBlurC() {
+        return blurC;
+    }
+
+    private String getScaling() {
+        return scaling;
+    }
+
+    private String getRecognition() {
+        return recognition;
     }
 }

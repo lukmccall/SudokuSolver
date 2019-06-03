@@ -7,11 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
+import pl.sudokusolver.app.CustomViews.RadioButtons.Recognition;
+import pl.sudokusolver.app.CustomViews.RadioButtons.Scaling;
+import pl.sudokusolver.app.CustomViews.Sliders.*;
 import pl.sudokusolver.app.Listeners.ButtonsListener;
-import pl.sudokusolver.app.CustomViews.Sliders.Distance;
-import pl.sudokusolver.app.CustomViews.Sliders.GaussianBlur;
-import pl.sudokusolver.app.CustomViews.Sliders.LineThickness;
-import pl.sudokusolver.app.CustomViews.Sliders.Proging;
 import pl.sudokusolver.app.Theme;
 import pl.sudokusolver.app.Values;
 
@@ -20,10 +19,14 @@ import pl.sudokusolver.app.Values;
  */
 public class ViewAdvanced extends VBox {
 
-    private LineThickness lineThickness;
-    private Proging proging;
-    private Distance distance;
-    private GaussianBlur gaussianBlur;
+    private LineThreshold lineThreshold;
+    private MinLineSize minLineSize;
+    private LineGap lineGap;
+    private BlurSize blurSize;
+    private BlurBlockSize blurBlockSize;
+    private BlurC blurC;
+    private Scaling scaling;
+    private Recognition recognition;
 
     private ButtonsListener buttonsListener;
 
@@ -36,17 +39,22 @@ public class ViewAdvanced extends VBox {
      * Function to initialize whole layout
      */
     private void init(){
-        lineThickness = new LineThickness();
-        proging = new Proging();
-        distance = new Distance();
-        gaussianBlur = new GaussianBlur();
+        lineThreshold = new LineThreshold();
+        lineGap = new LineGap();
+        minLineSize = new MinLineSize();
+        blurSize = new BlurSize();
+        blurBlockSize = new BlurBlockSize();
+        blurC = new BlurC();
+        scaling = new Scaling();
+        recognition = new Recognition();
 
-        HBox topHBox = initTop();
-        HBox bottomHBox = initBottom();
+        HBox topHBox = initSlidersTop();
+        HBox bottomHBox = initSlidersBottom();
         HBox buttonsHBox = initButtons();
-        setMargins(topHBox, bottomHBox, buttonsHBox);
+        HBox toggleHBox = initGroups();
+        setMargins(topHBox, bottomHBox, toggleHBox, buttonsHBox);
 
-        getChildren().addAll(topHBox, bottomHBox, buttonsHBox);
+        getChildren().addAll(topHBox, bottomHBox, toggleHBox, buttonsHBox);
         setSpacing(25);
         setAlignment(Pos.CENTER);
         setTheme();
@@ -56,8 +64,8 @@ public class ViewAdvanced extends VBox {
      * Function to initialize top line of sliders
      * @return completely created line
      */
-    private HBox initTop(){
-        HBox hBox = new HBox(lineThickness, distance);
+    private HBox initSlidersTop(){
+        HBox hBox = new HBox(lineThreshold, lineGap, minLineSize);
         hBox.setAlignment(Pos.CENTER);
         return hBox;
     }
@@ -66,8 +74,22 @@ public class ViewAdvanced extends VBox {
      * Function to initialize bottom line of sliders
      * @return completely created line
      */
-    private HBox initBottom(){
-        HBox hBox = new HBox(proging, gaussianBlur);
+    private HBox initSlidersBottom(){
+        HBox hBox = new HBox(blurSize, blurBlockSize, blurC);
+        hBox.setAlignment(Pos.CENTER);
+        return hBox;
+    }
+
+    /**
+     * Function to initialize bottom line of sliders
+     * @return completely created line
+     */
+    private HBox initGroups(){
+        HBox hBox = new HBox(scaling, recognition);
+
+        HBox.setMargin(scaling, new Insets(0,50,0,50));
+        HBox.setMargin(recognition, new Insets(0,50,0,50));
+
         hBox.setAlignment(Pos.CENTER);
         return hBox;
     }
@@ -84,15 +106,21 @@ public class ViewAdvanced extends VBox {
         def.setPrefWidth(100);
 
         set.setOnAction((event) -> {
-            buttonsListener.send(lineThickness.getValue(), proging.getValue(), distance.getValue(), gaussianBlur.getValue());
+            buttonsListener.send(lineThreshold.getValue(), lineGap.getValue(), minLineSize.getValue(),
+                    blurSize.getValue(), blurBlockSize.getValue(), blurC.getValue(),
+                    scaling.getValue(), recognition.getValue());
             buttonsListener.exit();
         });
 
         def.setOnAction((event) -> {
-            lineThickness.setValue(1.0f);
-            proging.setValue(1.0f);
-            distance.setValue(1.0f);
-            gaussianBlur.setValue(1.0f);
+            lineThreshold.setValue(50);
+            minLineSize.setValue(100);
+            lineGap.setValue(5);
+            blurSize.setValue(3);
+            blurBlockSize.setValue(31);
+            blurC.setValue(15);
+            scaling.setValue(Values.FIXED_WIDTH_SCALING);
+            recognition.setValue(Values.SVM);
         });
 
 
@@ -122,7 +150,7 @@ public class ViewAdvanced extends VBox {
      * @param bottom line of sliders
      * @param buttons line of buttons
      */
-    private void setMargins(HBox top, HBox bottom, HBox buttons){
+    private void setMargins(HBox top, HBox bottom, HBox group, HBox buttons){
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
         double width = primaryScreenBounds.getWidth();
@@ -130,6 +158,7 @@ public class ViewAdvanced extends VBox {
 
         VBox.setMargin(top, new Insets(height / 20, width / 40, 0, width / 40));
         VBox.setMargin(bottom, new Insets(0, width / 40, 0, width / 40));
+        VBox.setMargin(group, new Insets(0, width / 40, 0, width / 40));
         VBox.setMargin(buttons, new Insets(0, width / 40, height / 20, width / 40));
     }
 }

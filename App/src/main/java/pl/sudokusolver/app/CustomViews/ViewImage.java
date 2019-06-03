@@ -39,14 +39,19 @@ public class ViewImage extends BorderPane implements ParametersListener {
 
     /**
      * Function inherited from ParametersListener, called when user accepts parameters in Advanced Stage
-     * @param a line thickness
-     * @param b proging
-     * @param c distance
-     * @param d gaussian blur
+     * @param lineThreshold line threshold value
+     * @param lineGap line gap value
+     * @param minLineSize minimum line size value
+     * @param blurSize blur size value
+     * @param blurBlockSize blur block size value
+     * @param blurC blur C value
+     * @param scaling scaling option
+     * @param recognition recognition option
      */
     @Override
-    public void parameters(double a, double b, double c, double d){
-        parameters.set(a, b, c, d);
+    public void parameters(int lineThreshold, int lineGap, int minLineSize, int blurSize, int blurBlockSize, int blurC,
+                           String scaling, String recognition){
+        parameters.set(lineThreshold, lineGap, minLineSize, blurSize, blurBlockSize, blurC, scaling, recognition);
     }
 
     /**
@@ -196,9 +201,7 @@ public class ViewImage extends BorderPane implements ParametersListener {
     private Button initAccept(){
         Button accept = new Button(Values.ACCEPT);
         accept.setPrefWidth(100);
-        accept.setOnAction((event) -> {
-            imageListener.accepted(imageView.getImage(), parameters);
-        });
+        accept.setOnAction((event) -> imageListener.accepted(imageView.getImage(), parameters));
 
         return accept;
     }

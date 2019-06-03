@@ -44,6 +44,19 @@ public class Values {
     public static final String PROGING = "PROGING";
     public static final String DISTANCE = "DISTANCE";
     public static final String GAUSSIAN_BLUR = "GAUSSIAN BLUR";
+    public static final String LINE_THRESHOLD = "LINE THRESHOLD";
+    public static final String LINE_GAP = "LINE GAP";
+    public static final String MIN_LINE_SIZE = "MINIMUM LINE SIZE";
+    public static final String BLUR_BLOCK_SIZE = "BLUR BLOCK SIZE";
+    public static final String BLUR_C = "BLUR C";
+    public static final String BLUR_SIZE = "BLUR SIZE";
+    public static final String SCALING = "SCALING";
+    public static final String RECOGNITION = "RECOGNITION";
+    public static final String FIXED_WIDTH_SCALING = "FIXED WIDTH SCALING";
+    public static final String MAX_AXIS_RESIZE = "MAX AXIS RESIZE";
+    public static final String NONE = "NONE";
+    public static final String SVM = "SVM";
+    public static final String TESSERACT = "TESSERACT";
 
     public static final String SET = "SET";
     public static final String DEFAULT = "DEFAULT";

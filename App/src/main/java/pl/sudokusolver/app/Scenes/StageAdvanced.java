@@ -25,14 +25,20 @@ public class StageAdvanced extends Stage implements ButtonsListener {
 
     /**
      * Function inherited from ButtonsListeners, used to send parameters
-     * @param lineThickness line thickness value
-     * @param proging proging value
-     * @param distance distance value
-     * @param gaussianBlur value
+     * @param lineThreshold line threshold value
+     * @param lineGap line gap value
+     * @param minLineSize minimum line size value
+     * @param blurSize blur size value
+     * @param blurBlockSize blur block size value
+     * @param blurC blur C value
+     * @param scaling scaling option
+     * @param recognition recognition option
      */
     @Override
-    public void send(double lineThickness, double proging, double distance, double gaussianBlur){
-        parametersListener.parameters(lineThickness, proging, distance, gaussianBlur);
+    public void send(int lineThreshold, int lineGap, int minLineSize, int blurSize, int blurBlockSize, int blurC,
+                     String scaling, String recognition){
+        parametersListener.parameters(lineThreshold, lineGap, minLineSize, blurSize, blurBlockSize, blurC,
+                scaling, recognition);
     }
 
     /**
@@ -46,7 +52,7 @@ public class StageAdvanced extends Stage implements ButtonsListener {
     /**
      * Function to change theme
      */
-    void change(){
+    private void change(){
         viewAdvanced.setTheme();
     }
 

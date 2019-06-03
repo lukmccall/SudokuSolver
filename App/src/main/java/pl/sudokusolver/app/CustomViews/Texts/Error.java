@@ -46,6 +46,7 @@ public class Error extends VBox {
     private Text initErrorText(int errorID, double width){
         Text name = new Text("Error 00" + errorID + ":");
         name.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 24;");
+        name.setTextAlignment(TextAlignment.CENTER);
         name.setWrappingWidth(width * 0.95f);
         return name;
     }
