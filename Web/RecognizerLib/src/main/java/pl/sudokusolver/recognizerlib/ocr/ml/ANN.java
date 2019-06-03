@@ -1,6 +1,7 @@
 package pl.sudokusolver.recognizerlib.ocr.ml;
 
 import org.opencv.core.Mat;
+import org.opencv.core.TermCriteria;
 import org.opencv.ml.ANN_MLP;
 import pl.sudokusolver.recognizerlib.data.IData;
 import pl.sudokusolver.recognizerlib.utility.Pair;
@@ -19,13 +20,13 @@ public class ANN extends MLWrapper implements ILoader{
         ann = ANN_MLP.create();
         sampleSize = data.getSize();
 
-        Mat layers = new Mat(1 , 5 , CV_32FC1);
+        Mat layers = new Mat(1 , 4 , CV_32FC1);
         layers.put(0, 0, sampleSize*sampleSize);
-        layers.put(0, 1, 512);
-        layers.put(0, 2, 128);
-        layers.put(0, 3, 64);
-        layers.put(0, 4, 10);
+        layers.put(0, 1, 50);
+        layers.put(0, 2, 50);
+        layers.put(0, 3, 9);
         ann.setLayerSizes(layers);
+        ann.setTermCriteria(new TermCriteria(TermCriteria.COUNT + TermCriteria.EPS, 5000, 1e-5));
         ann.setActivationFunction(ANN_MLP.SIGMOID_SYM);
 
         ann.train(data.getData(), data.getSampleType(), data.getLabels());
@@ -52,7 +53,7 @@ public class ANN extends MLWrapper implements ILoader{
         Mat result = new Mat();
         ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
         int pre = 0;
-        for(int i = 1; i < 10; i++)
+        for(int i = 1; i < 9; i++)
             if(result.get(0,pre)[0] < result.get(0,i)[0])
                 pre = i;
         return new Pair<>(pre, result.get(0,pre)[0]);

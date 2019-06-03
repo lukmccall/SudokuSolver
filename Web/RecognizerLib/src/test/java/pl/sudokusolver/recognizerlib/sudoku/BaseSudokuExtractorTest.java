@@ -14,8 +14,10 @@ import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.*;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
+import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
 import pl.sudokusolver.recognizerlib.ocr.ml.PlaceTester;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
+import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractWrapper;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,7 +31,9 @@ class BaseSudokuExtractorTest {
     @Test
     @Ignore
     void procTest(){
-        IRecognizer svm = new SVM("../../Data/svm.xml");
+        IRecognizer svm = new ANN("../../Data/ann.xml");
+//        IRecognizer svm = new SVM("../../Data/svm.xml");
+//        IRecognizer svm = new TesseractWrapper();
 
         SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
                 .setGridStrategy(new DefaultGridExtractStrategy())
@@ -51,7 +55,7 @@ class BaseSudokuExtractorTest {
         long minTime = Long.MAX_VALUE;
         long maxTime = -1;
 
-        int all = 130;
+        int all = 20;
         for(int i = 0; i < all; i++){
 
             String path = "../../Data/TestImgs/"+i+".jpg";
@@ -64,6 +68,8 @@ class BaseSudokuExtractorTest {
                 testSudoku = baseSudokuExtractor.extract(img,path);
             } catch (Exception e){
                 expections++;
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
             long endTime = System.currentTimeMillis();
             long currDuration = endTime - startTime;

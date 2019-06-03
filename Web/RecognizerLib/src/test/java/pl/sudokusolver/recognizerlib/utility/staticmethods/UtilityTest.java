@@ -1,6 +1,5 @@
 package pl.sudokusolver.recognizerlib.utility.staticmethods;
 
-import org.apache.pdfbox.pdmodel.common.function.type4.Parser;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,11 +8,8 @@ import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib.filters.NotFilter;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.core.CvType.CV_8UC1;
 
 @ExtendWith({_INIT_.class})
