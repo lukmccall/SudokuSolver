@@ -9,8 +9,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import pl.sudokusolver.app.CustomViews.RadioButtons.Recognition;
 import pl.sudokusolver.app.CustomViews.RadioButtons.Scaling;
+import pl.sudokusolver.app.CustomViews.RadioButtons.StrictMode;
 import pl.sudokusolver.app.CustomViews.Sliders.*;
 import pl.sudokusolver.app.Listeners.ButtonsListener;
+import pl.sudokusolver.app.Parameters;
 import pl.sudokusolver.app.Theme;
 import pl.sudokusolver.app.Values;
 
@@ -27,6 +29,7 @@ public class ViewAdvanced extends VBox {
     private BlurC blurC;
     private Scaling scaling;
     private Recognition recognition;
+    private StrictMode strictMode;
 
     private ButtonsListener buttonsListener;
 
@@ -47,6 +50,7 @@ public class ViewAdvanced extends VBox {
         blurC = new BlurC();
         scaling = new Scaling();
         recognition = new Recognition();
+        strictMode = new StrictMode();
 
         HBox topHBox = initSlidersTop();
         HBox bottomHBox = initSlidersBottom();
@@ -54,7 +58,7 @@ public class ViewAdvanced extends VBox {
         HBox toggleHBox = initGroups();
         setMargins(topHBox, bottomHBox, toggleHBox, buttonsHBox);
 
-        getChildren().addAll(topHBox, bottomHBox, toggleHBox, buttonsHBox);
+        getChildren().addAll(topHBox, bottomHBox, toggleHBox, strictMode, buttonsHBox);
         setSpacing(25);
         setAlignment(Pos.CENTER);
         setTheme();
@@ -106,9 +110,11 @@ public class ViewAdvanced extends VBox {
         def.setPrefWidth(100);
 
         set.setOnAction((event) -> {
-            buttonsListener.send(lineThreshold.getValue(), lineGap.getValue(), minLineSize.getValue(),
+            Parameters parameters = new Parameters();
+            parameters.set(lineThreshold.getValue(), lineGap.getValue(), minLineSize.getValue(),
                     blurSize.getValue(), blurBlockSize.getValue(), blurC.getValue(),
-                    scaling.getValue(), recognition.getValue());
+                    scaling.getValue(), recognition.getValue(), strictMode.getValue());
+            buttonsListener.send(parameters);
             buttonsListener.exit();
         });
 
@@ -121,6 +127,7 @@ public class ViewAdvanced extends VBox {
             blurC.setValue(15);
             scaling.setValue(Values.FIXED_WIDTH_SCALING);
             recognition.setValue(Values.SVM);
+            strictMode.setValue(true);
         });
 
 
@@ -159,6 +166,7 @@ public class ViewAdvanced extends VBox {
         VBox.setMargin(top, new Insets(height / 20, width / 40, 0, width / 40));
         VBox.setMargin(bottom, new Insets(0, width / 40, 0, width / 40));
         VBox.setMargin(group, new Insets(0, width / 40, 0, width / 40));
+        VBox.setMargin(strictMode, new Insets(0, width / 40, 0, width / 40));
         VBox.setMargin(buttons, new Insets(0, width / 40, height / 20, width / 40));
     }
 }

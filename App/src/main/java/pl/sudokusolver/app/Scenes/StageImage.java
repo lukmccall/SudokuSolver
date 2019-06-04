@@ -40,19 +40,11 @@ public class StageImage extends Stage implements ParametersListener, ImageListen
 
     /**
      * Function inherited from ParametersListener, called when user accepts parameters
-     * @param lineThreshold line threshold value
-     * @param lineGap line gap value
-     * @param minLineSize minimum line size value
-     * @param blurSize blur size value
-     * @param blurBlockSize blur block size value
-     * @param blurC blur C value
-     * @param scaling scaling option
-     * @param recognition recognition option
+     * @param parameters image parameters
      */
     @Override
-    public void parameters(int lineThreshold, int lineGap, int minLineSize, int blurSize, int blurBlockSize, int blurC,
-                           String scaling, String recognition){
-        parameters.set(lineThreshold, lineGap, minLineSize, blurSize, blurBlockSize, blurC, scaling, recognition);
+    public void parameters(Parameters parameters){
+        this.parameters.set(parameters);
     }
 
     /**

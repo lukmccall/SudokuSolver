@@ -57,6 +57,9 @@ public class Values {
     public static final String NONE = "NONE";
     public static final String SVM = "SVM";
     public static final String TESSERACT = "TESSERACT";
+    public static final String ANN = "ANN";
+
+    public static final String STRICT_MODE = "STRICT MODE";
 
     public static final String SET = "SET";
     public static final String DEFAULT = "DEFAULT";

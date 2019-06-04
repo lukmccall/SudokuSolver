@@ -13,6 +13,7 @@ public class Parameters {
     private int blurC;
     private String scaling;
     private String recognition;
+    private boolean strictMode;
 
     public Parameters(){
         this.lineThreshold = 50;
@@ -23,6 +24,7 @@ public class Parameters {
         this.blurC = 15;
         this.scaling= "Fixed Width Resize";
         this.recognition = "SVM";
+        this.strictMode = true;
     }
 
     /**
@@ -35,9 +37,10 @@ public class Parameters {
      * @param blurC blur C value
      * @param scaling scaling option
      * @param recognition recognition option
+     * @param strictMode strict mode
      */
     public void set(int lineThreshold, int lineGap, int minLineSize, int blurSize, int blurBlockSize, int blurC,
-                    String scaling, String recognition){
+                    String scaling, String recognition, boolean strictMode){
         this.lineThreshold = lineThreshold;
         this.lineGap = lineGap;
         this.minLineSize = minLineSize;
@@ -46,6 +49,7 @@ public class Parameters {
         this.blurC = blurC;
         this.scaling = scaling;
         this.recognition = recognition;
+        this.strictMode = strictMode;
     }
 
     /**
@@ -61,6 +65,7 @@ public class Parameters {
         this.blurC = parameters.getBlurC();
         this.scaling = parameters.getScaling();
         this.recognition = parameters.getRecognition();
+        this.strictMode = parameters.getStrictMode();
     }
 
     /**
@@ -125,5 +130,13 @@ public class Parameters {
      */
     public String getRecognition() {
         return recognition;
+    }
+
+    /**
+     * Function to return strict mode
+     * @return strict mode
+     */
+    public boolean getStrictMode() {
+        return strictMode;
     }
 }

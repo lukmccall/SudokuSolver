@@ -47,22 +47,22 @@ public class Recognition extends VBox {
         toggleGroup = new ToggleGroup();
         initToggleGroup();
 
-        getChildren().addAll(text, defaultOption, initTesseract());
+        getChildren().addAll(text, defaultOption, initTesseract(), initAnn());
         setSpacing(10);
     }
 
     /**
-     * Function to initialize text to identify toggle group responsible for Scaling option
+     * Function to initialize text to identify toggle group responsible for Recognition option
      * @return completely created text
      */
     private Text initText(){
-        Text scaling = new Text(Values.SCALING);
+        Text scaling = new Text(Values.RECOGNITION);
         scaling.setTextAlignment(TextAlignment.CENTER);
         return scaling;
     }
 
     /**
-     * Function to initialize toggle group for changing Scaling option
+     * Function to initialize toggle group for changing Recognition option
      */
     private void initToggleGroup(){
         initSVM();
@@ -90,6 +90,19 @@ public class Recognition extends VBox {
     private RadioButton initTesseract(){
         RadioButton radioButton = new RadioButton(Values.TESSERACT);
         radioButton.setUserData(Values.TESSERACT);
+        radioButton.setToggleGroup(toggleGroup);
+        radioButton.setStyle("-fx-text-fill: black;");
+
+        return radioButton;
+    }
+
+    /**
+     * Function to initialize RadioButton responsible for ANN option
+     * @return radioButton that is already added to toggle group
+     */
+    private RadioButton initAnn(){
+        RadioButton radioButton = new RadioButton(Values.ANN);
+        radioButton.setUserData(Values.ANN);
         radioButton.setToggleGroup(toggleGroup);
         radioButton.setStyle("-fx-text-fill: black;");
 

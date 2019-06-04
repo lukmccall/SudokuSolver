@@ -1,7 +1,8 @@
 package pl.sudokusolver.app.Listeners;
 
+import pl.sudokusolver.app.Parameters;
+
 public interface ButtonsListener {
-    void send(int lineThreshold, int lineGap, int minLineSize, int blurSize, int blurBlockSize, int blurC,
-              String scaling, String recognition);
+    void send(Parameters parameters);
     void exit();
 }
