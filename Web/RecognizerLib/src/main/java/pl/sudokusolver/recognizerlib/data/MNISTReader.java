@@ -70,7 +70,6 @@ public class MNISTReader {
             if(i == 0)
                 continue;
 
-
             putLabel(labels, i, curr, type);
             putImg(trainData, img, curr++);
         }

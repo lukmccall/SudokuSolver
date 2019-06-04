@@ -66,9 +66,11 @@ public class ANN extends MLWrapper implements ILoader{
         Mat result = new Mat();
         ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
         int pre = 0;
-        for(int i = 1; i < 9; i++)
+        for(int i = 0; i < 9; i++)
             if(result.get(0,pre)[0] < result.get(0,i)[0])
-                pre = i;
+                pre = i + 1;
+        // todo: repair this :\
+        // todo: bug report
         return new Pair<>(pre, result.get(0,pre)[0]);
     }
 
