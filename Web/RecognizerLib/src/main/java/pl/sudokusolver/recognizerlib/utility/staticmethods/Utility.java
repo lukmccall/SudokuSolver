@@ -88,4 +88,8 @@ public class Utility {
     public static String getSVMDump(){
         return Init.class.getResource("/svm.xml").toString().substring(6);
     }
+
+    public static String getTessdata(){
+        return Init.class.getResource("/tessdata/").toString().substring(6);
+    }
 }

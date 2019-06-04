@@ -6,22 +6,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib._INIT_;
-import pl.sudokusolver.recognizerlib._TestUtility_;
-import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
-import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.SizeCellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.*;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
-import pl.sudokusolver.recognizerlib.ocr.ml.PlaceTester;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
-import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractWrapper;
+import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSimple;
+import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSingletonWrapper;
+import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractStrictMode;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
@@ -122,14 +118,14 @@ class BaseSudokuExtractorTest {
      **/
     @Test
     @Ignore
-    void testWithTesseract(){
-        IRecognizer tesseractWrapper = new TesseractWrapper();
+    void testWithTesseractSimple(){
+        IRecognizer tesseract = new TesseractSimple();
 
         SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
                 .setGridStrategy(new DefaultGridExtractStrategy())
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
-                .setRecognizer(tesseractWrapper)
+                .setRecognizer(tesseract)
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
@@ -137,7 +133,45 @@ class BaseSudokuExtractorTest {
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
-        System.out.println("*** Sudoku extractor with tesseract ***");
+        System.out.println("*** Sudoku extractor with tesseract simple ***");
+        score(baseSudokuExtractor);
+    }
+
+    /**
+     *** Sudoku extractor with tesseract stict ***
+     ---    Correctness  ---
+
+     All: 0.7469135802469138
+     Full: 76
+     Errors: 32
+     Without errors: 0.9908037288989672
+
+     ---    Performance  ---
+
+     Avg time: 6263.007692307692ms
+     Min time: 937ms
+     Max time: 10680ms
+
+     **************************************
+     */
+    @Test
+    @Ignore
+    void testWithTesseractStrict(){
+        IRecognizer tesseract = new TesseractStrictMode();
+
+        SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
+                .setGridStrategy(new DefaultGridExtractStrategy())
+                .setCellsStrategy(new SizeCellsExtractStrategy())
+                .setDigitsStrategy(new FastDigitExtractStrategy())
+                .setRecognizer(tesseract)
+                .addPreGridFilters(new FixedWidthResizeFilter())
+                .addPreCellsFilters(new ToGrayFilter())
+                .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
+                .build();
+
+        System.out.println("*** Sudoku extractor with tesseract stict ***");
         score(baseSudokuExtractor);
     }
 
@@ -163,8 +197,6 @@ class BaseSudokuExtractorTest {
                 testSudoku = extractor.extract(img,path);
             } catch (Exception e){
                 expections++;
-                System.out.println(e.getMessage());
-                e.printStackTrace();
             }
             long endTime = System.currentTimeMillis();
             long currDuration = endTime - startTime;

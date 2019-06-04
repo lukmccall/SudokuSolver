@@ -7,33 +7,23 @@ import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Opakowanie w formie singletonu zewnętrznego ocra - <a href="https://github.com/nguyenq/tess4j">Tesseract</a>.
  */
-public class TesseractWrapper implements IRecognizer {
+public class TesseractSingletonWrapper {
     /**
      * Instancja ocra
      */
-    public static Tesseract tesseract;
+    protected final static Tesseract tesseract;
 
     static {
         tesseract = new Tesseract();
+        tesseract.setDatapath(Utility.getTessdata());
         tesseract.setTessVariable("tessedit_char_whitelist", "123456789");
     }
 
-    @Override
-    public Pair<Integer, Double> recognize(Mat img) {
-        String text;
-        try {
-            text = tesseract.doOCR(Utility.matToBufferedImage(img));
-        } catch (TesseractException e) {
-            e.printStackTrace();
-            return new Pair<>(0, 0.0);
-        }
-        text = text.replaceAll("[^0-9]", "");
-        if(text.isEmpty()) return new Pair<>(0,0.0);
-        int g = Integer.parseInt(text)%10;
-        return new Pair<>(g, 1.0);
-    }
+    private TesseractSingletonWrapper() {}
 
 }

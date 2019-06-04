@@ -3,6 +3,7 @@ package pl.sudokusolver.recognizerlib.sudoku;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
+import pl.sudokusolver.recognizerlib.exceptions.DigitExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.cells.LineCellsExtractStrategy;
@@ -54,7 +55,7 @@ public class BaseSudokuExtractor extends SudokuExtractor {
      * @throws CellsExtractionFailedException gdy nie uda się wyciąć komórek ze zdjęcia
      */
     @Override
-    public Sudoku extract(String url) throws NotFoundSudokuException, CellsExtractionFailedException {
+    public Sudoku extract(String url) throws NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException {
         Mat img = imread(url);
         return extract(img);
     }
@@ -77,12 +78,12 @@ public class BaseSudokuExtractor extends SudokuExtractor {
      */
 
     @Override
-    public Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException {
+    public Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException {
 
        return extract(img,"Debug");
     }
     @Override
-    public Sudoku extract(Mat img, String path) throws NotFoundSudokuException, CellsExtractionFailedException {
+    public Sudoku extract(Mat img, String path) throws NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException {
 
         Utility.applyFilters(img, preGridFilters);
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
