@@ -4,6 +4,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.TermCriteria;
 import org.opencv.ml.ANN_MLP;
 import pl.sudokusolver.recognizerlib.data.IData;
+import pl.sudokusolver.recognizerlib.ocr.IRowModel;
+import pl.sudokusolver.recognizerlib.ocr.IRowRecognizer;
 import pl.sudokusolver.recognizerlib.ocr.ml.config.annConfig;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
@@ -16,7 +18,7 @@ import static org.opencv.core.CvType.CV_32FC1;
  */
 
 
-public class ANN extends MLWrapper implements ILoader{
+public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel {
     private ANN_MLP ann;
 
     public ANN() {}
@@ -74,7 +76,19 @@ public class ANN extends MLWrapper implements ILoader{
         return new Pair<>(pre, result.get(0,pre)[0]);
     }
 
-    public ANN_MLP getML(){
+    @Override
+    public Object getMl() {
         return ann;
+    }
+
+    @Override
+    public int rowRecognize(Mat img) {
+        Mat result = new Mat();
+        ann.predict(img, result);
+        int pre = 1;
+        for (int u = 0; u < 9; u++)
+            if (result.get(0, pre - 1)[0] < result.get(0, u)[0])
+                pre = u + 1;
+        return pre;
     }
 }

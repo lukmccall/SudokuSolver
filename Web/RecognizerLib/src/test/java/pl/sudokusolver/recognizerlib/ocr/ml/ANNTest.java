@@ -11,12 +11,10 @@ import pl.sudokusolver.recognizerlib.data.DataType;
 import pl.sudokusolver.recognizerlib.data.IData;
 import pl.sudokusolver.recognizerlib.data.MNISTReader;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
-import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 import java.io.IOException;
 
 import static org.opencv.core.CvType.CV_32FC1;
-import static org.opencv.core.CvType.CV_8UC1;
 
 @ExtendWith({_INIT_.class})
 class ANNTest {
@@ -66,8 +64,7 @@ class ANNTest {
 //            for svm
 //            double dist = ml.getML().predict(img, result,1);
 //            int gest  = (int) result.get(0,0)[0];
-
-            ml.getML().predict(img, result);
+            ((ANN_MLP)ml.getMl()).predict(img, result);
             int pre = 1;
             for (int u = 0; u < 9; u++)
                 if (result.get(0, pre - 1)[0] < result.get(0, u)[0])

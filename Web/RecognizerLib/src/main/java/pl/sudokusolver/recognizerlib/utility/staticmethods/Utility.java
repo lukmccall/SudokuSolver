@@ -81,6 +81,10 @@ public class Utility {
         }
     }
 
+    public static String getANNDump(){
+        return Init.class.getResource("/ann.xml").toString().substring(6);
+    }
+
     public static String getSVMDump(){
         return Init.class.getResource("/svm.xml").toString().substring(6);
     }

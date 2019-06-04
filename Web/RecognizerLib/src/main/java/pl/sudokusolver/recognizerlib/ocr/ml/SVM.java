@@ -2,6 +2,8 @@ package pl.sudokusolver.recognizerlib.ocr.ml;
 
 import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib.data.IData;
+import pl.sudokusolver.recognizerlib.ocr.IRowModel;
+import pl.sudokusolver.recognizerlib.ocr.IRowRecognizer;
 import pl.sudokusolver.recognizerlib.ocr.ml.config.svmConfig;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
@@ -9,7 +11,7 @@ import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 /**
  * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/Support-vector_machine">Support-vector machine</a>
  */
-public class SVM extends MLWrapper implements ILoader{
+public class SVM extends MLWrapper implements ILoader, IRowRecognizer, IRowModel {
     private org.opencv.ml.SVM svm;
 
     public SVM(String url){
@@ -57,7 +59,15 @@ public class SVM extends MLWrapper implements ILoader{
         return new Pair<>((int) result.get(0,0)[0],dist);
     }
 
-    public org.opencv.ml.SVM getML(){
+    @Override
+    public int rowRecognize(Mat img) {
+        Mat result = new Mat();
+        svm.predict(img, result,1);
+        return (int) result.get(0,0)[0];
+    }
+
+    @Override
+    public Object getMl() {
         return svm;
     }
 }
