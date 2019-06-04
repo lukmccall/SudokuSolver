@@ -126,6 +126,18 @@ public class Utilities {
     }
 
     /**
+     * Function to get file extension
+     * @param file file to check
+     * @return extension fo the file
+     */
+    public static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            return fileName.substring(fileName.lastIndexOf(".") + 1);
+        else return "";
+    }
+
+    /**
      * Function to log what error occured
      * @param error error string
      */

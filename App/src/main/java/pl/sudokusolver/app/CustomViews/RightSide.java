@@ -162,6 +162,11 @@ public class RightSide extends VBox implements ImageListener {
                 Singleton.getInstance().unblock();
 
                 if (file != null) {
+                    if (!(Utilities.getFileExtension(file).equals("jpg") || Utilities.getFileExtension(file).equals("png"))){
+                        new StageError(2);
+                        imageFilter = null;
+                        return;
+                    }
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
                     stageImage = new StageImage(RightSide.this);
                     double width = primaryScreenBounds.getWidth() * 0.375f;
@@ -169,7 +174,7 @@ public class RightSide extends VBox implements ImageListener {
                     stageImage.init(file, width, height);
                 }
                 else{
-                    new StageError(2);
+                    new StageError("Please choose a file");
                 }
 
                 imageFilter = null;
