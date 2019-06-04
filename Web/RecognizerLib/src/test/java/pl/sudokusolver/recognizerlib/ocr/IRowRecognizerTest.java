@@ -1,15 +1,11 @@
 package pl.sudokusolver.recognizerlib.ocr;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Mat;
-import org.opencv.ml.ANN_MLP;
-import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib._TestUtility_;
 import pl.sudokusolver.recognizerlib.data.DataType;
@@ -22,7 +18,6 @@ import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.core.CvType.CV_32FC1;
 
 @ExtendWith({_INIT_.class})

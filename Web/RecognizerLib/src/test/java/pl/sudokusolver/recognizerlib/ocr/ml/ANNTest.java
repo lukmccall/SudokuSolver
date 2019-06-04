@@ -36,10 +36,12 @@ class ANNTest {
             layers.put(0, 2, 150);
             layers.put(0, 3, 9);
             ann.setLayerSizes(layers);
-            ann.setTermCriteria(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 500, 0.001));
+            ann.setTermCriteria(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 1000, 0.0001));
             ann.setActivationFunction(ANN_MLP.SIGMOID_SYM, 0, 0);
             ann.setTrainMethod(ANN_MLP.BACKPROP, 0.0001);
-//                    30 15
+//            500 150 - 500 0.001 0.0001
+//            Score: 0.9812638580931264
+//                   30 15
 //                    Score: 0.9644124168514412
 //                    50 25
 //                    Score: 0.9717294900221729
@@ -51,7 +53,7 @@ class ANNTest {
 //                    Score: 0.9788248337028825
         });
 //                ANN ml = new ANN("../../Data/ann.xml"); // 0.9780487804878049
-//                ml.dump("../../Data/ann.xml");
+                ml.dump("../../Data/ann_new.xml");
 
         int good = 0;
         short sampleSize = testData.getSize();
