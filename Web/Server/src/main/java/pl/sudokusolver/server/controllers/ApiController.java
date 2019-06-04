@@ -60,7 +60,10 @@ public class ApiController {
             @RequestParam(value = "lineGap", required = false, defaultValue = "5") int lineGap,
             @RequestParam(value = "blurSize", required = false, defaultValue = "3") int blurSize,
             @RequestParam(value = "blurBlockSize", required = false, defaultValue = "31") int blurBlockSize,
-            @RequestParam(value = "blurC", required = false, defaultValue = "15") int blurC
+            @RequestParam(value = "blurC", required = false, defaultValue = "15") int blurC,
+            @RequestParam(value = "scaling", required = false, defaultValue = "Fixed Width Resize") String scaling,
+            @RequestParam(value = "recognizer", required = false, defaultValue = "SVM") String recognizer,
+            @RequestParam(value = "strictMode", required = false, defaultValue = "false") boolean strictMode
     ) throws IllegalArgumentException, IOException, NotFoundSudokuException, CellsExtractionFailedException {
 
         LOGGER.trace("Send "+inputImg.getContentType()+" which have " + inputImg.getSize() +" bits");
@@ -69,19 +72,23 @@ public class ApiController {
                 && !inputImg.getContentType().equals("image/jpg"))
             throw new IllegalArgumentException("Expected jpg or png get " + inputImg.getContentType());
 
-        //todo: add parameters to extractor
-        SudokuExtractor baseSudokuExtractor = BaseSudokuExtractor.builder()
+        BaseSudokuExtractor.Builder builder  = BaseSudokuExtractor.builder()
                 .setGridStrategy(new DefaultGridExtractStrategy())
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
-                .setRecognizer(digitRecognizer.getRecognizer())
-                .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
-                .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
-                .build();
+                .addPreCellsFilters(new CleanLinesFilter(lineTreshold, minLineSize, lineGap,
+                                                        new MedianBlur(blurSize, blurBlockSize, blurC)))
+                .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)));
 
+        if(recognizer.equals("SVM"))
+            builder.setRecognizer(digitRecognizer.getRecognizer());
+
+        if (scaling.equals("Fixed Width Resize"))
+            builder.addPreGridFilters(new FixedWidthResizeFilter());
+
+        SudokuExtractor baseSudokuExtractor = builder.build();
         Mat mat = Utility.multipartFileToMat(inputImg);
         Sudoku sudoku = baseSudokuExtractor.extract(mat);
         return new Gson().toJson(new GridModel(1, sudoku.getGrid()));

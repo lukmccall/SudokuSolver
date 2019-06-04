@@ -7,8 +7,10 @@ import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 /**
+ * Klasa przestarzała
  * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">k-nearest neighbors algorithm</a>
  */
+@Deprecated
 public class KNN extends MLWrapper {
     private KNearest knn;
 
