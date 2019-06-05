@@ -24,7 +24,7 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 @ExtendWith({_INIT_.class})
 class BaseSudokuExtractorTest {
 
-    private int all = 20;
+    private int all = 130;
 
     /**
     *** Sudoku extractor with SVM ***
