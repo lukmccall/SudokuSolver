@@ -60,6 +60,7 @@ public class UploadTest {
                 response = client.newCall(request).execute();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
+                e.printStackTrace();
             } finally {
                 endTime = System.currentTimeMillis();
                 if(response != null) response.close();

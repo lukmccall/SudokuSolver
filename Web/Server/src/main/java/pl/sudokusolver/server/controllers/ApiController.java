@@ -79,8 +79,8 @@ public class ApiController {
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(digitRecognizer.getRecognizer(recognizer, strictMode))
-                .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
+                .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new CleanLinesFilter(lineTreshold, minLineSize, lineGap,
                                                         new MedianBlur(blurSize, blurBlockSize, blurC)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)));
