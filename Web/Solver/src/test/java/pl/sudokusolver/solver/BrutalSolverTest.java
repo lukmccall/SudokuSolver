@@ -132,10 +132,10 @@ public class BrutalSolverTest {
                 { 0, 6, 0, 8, 1, 1, 1, 1, 4 } };
 
         // też tylko jedna liczba, przez którą nie mozna rozwiazac
-        grid[0][0]=6;
-
+        int [][] grid5 = grid.clone();
+        grid5[0][0]=6;
         ISolver brutalSolver = new BrutalSolver();
-        Assert.assertFalse(brutalSolver.solve(grid));
+        Assert.assertFalse(brutalSolver.solve(grid5));
         Assert.assertFalse(brutalSolver.solve(grid2));
         Assert.assertFalse(brutalSolver.solve(grid3));
         Assert.assertFalse(brutalSolver.solve(grid4));

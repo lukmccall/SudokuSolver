@@ -31,6 +31,7 @@ public class TesseractWrapper implements IRecognizer {
             return new Pair<>(0, 0.0);
         }
         text = text.replaceAll("[^0-9]", "");
+        if(text.isEmpty()) return new Pair<>(0,0.0);
         int g = Integer.parseInt(text)%10;
         return new Pair<>(g, 1.0);
     }

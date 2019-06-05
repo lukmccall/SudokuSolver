@@ -49,9 +49,8 @@ public class Init {
                 libPath = Paths.get(url,"lib"+Core.NATIVE_LIBRARY_NAME).toString();
                 libPath += ".dylib";
             break;
-//            default:
-                //todo throw exception
-//            break;
+            default:
+                throw new IllegalArgumentException("Your system is not supported");
         }
         System.load(libPath);
     }

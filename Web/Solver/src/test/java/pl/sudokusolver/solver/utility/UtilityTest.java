@@ -275,7 +275,8 @@ class UtilityTest {
 
     @Test
     void getUnassignedLocationGrid2True() {
-        grid2[5][5]=0;
+        int [][] testGrid = grid2.clone();
+        testGrid[5][5]=0;
         Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid2);
         boolean test = false;
 
