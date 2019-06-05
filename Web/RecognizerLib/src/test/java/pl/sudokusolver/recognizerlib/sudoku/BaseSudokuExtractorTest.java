@@ -54,7 +54,7 @@ class BaseSudokuExtractorTest {
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(svm)
                 .addPreGridFilters(new FixedWidthResizeFilter())
-                .addPreGridFilters(new MaxResizeFilter(new Size(2000,2000)))
+//                .addPreGridFilters(new MaxResizeFilter(new Size(2000,2000)))
                 .addPreCellsFilters(new ResizeFilter(new Size(600f,600f)))
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
@@ -172,7 +172,7 @@ class BaseSudokuExtractorTest {
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(25, 66, 3,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
@@ -188,60 +188,6 @@ class BaseSudokuExtractorTest {
         long avgTime = 0;
         long minTime = Long.MAX_VALUE;
         long maxTime = -1;
-
-
-
-        try{
-            int number = 3;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 54;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 60;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 64;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 68;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 115;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-
-        try{
-            int number = 78;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-
 
         for(int i = 0; i < all; i++){
 

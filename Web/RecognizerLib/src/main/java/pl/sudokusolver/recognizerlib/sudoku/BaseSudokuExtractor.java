@@ -88,7 +88,7 @@ public class BaseSudokuExtractor extends SudokuExtractor {
 
         Utility.applyFilters(img, preGridFilters);
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
-        
+
         Utility.applyFilters(sudokuGrid, preCellsFilters);
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
 

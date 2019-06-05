@@ -3,10 +3,9 @@ package pl.sudokusolver.recognizerlib.filters;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
 
-import static org.opencv.imgproc.Imgproc.*;
-import static org.opencv.imgproc.Imgproc.dilate;
+import static org.opencv.imgproc.Imgproc.HoughLinesP;
+import static org.opencv.imgproc.Imgproc.line;
 
 /**
  * Filter służący do usuwania lini

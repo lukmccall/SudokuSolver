@@ -3,14 +3,12 @@ package pl.sudokusolver.recognizerlib.extractors.grid;
 import org.opencv.core.*;
 import org.opencv.photo.Photo;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
-import pl.sudokusolver.recognizerlib.filters.DisplayHelper;
 import pl.sudokusolver.recognizerlib.filters.ToGrayFilter;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.opencv.imgproc.Imgproc.*;
@@ -50,51 +48,13 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         List<MatOfPoint> ret = getContours(sudokuGridFinder,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         int max = getBiggestBlobIndex(ret);
 
+        drawContours(img,ret,max,new Scalar(0,0,0),3); // magical fix O.o ?!
+        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(ret.get(max));
 
-
-
-
-       drawContours(img,ret,max,new Scalar(0,0,0),3); // magical fix O.o ?!
-      //  new DisplayHelper().apply(img);
-      //  Mat outbox = img.clone();
-       // new ToGrayFilter().apply(outbox);
-
-       // Photo.fastNlMeansDenoising(outbox,outbox,50,5,5);
-
-       // adaptiveThreshold(outbox, outbox, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, blockSize, c);
-
-
-
-     Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(ret.get(max));
-
-     //   MatOfPoint poly = approx.getFirst();
-     //   MatOfPoint2f dst = approx.getSecond();
-
-     //   int size = Utility.distance(dst);
-
-
-
-
-
-       // RotatedRect rotatedRect = minAreaRect(dst);
-    //    drawRotatedRect(img, rotatedRect, new Scalar(255,0,0), 4);
-    //    new DisplayHelper().apply(img);
-      //  Mat cutted = ImageProcessing.applyMask(img, poly);
-
-
-     //   new DisplayHelper().apply(cutted);
-       // outbox.release();
         sudokuGridFinder.release();
         return perspectiveWrap(img, approx);
     }
 
-
-    public static void drawRotatedRect(Mat image, RotatedRect rotatedRect, Scalar color, int thickness) {
-        Point[] vertices = new Point[4];
-        rotatedRect.points(vertices);
-        MatOfPoint points = new MatOfPoint(vertices);
-        drawContours(image, Arrays.asList(points), -1, color, thickness);
-    }
 
     private Mat preCutProcessing(Mat img){
         Mat sudokuGridFinder = img.clone();
@@ -107,7 +67,6 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 33, 5);
 
 
-
         double erosion_size =1f;
         Mat element = getStructuringElement( MORPH_RECT,
                 new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
@@ -116,16 +75,15 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
         erode( sudokuGridFinder, sudokuGridFinder, element );
         erosion_size = 2f;
-       element = getStructuringElement( MORPH_RECT,
+        element = getStructuringElement( MORPH_RECT,
                 new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
                 new Point( erosion_size, erosion_size ) );
 
-       dilate( sudokuGridFinder, sudokuGridFinder, element );
+        dilate( sudokuGridFinder, sudokuGridFinder, element );
 
         element.release();
         sudokuGridFinder2.release();
 
-      //  new DisplayHelper().apply(sudokuGridFinder);
         return sudokuGridFinder;
     }
 
@@ -200,17 +158,12 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
         int size = Utility.distance(dst);
 
-
-
         Mat cutted = ImageProcessing.applyMask(sudoku, poly);
-
-      //  new DisplayHelper().apply(cutted);
         MatOfPoint2f order = Utility.orderPoints(dst);
 
         Size reshape = new Size(size, size);
 
         Mat undistorted = new Mat(reshape, CvType.CV_8UC1);
-
         MatOfPoint2f d = new MatOfPoint2f();
         d.fromArray(new Point(0, 0), new Point(0, reshape.width), new Point(reshape.height, 0),
                 new Point(reshape.width, reshape.height));
