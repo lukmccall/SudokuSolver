@@ -70,7 +70,6 @@ public class SmartSolver implements ISolver {
             }
             if(!place){
                 sudoku[x][y] = 0;
-                if (canPlace[x][y] == null){System.out.println("cos"); System.out.println(x+" "+y); };
                 element.setSecond(canPlace[x][y].iterator());
                 it.previous();
                 if(!it.hasPrevious()) return false;

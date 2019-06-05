@@ -28,6 +28,9 @@ public abstract class MLWrapper implements IRecognizer {
      * @return macierz z cyfrą po zastosowaniu filtrów
      */
     protected Mat applyDigitFilter(Mat img){
-        return ImageProcessing.deskew(ImageProcessing.center(img.clone(),sampleSize),sampleSize);
+        Mat center = ImageProcessing.center(img,sampleSize);
+        Mat result = ImageProcessing.deskew(center,sampleSize);
+        center.release();
+        return result;
     }
 }

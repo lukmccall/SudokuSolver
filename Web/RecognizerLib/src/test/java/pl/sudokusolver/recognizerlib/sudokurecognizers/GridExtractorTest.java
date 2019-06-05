@@ -2,6 +2,7 @@ package pl.sudokusolver.recognizerlib.sudokurecognizers;
 
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Size;
@@ -32,6 +33,7 @@ class GridExtractorTest {
     }
 
     @Test
+    @Ignore
     void getSudokuImg() {
         try {
             List<String> images = _TestUtility_.getAllImages();

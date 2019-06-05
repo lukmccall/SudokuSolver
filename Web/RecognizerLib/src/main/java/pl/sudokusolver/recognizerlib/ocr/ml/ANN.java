@@ -4,6 +4,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.TermCriteria;
 import org.opencv.ml.ANN_MLP;
 import pl.sudokusolver.recognizerlib.data.IData;
+import pl.sudokusolver.recognizerlib.ocr.IRowModel;
+import pl.sudokusolver.recognizerlib.ocr.IRowRecognizer;
+import pl.sudokusolver.recognizerlib.ocr.ml.config.annConfig;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
@@ -13,8 +16,12 @@ import static org.opencv.core.CvType.CV_32FC1;
 /**
  * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/Artificial_neural_network">Artificial neural network</a>
  */
-public class ANN extends MLWrapper implements ILoader{
+
+
+public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel {
     private ANN_MLP ann;
+
+    public ANN() {}
 
     public ANN(IData data){
         ann = ANN_MLP.create();
@@ -29,6 +36,13 @@ public class ANN extends MLWrapper implements ILoader{
         ann.setTermCriteria(new TermCriteria(TermCriteria.COUNT + TermCriteria.EPS, 5000, 1e-5));
         ann.setActivationFunction(ANN_MLP.SIGMOID_SYM);
 
+        ann.train(data.getData(), data.getSampleType(), data.getLabels());
+    }
+
+    public ANN(IData data, annConfig f){
+        ann = ANN_MLP.create();
+        sampleSize = data.getSize();
+        f.config(ann);
         ann.train(data.getData(), data.getSampleType(), data.getLabels());
     }
 
@@ -50,12 +64,38 @@ public class ANN extends MLWrapper implements ILoader{
     @Override
     public Pair<Integer,Double> recognize(Mat img) {
         Mat wraped = applyDigitFilter(img);
+
         Mat result = new Mat();
-        ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
-        int pre = 0;
-        for(int i = 1; i < 9; i++)
-            if(result.get(0,pre)[0] < result.get(0,i)[0])
-                pre = i;
-        return new Pair<>(pre, result.get(0,pre)[0]);
+        Mat preImg = ImageProcessing.procSimple(wraped, sampleSize);
+        ann.predict(preImg, result);
+        int pre = 1;
+        for(int i = 0; i < 9; i++)
+            if(result.get(0,pre - 1)[0] < result.get(0,i)[0])
+                pre = i + 1;
+        // todo: repair this :\
+        // todo: bug report
+        double dst = result.get(0,pre - 1)[0];
+
+        wraped.release();
+        preImg.release();
+        result.release();
+
+        return new Pair<>(pre, dst);
+    }
+
+    @Override
+    public Object getMl() {
+        return ann;
+    }
+
+    @Override
+    public int rowRecognize(Mat img) {
+        Mat result = new Mat();
+        ann.predict(img, result);
+        int pre = 1;
+        for (int u = 0; u < 9; u++)
+            if (result.get(0, pre - 1)[0] < result.get(0, u)[0])
+                pre = u + 1;
+        return pre;
     }
 }

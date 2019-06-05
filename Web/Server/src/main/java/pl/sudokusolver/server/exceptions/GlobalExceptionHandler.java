@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
+import pl.sudokusolver.recognizerlib.exceptions.DigitExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 
 import java.io.IOException;
@@ -61,6 +62,13 @@ public class GlobalExceptionHandler{
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     ErrorResponse handleNotFoundSudokuException(NotFoundSudokuException exception){
+        return new ErrorResponse(ErrorCodes.SudokuNotFound, exception.getMessage());
+    }
+
+    @ExceptionHandler({DigitExtractionFailedException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ErrorResponse handleDigitExtractionFailedException(DigitExtractionFailedException exception){
         return new ErrorResponse(ErrorCodes.SudokuNotFound, exception.getMessage());
     }
 

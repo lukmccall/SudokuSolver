@@ -63,7 +63,7 @@ public class CleanLinesFilter implements IFilter {
             Point end = new Point(x2, y2);
 
             line(input, start, end, Scalar.all(0), 3);
-
         }
+        lines.release();
     }
 }

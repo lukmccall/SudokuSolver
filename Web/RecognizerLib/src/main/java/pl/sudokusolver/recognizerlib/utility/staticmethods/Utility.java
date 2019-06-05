@@ -81,7 +81,18 @@ public class Utility {
         }
     }
 
+    public static String getANNDump(){
+        return Init.class.getResource("/ann.xml").toString().substring(6);
+    }
+
     public static String getSVMDump(){
-        return Init.class.getResource("/svm.xml").toString().substring(6);
+        String r = Init.class.getResource("/svm.xml").toString();
+        if(r.substring(0,3).equals("jar"))
+            return r;
+        return r.substring(6);
+    }
+
+    public static String getTessdata(){
+        return Init.class.getResource("/tessdata/").toString().substring(6);
     }
 }

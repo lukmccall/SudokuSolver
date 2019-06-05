@@ -19,17 +19,17 @@ public class test {
     public static void main(String[] args) throws NotFoundSudokuException, CellsExtractionFailedException, VersionMismatchException, IOException {
         System.out.println("Rec Lib Test");
 
-        Init.init("C:\\opencv4.0.1\\opencv\\build\\java\\x64");
+        Init.init("D:\\SyfPulpit\\ProjektIO\\opencv\\build\\java\\x64");
 
 
         if(train)
         {
             ILoader ml;
             try {
-                IData data = MNISTReader.read("..\\Data\\images","..\\Data\\labels", DataType.Complex);
-                ml = new ANN(data);
+                IData data = MNISTReader.read("..\\Data\\images","..\\Data\\labels", DataType.SimpleSVM);
+                ml = new SVM(data);
                 System.out.println("End");
-                ml.dump("../Data/ann.xml");
+                ml.dump("../Data/svm.xml");
             } catch (VersionMismatchException e) {
                 e.printStackTrace();
             } catch (IOException e) {

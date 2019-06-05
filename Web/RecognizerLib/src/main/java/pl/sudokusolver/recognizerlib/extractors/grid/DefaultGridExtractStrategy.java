@@ -45,50 +45,44 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
     @Override
     public Mat extractGrid(Mat img) throws NotFoundSudokuException {
         Mat sudokuGridFinder = preCutProcessing(img);
-        List<MatOfPoint> ret = getContours(sudokuGridFinder,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
+        List<MatOfPoint> ret = getContours(sudokuGridFinder,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         int max = getBiggestBlobIndex(ret);
 
+        drawContours(img,ret,max,new Scalar(0,0,0),3); // magical fix O.o ?!
+        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(ret.get(max));
 
-        drawContours(img,ret,max,new Scalar(0,0,0),3); // magical fix
-
-        Mat outbox = img.clone();
-        new ToGrayFilter().apply(outbox);
-
-        Photo.fastNlMeansDenoising(outbox,outbox,50,5,10);
-
-        adaptiveThreshold(outbox, outbox, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, blockSize, c);
-
-        List<MatOfPoint> contours = getContours(outbox,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
-        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
-
+        sudokuGridFinder.release();
         return perspectiveWrap(img, approx);
     }
+
 
     private Mat preCutProcessing(Mat img){
         Mat sudokuGridFinder = img.clone();
         new ToGrayFilter().apply(sudokuGridFinder);
         Mat sudokuGridFinder2 = sudokuGridFinder.clone();
 
-        Photo.fastNlMeansDenoising(sudokuGridFinder,sudokuGridFinder,50,10,10);
-        Core.addWeighted(sudokuGridFinder2,1.5f,sudokuGridFinder,-0.5f,0.5f,sudokuGridFinder);
 
-        Photo.fastNlMeansDenoising(sudokuGridFinder,sudokuGridFinder,50,10,10);
+        Photo.fastNlMeansDenoising(sudokuGridFinder,sudokuGridFinder,100,5,5);
 
-        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
-
-        double erosion_size = 2;
-        Mat structImage = getStructuringElement(MORPH_RECT, new Size(erosion_size,erosion_size));
-        morphologyEx(sudokuGridFinder,sudokuGridFinder,MORPH_OPEN, structImage);
+        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 33, 5);
 
 
-        erosion_size = 1f;
+        double erosion_size =1f;
         Mat element = getStructuringElement( MORPH_RECT,
                 new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
                 new Point( erosion_size, erosion_size ) );
 
 
         erode( sudokuGridFinder, sudokuGridFinder, element );
+        erosion_size = 2f;
+        element = getStructuringElement( MORPH_RECT,
+                new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
+                new Point( erosion_size, erosion_size ) );
+
         dilate( sudokuGridFinder, sudokuGridFinder, element );
+
+        element.release();
+        sudokuGridFinder2.release();
 
         return sudokuGridFinder;
     }
@@ -111,6 +105,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         List<MatOfPoint> ret = new ArrayList<>();
         Mat heirarchy = new Mat();
         findContours(img, ret, heirarchy, mode, method);
+        heirarchy.release();
         return ret;
     }
 
@@ -121,14 +116,17 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         MatOfPoint2f src = new MatOfPoint2f();
         poly.convertTo(src, CvType.CV_32FC2);
 
-        final int maxIteration = 100;
+
+        final int maxIteration = 400;
         final int corners = 4;
 
         // default value
         double arcLength = arcLength(src, true);
         approxPolyDP(src, dst, 0.02 * arcLength, true);
-        if(dst.rows() == corners)
+        if(dst.rows() == corners) {
+            src.release();
             return new Pair<>(poly, dst);
+        }
 
         // searching for new
         double left = 0.0;
@@ -141,7 +139,10 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
             double eps = k * arcLength;
 
             approxPolyDP(src, dst, eps * arcLength, true);
-            if (dst.rows() == corners) return new Pair<>(poly, dst);
+            if (dst.rows() == corners) {
+                src.release();
+                return new Pair<>(poly, dst);
+            }
             else if(dst.rows() > corners) left = k;
             else right = k;
 
@@ -163,12 +164,16 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         Size reshape = new Size(size, size);
 
         Mat undistorted = new Mat(reshape, CvType.CV_8UC1);
-
         MatOfPoint2f d = new MatOfPoint2f();
         d.fromArray(new Point(0, 0), new Point(0, reshape.width), new Point(reshape.height, 0),
                 new Point(reshape.width, reshape.height));
 
         warpPerspective(cutted, undistorted, getPerspectiveTransform(order, d), reshape);
+
+        d.release();
+        poly.release();
+        dst.release();
+        cutted.release();
         return undistorted;
     }
 }
