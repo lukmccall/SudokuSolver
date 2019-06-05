@@ -47,6 +47,14 @@ public class StageMain extends Stage implements MenuListener, Sender {
      */
     @Override
     public void solve() throws Exception{
+        int[][] sudoku;
+        try{
+            sudoku = canvas.getInitial();
+        }
+        catch (IllegalArgumentException e){
+            new StageError("Sudoku is not valid!");
+            return;
+        }
 
         block();
         ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -56,7 +64,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     .addPathSegment("api").addPathSegment("solve").build();
 
             OkHttpClient client = new OkHttpClient();
-            SolveRequest solveRequest = new SolveRequest(canvas.getInitial());
+            SolveRequest solveRequest = new SolveRequest(sudoku);
             Gson gson = new Gson();
             RequestBody body = RequestBody.create(Values.SERVER_REQUEST_TYPE, gson.toJson(solveRequest, solveRequest.getClass()));
 
@@ -87,6 +95,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
     @Override
     public void send(BufferedImage image, Parameters parameters) throws Exception{
         block();
+
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {

@@ -33,7 +33,14 @@ public class Canvas extends javafx.scene.canvas.Canvas {
      * Function to get numbers input by player
      * @return 2d array of numbers that have already been input
      */
-    public int[][] getInitial(){
+    public int[][] getInitial() throws IllegalArgumentException{
+        for (int i = 0; i <= MAX_ROW; i++){
+            for (int j = 0; j <= MAX_COL; j++){
+                if (!isValid(gameboard.getInitial()[i][j], i, j)){
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
         return gameboard.getInitial();
     }
 
@@ -95,18 +102,18 @@ public class Canvas extends javafx.scene.canvas.Canvas {
      * @param value value to be inserted to sudoku
      * @return  true if it can be, false otherwise
      */
-    private boolean isValid(int value){
+    private boolean isValid(int value, int inRow, int inCol){
         if (value < 0 || value > 9) return false;
         if (value == 0) return true;
         int[][] sudoku = gameboard.getInitial();
 
         for (int i = 0; i <= MAX_ROW; i++){
-            if (sudoku[i][playerCol] == value) return false;
-            if (sudoku[playerRow][i] == value) return false;
+            if (sudoku[i][inCol] == value) return false;
+            if (sudoku[inRow][i] == value) return false;
         }
 
-        int startRow = playerRow - playerRow % 3;
-        int startCol = playerCol - playerCol % 3;
+        int startRow = inRow - inRow % 3;
+        int startCol = inCol - inCol % 3;
         for (int row = 0; row < 3; row++){
             for (int col = 0; col < 3; col++){
                 if (sudoku[row + startRow][col + startCol] == value) return false;
@@ -121,7 +128,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
      * @param value value inserted by user
      */
     public void onValueInserted(int value){
-        if (!isValid(value)){
+        if (!isValid(value, playerRow, playerCol)){
             new StageError(Values.E008);
             return;
         }
