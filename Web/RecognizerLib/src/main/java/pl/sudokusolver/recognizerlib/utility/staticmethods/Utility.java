@@ -16,7 +16,7 @@ import java.util.List;
 
 
 /**
- * Zbiór funckji pomocniczych
+ * Zbiór funkcji pomocniczych
  */
 public class Utility {
     private static final Ordering<Point> SORT = Ordering.natural().nullsFirst().onResultOf(
@@ -24,8 +24,8 @@ public class Utility {
     );
 
     /**
-     * @param mat macierz punktów
-     * @return posortowana, ze względu na pierwszą współrzędną, macierz punktów
+     * @param mat macierz punktów (x,y) x,y nalezą do naturalnych
+     * @return posortowana macierz po sumie x+y
      */
     public static MatOfPoint2f orderPoints(MatOfPoint2f mat) {
         List<Point> pointList = SORT.sortedCopy(mat.toList());
@@ -41,8 +41,8 @@ public class Utility {
     }
 
     /**
-     * @param poly wektor zawierający dwa punkty
-     * @return całkowita część euklidesowejj odległości punktów w wektorze
+     * @param poly wektor zawierający dwa punkty (x,y) x,y naturalne
+     * @return całkowita część euklidesowej odległości punktów w wektorze
      */
     public static int distance(MatOfPoint2f poly) {
         Point[] a =  poly.toArray();
