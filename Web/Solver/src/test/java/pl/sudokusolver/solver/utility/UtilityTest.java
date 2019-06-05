@@ -277,7 +277,7 @@ class UtilityTest {
     void getUnassignedLocationGrid2True() {
         int [][] testGrid = grid2.clone();
         testGrid[5][5]=0;
-        Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid2);
+        Pair<Integer,Integer> a = Utility.getUnassignedLocation(testGrid);
         boolean test = false;
 
         if (a.equals(new Pair<>(5,5))) test = true;
