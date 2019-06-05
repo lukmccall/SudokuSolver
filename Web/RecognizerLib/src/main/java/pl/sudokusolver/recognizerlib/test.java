@@ -6,6 +6,7 @@ import pl.sudokusolver.recognizerlib.data.MNISTReader;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
+import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
 import pl.sudokusolver.recognizerlib.ocr.ml.ILoader;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
 
@@ -13,20 +14,22 @@ import java.io.IOException;
 
 public class test {
 
-    private static boolean train = false;       //train SVM model
+    private static boolean train = true;       //train SVM model
 
-    public static void main(String[] args) throws NotFoundSudokuException, CellsExtractionFailedException {
+    public static void main(String[] args) throws NotFoundSudokuException, CellsExtractionFailedException, VersionMismatchException, IOException {
         System.out.println("Rec Lib Test");
 
         Init.init("C:\\opencv4.0.1\\opencv\\build\\java\\x64");
+
 
         if(train)
         {
             ILoader ml;
             try {
-                IData data = MNISTReader.read("..\\Data\\images","..\\Data\\labels", DataType.SimpleSVM);
-                ml = new SVM(data);
-                ml.dump("../Data/svm.xml");
+                IData data = MNISTReader.read("..\\Data\\images","..\\Data\\labels", DataType.Complex);
+                ml = new ANN(data);
+                System.out.println("End");
+                ml.dump("../Data/ann.xml");
             } catch (VersionMismatchException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -34,8 +37,8 @@ public class test {
             }
 
         }
-
-
+//
+//
 
         /*
         File folder = new File("../Data/temp/");

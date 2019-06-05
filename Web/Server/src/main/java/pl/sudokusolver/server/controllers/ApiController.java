@@ -55,12 +55,12 @@ public class ApiController {
     @RequestMapping(value = "/extractfromimg", method = RequestMethod.POST)
     public String extract(
             @RequestParam("sudoku") MultipartFile inputImg,
-            @RequestParam(value = "lineThreshold", required = false, defaultValue = "80") int lineTreshold,
-            @RequestParam(value = "minLineSize", required = false, defaultValue = "200") int minLineSize,
-            @RequestParam(value = "lineGap", required = false, defaultValue = "20") int lineGap,
-            @RequestParam(value = "blurSize", required = false, defaultValue = "11") int blurSize,
-            @RequestParam(value = "blurBlockSize", required = false, defaultValue = "5") int blurBlockSize,
-            @RequestParam(value = "blurC", required = false, defaultValue = "2") int blurC
+            @RequestParam(value = "lineThreshold", required = false, defaultValue = "50") int lineTreshold,
+            @RequestParam(value = "minLineSize", required = false, defaultValue = "100") int minLineSize,
+            @RequestParam(value = "lineGap", required = false, defaultValue = "5") int lineGap,
+            @RequestParam(value = "blurSize", required = false, defaultValue = "3") int blurSize,
+            @RequestParam(value = "blurBlockSize", required = false, defaultValue = "31") int blurBlockSize,
+            @RequestParam(value = "blurC", required = false, defaultValue = "15") int blurC
     ) throws IllegalArgumentException, IOException, NotFoundSudokuException, CellsExtractionFailedException {
 
         LOGGER.trace("Send "+inputImg.getContentType()+" which have " + inputImg.getSize() +" bits");

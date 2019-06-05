@@ -46,9 +46,10 @@ public class MNISTReader {
         int m2 = labelBuffer.getInt();
         if(m1 == 2049 && m2 == 2051)
             throw new VersionMismatchException("MNIST files don't have same version. Images have " + m1 + ", labels have "+m2+".");
-
+        final int numberOfZeroes = 5923; // todo: make it better, because this is stupid :\
+        // todo: make bug report
         // IMAGES LOAD
-        int imgNumber = imgBuffer.getInt();
+        int imgNumber = imgBuffer.getInt() - numberOfZeroes;
         int imgRows = imgBuffer.getInt();
         int imgCols = imgBuffer.getInt();
 
@@ -60,8 +61,8 @@ public class MNISTReader {
 
         if(labels == null)
             throw new IllegalArgumentException("Invalid data type");
-
-        for(int n = 0; n < imgNumber; n++) {
+        int cout = 0;
+        for(int n = 0; n < imgNumber + numberOfZeroes; n++) {
             int i = labelBuffer.get() & 0xFF;
 
 
@@ -69,6 +70,7 @@ public class MNISTReader {
             Mat img = loadImg(imgBuffer, imgRows, imgCols);
             if(i == 0)
             {
+                cout++;
                continue;
             }
 
@@ -100,7 +102,7 @@ public class MNISTReader {
             case SimpleSVM:
                 return  Mat.zeros(size, 1, CvType.CV_32SC1);
             case Complex:
-                return Mat.zeros(size, 10, CvType.CV_32FC1);
+                return Mat.zeros(size, 9, CvType.CV_32FC1);
             default:
                 return null;
         }
@@ -109,34 +111,32 @@ public class MNISTReader {
     private static String getStringFromLable(int label){
         switch (label) {
             case 9:
-                return "0000000001";
+                return "000000001";
             case 8:
-                return "0000000010";
+                return "000000010";
             case 7:
-                return "0000000100";
+                return "000000100";
             case 6:
-                return "0000001000";
+                return "000001000";
             case 5:
-                return "0000010000";
+                return "000010000";
             case 4:
-                return "0000100000";
+                return "000100000";
             case 3:
-                return "0001000000";
+                return "001000000";
             case 2:
-                return "0010000000";
+                return "010000000";
             case 1:
-                return "0100000000";
-            case 0:
-                return "1000000000";
+                return "100000000";
             default:
-                return "0000000000";
+                return "000000000";
         }
     }
 
     private static void putLabel(Mat labels, int label, int n, DataType type){
         if(type == DataType.Complex) {
             String word = getStringFromLable(label);
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < 9; k++) {
                 double c = (word.charAt(k) == '1') ? 1 : 0;
                 labels.put(n, k, c);
             }
