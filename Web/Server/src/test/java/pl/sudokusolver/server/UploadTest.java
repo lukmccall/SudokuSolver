@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.concurrent.TimeUnit;
 
 public class UploadTest {
 
@@ -15,23 +16,28 @@ public class UploadTest {
      ********   For ANN    ******
      *** Images upload test ***
 
-     Avg Time: 3009.3384615384616 ms
-     Min Time: 310 ms
-     Max Time: 10039 ms
-
+     Avg Time: 1489.1076923076923 ms
+     Min Time: 313 ms
+     Max Time: 4315 ms
      *******   For SVM   *******
      *** Images upload test ***
 
-     Avg Time: 2950.8846153846152 ms
-     Min Time: 29 ms
-     Max Time: 9296 ms
+     Avg Time: 1431.7076923076922 ms
+     Min Time: 380 ms
+     Max Time: 3415 ms
+
      */
     @Test
     @Ignore
     /* Run when server is running */
     void performanceTest() throws IOException {
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                                    .connectTimeout(10, TimeUnit.SECONDS)
+                                    .writeTimeout(120, TimeUnit.SECONDS)
+                                    .readTimeout(120, TimeUnit.SECONDS)
+                                    .build();
+
         int all = 130;
         long avgTime = 0;
         long minTime = Long.MAX_VALUE;
@@ -46,10 +52,10 @@ public class UploadTest {
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("sudoku", "sudoku.jpg",
                             RequestBody.create(MediaType.get("image/jpg"), fileContent))
-                    .addFormDataPart("recognizer", "ANN")
+                    .addFormDataPart("recognizer", "Tesseract")
                     .build();
             Request request = new Request.Builder()
-                    .url("http://localhost:8080/api/extractfromimg")
+                    .url("http://localhost:8080/app/api/extractfromimg")
                     .post(requestBody)
                     .build();
             long startTime = System.currentTimeMillis();
@@ -59,13 +65,16 @@ public class UploadTest {
             try{
                 response = client.newCall(request).execute();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
+                System.out.println(i + " " + e.getMessage() + " time " + (System.currentTimeMillis()-startTime));
+
             } finally {
                 endTime = System.currentTimeMillis();
-                if(response != null) response.close();
+                if(response != null)
+                    response.close();
+
             }
             long currDuration = endTime - startTime;
+            if (currDuration > 14000) System.out.println(i);
 
             avgTime += currDuration;
             if(currDuration > maxTime) maxTime = currDuration;

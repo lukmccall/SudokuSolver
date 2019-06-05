@@ -79,6 +79,7 @@ public class ApiController {
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(digitRecognizer.getRecognizer(recognizer, strictMode))
+                .addPreGridFilters(new MaxResizeFilter(new Size(2000,2000)))
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new CleanLinesFilter(lineTreshold, minLineSize, lineGap,
@@ -89,9 +90,9 @@ public class ApiController {
         if (scaling.equals("FIXED WIDTH SCALING"))
             builder.addPreGridFilters(new FixedWidthResizeFilter());
         else if(scaling.equals("MAX AXIS RESIZE"))
-            builder.addPreDigitsFilters(new MaxResizeFilter());
+            builder.addPreGridFilters(new MaxResizeFilter());
         else if(scaling.equals("NONE"))
-            builder.addPreDigitsFilters(new MaxResizeFilter(new Size(1500,1500)));
+            builder.addPreGridFilters(new MaxResizeFilter(new Size(1500,1500)));
 
         SudokuExtractor baseSudokuExtractor = builder.build();
 
