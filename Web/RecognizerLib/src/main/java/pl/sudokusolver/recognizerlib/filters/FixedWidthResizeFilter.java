@@ -18,7 +18,9 @@ public class FixedWidthResizeFilter implements IFilter {
 
     @Override
     public void apply(Mat input) {
+
         double ratio = input.size().height/input.size().width;
-        resize(input,input, new Size(width,width*ratio));
+
+            resize(input,input, new Size(width,width*ratio));
     }
 }

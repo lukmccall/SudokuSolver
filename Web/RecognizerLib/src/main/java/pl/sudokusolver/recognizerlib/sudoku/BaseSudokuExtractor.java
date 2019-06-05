@@ -15,6 +15,7 @@ import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.BlurFilter;
 import pl.sudokusolver.recognizerlib.filters.CleanLinesFilter;
+import pl.sudokusolver.recognizerlib.filters.DisplayHelper;
 import pl.sudokusolver.recognizerlib.filters.IFilter;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
@@ -87,9 +88,7 @@ public class BaseSudokuExtractor extends SudokuExtractor {
 
         Utility.applyFilters(img, preGridFilters);
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
-
-//            resize(sudokuGrid,sudokuGrid,new Size(600f,600f));
-
+        
         Utility.applyFilters(sudokuGrid, preCellsFilters);
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
 
