@@ -125,7 +125,7 @@ public class UtilityTest {
     void matToBufferedImageTest(){
     }
 
-    
+
     @Test
     void getSVM(){
         File file = new File(Utility.getSVMDump());
