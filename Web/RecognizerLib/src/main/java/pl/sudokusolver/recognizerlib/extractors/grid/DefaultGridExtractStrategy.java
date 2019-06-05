@@ -61,6 +61,8 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         List<MatOfPoint> contours = getContours(outbox,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
         Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(contours.get(getBiggestBlobIndex(contours)));
 
+        outbox.release();
+        sudokuGridFinder.release();
         return perspectiveWrap(img, approx);
     }
 
@@ -90,6 +92,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         erode( sudokuGridFinder, sudokuGridFinder, element );
         dilate( sudokuGridFinder, sudokuGridFinder, element );
 
+        sudokuGridFinder2.release();
         return sudokuGridFinder;
     }
 
@@ -111,6 +114,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         List<MatOfPoint> ret = new ArrayList<>();
         Mat heirarchy = new Mat();
         findContours(img, ret, heirarchy, mode, method);
+        heirarchy.release();
         return ret;
     }
 
@@ -127,8 +131,10 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         // default value
         double arcLength = arcLength(src, true);
         approxPolyDP(src, dst, 0.02 * arcLength, true);
-        if(dst.rows() == corners)
+        if(dst.rows() == corners) {
+            src.release();
             return new Pair<>(poly, dst);
+        }
 
         // searching for new
         double left = 0.0;
@@ -141,7 +147,10 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
             double eps = k * arcLength;
 
             approxPolyDP(src, dst, eps * arcLength, true);
-            if (dst.rows() == corners) return new Pair<>(poly, dst);
+            if (dst.rows() == corners) {
+                src.release();
+                return new Pair<>(poly, dst);
+            }
             else if(dst.rows() > corners) left = k;
             else right = k;
 
@@ -169,6 +178,11 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
                 new Point(reshape.width, reshape.height));
 
         warpPerspective(cutted, undistorted, getPerspectiveTransform(order, d), reshape);
+
+        d.release();
+        poly.release();
+        dst.release();
+        cutted.release();
         return undistorted;
     }
 }

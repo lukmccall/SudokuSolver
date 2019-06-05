@@ -67,11 +67,12 @@ public class ApiController {
             @RequestParam(value = "strictMode", required = false, defaultValue = "false") boolean strictMode
     ) throws IllegalArgumentException, IOException, NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException {
 
-        LOGGER.trace("Send "+inputImg.getContentType()+" which have " + inputImg.getSize() +" bits");
+        LOGGER.trace("Get "+inputImg.getContentType()+" which have " + inputImg.getSize() +" bits");
 
         if(!inputImg.getContentType().equals("image/jpeg") && !inputImg.getContentType().equals("image/png")
                 && !inputImg.getContentType().equals("image/jpg"))
             throw new IllegalArgumentException("Expected jpg or png get " + inputImg.getContentType());
+
 
         BaseSudokuExtractor.Builder builder  = BaseSudokuExtractor.builder()
                 .setGridStrategy(new DefaultGridExtractStrategy())
@@ -96,6 +97,7 @@ public class ApiController {
 
         Mat mat = Utility.multipartFileToMat(inputImg);
         Sudoku sudoku = baseSudokuExtractor.extract(mat);
+        mat.release();
         return new Gson().toJson(new GridModel(1, sudoku.getGrid()));
     }
 }

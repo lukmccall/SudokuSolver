@@ -100,6 +100,7 @@ public class ImageProcessing {
         Mat dst = new Mat();
         image.copyTo(dst, mask);
 
+        mask.release();
         return dst;
     }
 

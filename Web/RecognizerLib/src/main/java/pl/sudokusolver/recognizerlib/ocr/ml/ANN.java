@@ -66,14 +66,21 @@ public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
         Mat wraped = applyDigitFilter(img);
 
         Mat result = new Mat();
-        ann.predict(ImageProcessing.procSimple(wraped, sampleSize), result);
+        Mat preImg = ImageProcessing.procSimple(wraped, sampleSize);
+        ann.predict(preImg, result);
         int pre = 1;
         for(int i = 0; i < 9; i++)
             if(result.get(0,pre - 1)[0] < result.get(0,i)[0])
                 pre = i + 1;
         // todo: repair this :\
         // todo: bug report
-        return new Pair<>(pre, result.get(0,pre - 1)[0]);
+        double dst = result.get(0,pre - 1)[0];
+
+        wraped.release();
+        preImg.release();
+        result.release();
+
+        return new Pair<>(pre, dst);
     }
 
     @Override

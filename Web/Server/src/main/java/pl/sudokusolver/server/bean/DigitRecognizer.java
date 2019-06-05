@@ -4,11 +4,16 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.sudokusolver.recognizerlib.Init;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
+import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSimple;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractStrictMode;
+import pl.sudokusolver.recognizerlib.utility.ResourceManager;
+import pl.sudokusolver.server.utility.Utility;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.util.jar.JarFile;
 
 public class DigitRecognizer {
     private String openCVUrl;
@@ -35,8 +40,10 @@ public class DigitRecognizer {
             Init.init(this.openCVUrl);
         }
 
-        this.svm = new SVM("..\\..\\Data\\svm.xml");
-        this.ann = new SVM("..\\..\\Data\\ann.xml");
+
+
+        this.svm = new SVM(ResourceManager.extract("/svm.xml"));
+        this.ann = new ANN(ResourceManager.extract("/ann.xml"));
         this.tesseractSimple = new TesseractSimple();
         this.tesseractStrict = new TesseractStrictMode();
     }

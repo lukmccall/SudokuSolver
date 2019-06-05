@@ -26,7 +26,7 @@ public class SizeCellsExtractStrategy implements CellsExtractStrategy{
             for (int col = 0; col < 9; col++) {
                 Rect rect = new Rect(new Point(col * size, row * size), cellSize);
 
-                Mat digit = new Mat(grid, rect).clone();
+                Mat digit = new Mat(grid, rect);//.clone();
                 cells.add(digit);
             }
         }

@@ -24,6 +24,8 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 @ExtendWith({_INIT_.class})
 class BaseSudokuExtractorTest {
 
+    private int all = 20;
+
     /**
     *** Sudoku extractor with SVM ***
        ---    Correctness  ---
@@ -184,7 +186,6 @@ class BaseSudokuExtractorTest {
         long minTime = Long.MAX_VALUE;
         long maxTime = -1;
 
-        int all = 130;
         for(int i = 0; i < all; i++){
 
             String path = "../../Data/TestImgs/"+i+".jpg";
