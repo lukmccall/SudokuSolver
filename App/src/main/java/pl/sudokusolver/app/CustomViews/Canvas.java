@@ -100,7 +100,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
         if (value == 0) return true;
         int[][] sudoku = gameboard.getInitial();
 
-        for (int i = 0; i <= MAX_ROW; i++){
+        for (int i = 0; i < MAX_ROW; i++){
             if (sudoku[i][playerCol] == value) return false;
             if (sudoku[playerRow][i] == value) return false;
         }
