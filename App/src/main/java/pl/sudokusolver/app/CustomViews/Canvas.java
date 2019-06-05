@@ -107,15 +107,21 @@ public class Canvas extends javafx.scene.canvas.Canvas {
         if (value == 0) return true;
         int[][] sudoku = gameboard.getInitial();
 
-        for (int i = 0; i <= MAX_ROW; i++){
+        for (int i = 0; i <= MAX_COL; i++){
+            if (i == inRow) continue;
             if (sudoku[i][inCol] == value) return false;
+        }
+        for (int i = 0; i <= MAX_ROW; i++){
+            if (i == inCol) continue;
             if (sudoku[inRow][i] == value) return false;
         }
+
 
         int startRow = inRow - inRow % 3;
         int startCol = inCol - inCol % 3;
         for (int row = 0; row < 3; row++){
             for (int col = 0; col < 3; col++){
+                if (row + startRow == inRow && col + startCol == inCol) continue;
                 if (sudoku[row + startRow][col + startCol] == value) return false;
             }
         }
@@ -272,11 +278,16 @@ public class Canvas extends javafx.scene.canvas.Canvas {
                 //if the digit is entered by user or detected while image input use one color to draw it
                 if(initial[row][col] != 0) {
                     context.setFill(Color.BLACK);
+
+                    if (!isValid(initial[row][col], row, col)){
+                        context.setFill(Color.RED);
+                    }
+
                     context.fillText(initial[row][col] + "", position_x, position_y);
                 }
                 //otherwise use another color
                 else if (solution[row][col] != 0){
-                    context.setFill(Color.RED);
+                    context.setFill(Color.GREEN);
                     context.fillText(solution[row][col] + "", position_x, position_y);
                 }
             }
