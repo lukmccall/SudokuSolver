@@ -212,7 +212,7 @@ class BaseSudokuExtractorTest {
                 } catch (IOException ignored) {}
 
                 double s = goodAnsSudoku.score(testSudoku);
-                
+
                 if(s == 1.0f) full++;
                 avgCorrectness += s;
             }
