@@ -11,17 +11,21 @@ import pl.sudokusolver.recognizerlib._TestUtility_;
 import pl.sudokusolver.recognizerlib.data.DataType;
 import pl.sudokusolver.recognizerlib.data.IData;
 import pl.sudokusolver.recognizerlib.data.MNISTReader;
+import pl.sudokusolver.recognizerlib.exceptions.DigitExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.VersionMismatchException;
 import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
+import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSimple;
+import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSingletonWrapper;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
 import java.io.IOException;
 
 import static org.opencv.core.CvType.CV_32FC1;
+import static org.opencv.core.CvType.CV_8UC1;
 
 @ExtendWith({_INIT_.class})
-class IRowRecognizerTest {
+class RecognizersTest {
 
     static IData testData;
 

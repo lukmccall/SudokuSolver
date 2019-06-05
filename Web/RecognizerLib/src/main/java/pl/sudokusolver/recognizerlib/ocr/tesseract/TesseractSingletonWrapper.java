@@ -16,7 +16,7 @@ public class TesseractSingletonWrapper {
     /**
      * Instancja ocra
      */
-    protected final static Tesseract tesseract;
+    public final static Tesseract tesseract;
 
     static {
         tesseract = new Tesseract();
