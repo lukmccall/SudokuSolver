@@ -58,7 +58,7 @@ class BaseSudokuExtractorTest {
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
-        System.out.println("*** Sudoku extractor with SVM ***");
+        System.out.println("***  Sudoku extractor with SVM ***");
         score(baseSudokuExtractor);
     }
     /**
@@ -212,7 +212,7 @@ class BaseSudokuExtractorTest {
                 } catch (IOException ignored) {}
 
                 double s = goodAnsSudoku.score(testSudoku);
-
+                
                 if(s == 1.0f) full++;
                 avgCorrectness += s;
             }

@@ -37,6 +37,9 @@ class RecognizersTest {
         );
     }
 
+    /**
+        0.9780487804878049 accuracy
+     */
     @Test
     @Ignore
     void ANN(){
@@ -49,6 +52,9 @@ class RecognizersTest {
         System.out.println("ANN have " + acc + " accuracy");
     }
 
+    /**
+        0.967849223946785 accuracy
+     */
     @Test
     @Ignore
     void SVM(){
