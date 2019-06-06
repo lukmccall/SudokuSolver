@@ -4,11 +4,13 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import pl.sudokusolver.recognizerlib.exceptions.DigitExtractionFailedException;
 import pl.sudokusolver.recognizerlib.extractors.cells.SizeCellsExtractStrategyTest;
 import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategyTest;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategyTest;
 import pl.sudokusolver.recognizerlib.filters.CleanLinesFilterTest;
+import pl.sudokusolver.recognizerlib.ocr.IRecognizerTest;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVMTest;
 
@@ -27,18 +29,18 @@ class InitTest {
     // for developers
     @Test
     @Ignore
-    void dump() throws IOException {
+    void dump() throws IOException, DigitExtractionFailedException {
         DefaultGridExtractStrategyTest grid = new DefaultGridExtractStrategyTest();
         CleanLinesFilterTest clean = new CleanLinesFilterTest();
         SizeCellsExtractStrategyTest cells = new SizeCellsExtractStrategyTest();
         FastDigitExtractStrategyTest digit = new FastDigitExtractStrategyTest();
-        SVMTest svmTest = new SVMTest();
+        IRecognizerTest iRecognizerTest = new IRecognizerTest();
 
         grid.saveCuttedGrids();
         clean.clean();
         cells.extract();
         digit.extract();
-        svmTest.fromDump();
+        iRecognizerTest.SVMfromDump();
 
     }
 
