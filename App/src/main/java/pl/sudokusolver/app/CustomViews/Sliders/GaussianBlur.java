@@ -42,7 +42,7 @@ public class GaussianBlur extends VBox {
     /**
      * Function to initialize layout
      */
-    private void init(){
+    protected void init(){
         Text text = initText();
         Text value = initValue();
         slider = initSlider(value);
