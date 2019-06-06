@@ -48,11 +48,31 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         List<MatOfPoint> ret = getContours(sudokuGridFinder,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         int max = getBiggestBlobIndex(ret);
 
-        drawContours(img,ret,max,new Scalar(0,0,0),3); // magical fix O.o ?!
-        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(ret.get(max));
 
+        MatOfInt hull = new MatOfInt();
+        convexHull(ret.get(max), hull);
+
+        Point[] contourArray = ret.get(max).toArray();
+        List<MatOfPoint> hullList = new ArrayList<>();
+        Point[] hullPoints = new Point[hull.rows()];
+        List<Integer> hullContourIdxList = hull.toList();
+        for (int i = 0; i < hullContourIdxList.size(); i++) {
+            hullPoints[i] = contourArray[hullContourIdxList.get(i)];
+        }
+        hullList.add(new MatOfPoint(hullPoints));
+
+
+        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(hullList.get(0));
         sudokuGridFinder.release();
-        return perspectiveWrap(img, approx);
+
+        Mat pW = perspectiveWrap(img, approx); // todo: clear this
+
+        int boardRectWitdth = 1;
+        Point p1 = new Point(boardRectWitdth,boardRectWitdth);
+        Point p2 = new Point(pW.width()-boardRectWitdth, pW.height()-boardRectWitdth);
+        Mat output = new Mat(pW, new Rect(p1,p2));
+        pW.release();
+        return output;
     }
 
 
@@ -61,25 +81,14 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         new ToGrayFilter().apply(sudokuGridFinder);
         Mat sudokuGridFinder2 = sudokuGridFinder.clone();
 
-
         Photo.fastNlMeansDenoising(sudokuGridFinder,sudokuGridFinder,100,5,5);
+        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
 
-        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 33, 5);
 
-
-        double erosion_size =1f;
+        double erosion_size = 2f;
         Mat element = getStructuringElement( MORPH_RECT,
                 new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
                 new Point( erosion_size, erosion_size ) );
-
-
-        erode( sudokuGridFinder, sudokuGridFinder, element );
-        erosion_size = 2f;
-        element = getStructuringElement( MORPH_RECT,
-                new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
-                new Point( erosion_size, erosion_size ) );
-
-        dilate( sudokuGridFinder, sudokuGridFinder, element );
 
         element.release();
         sudokuGridFinder2.release();
@@ -159,6 +168,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         int size = Utility.distance(dst);
 
         Mat cutted = ImageProcessing.applyMask(sudoku, poly);
+
         MatOfPoint2f order = Utility.orderPoints(dst);
 
         Size reshape = new Size(size, size);

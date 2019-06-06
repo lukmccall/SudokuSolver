@@ -50,7 +50,6 @@ public class CleanLinesFilter implements IFilter {
     public void apply(Mat input) {
         blurFilter.apply(input);
         Mat lines = new Mat();
-
         HoughLinesP(input, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
         for (int x = 0; x < lines.rows(); x++) {
