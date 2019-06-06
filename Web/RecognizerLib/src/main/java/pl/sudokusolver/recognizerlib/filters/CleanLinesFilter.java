@@ -3,10 +3,9 @@ package pl.sudokusolver.recognizerlib.filters;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
 
-import static org.opencv.imgproc.Imgproc.*;
-import static org.opencv.imgproc.Imgproc.dilate;
+import static org.opencv.imgproc.Imgproc.HoughLinesP;
+import static org.opencv.imgproc.Imgproc.line;
 
 /**
  * Filter służący do usuwania lini
@@ -51,7 +50,6 @@ public class CleanLinesFilter implements IFilter {
     public void apply(Mat input) {
         blurFilter.apply(input);
         Mat lines = new Mat();
-   //     new DisplayHelper().apply(input);
         HoughLinesP(input, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
         for (int x = 0; x < lines.rows(); x++) {

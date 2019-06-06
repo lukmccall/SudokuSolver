@@ -6,7 +6,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib._INIT_;
+import pl.sudokusolver.recognizerlib.extractors.cells.LineCellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.cells.SizeCellsExtractStrategy;
+import pl.sudokusolver.recognizerlib.extractors.digits.ByteSumDigitExtractStrategy;
+import pl.sudokusolver.recognizerlib.extractors.digits.ContoursDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.filters.*;
@@ -14,7 +17,6 @@ import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSimple;
-import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSingletonWrapper;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractStrictMode;
 
 import java.io.IOException;
@@ -53,9 +55,11 @@ class BaseSudokuExtractorTest {
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(svm)
+                .addPreGridFilters(new MaxResizeFilter(new Size(2500,2500))) // todo: maybe add this?
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
+//                .addPreCellsFilters(new MedianBlur(3,31,15))
                 .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
@@ -187,70 +191,6 @@ class BaseSudokuExtractorTest {
         long maxTime = -1;
 
 
-        try{
-            int number = 85;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 59;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 64;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 3;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 115;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-
-        try{
-            int number = 58;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-
-
-        try{
-            int number = 68;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-
-
-
-        try{
-            int number = 78;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-
-
         for(int i = 0; i < all; i++){
 
             String path = "../../Data/TestImgs/"+i+".jpg";
@@ -263,6 +203,7 @@ class BaseSudokuExtractorTest {
                 testSudoku = extractor.extract(img,path);
             } catch (Exception e){
                 expections++;
+                System.out.println(e.getMessage());
             }
             long endTime = System.currentTimeMillis();
             long currDuration = endTime - startTime;
