@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-class CleanLinesFilterTest {
+public class CleanLinesFilterTest {
     int all = 130;
 
     @Test
     @Ignore
-    void clean(){
+    public void clean(){
         String data = "../../Data/Dump/Grid/";
         CleanLinesFilter cleanLinesFilter = new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15));
 

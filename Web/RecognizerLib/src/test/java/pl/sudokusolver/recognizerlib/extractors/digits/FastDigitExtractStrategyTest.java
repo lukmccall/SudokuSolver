@@ -4,8 +4,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
+import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib.filters.ResizeFilter;
 import pl.sudokusolver.recognizerlib.filters.SaveFilter;
@@ -16,12 +15,12 @@ import java.util.Optional;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-class FastDigitExtractStrategyTest {
+public class FastDigitExtractStrategyTest {
     int all = 130;
 
     @Test
     @Ignore
-    void extract(){
+    public void extract(){
         String data = "../../Data/Dump/Cell/";
         FastDigitExtractStrategy fastDigitExtractStrategy = new FastDigitExtractStrategy();
         String save = "../../Data/Dump/Digit/";
@@ -40,5 +39,4 @@ class FastDigitExtractStrategyTest {
 
         }
     }
-
 }

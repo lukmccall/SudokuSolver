@@ -14,11 +14,11 @@ import java.util.List;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-class SizeCellsExtractStrategyTest {
+public class SizeCellsExtractStrategyTest {
     int all = 130;
     @Test
     @Ignore
-    void extract(){
+    public void extract(){
         String data = "../../Data/Dump/CleanGrid/";
         CellsExtractStrategy cellsExtractStrategy = new SizeCellsExtractStrategy();
         String save = "../../Data/Dump/Cell/";

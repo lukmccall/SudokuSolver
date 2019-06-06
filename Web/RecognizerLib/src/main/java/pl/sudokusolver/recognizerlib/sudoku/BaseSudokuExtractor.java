@@ -1,5 +1,6 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;

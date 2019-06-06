@@ -12,12 +12,12 @@ import pl.sudokusolver.recognizerlib.filters.SaveFilter;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-class DefaultGridExtractStrategyTest {
+public class DefaultGridExtractStrategyTest {
     int all = 130;
 
     @Test
     @Ignore
-    void saveCuttedGrids() {
+    public void saveCuttedGrids() {
         GridExtractStrategy gridExtractStrategy = new DefaultGridExtractStrategy();
         String save = "../../Data/Dump/Grid/";
         for (int i = 0; i < all; i++) {

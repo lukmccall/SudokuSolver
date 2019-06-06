@@ -220,6 +220,7 @@ class BaseSudokuExtractorTest {
                 double s = goodAnsSudoku.score(testSudoku);
 
                 if(s == 1.0f) full++;
+//                else if(s < 0.7) System.out.println("Below 70%. Score " + s + " - " + i);
                 avgCorrectness += s;
             }
         }
