@@ -5,13 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib._INIT_;
-import pl.sudokusolver.recognizerlib.filters.NotFilter;
+import pl.sudokusolver.recognizerlib.filters.*;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.opencv.core.CvType.CV_8SC4;
 import static org.opencv.core.CvType.CV_8UC1;
+import static org.opencv.core.CvType.CV_8UC3;
 
 @ExtendWith({_INIT_.class})
 public class UtilityTest {
@@ -122,14 +125,42 @@ public class UtilityTest {
     }
 
     @Test
+    void applyResizeAndToGrayFiltersTest(){
+        Mat mat = Mat.zeros(5,5,CV_8UC3);
+        List<IFilter> list = new LinkedList<>();
+        list.add(new ResizeFilter(new Size(50, 50)));
+        list.add(new ToGrayFilter());
+
+        Utility.applyFilters(mat, list);
+        Assert.assertEquals(new Size(50,50),mat.size());
+        Assert.assertEquals(1,mat.channels());
+    }
+
+    @Test
+    void applyFilterCounterTest(){
+        Mat mat = Mat.zeros(5,5,CV_8UC3);
+        List<IFilter> list = new LinkedList<>();
+        for(int i=0;i<50; i++) list.add(new FilterCounter());
+        Utility.applyFilters(mat,list);
+        Assert.assertEquals("Expected correct number of filter applied",50, new FilterCounter().getCounter());
+    }
+
+
+    @Test
     void matToBufferedImageTest(){
     }
 
 
     @Test
-    void getSVM(){
+    void getFileFromResourcesTest(){
         File file = new File(Utility.getSVMDump());
+        Assert.assertTrue("ANN dump should be in resources", file.exists());
+
+        file = new File(Utility.getANNDump());
         Assert.assertTrue("SVM dump should be in resources", file.exists());
+
+        file = new File(Utility.getTessdata());
+        Assert.assertTrue("Tess data should be in resources", file.exists());
     }
 
 }

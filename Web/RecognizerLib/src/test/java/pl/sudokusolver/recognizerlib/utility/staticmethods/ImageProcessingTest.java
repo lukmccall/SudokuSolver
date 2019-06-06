@@ -34,6 +34,14 @@ class ImageProcessingTest {
     }
 
     @Test
+    void centerTest(){
+        int size = 30;
+        Mat mat = new Mat (size,size, CV_32FC1);
+
+
+    }
+
+    @Test
     void applyMask() {
         short size = 30;
         Mat mat =  Mat.ones(size, size, CV_8UC1);

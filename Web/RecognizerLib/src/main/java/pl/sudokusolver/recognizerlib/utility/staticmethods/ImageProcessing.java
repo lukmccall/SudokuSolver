@@ -40,7 +40,7 @@ public class ImageProcessing {
     /**
      * @param img macierz z zdjęciem (musi to być macierz kwadratowa)
      * @param size rozmiar tego zdjęcia
-     * @return macierz posiadająca tylko <code>jene</code> wiersz i <code>size * size</code> kolumn, w których
+     * @return macierz posiadająca tylko <code>jeden</code> wiersz i <code>size * size</code> kolumn, w których
      *         ułożone są poszczególne komórki macierzy wejściowej. Wyjście jest typu CV_32FC1
      */
     public static Mat procSimple(Mat img, short size) {
