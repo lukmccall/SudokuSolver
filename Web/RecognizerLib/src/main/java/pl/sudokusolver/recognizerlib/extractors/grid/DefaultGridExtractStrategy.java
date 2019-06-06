@@ -50,12 +50,69 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         List<MatOfPoint> ret = getContours(sudokuGridFinder,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         int max = getBiggestBlobIndex(ret);
 
+        Rect rect = boundingRect(ret.get(max));
+
+
+        RotatedRect rect2 = minAreaRect(new MatOfPoint2f( ret.get(max).toArray()));
 
 
 
+        MatOfInt hull = new MatOfInt();
+        convexHull(ret.get(max), hull);
 
-       drawContours(img,ret,max,new Scalar(0,0,0),3); // magical fix O.o ?!
+        Point[] contourArray = ret.get(max).toArray();
+        List<MatOfPoint> hullList = new ArrayList<>();
+        Point[] hullPoints = new Point[hull.rows()];
+        List<Integer> hullContourIdxList = hull.toList();
+        for (int i = 0; i < hullContourIdxList.size(); i++) {
+            hullPoints[i] = contourArray[hullContourIdxList.get(i)];
+        }
+        hullList.add(new MatOfPoint(hullPoints));
+
+      //  drawContours(img, hullList, 0, new Scalar(0,0,255), 3 ); //otoczka
+
+      //  drawContours(img,ret,max,new Scalar(0,0,0),3); // magical fix O.o ?!
       //  new DisplayHelper().apply(img);
+        /*
+        Point[] corners = new Point[4];
+        corners[0] = new Point(rect.x,rect.y);                  //Bottom left
+        corners[1] = new Point(rect.x+rect.width,rect.y);   //bottom right
+        corners[2] = new Point(rect.x,rect.y+rect.height);  //top left
+        corners[3] = new Point(rect.x+rect.width,rect.y+rect.height); //top right
+
+        Point[] approxCorn = new Point[4];
+        approxCorn[0] = new Point(rect.x+rect.width/2,rect.y+rect.height/2);
+        approxCorn[1] = new Point(rect.x+rect.width/2,rect.y+rect.height/2);    //Da sie kopiujacy konstruktor?
+        approxCorn[2] = new Point(rect.x+rect.width/2,rect.y+rect.height/2);
+        approxCorn[3] = new Point(rect.x+rect.width/2,rect.y+rect.height/2);
+
+        double[] distance = new double[4];
+        distance[0] = Double.MAX_VALUE;
+        distance[1] = Double.MAX_VALUE;
+        distance[2] = Double.MAX_VALUE;
+        distance[3] = Double.MAX_VALUE;
+        List<Point> points = ret.get(max).toList();
+
+        for (Point p: points )
+        {
+            for(int i = 0; i<4;i++)
+            {
+                double currDistance = Math.sqrt((p.y-corners[i].y)*(p.y-corners[i].y)+(p.x-corners[i].x)*(p.x-corners[i].x));
+                if(currDistance < distance[i])
+                {
+                  //  System.out.println("S: "+i + " - "+ currDistance);
+                    distance[i] = currDistance;
+                    approxCorn[i] = p;
+                }
+            }
+
+        }*/
+
+      //  line(img,approxCorn[0],approxCorn[1],new Scalar(0,0,255),3);
+       // line(img,approxCorn[1],approxCorn[3],new Scalar(0,0,255),3);
+        //line(img,approxCorn[3],approxCorn[2],new Scalar(0,0,255),3);
+        //line(img,approxCorn[0],approxCorn[2],new Scalar(0,0,255),3);
+    //   new DisplayHelper().apply(img);
       //  Mat outbox = img.clone();
        // new ToGrayFilter().apply(outbox);
 
@@ -65,27 +122,15 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
 
 
-     Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(ret.get(max));
-
-     //   MatOfPoint poly = approx.getFirst();
-     //   MatOfPoint2f dst = approx.getSecond();
-
-     //   int size = Utility.distance(dst);
-
-
-
-
-
-       // RotatedRect rotatedRect = minAreaRect(dst);
-    //    drawRotatedRect(img, rotatedRect, new Scalar(255,0,0), 4);
-    //    new DisplayHelper().apply(img);
-      //  Mat cutted = ImageProcessing.applyMask(img, poly);
-
-
-     //   new DisplayHelper().apply(cutted);
-       // outbox.release();
+        Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(hullList.get(0));
         sudokuGridFinder.release();
-        return perspectiveWrap(img, approx);
+
+        Mat pW = perspectiveWrap(img, approx); // todo: clear this
+
+        int boardRectWitdth = 1;
+        Point p1 = new Point(boardRectWitdth,boardRectWitdth);
+        Point p2 = new Point(pW.width()-boardRectWitdth, pW.height()-boardRectWitdth);
+        return new Mat(pW, new Rect(p1, p2));
     }
 
 
@@ -102,30 +147,35 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         Mat sudokuGridFinder2 = sudokuGridFinder.clone();
 
 
+
+
+    //    GaussianBlur(sudokuGridFinder2, sudokuGridFinder2, new Size(0,0), 3);
         Photo.fastNlMeansDenoising(sudokuGridFinder,sudokuGridFinder,100,5,5);
 
-        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 33, 5);
+        //  Core.addWeighted(sudokuGridFinder2,1.2f,sudokuGridFinder,-0.5f,0,sudokuGridFinder);
+
+        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
 
 
 
-        double erosion_size =1f;
+        double erosion_size =0.25f;
         Mat element = getStructuringElement( MORPH_RECT,
                 new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
                 new Point( erosion_size, erosion_size ) );
 
-
-        erode( sudokuGridFinder, sudokuGridFinder, element );
+      //  erode( sudokuGridFinder, sudokuGridFinder, element );
         erosion_size = 2f;
        element = getStructuringElement( MORPH_RECT,
                 new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
                 new Point( erosion_size, erosion_size ) );
 
-       dilate( sudokuGridFinder, sudokuGridFinder, element );
+     //
+        //  dilate( sudokuGridFinder, sudokuGridFinder, element );
 
         element.release();
         sudokuGridFinder2.release();
 
-      //  new DisplayHelper().apply(sudokuGridFinder);
+      // new DisplayHelper().apply(sudokuGridFinder);
         return sudokuGridFinder;
     }
 

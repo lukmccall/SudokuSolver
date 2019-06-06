@@ -89,7 +89,9 @@ public class BaseSudokuExtractor extends SudokuExtractor {
         Utility.applyFilters(img, preGridFilters);
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
 
-        Utility.applyFilters(sudokuGrid, preCellsFilters);
+    //   new DisplayHelper().apply(sudokuGrid, path);
+        Utility  .applyFilters(sudokuGrid, preCellsFilters);
+    //    new DisplayHelper().apply(sudokuGrid, path);
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
 
 
@@ -103,6 +105,19 @@ public class BaseSudokuExtractor extends SudokuExtractor {
             Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
 
             if (digit.isPresent()) {
+              //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //  new DisplayHelper().apply(digit.get(),path);
+
+
+
                 sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i / 9, i % 9);
                 digit.get().release();
             }

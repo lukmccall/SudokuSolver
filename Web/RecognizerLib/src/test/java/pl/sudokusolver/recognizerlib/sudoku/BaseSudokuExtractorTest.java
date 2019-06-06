@@ -187,23 +187,15 @@ class BaseSudokuExtractorTest {
         long maxTime = -1;
 
 
-
         try{
-            int number = 3;
+            int number = 85;
             String test = "../../Data/TestImgs/"+number+".jpg";
             Mat testimg = imread(test);
             extractor.extract(testimg,test);
         } catch (Exception e){ }
 
         try{
-            int number = 54;
-            String test = "../../Data/TestImgs/"+number+".jpg";
-            Mat testimg = imread(test);
-            extractor.extract(testimg,test);
-        } catch (Exception e){ }
-
-        try{
-            int number = 60;
+            int number = 59;
             String test = "../../Data/TestImgs/"+number+".jpg";
             Mat testimg = imread(test);
             extractor.extract(testimg,test);
@@ -217,7 +209,7 @@ class BaseSudokuExtractorTest {
         } catch (Exception e){ }
 
         try{
-            int number = 68;
+            int number = 3;
             String test = "../../Data/TestImgs/"+number+".jpg";
             Mat testimg = imread(test);
             extractor.extract(testimg,test);
@@ -229,6 +221,25 @@ class BaseSudokuExtractorTest {
             Mat testimg = imread(test);
             extractor.extract(testimg,test);
         } catch (Exception e){ }
+
+
+        try{
+            int number = 58;
+            String test = "../../Data/TestImgs/"+number+".jpg";
+            Mat testimg = imread(test);
+            extractor.extract(testimg,test);
+        } catch (Exception e){ }
+
+
+
+        try{
+            int number = 68;
+            String test = "../../Data/TestImgs/"+number+".jpg";
+            Mat testimg = imread(test);
+            extractor.extract(testimg,test);
+        } catch (Exception e){ }
+
+
 
 
         try{
