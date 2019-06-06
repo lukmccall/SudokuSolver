@@ -10,6 +10,7 @@ import java.util.List;
  * Filter służący do uwuwania szumu.
  * Obszar jest uważany za szum gdzy zawiera białe pixela, których da się ograniczyć mały prostokątem (1/10 wielkości wejścia).
  */
+@Deprecated
 public class NoiceFilter implements IFilter {
     @Override
     public void apply(Mat input){
