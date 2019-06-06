@@ -32,8 +32,8 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
     private int c;
 
     public DefaultGridExtractStrategy(){
-        blockSize = 33;
-        c = 9;
+        blockSize = 21;
+        c = 2;
     }
 
     public DefaultGridExtractStrategy(int blockSize, int c) {
@@ -82,7 +82,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         Mat sudokuGridFinder2 = sudokuGridFinder.clone();
 
         Photo.fastNlMeansDenoising(sudokuGridFinder,sudokuGridFinder,100,5,5);
-        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 21, 2);
+        adaptiveThreshold(sudokuGridFinder, sudokuGridFinder, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, this.blockSize, this.c);
 
 
         double erosion_size = 2f;

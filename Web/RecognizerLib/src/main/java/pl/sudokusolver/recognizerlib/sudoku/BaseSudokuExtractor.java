@@ -130,13 +130,6 @@ public class BaseSudokuExtractor extends SudokuExtractor {
                 .addPreCellsFilters(cleanLinesFilter);
     }
 
-    public static Builder complexBuilderRecipe(IRecognizer recognizer){
-        return builder().setGridStrategy(new DefaultGridExtractStrategy())
-                .setCellsStrategy(new LineCellsExtractStrategy())
-                .setDigitsStrategy(new ContoursDigitExtractStrategy())
-                .setRecognizer(recognizer)
-                .addPreCellsFilters(new BlurFilter());
-    }
 
     /**
      * Builder klasy <code>BaseSudokuExtractor</code>.
