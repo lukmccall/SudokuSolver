@@ -8,7 +8,7 @@ import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib._INIT_;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.opencv.core.CvType.CV_8UC1;
+import static org.opencv.core.CvType.*;
 
 @ExtendWith({_INIT_.class})
 class ResizeFilterTest {
@@ -17,6 +17,19 @@ class ResizeFilterTest {
         Mat matrix = Mat.zeros(50,50, CV_8UC1);
         new ResizeFilter(new Size(25,25)).apply(matrix);
         Assert.assertEquals(new Size(25,25),matrix.size());
+    }
+    @Test
+    void simpleResize1(){
+        Mat matrix = Mat.zeros(1000,1000, CV_8UC4);
+        new ResizeFilter(new Size(15,25)).apply(matrix);
+        Assert.assertEquals(new Size(15,25),matrix.size());
+    }
+    @Test
+    void throwExceptionTest(){
+        Mat matrix = Mat.zeros(25,25, CV_8U);
+        assertThrows(IllegalArgumentException.class, ()->{
+            new ResizeFilter(new Size(0,0)).apply(matrix);
+        }, "Size must be > 0");
     }
 
     @Test
