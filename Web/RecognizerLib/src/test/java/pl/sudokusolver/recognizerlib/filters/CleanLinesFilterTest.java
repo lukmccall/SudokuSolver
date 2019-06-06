@@ -19,7 +19,7 @@ class CleanLinesFilterTest {
     @Ignore
     void clean(){
         String data = "../../Data/Dump/Grid/";
-        CleanLinesFilter cleanLinesFilter = new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15));
+        CleanLinesFilter cleanLinesFilter = new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15));
 
         String save = "../../Data/Dump/CleanGrid/";
         for (int i = 0; i < all; i++) {

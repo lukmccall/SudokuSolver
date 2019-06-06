@@ -59,7 +59,7 @@ class BaseSudokuExtractorTest {
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
@@ -96,7 +96,7 @@ class BaseSudokuExtractorTest {
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
@@ -134,7 +134,7 @@ class BaseSudokuExtractorTest {
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
@@ -172,7 +172,7 @@ class BaseSudokuExtractorTest {
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
