@@ -87,7 +87,7 @@ public class BaseSudokuExtractor extends SudokuExtractor {
     public Sudoku extract(Mat img, String path) throws NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException {
         Utility.applyFilters(img, preGridFilters);
         Mat sudokuGrid = gridExtractStrategy.extractGrid(img);
-        Utility  .applyFilters(sudokuGrid, preCellsFilters);
+        Utility.applyFilters(sudokuGrid, preCellsFilters);
         List<Mat> cells = cellsExtractStrategy.extract(sudokuGrid);
 
         if(cells == null) throw new CellsExtractionFailedException();

@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib._INIT_;
+import pl.sudokusolver.recognizerlib.filters.SaveFilter;
 
+import java.io.File;
 import java.util.List;
 
 import static org.opencv.imgcodecs.Imgcodecs.imread;
@@ -19,7 +21,7 @@ class SizeCellsExtractStrategyTest {
     void extract(){
         String data = "../../Data/Dump/CleanGrid/";
         CellsExtractStrategy cellsExtractStrategy = new SizeCellsExtractStrategy();
-        String save = "../../Data/Dump/Cells/";
+        String save = "../../Data/Dump/Cell/";
 
         for (int i = 0; i < all; i++) {
 
@@ -27,8 +29,13 @@ class SizeCellsExtractStrategyTest {
             Mat img = imread(path, -1);
             try {
                 List<Mat> cells = cellsExtractStrategy.extract(img);
-                //todo: make it
-//                new SaveFilter(save + i + ".jpg").apply(grid);
+                Assert.assertEquals("Should extracted 81 cells",81, cells.size());
+                File f = new File(save+i);
+                if(!f.exists()) f.mkdir();
+                for(int j = 0; j < cells.size(); j++){
+                    Mat cell = cells.get(j);
+                    new SaveFilter(save + i +"/" + j + ".jpg").apply(cell);
+                }
             } catch (Exception e) {
                 Assert.fail("Could't extract grid - " + e.getMessage());
             }

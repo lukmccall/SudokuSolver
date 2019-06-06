@@ -25,3 +25,5 @@ Web/Solver/solver.iml
 
 Data/Dump/Grid/
 Data/Dump/CleanGrid/
+Data/Dump/Digit/
+Data/Dump/Cell/
