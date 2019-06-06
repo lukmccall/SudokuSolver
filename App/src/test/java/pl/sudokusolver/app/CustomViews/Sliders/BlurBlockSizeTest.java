@@ -17,6 +17,7 @@ public class BlurBlockSizeTest {
         BlurBlockSize blurBlockSize = new BlurBlockSizeStub();
         try {
             blurBlockSize.setValue(10);
+            fail("Fail, should throw NullPointerException");
         }
         catch(NullPointerException n){
             Assert.assertEquals(10,blurBlockSize.getValue());
