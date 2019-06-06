@@ -5,23 +5,23 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class BlurSizeTest {
+public class LineThresholdTest {
 
     @Test
     public void getValue() {
-        BlurSize blurSize = new BlurSizeStub();
-        Assert.assertEquals(3,blurSize.getValue());
+        LineThreshold lineThreshold = new LineThresholdStub();
+        Assert.assertEquals(50,lineThreshold.getValue());
     }
 
     @Test
     public void setValue() {
-        BlurSize blurSize = new BlurSizeStub();
+        LineThreshold lineThreshold = new LineThresholdStub();
         try{
-            blurSize.setValue(-1);
+            lineThreshold.setValue(10);
             fail("Fail, should throw NullPointerException");
         }
         catch (NullPointerException n){
-            Assert.assertEquals(-1, blurSize.getValue());
+            Assert.assertEquals(10,lineThreshold.getValue());
         }
     }
 }

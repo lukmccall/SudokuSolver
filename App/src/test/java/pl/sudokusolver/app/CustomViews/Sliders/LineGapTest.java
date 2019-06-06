@@ -18,6 +18,7 @@ public class LineGapTest {
         LineGap lineGap = new LineGapStub();
         try{
             lineGap.setValue(1);
+            fail("Fail, should throw NullPointerException");
         }
         catch (NullPointerException n){
             Assert.assertEquals(1,lineGap.getValue());

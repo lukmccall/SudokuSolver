@@ -18,6 +18,7 @@ public class DistanceTest {
         Distance distance = new DistanceStub();
         try{
             distance.setValue(0.05);
+            fail("Fail, should throw NullPointerException");
         }
         catch (NullPointerException n){
             Assert.assertEquals(0.05, distance.getValue(),0.0);

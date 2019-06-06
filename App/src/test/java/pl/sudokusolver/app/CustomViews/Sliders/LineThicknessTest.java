@@ -5,23 +5,23 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class BlurSizeTest {
+public class LineThicknessTest {
 
     @Test
     public void getValue() {
-        BlurSize blurSize = new BlurSizeStub();
-        Assert.assertEquals(3,blurSize.getValue());
+        LineThickness lineThickness = new LineThicknessStub();
+        Assert.assertEquals(1.0,lineThickness.getValue(),0.0);
     }
 
     @Test
     public void setValue() {
-        BlurSize blurSize = new BlurSizeStub();
+        LineThickness lineThickness = new LineThicknessStub();
         try{
-            blurSize.setValue(-1);
+            lineThickness.setValue(0.8);
             fail("Fail, should throw NullPointerException");
         }
         catch (NullPointerException n){
-            Assert.assertEquals(-1, blurSize.getValue());
+            Assert.assertEquals(0.8,lineThickness.getValue(),0.0);
         }
     }
 }

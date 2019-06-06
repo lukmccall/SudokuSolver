@@ -5,23 +5,23 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class BlurSizeTest {
+public class MinLineSizeTest {
 
     @Test
     public void getValue() {
-        BlurSize blurSize = new BlurSizeStub();
-        Assert.assertEquals(3,blurSize.getValue());
+        MinLineSize minLineSize = new MinLineSizeStub();
+        Assert.assertEquals(100,minLineSize.getValue());
     }
 
     @Test
     public void setValue() {
-        BlurSize blurSize = new BlurSizeStub();
+        MinLineSize minLineSize = new MinLineSizeStub();
         try{
-            blurSize.setValue(-1);
+            minLineSize.setValue(10);
             fail("Fail, should throw NullPointerException");
         }
         catch (NullPointerException n){
-            Assert.assertEquals(-1, blurSize.getValue());
+            Assert.assertEquals(10,minLineSize.getValue());
         }
     }
 }

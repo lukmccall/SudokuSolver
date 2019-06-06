@@ -18,6 +18,7 @@ public class BlurCTest {
         BlurC blurC = new BlurCStub();
         try{
             blurC.setValue(0);
+            fail("Fail, should throw NullPointerException");
         }
         catch (NullPointerException n){
             Assert.assertEquals(0,blurC.getValue());

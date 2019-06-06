@@ -18,6 +18,7 @@ public class GaussianBlurTest {
         GaussianBlur gaussianBlur = new GaussianBlurStub();
         try{
             gaussianBlur.setValue(0.05);
+            fail("Fail, should throw NullPointerException");
         }
         catch (NullPointerException n){
             Assert.assertEquals(0.05, gaussianBlur.getValue(),0.0);
