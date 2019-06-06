@@ -31,7 +31,7 @@ class SizeCellsExtractStrategyTest {
                 List<Mat> cells = cellsExtractStrategy.extract(img);
                 Assert.assertEquals("Should extracted 81 cells",81, cells.size());
                 File f = new File(save+i);
-                if(!f.exists()) f.mkdir();
+                if(!f.exists()) Assert.assertTrue("Path doesn't exist", f.mkdir());
                 for(int j = 0; j < cells.size(); j++){
                     Mat cell = cells.get(j);
                     new SaveFilter(save + i +"/" + j + ".jpg").apply(cell);
