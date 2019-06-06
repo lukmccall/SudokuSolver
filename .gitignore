@@ -24,3 +24,4 @@ Web/Server/server.iml
 Web/Solver/solver.iml
 
 Data/Dump/Grid/
+Data/Dump/CleanGrid/
