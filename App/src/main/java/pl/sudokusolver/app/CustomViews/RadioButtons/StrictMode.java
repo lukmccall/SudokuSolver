@@ -42,7 +42,7 @@ public class StrictMode extends VBox {
     /**
      * Function to initialize layout
      */
-    private void init(){
+    protected void init(){
         initStrict();
 
         getChildren().addAll(defaultOption);
