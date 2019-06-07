@@ -16,7 +16,7 @@ import static org.opencv.highgui.HighGui.waitKey;
 class ImageProcessingTest {
 
     @Test
-    void procSimple() {
+    void procSimpleTest() {
         int size = 30;
         Mat mat = new Mat(size, size, CV_32FC1);
 
