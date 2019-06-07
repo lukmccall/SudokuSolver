@@ -35,8 +35,13 @@ class ImageProcessingTest {
 
     @Test
     void centerTest(){
-        int size = 30;
-        Mat mat = new Mat (size,size, CV_32FC1);
+        Mat mat = new Mat (50,30, CV_32FC1);
+        mat = ImageProcessing.center(mat,(short)20);
+        Assert.assertEquals(new Size(20,20),mat.size());
+
+        mat = new Mat (40, 50, CV_32FC1);
+        mat = ImageProcessing.center(mat,(short)9);
+        Assert.assertEquals(new Size(9,9), mat.size());
 
 
     }
