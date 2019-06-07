@@ -143,12 +143,17 @@ public class StageMain extends Stage implements MenuListener, Sender {
 
     }
 
-
+    /**
+     * Function to block user from sending requests to server when we are waiting for one
+     */
     private void block(){
         rightSide.blockButtons();
         Singleton.getInstance().block();
     }
 
+    /**
+     * Function to unblock user from sending requests to server when we are waiting for one
+     */
     private void unblock(){
         rightSide.unblockButtons();
         Singleton.getInstance().unblock();
