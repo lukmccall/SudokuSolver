@@ -6,33 +6,34 @@ import java.nio.file.Paths;
 import java.util.Locale;
 
 /**
- * Klasa odpowiedzialna za poprawną inicjalizację openCV
+ * Init class.<br>
+ * Help in loading opencv.
  */
 public class Init {
     /**
-     * Dostępne systemy operacyjne
+     * all os types
      */
     public enum OSType {
         Windows, MacOS, Linux, Other
     }
 
     /**
-     * System operacyjny komputera, na którym odpalony jest progrem
+     * currently detected os
      */
     private static OSType detectedOS;
 
 
     /**
-     * Fukncja wczytująca openCV.<br>
-     * Dll jest szukany w plikach systemowych.
+     * Load opencv dll.<br>
+     * Java looking for dll file in system files.
      */
     public static void init(){
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
     /**
-     * Fukncja wczytująca openCV z podanej lokalizacji
-     * @param url absolutna ścieżka do folderu, gdzie znajduje się openCV
+     ** Load opencv dll from path (parent folder url).<br>
+     * @param url absolute path to opancv, but without file and extension.
      */
     public static void init(String url){
         String libPath = "";
@@ -56,7 +57,7 @@ public class Init {
     }
 
     /**
-     * @return system operacyjny
+     * @return currently running os type
      */
     public static OSType getOperatingSystemType() {
         if (detectedOS == null) {

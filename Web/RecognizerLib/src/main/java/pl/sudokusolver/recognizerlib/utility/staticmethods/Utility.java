@@ -16,16 +16,19 @@ import java.util.List;
 
 
 /**
- * Zbiór funkcji pomocniczych
+ * Helpers methods.
  */
 public class Utility {
+    /**
+     * natural int comparator
+     */
     private static final Ordering<Point> SORT = Ordering.natural().nullsFirst().onResultOf(
             (Function<Point, Integer>) foo -> (int) (foo.x+foo.y)
     );
 
     /**
-     * @param mat macierz punktów (x,y) x,y nalezą do naturalnych
-     * @return posortowana macierz po sumie x+y
+     * @param mat natural matrix of points.
+     * @return matrix which contains sorted by points.
      */
     public static MatOfPoint2f orderPoints(MatOfPoint2f mat) {
         List<Point> pointList = SORT.sortedCopy(mat.toList());
@@ -41,8 +44,8 @@ public class Utility {
     }
 
     /**
-     * @param poly wektor zawierający dwa punkty (x,y) x,y naturalne
-     * @return całkowita część euklidesowej odległości punktów w wektorze
+     * @param poly natural matrix contains two point.
+     * @return distance between two given points.
      */
     public static int distance(MatOfPoint2f poly) {
         Point[] a =  poly.toArray();
@@ -51,8 +54,9 @@ public class Utility {
     }
 
     /**
-     * @param frame macierz
-     * @return buffor zawierający przekonwertowaną macierz
+     * Converted matrix to BufferedImage
+     * @param frame matrix
+     * @return buffor buffered image made from input matrix
      */
     public static BufferedImage matToBufferedImage(Mat frame) {
         int type = 0;
@@ -70,9 +74,9 @@ public class Utility {
     }
 
     /**
-     * Nakłada filtry na macierz przekazaną jako parametr
-     * @param input macierz, na którą będą nakładane filtry
-     * @param filters lista filtrów
+     * Apply all filters from list.
+     * @param input input matrix.
+     * @param filters list of filters.
      */
     public static void applyFilters(Mat input, List<IFilter> filters){
         if(filters != null) {
@@ -81,10 +85,16 @@ public class Utility {
         }
     }
 
+    /**
+     * @return absolute path to ann dump.
+     */
     public static String getANNDump(){
         return Init.class.getResource("/ann.xml").toString().substring(6);
     }
 
+    /**
+     * @return absolute path to svm dump.
+     */
     public static String getSVMDump(){
         String r = Init.class.getResource("/svm.xml").toString();
         if(r.substring(0,3).equals("jar"))
@@ -92,6 +102,9 @@ public class Utility {
         return r.substring(6);
     }
 
+    /**
+     * @return absolute path to tesseract dump.
+     */
     public static String getTessdata(){
         return Init.class.getResource("/tessdata/").toString().substring(6);
     }

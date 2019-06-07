@@ -5,10 +5,15 @@ import org.opencv.core.Point;
 import java.util.Comparator;
 
 /**
- * Porównuje punkty ze względu na odległość Y a następnie ze względu na X.<br>
- * Punkty odległe o maksymalnie 10 na osi Y traktowane są tak jakby miały tą są wartość na tej osi.
- */
+ * Comparator witch compare distance on Y axis, then it looking for distance on X axis.<br>
+ * If two points on Y axis have distance <= 10 they are treated as same point.
+ * */
 public class PointComparator implements Comparator<Point> {
+    /**
+     * @param y1 first point
+     * @param y2 second point
+     * @return y1 compare to y2, but if distance between this two points is <= 10 return 0.
+     */
     private int compareY(double y1, double y2){
         if(Math.abs(y1-y2) < 10) return 0;
         return Double.compare(y1,y2);
