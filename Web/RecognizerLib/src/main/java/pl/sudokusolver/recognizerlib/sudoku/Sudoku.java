@@ -5,56 +5,57 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Klasa zawierająca liczbową reprezentację sudoku
+ * Class represents sudoku.
  */
 public class Sudoku {
     /**
-     * Siatka sudoku
+     * sudoku's grid.
      */
     private int grid[][];
 
+    /**
+     * Create object witch contains given grid.
+     * @param grid new grid.
+     */
     public Sudoku(int grid[][]){
         this.grid = grid;
     }
 
+    /**
+     * Create object with empty 9 x 9 grid.
+     */
     public Sudoku(){
         grid = new int[9][9];
     }
 
     /**
-     * @param x wiersz
-     * @param y kolumna
-     * @return liczbę znajdującą sie na miejscu (x,y)
+     * @param x row
+     * @param y col
+     * @return get digit from x row and y col.
      */
     public int getDigit(int x, int y) {
         return grid[x][y];
     }
 
     /**
-     * @param digit liczba która znajdzie się na miejscu (x,y)
-     * @param x wiersz
-     * @param y kolumna
+     * Set x row, y col to given digit
+     * @param digit digit
+     * @param x row
+     * @param y col
      */
     public void setDigit(int digit, int x, int y) {
         this.grid[x][y] = digit;
     }
 
     /**
-     * Wyświetla sudoku na standartowe wyjście
-     */
-    public void printSudoku(){
-        System.out.println(toString());
-    }
-
-    /**
-     * @return tablicowa reprezentacja sudoku
+     * @return return whole grid.
      */
     public int[][] getGrid() {
         return grid;
     }
 
     /**
-     * @return <code>true</code> gdy sudoku jest puste, <code>false</code> gdy sudoku zawiera chodź jedną licznę różną od 0.
+     * @return <code>true</code> when sudoku is empty, otherwise return <code>false</code>.
      */
     public boolean empty() {
         for(int i = 0; i < 9; i++)
@@ -63,6 +64,11 @@ public class Sudoku {
         return true;
     }
 
+    /**
+     * @param url path to .dat file.
+     * @return sudoku creted base on dat file.
+     * @throws IOException if couldn't open file.
+     */
     public static Sudoku readFromDat(String url) throws IOException {
         Sudoku sudoku = new Sudoku();
         try (BufferedReader br = new BufferedReader(new FileReader(url))) {
@@ -81,6 +87,10 @@ public class Sudoku {
         return sudoku;
     }
 
+    /**
+     * @param outer other sudoku.
+     * @return return percent of same numbers.
+     */
     public double score(Sudoku outer){
         int same = 0;
         int numbers = 0;
