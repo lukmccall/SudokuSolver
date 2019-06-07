@@ -14,44 +14,63 @@ import java.util.List;
 import static org.opencv.imgproc.Imgproc.*;
 
 /**
- * Abstrakcyjna reprezentacja algorytmów do extrakcji siatki sudoku.<br>
- *
- *     Algorytm ekstrakcji:
+ * Implementation of gird extraction algorithm.<br>
+ *     Algorithm:
  *     <ul>
- *         <li>Nałożenie rozmycia</li>
- *         <li>Znalezienie wszytkich konturów</li>
- *         <li>Wybranie największego z nich (ze względu na pole)</li>
- *         <li>Wycięcie konturu oraz zmiana perspektywy zdjęcia</li>
- *         <li>Przekonwertowanie na czarno-białe zdjęcie</li>
+ *         <li>Creating working copy of input image.</li>
+ *         <li>Apply denoising and adaptiveThreshold to working copy.</li>
+ *         <li>Using morphological transformation on working copy.</li>
+ *         <li>Getting all contours on copy.</li>
+ *         <li>Creating convex hull base on biggest contour</li>
+ *         <li>Approximates a polygonal curve of hull.</li>
+ *         <li>Apply perspective wrap to input base on early calculated polygonal.</li>
  *     </ul>
  *
  */
 public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
+    /**
+     * Block size of adaptiveThreshold.<br>
+     * For more information you can check <a href="https://docs.opencv.org/4.0.1/d7/d1b/group__imgproc__misc.html#ga72b913f352e4a1b1b397736707afcde3" target="_blank">opencv</a>.
+     */
     private int blockSize;
+
+    /**
+     * Const c for adaptiveThreshold.<br>
+     * For more information you can check <a href="https://docs.opencv.org/4.0.1/d7/d1b/group__imgproc__misc.html#ga72b913f352e4a1b1b397736707afcde3" target="_blank">opencv</a>.
+     */
     private int c;
 
+    /**
+     * Set blockSize to 21, c to 2.
+     */
     public DefaultGridExtractStrategy(){
         blockSize = 21;
         c = 2;
     }
 
+    /**
+     * Create object base on given arguments.
+     * @param blockSize blockSize for adaptiveThreshold.
+     * @param c const c for adaptiveThreshold.
+     */
     public DefaultGridExtractStrategy(int blockSize, int c) {
         this.blockSize = blockSize;
         this.c = c;
     }
 
-    //todo: update doc
     @Override
     public Mat extract(Mat img) throws NotFoundSudokuException {
+        // denoising and adaptiveThreshold
         Mat sudokuGridFinder = preCutProcessing(img);
+
+        // getting contours
         List<MatOfPoint> ret = getContours(sudokuGridFinder,RETR_EXTERNAL,CHAIN_APPROX_NONE);
-        int max = getBiggestBlobIndex(ret);
+        int max = getBiggestBlobIndex(ret); // larges blob
 
-
+        // calc hull and save it into list of points
         MatOfInt hull = new MatOfInt();
         convexHull(ret.get(max), hull);
-
         Point[] contourArray = ret.get(max).toArray();
         List<MatOfPoint> hullList = new ArrayList<>();
         Point[] hullPoints = new Point[hull.rows()];
@@ -62,20 +81,29 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         hullList.add(new MatOfPoint(hullPoints));
 
 
+        // getting polygonal of hull
         Pair<MatOfPoint, MatOfPoint2f> approx = calcApprox(hullList.get(0));
-        sudokuGridFinder.release();
 
-        Mat pW = perspectiveWrap(img, approx); // todo: clear this
+        // wrap it
+        Mat pW = perspectiveWrap(img, approx);
 
+        // magic fix - resize picture by one pixel from every side
         int boardRectWitdth = 1;
         Point p1 = new Point(boardRectWitdth,boardRectWitdth);
         Point p2 = new Point(pW.width()-boardRectWitdth, pW.height()-boardRectWitdth);
         Mat output = new Mat(pW, new Rect(p1,p2));
+
+        // cleaning
+        sudokuGridFinder.release();
         pW.release();
         return output;
     }
 
 
+    /**
+     * @param img input matrix.
+     * @return copy of input after applying denoising, adaptiveThreshold and morphological transformation.
+     */
     private Mat preCutProcessing(Mat img){
         Mat sudokuGridFinder = img.clone();
         new ToGrayFilter().apply(sudokuGridFinder);
@@ -90,19 +118,24 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
                 new Size( 2*erosion_size + 1, 2*erosion_size+1 ),
                 new Point( erosion_size, erosion_size ) );
 
+        // cleaning
         element.release();
         sudokuGridFinder2.release();
 
         return sudokuGridFinder;
     }
 
+    /**
+     * @param contours list of all contours.
+     * @return index of the biggest contours.
+     */
     private int getBiggestBlobIndex(List<MatOfPoint> contours){
         double area;
         double maxArea = 0;
         int p = -1;
         for (int i = 0; i < contours.size(); i++) {
             area = contourArea(contours.get(i), false);
-            if (area > 50 && area > maxArea) {
+            if (area > 50 && area > maxArea) { // only accept contours which area are bigger than 50
                 maxArea = area;
                 p = i;
             }
@@ -110,6 +143,13 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
         return p;
     }
 
+    /**
+     * For more information check <a href="https://docs.opencv.org/4.0.1/d3/dc0/group__imgproc__shape.html#gadf1ad6a0b82947fa1fe3c3d497f260e0" target="_blank">openCV</a>.
+     * @param img input matrix.
+     * @param mode mode of findContours method.
+     * @param method method of findContours.
+     * @return list of all contours.
+     */
     private List<MatOfPoint> getContours(Mat img, int mode,int method){
         List<MatOfPoint> ret = new ArrayList<>();
         Mat heirarchy = new Mat();
@@ -119,6 +159,11 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
     }
 
 
+    /**
+     * @param contours matrix contains all point which creating hull.
+     * @return approximate polygonal curve..
+     * @throws NotFoundSudokuException if couldn't calc good approximation.
+     */
     private Pair<MatOfPoint, MatOfPoint2f> calcApprox(MatOfPoint contours) throws NotFoundSudokuException {
         MatOfPoint poly = new MatOfPoint(contours);
         MatOfPoint2f dst = new MatOfPoint2f();
@@ -137,30 +182,37 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
             return new Pair<>(poly, dst);
         }
 
-        // searching for new
+        // searching for new value with different parameters
         double left = 0.0;
         double right = 1.0;
 
+        // Looking for new parameters working similar to bin search method
         for (int i = 0; i < maxIteration; i++){
 
-            double k = (right+left)/2.0;
-
+            double k = (right+left)/2.0; // middle point
             double eps = k * arcLength;
 
+            // new approximation
             approxPolyDP(src, dst, eps * arcLength, true);
+
+            // it is good?
             if (dst.rows() == corners) {
                 src.release();
                 return new Pair<>(poly, dst);
             }
-            else if(dst.rows() > corners) left = k;
+            else if(dst.rows() > corners) left = k; // changing interval
             else right = k;
 
         }
-
         throw new NotFoundSudokuException();
-
     }
 
+    /**
+     * It's working similar to <a href="https://docs.opencv.org/3.1.0/da/d6e/tutorial_py_geometric_transformations.html" target="_blank">example</a>.
+     * @param sudoku input img.
+     * @param approx polygonal curve.
+     * @return input img transform by given curve.
+     */
     private Mat perspectiveWrap(Mat sudoku, Pair<MatOfPoint, MatOfPoint2f> approx){
         MatOfPoint poly = approx.getFirst();
         MatOfPoint2f dst = approx.getSecond();
@@ -180,6 +232,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
         warpPerspective(cutted, undistorted, getPerspectiveTransform(order, d), reshape);
 
+        // cleaning
         d.release();
         poly.release();
         dst.release();
