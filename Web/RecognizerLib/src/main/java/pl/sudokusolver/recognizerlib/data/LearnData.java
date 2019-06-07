@@ -21,32 +21,34 @@ import static org.opencv.imgproc.Imgproc.*;
  */
 public class LearnData implements IData {
     /**
-     * Próbki
+     * Samples (images).
      */
     private Mat samples;
 
     /**
-     * Etykiety w formacie {@link pl.sudokusolver.recognizerlib.data.DataType#Simple}
+     * Labels which are stored using {@link pl.sudokusolver.recognizerlib.data.DataType#Simple}.
      */
     private Mat labels;
 
     /**
-     * Rozmiar pojedynczej próbki (jest to kwadrat sampleSize x sampleSize)
+     * Size of single sample. Samples have to be rectangular.<br>
+     * So whole image takes <code>sampleSize * sampleSize</code>px.
      */
     private short sampleSize;
 
     /**
-     * @param files lista scieżek do 9 plików zawierających obrazki różnych cyfr.
-     *              Pliki powinny być posortowane ze względu na cyfry, które przedstawiają.
-     *              Na zdjęciu cyfry powinny być w kolorze białym a tło czarne.
-     * @throws CvException gdy nie uda się otworzyć jednego z plików.
-     * @throws IllegalArgumentException gdy na liście nie znajduje się 9 plików.
+     * @param files list which contains paths to 9 images. On each photo there are other digits.<br>
+     *              Files should be order by digit which have.<br>
+     *              Images need to be only black and white (digits should be white).
+     * @throws CvException if can't open one of files.
+     * @throws IllegalArgumentException if list size is different then 9.
      */
     public LearnData(List<String> files) throws CvException, IllegalArgumentException {
         if(files.size() != 9) throw new IllegalArgumentException("LearnData need 9 files");
         List<List<Rect>> allSamples = new LinkedList<>();
         int numberOfRect = 0;
 
+        // extraction digit form images
         for(int i = 0; i < files.size(); i++){
             allSamples.add(new LinkedList<>());
             Mat img = imread(files.get(i),1);
@@ -67,6 +69,7 @@ public class LearnData implements IData {
         labels = Mat.zeros(numberOfRect, 1, CvType.CV_32FC1);
 
 
+        // saving extracted images to matrix
         int currSampleIndex = 0;
         for(int i = 0; i < files.size(); i++){
             Mat img = imread(files.get(i), IMREAD_UNCHANGED);
@@ -95,7 +98,7 @@ public class LearnData implements IData {
     }
 
     /**
-     * @return M1.ROW_SAMPLE. Więcej informacji możesz znaleźć na <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/ml/Ml.html">openCV</a>
+     * @return M1.ROW_SAMPLE. For more information, you can checkout <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/ml/Ml.html">openCV</a>
      */
     @Override
     public int getSampleType() {
@@ -103,7 +106,7 @@ public class LearnData implements IData {
     }
 
     /**
-     * @return 28 jeżeli obiekt został poprawnie stworzony, w przeciwnym wypadku 0
+     * @return 28 if object was created correctly, else 0.
      */
     @Override
     public short getSize() {

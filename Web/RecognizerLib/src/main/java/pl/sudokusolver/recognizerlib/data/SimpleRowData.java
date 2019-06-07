@@ -9,25 +9,25 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 public class SimpleRowData implements IData{
     /**
-     * Próbki
+     * Samples
      */
     private Mat samples;
 
     /**
-     * Etykiety w formacie {@link pl.sudokusolver.recognizerlib.data.DataType#Simple}
+     * Labels stored in {@link pl.sudokusolver.recognizerlib.data.DataType#Simple} type.
      */
     private Mat labels;
 
     /**
-     * Rozmiar pojedynczej próbki (jest to kwadrat sampleSize x sampleSize)
+     * Size of single sample (It is rectangle which have size of sampleSize x sampleSize).
      */
     private short sampleSize;
 
     /**
-     * Tworzy obiekt korzystając z podanych parametrów
-     * @param samples próbki
-     * @param labels etykiety
-     * @param sampleSize rozmiar pojedynczej próbki
+     * Creates object using given parameters.
+     * @param samples samples.
+     * @param labels labels.
+     * @param sampleSize size of single sample.
      */
     public SimpleRowData(Mat samples, Mat labels, short sampleSize){
         this.samples = samples;
@@ -36,14 +36,20 @@ public class SimpleRowData implements IData{
     }
 
     /**
-     * @param url absolutna scieżka do pliku
-     * @param size rozmiar jednej cyfr w pliku
-     * @throws CvException gdy nie udało się otworzyć pliku
+     * Creates object using sheet file passed by path.
+     * @param url absolute path to sheet file.
+     * @param size size of single sample.
+     * @throws CvException if couldn't open file.
      */
     public SimpleRowData(String url, short size) throws CvException {
         loadFromSheet(url,size);
     }
 
+    /**
+     * @param url
+     * @param size
+     * @throws CvException
+     */
     private void loadFromSheet(String url, short size) throws CvException {
         //todo: check if file exist
         Mat img = imread(url, IMREAD_UNCHANGED);

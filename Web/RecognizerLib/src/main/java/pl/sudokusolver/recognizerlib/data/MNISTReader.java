@@ -15,28 +15,31 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * Klasa służąca do czytania i przedtwarzania danych w formacie <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>
+ * Class for reading data form MNIST format.<br>
+ * It was crated using <a href="http://yann.lecun.com/exdb/mnist/">MNIST website</a>.<br>
+ * You can also download data set from this website.
  */
 public class MNISTReader {
     /**
-     * Rozmiar pojedynczej próbki
+     * Size of one sample.
      */
     private static final short size = 28;
 
     /**
-     * @param dataUrl absolutna sieżka do pliku z danymi
-     * @param labelUrl absolutna sieżka do pliku z etykietami
-     * @param type typ w jakim chcemy otrzymać dane wyjściowe<br>
-     *             Możesz użyć:<br>
+     * Read and parse data from MNIST file, then save it to SimpleRowData object.
+     * @param dataUrl absolute path for data file.
+     * @param labelUrl absolute path for labels file.
+     * @param type type of output data.<br>
+     *             You can use:<br>
      *             <ul>
      *                  <li>{@link pl.sudokusolver.recognizerlib.data.DataType#Simple}</li>
      *                  <li>{@link pl.sudokusolver.recognizerlib.data.DataType#SimpleSVM}</li>
      *                  <li>{@link pl.sudokusolver.recognizerlib.data.DataType#Complex}</li>
      *             </ul>
-     * @return Odczytane i przedtworzone dane w podanym formacie.
-     * @throws VersionMismatchException gdy pliki z danymi nie są zgodne z etykietami
-     * @throws IOException gdzy nie udało się otworzyć plików
-     * @throws IllegalArgumentException gdzy podany typ danych wyjściowych nie jest obsługiwany
+     * @return data packed into IData (it is {@link pl.sudokusolver.recognizerlib.data.SimpleRowData}).
+     * @throws VersionMismatchException if magic numbers from file didn't match.
+     * @throws IOException if couldn't open file.
+     * @throws IllegalArgumentException if type of data isn't supported.
      */
     public static IData read(String dataUrl, String labelUrl, DataType type)
             throws VersionMismatchException, IOException, IllegalArgumentException {
@@ -49,26 +52,30 @@ public class MNISTReader {
             throw new VersionMismatchException("MNIST files don't have same version. Images have " + m1 + ", labels have "+m2+".");
 
         // todo: make bug report
-        // IMAGES LOAD
+
+        // images loading
         int iterations = imgBuffer.getInt();
         int imgNumber = iterations == 10000 ? iterations - 980 : iterations - 5923;
         int imgRows = imgBuffer.getInt();
         int imgCols = imgBuffer.getInt();
-        // LABELS LOAD
+
+        // labels loading
         labelBuffer.getInt(); // iteams number
 
+        // prepare matrix for data
         Mat trainData = Mat.zeros(imgNumber, size*size, CvType.CV_32FC1);
         Mat labels = createLabel(imgNumber, type);
 
         if(labels == null)
             throw new IllegalArgumentException("Invalid data type");
+
+        // reading data from mnist files and saving to prepared matrix
         int curr = 0;
         for(int n = 0; n < iterations; n++) {
             int i = labelBuffer.get() & 0xFF;
 
             Mat img = loadImg(imgBuffer, imgRows, imgCols);
-            if(i == 0)
-                continue;
+            if(i == 0) continue;
 
             putLabel(labels, i, curr, type);
             putImg(trainData, img, curr++);
@@ -76,6 +83,12 @@ public class MNISTReader {
         return new SimpleRowData(trainData, labels, size);
     }
 
+
+    /**
+     * @param infile absolute path to file used to open.
+     * @return all bytes read from this file.
+     * @throws IOException if couldn't open file.
+     */
     private static ByteBuffer loadFileToByteBuffer(String infile) throws IOException {
         RandomAccessFile f = new RandomAccessFile(infile, "r");
         FileChannel chan = f.getChannel();
@@ -91,6 +104,11 @@ public class MNISTReader {
         return ByteBuffer.wrap(baos.toByteArray());
     }
 
+    /**
+     * @param size size of labels matrix.
+     * @param type data type used to store labels.
+     * @return matrix which contains only zeroes and have size of size x 1.
+     */
     private static Mat createLabel(int size ,DataType type){
         switch (type){
             case Simple:
@@ -104,6 +122,10 @@ public class MNISTReader {
         }
     }
 
+    /**
+     * @param label value of label
+     * @return string which represent this value.
+     */
     private static String getStringFromLable(int label){
         switch (label) {
             case 9:
@@ -129,6 +151,12 @@ public class MNISTReader {
         }
     }
 
+    /**
+     * @param labels matrix whit all labels.
+     * @param label value which we want to put to matrix.
+     * @param n current label index.
+     * @param type type of labels matrix.
+     */
     private static void putLabel(Mat labels, int label, int n, DataType type){
         if(type == DataType.Complex) {
             String word = getStringFromLable(label);
@@ -141,6 +169,11 @@ public class MNISTReader {
         }
     }
 
+    /**
+     * @param trainData matrix whit data.
+     * @param img images which we want add to data.
+     * @param n current data index.
+     */
     private static void putImg(Mat trainData, Mat img, int n){
         Imgproc.resize(img, img, new Size(size,size));
         img = ImageProcessing.deskew(img,size);
@@ -150,17 +183,23 @@ public class MNISTReader {
         }
     }
 
-    private static Mat loadImg(ByteBuffer from, int imgRows, int imgCols){
+    /**
+     * @param source source of data
+     * @param imgRows image rows
+     * @param imgCols image cols
+     * @return matrix of size <code>imgRows x imgCols</code> which contains <code>imgRows*imgCols</code> bytes from source.
+     */
+    private static Mat loadImg(ByteBuffer source, int imgRows, int imgCols){
         Mat img = Mat.zeros(imgRows,imgCols, CvType.CV_32FC1);
 
         for (int i = 0; i < imgRows; i++)
             for (int j = 0; j < imgCols; j++)
-                img.put(i,j, from.get() & 0xFF);
+                img.put(i,j, source.get() & 0xFF);
         return img;
     }
 
     /**
-     * Nie można utworzyć obiektu tej klasy
+     * You should't be able to create this class.
      */
     private MNISTReader(){}
 }
