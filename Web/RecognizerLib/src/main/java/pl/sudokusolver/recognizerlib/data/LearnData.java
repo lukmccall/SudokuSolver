@@ -15,6 +15,10 @@ import static org.opencv.imgcodecs.Imgcodecs.IMREAD_UNCHANGED;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgproc.Imgproc.*;
 
+/**
+ * Now unused.
+ * Class used for keeping learning data.<br>
+ */
 public class LearnData implements IData {
     /**
      * Próbki

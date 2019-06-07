@@ -12,5 +12,5 @@ public interface DigitsExtractStrategy {
      * @param cell macierz z pojedynczą komórką sudoku. Macierz powinna być typu CV_8U lub CV_8UC1
      * @return macierz z cyfrą, gdy udało się ją znaleźć lub Optional.Empty() w przeciwnym wypadku
      */
-    Optional<Mat> extractDigit(Mat cell);
+    Optional<Mat> extract(Mat cell);
 }

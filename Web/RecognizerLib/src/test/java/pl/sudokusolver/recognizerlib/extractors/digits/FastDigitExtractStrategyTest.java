@@ -32,7 +32,7 @@ public class FastDigitExtractStrategyTest {
                 String path = data + i + "/" + j + ".jpg";
                 Mat img = imread(path, -1);
                 new ResizeFilter(new Size(50f,50f)).apply(img);
-                Optional<Mat> digit = fastDigitExtractStrategy.extractDigit(img);
+                Optional<Mat> digit = fastDigitExtractStrategy.extract(img);
                 if(digit.isPresent())
                     new SaveFilter(save+i+"/"+j+".jpg").apply(digit.get());
             }

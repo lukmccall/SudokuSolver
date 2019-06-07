@@ -1,22 +1,16 @@
 package pl.sudokusolver.recognizerlib.sudoku;
 
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Size;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.DigitExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import pl.sudokusolver.recognizerlib.extractors.cells.CellsExtractStrategy;
-import pl.sudokusolver.recognizerlib.extractors.cells.LineCellsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.cells.SizeCellsExtractStrategy;
-import pl.sudokusolver.recognizerlib.extractors.digits.ContoursDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.DigitsExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.digits.FastDigitExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.DefaultGridExtractStrategy;
 import pl.sudokusolver.recognizerlib.extractors.grid.GridExtractStrategy;
-import pl.sudokusolver.recognizerlib.filters.BlurFilter;
 import pl.sudokusolver.recognizerlib.filters.CleanLinesFilter;
-import pl.sudokusolver.recognizerlib.filters.DisplayHelper;
 import pl.sudokusolver.recognizerlib.filters.IFilter;
 import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
@@ -98,7 +92,7 @@ public class BaseSudokuExtractor extends SudokuExtractor {
             Mat cell = cells.get(i);
             Utility.applyFilters(cell, preDigitsFilters);
 
-            Optional<Mat> digit = digitsExtractStrategy.extractDigit(cell);
+            Optional<Mat> digit = digitsExtractStrategy.extract(cell);
 
             if (digit.isPresent()) {
                 sudoku.setDigit(recognizer.recognize(digit.get()).getFirst(), i / 9, i % 9);
