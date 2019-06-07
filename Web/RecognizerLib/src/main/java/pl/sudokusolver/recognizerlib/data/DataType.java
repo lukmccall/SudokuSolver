@@ -1,9 +1,9 @@
 package pl.sudokusolver.recognizerlib.data;
 
 /**
- * Typy danych używanych do nauczania ocrów.<br>
- * Typ odnosi się do tego jak przedstawione są etykiety<br>
- * Dostępne typy:
+ * Types used to define format of data.<br>
+ * This describe how labels look like.<br>
+ * You can use:
  * <ul>
  *     <li>{@link #Simple}</li>
  *     <li>{@link #SimpleSVM}</li>
@@ -12,25 +12,26 @@ package pl.sudokusolver.recognizerlib.data;
  */
 public enum DataType {
     /**
-     * <p>Etykity są przechowywane w macierzy, która posiada jedną columne.</p>
-     * <p>Macierz jest typu CV_32FC1.</p>
+     * <p>Labels are stored in matrix which have only once column</p>
+     * <p>This matrix is type of CV_32FC1.</p>
      */
     Simple,
 
     /**
-     * <p>Etykity są przechowywane w macierzy, która posiada jedną columne.</p>
-     * <p>Macierz jest typu CV_32SC1.</p>
+     * <p>Labels are stored in matrix which have only once column</p>
+     * <p>This matrix is type of CV_32SC1.</p>
      */
     SimpleSVM,
 
     /**
-     * <p>Etykiety są przechowywane w macierzy, która ma 10 kolumn, w której znajduje się zakodowana etykieta.</p>
+     * <p>Labels are stored in matrix which have 10 columns</p>
      * <p>
-     * Sposób kodowania:<br>
-     * - 1 - 1000000000<br>
-     * - 2 - 0100000000<br>
+     * Values are coded like:<br>
+     * - 1 - 100000000<br>
+     * - 2 - 010000000<br>
+     * - etc.<br>
      * </p>
-     * <p>Macierz jest typu CV_32FC1.</p>
+     * <p>This matrix is type of CV_32FC1.</p>
      */
     Complex
 }

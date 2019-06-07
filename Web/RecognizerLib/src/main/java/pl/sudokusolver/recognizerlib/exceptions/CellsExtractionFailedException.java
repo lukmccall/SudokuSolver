@@ -3,7 +3,7 @@ package pl.sudokusolver.recognizerlib.exceptions;
 public class CellsExtractionFailedException extends Exception {
 
     public CellsExtractionFailedException(){
-        super("Can't extract cells");
+            super("Nie udało się wyciąć komórek.");
     }
 
     public CellsExtractionFailedException(String message) {

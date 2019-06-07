@@ -57,7 +57,7 @@ public class ApiController {
     public String extract(
             @RequestParam("sudoku") MultipartFile inputImg,
             @RequestParam(value = "lineThreshold", required = false, defaultValue = "50") int lineTreshold,
-            @RequestParam(value = "minLineSize", required = false, defaultValue = "100") int minLineSize,
+            @RequestParam(value = "minLineSize", required = false, defaultValue = "65") int minLineSize,
             @RequestParam(value = "lineGap", required = false, defaultValue = "5") int lineGap,
             @RequestParam(value = "blurSize", required = false, defaultValue = "3") int blurSize,
             @RequestParam(value = "blurBlockSize", required = false, defaultValue = "31") int blurBlockSize,

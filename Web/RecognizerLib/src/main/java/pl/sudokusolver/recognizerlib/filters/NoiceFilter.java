@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Filter służący do uwuwania szumu.
- * Obszar jest uważany za szum gdzy zawiera białe pixela, których da się ograniczyć mały prostokątem (1/10 wielkości wejścia).
+ * Now unused.
+ * This filter remove noises from image.<br>
  */
 @Deprecated
 public class NoiceFilter implements IFilter {
@@ -29,7 +29,14 @@ public class NoiceFilter implements IFilter {
 
     }
 
-    private static  boolean isNoise(int width, int height, int tileWidth, int tileHeight) {
+    /**
+     * @param width width.
+     * @param height height.
+     * @param tileWidth tileWidth.
+     * @param tileHeight tileHeight.
+     * @return <code>true</code> if given title is noise, otherwise return <code>false</code>.
+     */
+    private static boolean isNoise(int width, int height, int tileWidth, int tileHeight) {
         if (width < tileWidth / 10 || height < tileHeight / 10) {
             return true;
         }

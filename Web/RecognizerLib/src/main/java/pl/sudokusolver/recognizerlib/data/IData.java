@@ -3,32 +3,34 @@ package pl.sudokusolver.recognizerlib.data;
 import org.opencv.core.Mat;
 
 /**
- * Abstrakcyjne przedstawienie danych. Pakiet taki może być użyty przy tworzeniu nowych obiektów ocr.
+ * Abstract data representation.<br>
+ * It packing data into something that can be used by orcs.
  */
 public interface IData {
     /**
-     * @return Macierz przechowującą próbki (zdjęcia)
+     * @return matrix which contain data.
      */
     Mat getData();
 
     /**
-     * @return Macierz przehowującą etykiety
+     * @return matrix which contain labels.
      */
     Mat getLabels();
 
 
     /**
-     * @return Typ próbek. Parametr z openCV
+     * @return pattern how data are stored.<br>
+     * For more information you can checkout <a href="https://docs.opencv.org/4.0.1/dd/ded/group__ml.html#ga9c57a2b823008dda53d2c7f7059a8710" target="_blank">SamplesType</a>
      */
     int getSampleType();
 
     /**
-     * @return Rozmiar pojedynczej próbki (zdjęcia)
+     * @return size of single sample. Sample must be rectangular.
      */
     short getSize();
 
     /**
-     * @return Typ danych
+     * @return data type
      */
     DataType getDataType();
 }

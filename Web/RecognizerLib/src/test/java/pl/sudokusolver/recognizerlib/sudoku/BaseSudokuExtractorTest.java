@@ -14,7 +14,6 @@ import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSimple;
-import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSingletonWrapper;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractStrictMode;
 
 import java.io.IOException;
@@ -30,18 +29,17 @@ class BaseSudokuExtractorTest {
     *** Sudoku extractor with SVM ***
        ---    Correctness  ---
 
-    All: 0.9806267806267808
-    Full: 101
+    All: 0.9819563152896486
+    Full: 102
     Errors: 0
-    Without errors: 0.9806267806267808
+    Without errors: 0.9819563152896486
 
-      ---    Performance  ---
+       ---    Performance  ---
+    Avg time: 231.93846153846152ms
+    Min time: 87ms
+    Max time: 385ms
 
-    Avg time: 1003.6692307692308ms
-    Min time: 448ms
-    Max time: 1558ms
-
-    ***********************************
+     ***********************************
     **/
     @Test
     @Ignore
@@ -53,10 +51,11 @@ class BaseSudokuExtractorTest {
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(svm)
+                .addPreGridFilters(new MaxResizeFilter(new Size(2500,2500))) // todo: maybe add this?
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
-                .addPreCellsFilters(new ResizeFilter(new Size(600f,600f)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
@@ -93,7 +92,7 @@ class BaseSudokuExtractorTest {
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
@@ -131,7 +130,7 @@ class BaseSudokuExtractorTest {
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
@@ -169,7 +168,7 @@ class BaseSudokuExtractorTest {
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
-                .addPreCellsFilters(new CleanLinesFilter(50, 100, 5,new MedianBlur(3,31, 15)))
+                .addPreCellsFilters(new CleanLinesFilter(50, 65, 5,new MedianBlur(3,31, 15)))
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)))
                 .build();
 
@@ -186,6 +185,7 @@ class BaseSudokuExtractorTest {
         long minTime = Long.MAX_VALUE;
         long maxTime = -1;
 
+
         for(int i = 0; i < all; i++){
 
             String path = "../../Data/TestImgs/"+i+".jpg";
@@ -198,6 +198,7 @@ class BaseSudokuExtractorTest {
                 testSudoku = extractor.extract(img,path);
             } catch (Exception e){
                 expections++;
+                System.out.println(e.getMessage());
             }
             long endTime = System.currentTimeMillis();
             long currDuration = endTime - startTime;
@@ -215,6 +216,7 @@ class BaseSudokuExtractorTest {
                 double s = goodAnsSudoku.score(testSudoku);
 
                 if(s == 1.0f) full++;
+//                else if(s < 0.7) System.out.println("Below 70%. Score " + s + " - " + i);
                 avgCorrectness += s;
             }
         }

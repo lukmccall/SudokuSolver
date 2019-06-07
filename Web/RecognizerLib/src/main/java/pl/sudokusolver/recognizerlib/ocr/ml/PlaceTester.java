@@ -5,7 +5,8 @@ import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 
 /**
- * Klasa do testów
+ * Now unused.
+ * Simple tested class.
  */
 public class PlaceTester implements IRecognizer {
     @Override

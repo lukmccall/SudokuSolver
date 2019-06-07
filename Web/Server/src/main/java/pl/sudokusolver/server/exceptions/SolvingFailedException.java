@@ -2,7 +2,7 @@ package pl.sudokusolver.server.exceptions;
 
 public class SolvingFailedException extends Exception {
     public SolvingFailedException() {
-        super("Can't solve this sudoku");
+        super("Nie udało się rozwiązać sudoku.");
     }
 
     public SolvingFailedException(String message) {

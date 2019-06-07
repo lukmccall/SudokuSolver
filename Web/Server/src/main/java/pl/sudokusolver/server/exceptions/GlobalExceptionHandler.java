@@ -27,35 +27,35 @@ public class GlobalExceptionHandler{
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     ErrorResponse handleNoHandlerFoundException() {
-        return new ErrorResponse(ErrorCodes.PageNotFound,"Page not found");
+        return new ErrorResponse(ErrorCodes.PageNotFound,"Strona nie znaleziona");
     }
 
     @ExceptionHandler({MissingServletRequestParameterException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     ErrorResponse handleMissingServletRequestParameterException(MissingServletRequestParameterException exception){
-        return new ErrorResponse(ErrorCodes.MissingParameter, "Missing argument: " + exception.getParameterName());
+        return new ErrorResponse(ErrorCodes.MissingParameter, "Brakujący argument: " + exception.getParameterName());
     }
 
     @ExceptionHandler({MissingServletRequestPartException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     ErrorResponse handleMissingServletRequestPartException(MissingServletRequestPartException exception){
-        return new ErrorResponse(ErrorCodes.MissingParameter, "Missing argument: " + exception.getRequestPartName());
+        return new ErrorResponse(ErrorCodes.MissingParameter, "Brakujący argument: " + exception.getRequestPartName());
     }
 
     @ExceptionHandler({IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     ErrorResponse handleIllegalArgumentException(IllegalArgumentException exception){
-        return new ErrorResponse(ErrorCodes.InvalidParameter, "Invalid argument: " + exception.getMessage());
+        return new ErrorResponse(ErrorCodes.InvalidParameter, "Niepoprawny argument: " + exception.getMessage());
     }
 
     @ExceptionHandler({IOException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     ErrorResponse handleIOException(IOException exception){
-        return new ErrorResponse(ErrorCodes.FileIsCorrupted, "File is currupted");
+        return new ErrorResponse(ErrorCodes.FileIsCorrupted, "Plik jest uszkodzony");
     }
 
     @ExceptionHandler({NotFoundSudokuException.class})
@@ -90,7 +90,7 @@ public class GlobalExceptionHandler{
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     ErrorResponse handleJsonSyntaxException(JsonSyntaxException exception){
-        return new ErrorResponse(ErrorCodes.InvalidParameter, "Invalid json: " + exception.getMessage());
+        return new ErrorResponse(ErrorCodes.InvalidParameter, "Niepoprawny json: " + exception.getMessage());
     }
 
     @ExceptionHandler({org.opencv.core.CvException.class})
@@ -98,7 +98,7 @@ public class GlobalExceptionHandler{
     @ResponseBody
     ErrorResponse hadneleCvException(org.opencv.core.CvException ex){
         ex.printStackTrace();
-        return new ErrorResponse(ErrorCodes.Unknown, "Unknown error");
+        return new ErrorResponse(ErrorCodes.Unknown, "Nieznany błąd.");
     }
 
     @ExceptionHandler({Exception.class})
@@ -107,7 +107,7 @@ public class GlobalExceptionHandler{
     ErrorResponse hadneleException(Exception ex){
         LOGGER.trace("Exception: " + ex.getClass().getCanonicalName());
 //        ex.printStackTrace();
-        return new ErrorResponse(ErrorCodes.Unknown, "Unknown error");
+        return new ErrorResponse(ErrorCodes.Unknown, "Nieznany błąd.");
     }
 
 

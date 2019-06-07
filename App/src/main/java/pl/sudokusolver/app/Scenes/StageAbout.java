@@ -32,7 +32,7 @@ public class StageAbout extends Stage {
 
         initModality(Modality.APPLICATION_MODAL);
         setDimensions(screenBounds);
-        setTitle(Values.AUTHORS);
+        setTitle(Values.ABOUT);
         setScene(aboutScene);
         setResizable(false);
         change();

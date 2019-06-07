@@ -8,15 +8,36 @@ import static org.opencv.imgproc.Imgproc.HoughLinesP;
 import static org.opencv.imgproc.Imgproc.line;
 
 /**
- * Filter służący do usuwania lini
+ * This filter clear lines form given matrix.<br>
+ * This matrix should be "blurable" - have type compatible with blur filter.
  */
 public class CleanLinesFilter implements IFilter {
+    /**
+     * threshold used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     */
     private int threshold;
+
+    /**
+     * minLineSize minLineSize used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     */
     private int minLineSize;
+
+    /**
+     * lineGap used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     */
     private int lineGap;
+
+    /**
+     * filter used before this one. For most cases you want to put here some kind of blur filter.
+     */
     private IFilter blurFilter;
 
 
+    /**
+     * Create object with defaults parameters.<br>
+     * lineGap = 20, minLineSize = 200, threshold = 80<br>
+     *  blurFilter = new BlurFilter(11,5,2)
+     */
     public CleanLinesFilter() {
         lineGap = 20;
         minLineSize = 200;
@@ -26,9 +47,9 @@ public class CleanLinesFilter implements IFilter {
     }
 
     /**
-     * @param threshold parametr używany w <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
-     * @param minLineSize parametr używany w <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
-     * @param lineGap parametr używany w <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     * @param threshold threshold used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     * @param minLineSize minLineSize used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     * @param lineGap lineGap used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
      */
     public CleanLinesFilter(int threshold, int minLineSize, int lineGap) {
         this.threshold = threshold;
@@ -38,7 +59,12 @@ public class CleanLinesFilter implements IFilter {
         blurFilter = new BlurFilter(11,5,2);
     }
 
-
+    /**
+     * @param threshold threshold used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     * @param minLineSize minLineSize used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     * @param lineGap lineGap used in <a href="https://docs.opencv.org/4.0.1/dd/d1a/group__imgproc__feature.html#ga8618180a5948286384e3b7ca02f6feeb">HoughLinesP</a>
+     * @param filtr filter used before this one. For most cases you want to put here some kind of blur filter.
+     */
     public CleanLinesFilter(int threshold, int minLineSize, int lineGap, IFilter filtr) {
         this.threshold = threshold;
         this.minLineSize = minLineSize;
@@ -51,8 +77,10 @@ public class CleanLinesFilter implements IFilter {
         blurFilter.apply(input);
         Mat lines = new Mat();
 
+        // searching for lines
         HoughLinesP(input, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
+        // clearing them from photo
         for (int x = 0; x < lines.rows(); x++) {
             double[] vec = lines.get(x, 0);
             double x1 = vec[0],

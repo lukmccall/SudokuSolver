@@ -4,13 +4,14 @@ import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 
 /**
- * Abstrakcyjna reprezentacja algorytmów do extrakcji siatki sudoku
+ * Abstract interpretation of sudoku's grid extraction algorithm.
  */
 public interface GridExtractStrategy {
     /**
-     * @param img macierz, w której znajduje się zdjęcie. Macierz może mieć dowolny typ.
-     * @return macierz zawierającą znalezioną siatkę. Macierz jest typu CV_8U1
-     * @throws NotFoundSudokuException gdy nie udało się odnaleźć siatki
+     * Algorithm looking for sudoku's grid and trying to extract it.
+     * @param img matrix with contains sudoku. Matrix can be of any type.
+     * @return matrix whit extracted grid. This matrix's type of <code>CV_8UC3</code>.
+     * @throws NotFoundSudokuException if couldn't find grid.
      */
-    Mat extractGrid(Mat img) throws NotFoundSudokuException;
+    Mat extract(Mat img) throws NotFoundSudokuException;
 }

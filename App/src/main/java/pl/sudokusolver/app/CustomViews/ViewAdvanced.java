@@ -107,7 +107,7 @@ public class ViewAdvanced extends VBox {
         Button def = new Button(Values.DEFAULT);
 
         set.setPrefWidth(100);
-        def.setPrefWidth(100);
+        def.setPrefWidth(150);
 
         set.setOnAction((event) -> {
             Parameters parameters = new Parameters();

@@ -14,19 +14,23 @@ import static java.lang.Math.sqrt;
 import static org.opencv.core.CvType.CV_32FC1;
 
 /**
- * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/Artificial_neural_network">Artificial neural network</a>
+ * Ocr which using <a href="https://en.wikipedia.org/wiki/Artificial_neural_network">Artificial neural network</a>
  */
-
-
 public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel {
+    /**
+     * model from opencv
+     */
     private ANN_MLP ann;
 
-    public ANN() {}
-
+    /**
+     * Create and learn ann form IData.
+     * @param data learning data.
+     */
     public ANN(IData data){
         ann = ANN_MLP.create();
         sampleSize = data.getSize();
 
+        // default configuration
         Mat layers = new Mat(1 , 4 , CV_32FC1);
         layers.put(0, 0, sampleSize*sampleSize);
         layers.put(0, 1, 50);
@@ -39,6 +43,11 @@ public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
         ann.train(data.getData(), data.getSampleType(), data.getLabels());
     }
 
+    /**
+     * Create and learn ann form IData.
+     * @param data learning data.
+     * @param f configuration function or object.
+     */
     public ANN(IData data, annConfig f){
         ann = ANN_MLP.create();
         sampleSize = data.getSize();
@@ -46,6 +55,10 @@ public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
         ann.train(data.getData(), data.getSampleType(), data.getLabels());
     }
 
+    /**
+     * Create ann and then load its state from dump.
+     * @param url absolute path to dump file.
+     */
     public ANN(String url){
         load(url);
         sampleSize = (short) sqrt(ann.getLayerSizes().get(0,0)[0]);

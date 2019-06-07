@@ -2,7 +2,7 @@ package pl.sudokusolver.recognizerlib.exceptions;
 
 public class NotFoundSudokuException extends Exception {
     public NotFoundSudokuException(){
-        super("Can't find sudoku");
+        super("Nie udało się rozpoznać sudoku.");
     }
 
     public NotFoundSudokuException(String message) {

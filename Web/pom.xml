@@ -65,7 +65,19 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M3</version>
                     <configuration>
-                        <skipTests>true</skipTests>
+                        <!-- This tests need to be run by human -->
+                        <excludes>
+                            <exclude>**/SizeCellsExtractStrategyTest*.java</exclude>
+                            <exclude>**/FastDigitExtractStrategyTest*.java</exclude>
+                            <exclude>**/DefaultGridExtractStrategyTest*.java</exclude>
+                            <exclude>**/ANNTest*.java</exclude>
+                            <exclude>**/IRecognizerTest*.java</exclude>
+                            <exclude>**/RecognizersTest*.java</exclude>
+                            <exclude>**/BaseSudokuExtractorTest*.java</exclude>
+                            <exclude>**/UploadTest*.java</exclude>
+                            <exclude>**/CleanLinesFilterTest*.java</exclude>
+                            <exclude>**/SmartSolverPerformanceTest*.java</exclude>
+                        </excludes>
                     </configuration>
                 </plugin>
                 <plugin>

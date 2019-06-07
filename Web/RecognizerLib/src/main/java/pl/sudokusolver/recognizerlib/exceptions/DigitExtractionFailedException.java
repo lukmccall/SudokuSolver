@@ -3,7 +3,7 @@ package pl.sudokusolver.recognizerlib.exceptions;
 public class DigitExtractionFailedException extends Exception {
 
     public DigitExtractionFailedException(){
-        super("Can't extract digit");
+        super("Nie udało się wyciąć siatki sudoku.");
     }
 
     public DigitExtractionFailedException(String message) {

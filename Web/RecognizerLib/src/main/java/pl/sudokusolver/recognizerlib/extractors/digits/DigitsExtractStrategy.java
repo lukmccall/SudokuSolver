@@ -5,12 +5,13 @@ import org.opencv.core.Mat;
 import java.util.Optional;
 
 /**
- * Abstrakcyjna reprezentacja algorytmów do extrakcji cyfr
+ * Abstract interpretation of digit extraction algorithm.
  */
 public interface DigitsExtractStrategy {
     /**
-     * @param cell macierz z pojedynczą komórką sudoku. Macierz powinna być typu CV_8U lub CV_8UC1
-     * @return macierz z cyfrą, gdy udało się ją znaleźć lub Optional.Empty() w przeciwnym wypadku
+     * Looking for digit in given image.
+     * @param cell matrix with sudoku's cell. This matrix be type of <code>CV_8U</code>.
+     * @return matrix with digit when algorithm correctly extracted digit, if not it return <code>Optional.Empty()</code>.
      */
-    Optional<Mat> extractDigit(Mat cell);
+    Optional<Mat> extract(Mat cell);
 }

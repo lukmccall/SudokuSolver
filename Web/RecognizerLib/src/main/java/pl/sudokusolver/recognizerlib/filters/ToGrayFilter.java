@@ -6,11 +6,7 @@ import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
 import static org.opencv.imgproc.Imgproc.cvtColor;
 
 /**
- * Filter zmieniający kolory obrazu na czarno-białe
- * <p>
- *     <b>Uwaga</b><br>
- *     Zdjęcie wejściowe nie może być już czarno-białe
- * </p>
+ * This filter convert from colorful to black and white image.
  */
 public class ToGrayFilter implements IFilter {
     @Override

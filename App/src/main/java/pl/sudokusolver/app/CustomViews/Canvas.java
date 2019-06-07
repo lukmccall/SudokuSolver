@@ -287,7 +287,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
                 }
                 //otherwise use another color
                 else if (solution[row][col] != 0){
-                    context.setFill(Color.GREEN);
+                    context.setFill(Color.rgb(20,170,0));
                     context.fillText(solution[row][col] + "", position_x, position_y);
                 }
             }

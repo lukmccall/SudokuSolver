@@ -5,27 +5,24 @@ import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 /**
- * Opakowanie interfejsu IRecognizer.
- * <p>
- *     Jego celem jest zapamiętanie rozmiaru próbki oraz ujednolicenie filtra stosowanego na cyfrę do rozpoznania.
- * </p>
+ * Abstract wrapper for IRecognizer interface. It's used for methods shearing.
  */
 public abstract class MLWrapper implements IRecognizer {
     /**
-     * Rozmiar próbki
+     * sample size
      */
     protected short sampleSize;
 
     /**
-     * @return rozmiar próbki
+     * @return sample size
      */
     public short getSampleSize() {
         return sampleSize;
     }
 
     /**
-     * @param img macierz z cyfrą
-     * @return macierz z cyfrą po zastosowaniu filtrów
+     * @param img matrix with digit
+     * @return matrix which is centered and de-skewed.
      */
     protected Mat applyDigitFilter(Mat img){
         Mat center = ImageProcessing.center(img,sampleSize);
