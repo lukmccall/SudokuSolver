@@ -1,6 +1,8 @@
 package pl.sudokusolver.app.Scenes;
 
 import com.google.gson.Gson;
+import javafx.geometry.Insets;
+import javafx.scene.layout.VBox;
 import okhttp3.*;
 import pl.sudokusolver.app.*;
 import pl.sudokusolver.app.CustomViews.Canvas;
@@ -143,12 +145,19 @@ public class StageMain extends Stage implements MenuListener, Sender {
 
     }
 
-
+    /**
+     * Function to block user from sending requests to server when we are waiting for one
+     */
     private void block(){
+        rightSide.blockButtons();
         Singleton.getInstance().block();
     }
 
+    /**
+     * Function to unblock user from sending requests to server when we are waiting for one
+     */
     private void unblock(){
+        rightSide.unblockButtons();
         Singleton.getInstance().unblock();
     }
 
@@ -290,5 +299,6 @@ public class StageMain extends Stage implements MenuListener, Sender {
         vBox.setTop(menu);
         vBox.setCenter(rightSide);
         vBox.setLeft(canvas);
+        BorderPane.setMargin(canvas, new Insets(0,0,0,20));
     }
 }
