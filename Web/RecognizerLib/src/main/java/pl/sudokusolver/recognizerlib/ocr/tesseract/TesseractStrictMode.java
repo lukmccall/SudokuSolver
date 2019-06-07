@@ -7,6 +7,10 @@ import pl.sudokusolver.recognizerlib.ocr.IRecognizer;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 
+/**
+ * This class using external ocr.<br>
+ * When tesseract couldn't recognize digit, recognize method throw exception.
+ */
 public class TesseractStrictMode implements IRecognizer {
     @Override
     public Pair<Integer, Double> recognize(Mat img) throws DigitExtractionFailedException {

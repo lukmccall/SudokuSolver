@@ -10,20 +10,24 @@ import pl.sudokusolver.recognizerlib.utility.staticmethods.Utility;
 import java.awt.image.BufferedImage;
 
 /**
- * Opakowanie w formie singletonu zewnętrznego ocra - <a href="https://github.com/nguyenq/tess4j">Tesseract</a>.
+ * Wrapper for external ocra - <a href="https://github.com/nguyenq/tess4j">Tesseract</a>.
  */
 public class TesseractSingletonWrapper {
     /**
-     * Instancja ocra
+     * single instance of tesseract object.
      */
     public final static Tesseract tesseract;
 
+    // init tesseract data and changing rec rules
     static {
         tesseract = new Tesseract();
         tesseract.setDatapath(Utility.getTessdata());
         tesseract.setTessVariable("tessedit_char_whitelist", "123456789");
     }
 
+    /**
+     * You shouldn't be able to create instance of this class.
+     */
     private TesseractSingletonWrapper() {}
 
 }

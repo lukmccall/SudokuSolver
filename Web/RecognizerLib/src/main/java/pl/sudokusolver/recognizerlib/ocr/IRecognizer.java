@@ -1,17 +1,16 @@
 package pl.sudokusolver.recognizerlib.ocr;
 
-import net.sourceforge.tess4j.TesseractException;
 import org.opencv.core.Mat;
 import pl.sudokusolver.recognizerlib.exceptions.DigitExtractionFailedException;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 
 /**
- * Abstrakcyjne przedstawienie ocrów
+ * Common ocr interface.
  */
 public interface IRecognizer {
     /**
-     * @param img macierz, na której znajduje się cyfra do rozpoznania
-     * @return parę, która składa się z rozpoznanej liczby i pewności z jaką została rozpoznana. <b>W aktualnej wersji drugi parametr jest nieujednolicony</b>.
+     * @param img matrix with digit.
+     * @return pair which contains output from model. First value is predicted digit, second value is probability (now unused).
      */
     Pair<Integer, Double> recognize(Mat img) throws DigitExtractionFailedException;
 }

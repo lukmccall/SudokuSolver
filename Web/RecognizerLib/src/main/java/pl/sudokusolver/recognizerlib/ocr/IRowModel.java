@@ -1,11 +1,11 @@
 package pl.sudokusolver.recognizerlib.ocr;
 
 /**
- * Interfejs pozwalający dostać się do modelu z opencv.
+ * If class implement this interface then you can get bare model which is using by this class.
  */
 public interface IRowModel {
     /**
-     * @return model z opencv w postaci Object
+     * @return opencv model
      */
     Object getMl();
 }

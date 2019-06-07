@@ -9,16 +9,27 @@ import pl.sudokusolver.recognizerlib.utility.Pair;
 import pl.sudokusolver.recognizerlib.utility.staticmethods.ImageProcessing;
 
 /**
- * Ocr korzystający z <a href="https://en.wikipedia.org/wiki/Support-vector_machine">Support-vector machine</a>
+ * Ocr which using <a href="https://en.wikipedia.org/wiki/Support-vector_machine">Support-vector machine</a>
  */
 public class SVM extends MLWrapper implements ILoader, IRowRecognizer, IRowModel {
+    /**
+     * bare opencv model
+     */
     private org.opencv.ml.SVM svm;
 
+    /**
+     * Create svm and then load its state from dump.
+     * @param url absolute path to dump file.
+     */
     public SVM(String url){
         load(url);
         sampleSize = (short) Math.sqrt((double) svm.getVarCount());
     }
 
+    /**
+     * Create svm learn ann form IData.
+     * @param data learning data.
+     */
     public SVM(IData data){
         svm = org.opencv.ml.SVM.create();
         sampleSize = data.getSize();
@@ -32,6 +43,11 @@ public class SVM extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
         svm.train(data.getData(),data.getSampleType(), data.getLabels());
     }
 
+    /**
+     * Create and learn svm form IData.
+     * @param data learning data.
+     * @param f configuration function or object.
+     */
     public SVM(IData data, svmConfig config){
         svm = org.opencv.ml.SVM.create();
         sampleSize = data.getSize();
