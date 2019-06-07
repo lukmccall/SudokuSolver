@@ -6,12 +6,13 @@ import org.opencv.core.Rect;
 import java.util.Optional;
 
 /**
- * Abstrakcyjna reprezentacja algorytmów do znajdywania cyfry na zdjęciu
+ * Abstract interpretation of finding digit algorithm.
  */
 public interface IDigitBox {
     /**
-     * @param input macierz z zdjęciem, na którym znajduje się cyfra. Macierz powinna być typu CV_8U lub CV_8UC1
-     * @return kwadrat, w którym znajduje się cyfra lub Optional.Empty() gdzy nie uda się znaleźć cyfry
+     * Try find digit on given img. If found something then return it, else just return <code>Optional.Empty()</code>
+     * @param input matrix which contains image of digit. Matrix should be type of <code>CV_8U</code>.
+     * @return bounding rect with image or <code>Optional.Empty()</code> when algorithm couldn't find digit.
      */
     Optional<Rect> getDigitBox(Mat input);
 }

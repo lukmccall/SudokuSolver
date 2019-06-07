@@ -46,25 +46,28 @@ public class SimpleRowData implements IData{
     }
 
     /**
-     * @param url
-     * @param size
-     * @throws CvException
+     * @param url absolute path to sheet file.
+     * @param size size of single sample.
+     * @throws CvException if couldn't open file.
      */
     private void loadFromSheet(String url, short size) throws CvException {
-        //todo: check if file exist
         Mat img = imread(url, IMREAD_UNCHANGED);
 
+        // calc mat size
         int cols = img.width() / size;
         int rows = img.height() / size;
 
+        // calc number of images that contains concrete digit
         int totalPerClass = cols * rows / 10;
 
+        // prepare matrix
         samples = Mat.zeros(cols * rows, size * size, CvType.CV_32FC1);
         labels = Mat.zeros(cols * rows, 1, CvType.CV_32FC1);
 
         Size cellSize = new Size(size, size);
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++) {
+                // cut single img
                 Rect rect = new Rect(new Point(j * size, i * size), cellSize);
                 int currentCell = i * cols + j;
                 double label = (j + i * cols) / totalPerClass;
@@ -72,12 +75,15 @@ public class SimpleRowData implements IData{
                 // Skip '0'
                 if (label == 0) continue;
 
+                // processing image
                 Mat cell = ImageProcessing.deskew(new Mat(img, rect), size);
                 Mat procCell = ImageProcessing.procSimple(cell, size);
 
+                // put into data matrix
                 for (int k = 0; k < size * size; k++)
                     samples.put(currentCell, k, procCell.get(0, k));
 
+                // put into labels matrix
                 labels.put(currentCell, 0 , label);
 
             }
@@ -95,7 +101,7 @@ public class SimpleRowData implements IData{
     }
 
     /**
-     * @return M1.ROW_SAMPLE. Więcej informacji możesz znaleźć na <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/ml/Ml.html">openCV</a>
+     * @return M1.ROW_SAMPLE. For more information, you can checkout <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/ml/Ml.html">openCV</a>
      */
     @Override
     public int getSampleType() {
