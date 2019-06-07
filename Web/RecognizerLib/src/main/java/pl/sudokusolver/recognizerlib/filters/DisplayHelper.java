@@ -6,7 +6,7 @@ import static org.opencv.highgui.HighGui.imshow;
 import static org.opencv.highgui.HighGui.waitKey;
 
 /**
- * Helper w postaci filtra służący do wyświetlenie zdjęcia
+ * Helper. It show matrix (have to be valid img) on the screen.
  */
 public class DisplayHelper implements IFilter {
     @Override

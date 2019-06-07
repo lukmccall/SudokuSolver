@@ -6,9 +6,19 @@ import org.opencv.core.MatOfInt;
 import static org.opencv.imgcodecs.Imgcodecs.IMWRITE_JPEG_QUALITY;
 import static org.opencv.imgcodecs.Imgcodecs.imwrite;
 
+/**
+ * This filter saving img to file.
+ */
 public class SaveFilter implements IFilter {
+    /**
+     * where you want to save image
+     */
     private String path;
 
+    /**
+     * Set inner path variable.
+     * @param path path where you want save file.
+     */
     public SaveFilter(String path){
         this.path = path;
     }

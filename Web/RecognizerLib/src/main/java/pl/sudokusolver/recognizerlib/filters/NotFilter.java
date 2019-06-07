@@ -5,7 +5,7 @@ import org.opencv.core.Mat;
 import static org.opencv.core.Core.bitwise_not;
 
 /**
- * Filter wykonujący operację negacji na macierzy
+ * This filter apply bitwise not operation on matrix.
  */
 public class NotFilter implements IFilter {
     @Override
