@@ -245,43 +245,22 @@ class UtilityTest {
     @Test
     void getUnassignedLocationTrue() {
         Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid);
-        boolean test = false;
+        assertTrue(a.equals(new Pair<>(0,0)));
 
-        if (a.equals(new Pair<>(0,0))) test = true;
-        assertTrue(test);
+        Pair<Integer,Integer> b = Utility.getUnassignedLocation(grid2);
+        assertTrue(b.equals(new Pair<>(9,9)));
+
+        int [][] testGrid = grid2.clone();
+        testGrid[5][5]=0;
+        Pair<Integer,Integer> c = Utility.getUnassignedLocation(testGrid);
+        assertTrue(c.equals(new Pair<>(5,5)));
     }
 
 
     @Test
     void getUnassignedLocationFalse() {
         Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid);
-        boolean test = false;
-
-        if (a.equals(new Pair<>(7,7))) test = true;
-        assertFalse(test);
-    }
-
-
-    @Test
-    void getUnassignedLocation9x9() {
-
-        Pair<Integer,Integer> a = Utility.getUnassignedLocation(grid2);
-        boolean test = false;
-
-        if (a.equals(new Pair<>(9,9))) test = true;
-
-        assertTrue(test);
-    }
-
-    @Test
-    void getUnassignedLocationGrid2True() {
-        int [][] testGrid = grid2.clone();
-        testGrid[5][5]=0;
-        Pair<Integer,Integer> a = Utility.getUnassignedLocation(testGrid);
-        boolean test = false;
-
-        if (a.equals(new Pair<>(5,5))) test = true;
-        assertTrue(test);
+        assertFalse(a.equals(new Pair<>(7,7)));
     }
 
 
