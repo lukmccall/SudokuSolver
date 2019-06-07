@@ -12,5 +12,5 @@ public interface GridExtractStrategy {
      * @return macierz zawierającą znalezioną siatkę. Macierz jest typu CV_8U1
      * @throws NotFoundSudokuException gdy nie udało się odnaleźć siatki
      */
-    Mat extractGrid(Mat img) throws NotFoundSudokuException;
+    Mat extract(Mat img) throws NotFoundSudokuException;
 }

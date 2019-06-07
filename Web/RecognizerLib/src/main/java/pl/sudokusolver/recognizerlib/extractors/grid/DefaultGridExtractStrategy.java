@@ -43,7 +43,7 @@ public class DefaultGridExtractStrategy implements GridExtractStrategy {
 
     //todo: update doc
     @Override
-    public Mat extractGrid(Mat img) throws NotFoundSudokuException {
+    public Mat extract(Mat img) throws NotFoundSudokuException {
         Mat sudokuGridFinder = preCutProcessing(img);
         List<MatOfPoint> ret = getContours(sudokuGridFinder,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         int max = getBiggestBlobIndex(ret);

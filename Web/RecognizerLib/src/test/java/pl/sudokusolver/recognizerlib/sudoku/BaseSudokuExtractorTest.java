@@ -29,18 +29,17 @@ class BaseSudokuExtractorTest {
     *** Sudoku extractor with SVM ***
        ---    Correctness  ---
 
-    All: 0.9806267806267808
-    Full: 101
+    All: 0.9819563152896486
+    Full: 102
     Errors: 0
-    Without errors: 0.9806267806267808
+    Without errors: 0.9819563152896486
 
-      ---    Performance  ---
+       ---    Performance  ---
+    Avg time: 231.93846153846152ms
+    Min time: 87ms
+    Max time: 385ms
 
-    Avg time: 1003.6692307692308ms
-    Min time: 448ms
-    Max time: 1558ms
-
-    ***********************************
+     ***********************************
     **/
     @Test
     @Ignore
