@@ -80,12 +80,13 @@ public class ViewImage extends BorderPane implements ParametersListener {
             initImage(file, width, height);
         }
         catch (FileNotFoundException e){
-            //todo
+            new StageError("Nie udało się otworzyć pliku");
+            return;
         }
 
         initRectangle();
         imageParent = initImageParent();
-        rubberBandSelection = new ViewSelection(imageParent, imageView);
+        rubberBandSelection = new ViewSelection(imageParent, imageView, imageListener);
 
         HBox buttons = getButtons();
         HBox image = initImage();

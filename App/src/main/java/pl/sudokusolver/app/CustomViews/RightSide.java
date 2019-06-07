@@ -174,7 +174,7 @@ public class RightSide extends VBox implements ImageListener {
                     stageImage.init(file, width, height);
                 }
                 else{
-                    new StageError("Please choose a file");
+                    new StageError("Wybierz zdjecie");
                 }
 
                 imageFilter = null;

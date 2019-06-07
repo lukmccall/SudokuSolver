@@ -2,12 +2,22 @@ package pl.sudokusolver.app.CustomViews;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import pl.sudokusolver.app.Listeners.ImageListener;
+import pl.sudokusolver.app.Scenes.StageError;
+import pl.sudokusolver.app.Singleton;
+import pl.sudokusolver.app.Utilities;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 /**
  * Class used to indicate what part of image the user is trying to cut
@@ -19,11 +29,14 @@ class ViewSelection {
 
     private Pane group;
     private ImageView imageView;
+    private FileChooser.ExtensionFilter imageFilter;
+    private ImageListener imageListener;
 
-    ViewSelection(Pane group, ImageView imageView) {
+
+    ViewSelection(Pane group, ImageView imageView, ImageListener imageListener) {
         this.group = group;
         this.imageView = imageView;
-
+        this.imageListener = imageListener;
         init();
     }
 
@@ -40,6 +53,7 @@ class ViewSelection {
      */
     private void initPane(){
         group.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressedEventHandler);
+        group.addEventHandler(MouseEvent.MOUSE_CLICKED, onMouseClickedEventHandler);
         group.addEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseDraggedEventHandler);
     }
 
@@ -78,7 +92,7 @@ class ViewSelection {
      * Function that handles mouse press on image
      */
     private EventHandler<MouseEvent> onMousePressedEventHandler = (event) -> {
-        if( event.isSecondaryButtonDown())
+        if (event.isSecondaryButtonDown())
             return;
 
         // remove old rect
@@ -96,6 +110,43 @@ class ViewSelection {
         rect.setHeight(0);
 
         group.getChildren().add( rect);
+    };
+
+    private EventHandler<MouseEvent> onMouseClickedEventHandler = (event) -> {
+        if (rect.getWidth() <= 0.5f && rect.getHeight() <= 0.5f)
+        if (imageFilter == null){
+            imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+
+            final FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(imageFilter);
+
+            File file = fileChooser.showOpenDialog((Stage) imageListener);
+            Singleton.getInstance().unblock();
+
+            if (file != null) {
+                if (!(Utilities.getFileExtension(file).equals("jpg") || Utilities.getFileExtension(file).equals("png"))){
+                    new StageError(2);
+                    imageFilter = null;
+                    return;
+                }
+
+                Image image;
+                try{
+                    image = new Image(new FileInputStream(file.getPath()));
+                }
+                catch (Exception e){
+                    new StageError("Nie udało się otworzyć zdjęcia");
+                    return;
+                }
+
+                imageView.setImage(image);
+            }
+            else{
+                new StageError("Wybierz zdjęcie");
+            }
+
+            imageFilter = null;
+        }
     };
 
     /**
