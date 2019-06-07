@@ -10,7 +10,7 @@ import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import java.util.List;
 
 /**
- * Implementation of extract cell algorithm.<br>
+ * Implementation of cell extraction algorithm.<br>
  * Extraction is being performed by dividing it into equally large pieces.
  */
 public class SizeCellsExtractStrategy implements CellsExtractStrategy{

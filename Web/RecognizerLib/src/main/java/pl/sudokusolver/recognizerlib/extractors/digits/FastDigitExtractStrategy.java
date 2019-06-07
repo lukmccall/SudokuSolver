@@ -7,9 +7,9 @@ import pl.sudokusolver.recognizerlib.digitbox.DigitBoxContoures;
 import java.util.Optional;
 
 /**
- * Implementacja algorytmu extrakcji cyfry.
+ * Implementation of digit extraction algorithm.<br>
  * <p>
- *     Korzysta z {@link pl.sudokusolver.recognizerlib.digitbox.DigitBoxContoures}
+ *     We used {@link pl.sudokusolver.recognizerlib.digitbox.DigitBoxContoures}
  * </p>
  */
 public class FastDigitExtractStrategy extends DigitBoxContoures implements DigitsExtractStrategy {

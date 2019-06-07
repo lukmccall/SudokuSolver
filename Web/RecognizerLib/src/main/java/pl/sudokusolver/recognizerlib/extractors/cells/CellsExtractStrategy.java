@@ -6,7 +6,7 @@ import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import java.util.List;
 
 /**
- * Abstract interpretation of cell cutter algorithm.
+ * Abstract interpretation of cell extraction algorithm.
  */
 public interface CellsExtractStrategy {
     /**
