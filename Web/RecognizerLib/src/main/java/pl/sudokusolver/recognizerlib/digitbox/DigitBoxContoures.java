@@ -13,9 +13,9 @@ import static org.opencv.imgproc.Imgproc.*;
 /**
  * Implementation of digit finding algorithm.
  * <p>
- * We used method which you can find <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/imgproc/Imgproc.html#findContours-org.opencv.core.Mat-java.util.List-org.opencv.core.Mat-int-int-">findContours</a>.
- * We looking for all contours, then we calc bounding rectangles of this contours.<br>
- * Then we only accept this rectangles which aspect ration is in rang of [0.5, 10] and have area bigger than 20.<br>
+ * We are used method which you can find <a href="https://docs.opencv.org/4.0.1/javadoc/org/opencv/imgproc/Imgproc.html#findContours-org.opencv.core.Mat-java.util.List-org.opencv.core.Mat-int-int-">findContours</a>.
+ * We looking for all contours, then we calc bounding rectangles of those contours.<br>
+ * Then we only accept rectangles whose aspect ration is in rang of [0.5, 10] and have area bigger than 20.<br>
  * Then we create another bounding rectangle on the basis of other rectangles.
  * </p>
  */
