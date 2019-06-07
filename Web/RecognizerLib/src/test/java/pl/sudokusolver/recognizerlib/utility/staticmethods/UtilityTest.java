@@ -20,7 +20,7 @@ import static org.opencv.core.CvType.CV_8UC3;
 public class UtilityTest {
 
     @Test
-    void orderPointTest(){
+    void orderPointTest1(){
         MatOfPoint2f list = new MatOfPoint2f();
         list.fromArray(
                         new Point(31,0),
@@ -143,11 +143,6 @@ public class UtilityTest {
         for(int i=0;i<50; i++) list.add(new FilterCounter());
         Utility.applyFilters(mat,list);
         Assert.assertEquals("Expected correct number of filter applied",50, new FilterCounter().getCounter());
-    }
-
-
-    @Test
-    void matToBufferedImageTest(){
     }
 
 
