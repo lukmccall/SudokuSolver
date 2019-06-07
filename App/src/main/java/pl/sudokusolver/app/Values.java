@@ -16,18 +16,18 @@ public class Values {
     public static String NAME = "SUDOKU SOLVER";
 
     public static final String ERROR = "ERROR";
-    public static final String LOAD = "LOAD";
-    public static final String SOLVE = "SOLVE";
-    public static final String ABOUT = "ABOUT";
-    public static final String EXIT =  "EXIT";
-    public static final String AUTHORS = "AUTHORS";
-    public static final String BRIGHT = "BRIGHT";
-    public static final String DARK = "DARK";
-    public static final String HELP = "HELP";
-    public static final String THEMES = "THEMES";
-    public static final String CUT = "CUT";
-    public static final String ADVANCED = "ADVANCED";
-    public static final String ACCEPT = "ACCEPT";
+    public static final String LOAD = "WCZYTAJ";
+    public static final String SOLVE = "ROZWIĄŻ";
+    public static final String ABOUT = "O programie";
+    public static final String EXIT =  "Wyjscie";
+    public static final String AUTHORS = "Autorzy";
+    public static final String BRIGHT = "Jasny";
+    public static final String DARK = "Ciemny";
+    public static final String HELP = "POMOC";
+    public static final String THEMES = "MOTYW";
+    public static final String CUT = "PRZYTNIJ";
+    public static final String ADVANCED = "ZAAWANSOWANE";
+    public static final String ACCEPT = "ZATWIERDŹ";
 
     public static final String PROJECT_MANAGER = "Project Manager:";
     public static final String PROJECT_MANAGER_NAME = "Daniel Dobrowolski";
@@ -61,21 +61,21 @@ public class Values {
 
     public static final String STRICT_MODE = "STRICT MODE";
 
-    public static final String SET = "SET";
-    public static final String DEFAULT = "DEFAULT";
+    public static final String SET = "OK";
+    public static final String DEFAULT = "USTAW DOMYŚLNE";
 
-    public static final String CLEAR = "CLEAR";
+    public static final String CLEAR = "Wyczyść";
     public static final String SUDOKU = "SUDOKU";
 
-    public static final String E001 = "WRONG JAVA VERSION";
-    public static final String E002 = "WRONG FILE EXTENSION";
-    public static final String E003 = "COULDN'T RECOGNIZE SUDOKU";
-    public static final String E004 = "SUDOKU ISN'T SOLVABLE";
-    public static final String E005 = "NO INTERNET CONNECTION";
-    public static final String E006 = "SERVER IS DOWN";
-    public static final String E007 = "FILE DOESN'T EXIST";
-    public static final String E008 = "CAN'T INSERT INTO THIS FIELD";
-    public static final String E009 = "CAN'T CUT WITH EMPTY SELECTION";
+    public static final String E001 = "Nie wykryto odpowiedniej wersji JAVY";
+    public static final String E002 = "Nieznany format pliku (tylko .jpg, .png)";
+    public static final String E003 = "Niewykryte poprawne sudoku na zdjęciu";
+    public static final String E004 = "Sudoku nie posiada rozwiązania";
+    public static final String E005 = "Brak połączenia z siecią";
+    public static final String E006 = "Serwer nieaktywny";
+    public static final String E007 = "Plik nie istnieje";
+    public static final String E008 = "Nie można wpisać tej wartości w to pole";
+    public static final String E009 = "Nie można wyciąć bez zaznaczenia";
 
 
 }

@@ -172,7 +172,7 @@ public class ViewImage extends BorderPane implements ParametersListener {
      */
     private Button initAdvanced(){
         Button advanced = new Button(Values.ADVANCED);
-        advanced.setPrefWidth(100);
+        advanced.setPrefWidth(150);
         advanced.setOnAction((event) -> {
             if (stageAdvanced != null) {
                 if (stageAdvanced.isShowing()) stageAdvanced.toFront();

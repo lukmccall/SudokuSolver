@@ -145,10 +145,12 @@ public class StageMain extends Stage implements MenuListener, Sender {
 
 
     private void block(){
+        rightSide.blockButtons();
         Singleton.getInstance().block();
     }
 
     private void unblock(){
+        rightSide.unblockButtons();
         Singleton.getInstance().unblock();
     }
 

@@ -47,7 +47,6 @@ public class Menu extends MenuBar {
         MenuItem about = new MenuItem(Values.ABOUT);
 
         about.setOnAction((event) -> {
-            if (Singleton.getInstance().isBlocked()) return;
 
             if (aboutStage != null) {
                 if (aboutStage.isShowing()) aboutStage.toFront();
@@ -69,7 +68,6 @@ public class Menu extends MenuBar {
         MenuItem authors = new MenuItem(Values.AUTHORS);
 
         authors.setOnAction((event) -> {
-            if (Singleton.getInstance().isBlocked()) return;
 
             if (authorsStage != null) {
                 if (authorsStage.isShowing()) authorsStage.toFront();
@@ -91,7 +89,6 @@ public class Menu extends MenuBar {
         MenuItem exit = new MenuItem(Values.EXIT);
 
         exit.setOnAction((event) -> {
-            if (Singleton.getInstance().isBlocked()) return;
             menuListener.exit();
         });
 
@@ -128,7 +125,6 @@ public class Menu extends MenuBar {
         }
 
         lightTheme.setOnAction((event) -> {
-            if (Singleton.getInstance().isBlocked()) return;
 
             if (Values.THEME != Theme.LIGHT){
                 Values.THEME = Theme.LIGHT;
@@ -163,8 +159,6 @@ public class Menu extends MenuBar {
         }
 
         darkTheme.setOnAction((event) -> {
-            if (Singleton.getInstance().isBlocked()) return;
-
             if (Values.THEME != Theme.DARK){
                 Values.THEME = Theme.DARK;
 
@@ -217,7 +211,6 @@ public class Menu extends MenuBar {
         MenuItem clear = new MenuItem(Values.CLEAR);
 
         clear.setOnAction((event) -> {
-            if (Singleton.getInstance().isBlocked()) return;
             menuListener.clear();
         });
 

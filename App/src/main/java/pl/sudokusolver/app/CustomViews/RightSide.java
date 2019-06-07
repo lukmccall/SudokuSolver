@@ -32,6 +32,7 @@ public class RightSide extends VBox implements ImageListener {
     private ImageView imageView;
     private StageImage stageImage;
     private FileChooser.ExtensionFilter imageFilter;
+    private Button solveButton, loadButton;
 
     public RightSide(Sender sender, double a, double b){
         this.sender = sender;
@@ -64,14 +65,13 @@ public class RightSide extends VBox implements ImageListener {
         BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
         try{
             sender.send(bImage, parameters);
-            Singleton.getInstance().unblock();
+            //Singleton.getInstance().unblock();
         }
         catch (Exception e){
             //TODO error codes handiling ukasz musi mi powiedziec jak wygladaja exception zebym wiecial co logowac
             Singleton.getInstance().unblock();
             Utilities.log(e.toString());
         }
-
     }
 
     /**
@@ -217,9 +217,24 @@ public class RightSide extends VBox implements ImageListener {
     private HBox getButtons(){
         HBox hBox = new HBox();
         hBox.setSpacing(25);
-        hBox.getChildren().addAll(initLoad(), initSolve());
+
+        loadButton = initLoad();
+        solveButton = initSolve();
+        hBox.getChildren().addAll(loadButton, solveButton);
         hBox.setAlignment(Pos.CENTER);
 
         return hBox;
     }
+
+    public void blockButtons(){
+        loadButton.setDisable(true);
+        solveButton.setDisable(true);
+
+    }
+
+    public void unblockButtons(){
+        loadButton.setDisable(false);
+        solveButton.setDisable(false);
+    }
+
 }
