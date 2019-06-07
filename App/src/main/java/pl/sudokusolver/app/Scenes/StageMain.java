@@ -134,9 +134,9 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     Platform.runLater(() -> new StageError(errorResponse.errorMessage));
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
                 Platform.runLater(() -> new StageError("Couldn't open file"));
+            } finally {
+                unblock();
             }
 
         });
