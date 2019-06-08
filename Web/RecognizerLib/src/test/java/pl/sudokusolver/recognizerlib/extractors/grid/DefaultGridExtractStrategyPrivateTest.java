@@ -5,10 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib._INIT_;
-import pl.sudokusolver.recognizerlib.data.DataType;
-import pl.sudokusolver.recognizerlib.data.MNISTReader;
-import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
-import pl.sudokusolver.recognizerlib.filters.BlurFilter;
 import pl.sudokusolver.recognizerlib.utility.Pair;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +12,6 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.core.CvType.CV_8UC1;
 
 @ExtendWith({_INIT_.class})

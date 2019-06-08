@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-class SmartSolverPerformanceTest {
+class SmartSolverPerformanceManualTest {
 
     /**
      Avg time: 31.232704402515722 ms

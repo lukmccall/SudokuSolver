@@ -25,7 +25,7 @@ import static org.opencv.core.CvType.CV_32FC1;
 import static org.opencv.core.CvType.CV_8UC1;
 
 @ExtendWith({_INIT_.class})
-class RecognizersTest {
+class RecognizersManualTest {
 
     static IData testData;
 

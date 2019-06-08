@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
-public class UploadTest {
+public class UploadPerformanceManualTest {
 
     /**
      ********   For ANN    ******

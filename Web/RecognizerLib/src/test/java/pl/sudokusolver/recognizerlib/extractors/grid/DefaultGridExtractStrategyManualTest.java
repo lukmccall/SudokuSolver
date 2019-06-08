@@ -12,7 +12,7 @@ import pl.sudokusolver.recognizerlib.filters.SaveFilter;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-public class DefaultGridExtractStrategyTest {
+public class DefaultGridExtractStrategyManualTest {
     int all = 130;
 
     @Test

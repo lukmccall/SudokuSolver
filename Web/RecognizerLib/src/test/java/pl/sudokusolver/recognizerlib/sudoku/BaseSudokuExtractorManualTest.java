@@ -21,7 +21,7 @@ import java.io.IOException;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-class BaseSudokuExtractorTest {
+class BaseSudokuExtractorManualTest {
 
     private int all = 130;
 

@@ -18,7 +18,7 @@ import java.io.IOException;
 import static org.opencv.core.CvType.CV_32FC1;
 
 @ExtendWith({_INIT_.class})
-class ANNTest {
+class ANNManualTest {
 
     @Test
     @Ignore
