@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.util.NestedServletException;
 import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.DigitExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
@@ -147,6 +148,17 @@ public class GlobalExceptionHandler{
     @ResponseBody
     ErrorResponse handleJsonSyntaxException(JsonSyntaxException exception){
         return new ErrorResponse(ErrorCodes.InvalidParameter, "Niepoprawny json: " + exception.getMessage());
+    }
+    /**
+     * Unknown error (by request handler).
+     * @param exception caused
+     * @return error response
+     */
+    @ExceptionHandler({NestedServletException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ErrorResponse handleNestedServletException(NestedServletException exception){
+        return new ErrorResponse(ErrorCodes.InvalidParameter, "Nieznany błąd.");
     }
 
     /**

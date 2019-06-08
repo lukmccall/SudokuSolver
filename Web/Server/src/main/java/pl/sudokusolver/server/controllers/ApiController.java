@@ -27,6 +27,8 @@ import pl.sudokusolver.solver.ISolver;
 
 import java.io.IOException;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+
 /**
  * Api controller.
  */
@@ -59,8 +61,9 @@ public class ApiController {
      * @throws SolvingFailedException if solving algorithm couldn't solve sudoku.
      */
     @RequestMapping(value = "/solve",
-            consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+            consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String solve(@RequestBody String json) throws MissingServletRequestParameterException, SolvingFailedException {
+
         // get sudoku from json
         Sudoku sudoku = new Gson().fromJson(json, Sudoku.class);
 
@@ -95,7 +98,7 @@ public class ApiController {
      * @throws CellsExtractionFailedException if couldn't extract cells.
      * @throws DigitExtractionFailedException if couldn't digits digits.
      */
-    @RequestMapping(value = "/extractfromimg", method = RequestMethod.POST)
+    @RequestMapping(value = "/extractfromimg", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String extract(
             @RequestParam("sudoku") MultipartFile inputImg,
             @RequestParam(value = "lineThreshold", required = false, defaultValue = "50") int lineTreshold,
@@ -116,15 +119,15 @@ public class ApiController {
                 && !inputImg.getContentType().equals("image/jpg"))
             throw new IllegalArgumentException("Expected jpg or png get " + inputImg.getContentType());
 
-        LOGGER.trace("Parameters:\nlineThreshold: " + lineTreshold
-                                 + "\nminLineSize " + minLineSize
-                                 + "\nlineGap " + lineGap
-                                 + "\nblurSize " + blurSize
-                                 +"\nblurBlockSize " + blurBlockSize
-                                 +"\nblurC " + blurC
-                                 +"\nscaling " + scaling
-                                 +"\nrecognizer " + recognizer
-                                 +"\nstrictMode " + strictMode);
+//        LOGGER.trace("Parameters:\nlineThreshold: " + lineTreshold
+//                                 + "\nminLineSize " + minLineSize
+//                                 + "\nlineGap " + lineGap
+//                                 + "\nblurSize " + blurSize
+//                                 +"\nblurBlockSize " + blurBlockSize
+//                                 +"\nblurC " + blurC
+//                                 +"\nscaling " + scaling
+//                                 +"\nrecognizer " + recognizer
+//                                 +"\nstrictMode " + strictMode);
 
         // building base sudoku extractor
         BaseSudokuExtractor.Builder builder  = BaseSudokuExtractor.builder()
