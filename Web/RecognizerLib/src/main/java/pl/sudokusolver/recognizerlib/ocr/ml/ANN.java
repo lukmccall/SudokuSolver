@@ -32,7 +32,7 @@ public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
 
         // default configuration
         Mat layers = new Mat(1 , 4 , CV_32FC1);
-        layers.put(0, 0, sampleSize*sampleSize);
+        layers.put(0, 0, getSampleSize()*getSampleSize());
         layers.put(0, 1, 50);
         layers.put(0, 2, 50);
         layers.put(0, 3, 9);
@@ -79,7 +79,7 @@ public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
         Mat wraped = applyDigitFilter(img);
 
         Mat result = new Mat();
-        Mat preImg = ImageProcessing.procSimple(wraped, sampleSize);
+        Mat preImg = ImageProcessing.procSimple(wraped, getSampleSize());
         ann.predict(preImg, result);
         int pre = 1;
         for(int i = 0; i < 9; i++)

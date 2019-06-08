@@ -67,16 +67,8 @@
                     <configuration>
                         <!-- This tests need to be run by human -->
                         <excludes>
-                            <exclude>**/SizeCellsExtractStrategyTest*.java</exclude>
-                            <exclude>**/FastDigitExtractStrategyTest*.java</exclude>
-                            <exclude>**/DefaultGridExtractStrategyTest*.java</exclude>
-                            <exclude>**/ANNTest*.java</exclude>
-                            <exclude>**/IRecognizerTest*.java</exclude>
-                            <exclude>**/RecognizersTest*.java</exclude>
-                            <exclude>**/BaseSudokuExtractorTest*.java</exclude>
-                            <exclude>**/UploadTest*.java</exclude>
-                            <exclude>**/CleanLinesFilterTest*.java</exclude>
-                            <exclude>**/SmartSolverPerformanceTest*.java</exclude>
+                            <exclude>**/*ManualTest*.java</exclude>
+
                         </excludes>
                     </configuration>
                 </plugin>

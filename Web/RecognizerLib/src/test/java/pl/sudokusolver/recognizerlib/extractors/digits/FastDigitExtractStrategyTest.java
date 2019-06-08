@@ -1,42 +1,45 @@
 package pl.sudokusolver.recognizerlib.extractors.digits;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.opencv.core.*;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import pl.sudokusolver.recognizerlib._INIT_;
-import pl.sudokusolver.recognizerlib.filters.ResizeFilter;
-import pl.sudokusolver.recognizerlib.filters.SaveFilter;
+import pl.sudokusolver.recognizerlib.digitbox.DigitBoxContoures;
 
-import java.io.File;
 import java.util.Optional;
 
-import static org.opencv.imgcodecs.Imgcodecs.imread;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.opencv.core.CvType.CV_8UC1;
 
 @ExtendWith({_INIT_.class})
-public class FastDigitExtractStrategyTest {
-    int all = 130;
+class FastDigitExtractStrategyTest {
 
     @Test
-    @Ignore
-    public void extract(){
-        String data = "../../Data/Dump/Cell/";
-        FastDigitExtractStrategy fastDigitExtractStrategy = new FastDigitExtractStrategy();
-        String save = "../../Data/Dump/Digit/";
-
-        for (int i = 0; i < all; i++) {
-            File f = new File(save+i);
-            if(!f.exists()) Assert.assertTrue("Path doesn't exist", f.mkdir());
-            for (int j = 0; j < 81; j++){
-                String path = data + i + "/" + j + ".jpg";
-                Mat img = imread(path, -1);
-                new ResizeFilter(new Size(50f,50f)).apply(img);
-                Optional<Mat> digit = fastDigitExtractStrategy.extract(img);
-                if(digit.isPresent())
-                    new SaveFilter(save+i+"/"+j+".jpg").apply(digit.get());
-            }
-
-        }
+    void digitNotFound(){
+        Mat input = Mat.zeros(30,30, CV_8UC1);
+        Optional<Rect> optionalRect = new FastDigitExtractStrategy().getDigitBox(input);
+        Assert.assertFalse(optionalRect.isPresent());
     }
+
+
+    @Test
+    void digitCoverAllImage(){
+        Mat input = Mat.ones(30,30, CV_8UC1);
+        Core.multiply(input, new Scalar(255), input);
+
+        Optional<Rect> optionalRect = new FastDigitExtractStrategy().getDigitBox(input);
+
+        Assert.assertTrue(optionalRect.isPresent());
+
+        Assert.assertEquals(0, optionalRect.get().x);
+        Assert.assertEquals(0, optionalRect.get().y);
+
+        Assert.assertEquals(30, optionalRect.get().width);
+        Assert.assertEquals(30, optionalRect.get().height);
+    }
+
 }
