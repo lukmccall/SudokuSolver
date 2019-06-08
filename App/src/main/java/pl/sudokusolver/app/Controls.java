@@ -9,7 +9,6 @@ import pl.sudokusolver.app.CustomViews.Canvas;
 public class Controls {
 
     private Canvas canvas;
-
     public Controls(Canvas canvas){
         this.canvas = canvas;
     }
