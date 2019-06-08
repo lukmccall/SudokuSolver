@@ -15,8 +15,13 @@ import static org.opencv.core.CvType.CV_8UC1;
 class MaxResizeFilterTest {
 
     @Test
-    void simpleTest(){
-        Mat matix = Mat.zeros(new Size(600,300), CV_8UC1);
+    void applyTest(){
+
+        Mat matix = Mat.zeros(new Size(200,200), CV_8UC1);
+        new MaxResizeFilter(new Size(300,300)).apply(matix);
+        Assert.assertEquals(new Size(200,200),matix.size());
+
+        matix = Mat.zeros(new Size(600,300), CV_8UC1);
         new MaxResizeFilter(new Size(300,300)).apply(matix);
 
         Assert.assertEquals(new Size(300,150),matix.size());
@@ -26,24 +31,24 @@ class MaxResizeFilterTest {
 
         Assert.assertEquals(new Size(150,300),matix.size());
 
-        matix = Mat.zeros(new Size(200,200), CV_8UC1);
-        new MaxResizeFilter(new Size(300,300)).apply(matix);
-
-        Assert.assertEquals(new Size(200,200),matix.size());
-
         matix = Mat.zeros(new Size(1000,1000), CV_8UC1);
-        new MaxResizeFilter(new Size(300,300)).apply(matix);
+        new MaxResizeFilter(new Size(300,150)).apply(matix);
 
-        Assert.assertEquals(new Size(300,300),matix.size());
+        Assert.assertEquals(new Size(150,150),matix.size());
 
     }
 
     @Test
-    void invalidCreations(){
+    void invalidCreationsTest(){
         assertThrows(IllegalArgumentException.class, ()->{
             new MaxResizeFilter(new Size(-10, -20));
-            new MaxResizeFilter(new Size(100, 0));
+        }, "Size must be greater than 0");
+
+        assertThrows(IllegalArgumentException.class, ()->{
+            new MaxResizeFilter(new Size(0, 20));
 
         }, "Size must be greater than 0");
+
+
     }
 }
