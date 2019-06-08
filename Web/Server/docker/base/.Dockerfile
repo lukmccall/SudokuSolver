@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-stretch
 
 # install depedency for opencv-4.0.1
 RUN apt-get update -y && apt-get upgrade -y && \
-	apt-get install -y build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev && \
+	apt-get install -y build-essential cmake git libgtk2.0-dev libgtk2.0-0 pkg-config libavcodec-dev libavformat-dev libswscale-dev && \
 	apt-get install -y python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff5-dev libdc1394-22-dev && \
 	apt-get install ant -y
 	
@@ -15,7 +15,7 @@ RUN cd /tmp && wget https://github.com/opencv/opencv/archive/4.0.1.tar.gz -q --s
 # cleaning depedency
 RUN apt-get purge -y build-essential cmake pkg-config python-dev python-numpy ant
 RUN apt-get autoremove -y
-	
+
 # Tomcat installetion create on https://github.com/docker-library/tomcat/blob/9bfd9b313303a607aff9a837d95609c67e7c9da6/9.0/jre8/Dockerfile
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
@@ -143,7 +143,7 @@ RUN set -eux; \
 		libapr1-dev \
 		libssl-dev \
 		make \
-		"openjdk-${JAVA_VERSION%%[.~bu-]*}-jdk=$JAVA_DEBIAN_VERSION" \
+		#"openjdk-${JAVA_VERSION%%[.~bu-]*}-jdk=$JAVA_DEBIAN_VERSION" \
 	; \
 	( \
 		export CATALINA_HOME="$PWD"; \
