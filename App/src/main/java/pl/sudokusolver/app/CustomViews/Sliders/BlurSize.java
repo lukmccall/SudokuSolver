@@ -76,7 +76,7 @@ public class BlurSize extends VBox {
      * @return completely created slider
      */
     private Slider initSlider(Text value){
-        Slider slider = new Slider(0, 49, 3);
+        Slider slider = new Slider(1, 49, 3);
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable,
                                                    Number oldValue, Number newValue) -> {
 

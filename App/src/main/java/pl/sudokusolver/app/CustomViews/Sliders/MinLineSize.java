@@ -13,7 +13,7 @@ import pl.sudokusolver.app.Values;
  */
 public class MinLineSize extends VBox {
 
-    private int minLineSize = 100;
+    private int minLineSize = 65;
     private Slider slider;
 
     public MinLineSize(){
@@ -65,7 +65,7 @@ public class MinLineSize extends VBox {
      * @return completely created text
      */
     private Text initValue(){
-        Text minLineSize = new Text("100");
+        Text minLineSize = new Text("65");
         minLineSize.setTextAlignment(TextAlignment.CENTER);
         return minLineSize;
     }
@@ -76,7 +76,7 @@ public class MinLineSize extends VBox {
      * @return completely created slider
      */
     private Slider initSlider(Text value){
-        Slider slider = new Slider(0, 600, 100);
+        Slider slider = new Slider(1, 600, 65);
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable,
                                                    Number oldValue, Number newValue) -> {
 

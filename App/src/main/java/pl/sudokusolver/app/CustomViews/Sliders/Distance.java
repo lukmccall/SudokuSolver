@@ -78,7 +78,7 @@ public class Distance extends VBox {
      * @return completely created slider
      */
     private Slider initSlider(Text value){
-        Slider slider = new Slider(0, 1, 1);
+        Slider slider = new Slider(1, 1, 1);
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable,
                                                    Number oldValue, Number newValue) -> {
 

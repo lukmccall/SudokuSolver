@@ -76,7 +76,7 @@ public class BlurC extends VBox {
      * @return completely created slider
      */
     private Slider initSlider(Text value){
-        Slider slider = new Slider(0, 50, 15);
+        Slider slider = new Slider(1, 50, 15);
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable,
                                                    Number oldValue, Number newValue) -> {
 

@@ -120,7 +120,7 @@ public class ViewAdvanced extends VBox {
 
         def.setOnAction((event) -> {
             lineThreshold.setValue(50);
-            minLineSize.setValue(100);
+            minLineSize.setValue(65);
             lineGap.setValue(5);
             blurSize.setValue(3);
             blurBlockSize.setValue(31);
