@@ -51,7 +51,6 @@ public class MNISTReader {
         if(m1 == 2049 && m2 == 2051)
             throw new VersionMismatchException("MNIST files don't have same version. Images have " + m1 + ", labels have "+m2+".");
 
-        // todo: make bug report
 
         // images loading
         int iterations = imgBuffer.getInt();

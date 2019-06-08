@@ -16,8 +16,10 @@ import pl.sudokusolver.app.Scenes.StageError;
 import pl.sudokusolver.app.Singleton;
 import pl.sudokusolver.app.Utilities;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Class used to indicate what part of image the user is trying to cut
@@ -130,12 +132,25 @@ class ViewSelection {
                     return;
                 }
 
+                try {
+                    if (ImageIO.read(file) == null) {
+                        new StageError("Plik nie jest poprawny");
+                        imageFilter = null;
+                        return;
+                    }
+                } catch(IOException ex) {
+                    new StageError("Plik nie jest poprawny");
+                    imageFilter = null;
+                    return;
+                }
+
                 Image image;
                 try{
                     image = new Image(new FileInputStream(file.getPath()));
                 }
                 catch (Exception e){
                     new StageError("Nie udało się otworzyć zdjęcia");
+                    imageFilter = null;
                     return;
                 }
 

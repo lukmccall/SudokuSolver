@@ -18,10 +18,12 @@ import pl.sudokusolver.app.Listeners.Sender;
 import pl.sudokusolver.app.Scenes.StageError;
 import pl.sudokusolver.app.Scenes.StageImage;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Appearance of right side of main screen
@@ -167,6 +169,19 @@ public class RightSide extends VBox implements ImageListener {
                         imageFilter = null;
                         return;
                     }
+
+                    try {
+                        if (ImageIO.read(file) == null) {
+                            new StageError("Plik nie jest poprawny");
+                            imageFilter = null;
+                            return;
+                        }
+                    } catch(IOException ex) {
+                        new StageError("Plik nie jest poprawny");
+                        imageFilter = null;
+                        return;
+                    }
+
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
                     stageImage = new StageImage(RightSide.this);
                     double width = primaryScreenBounds.getWidth() * 0.375f;

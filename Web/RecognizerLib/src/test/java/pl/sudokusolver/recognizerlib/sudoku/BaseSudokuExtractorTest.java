@@ -51,7 +51,7 @@ class BaseSudokuExtractorTest {
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(svm)
-                .addPreGridFilters(new MaxResizeFilter(new Size(2500,2500))) // todo: maybe add this?
+                .addPreGridFilters(new MaxResizeFilter(new Size(2500,2500)))
                 .addPreGridFilters(new FixedWidthResizeFilter())
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
