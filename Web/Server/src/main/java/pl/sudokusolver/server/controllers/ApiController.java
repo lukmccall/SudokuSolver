@@ -63,8 +63,9 @@ public class ApiController {
     public String solve(@RequestBody String json) throws MissingServletRequestParameterException, SolvingFailedException {
         // get sudoku from json
         Sudoku sudoku = new Gson().fromJson(json, Sudoku.class);
+
         // it was valid?
-        if(sudoku == null || sudoku.empty())
+        if(sudoku == null)
             throw new MissingServletRequestParameterException("sudoku", "int[9][9]");
 
         // try to solve
@@ -103,7 +104,7 @@ public class ApiController {
             @RequestParam(value = "blurSize", required = false, defaultValue = "3") int blurSize,
             @RequestParam(value = "blurBlockSize", required = false, defaultValue = "31") int blurBlockSize,
             @RequestParam(value = "blurC", required = false, defaultValue = "15") int blurC,
-            @RequestParam(value = "scaling", required = false, defaultValue = "Fixed Width Resize") String scaling,
+            @RequestParam(value = "scaling", required = false, defaultValue = "FIXED WIDTH SCALING") String scaling,
             @RequestParam(value = "recognizer", required = false, defaultValue = "SVM") String recognizer,
             @RequestParam(value = "strictMode", required = false, defaultValue = "false") boolean strictMode
     ) throws IllegalArgumentException, IOException, NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException {

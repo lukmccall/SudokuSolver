@@ -60,6 +60,9 @@ public class StageMain extends Stage implements MenuListener, Sender {
             return;
         }
 
+        for (int i = 0; i < 9; i++)
+            for (int j = 0; j < 9; j++)
+                System.out.println(sudoku[i][j]);
         block();
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {

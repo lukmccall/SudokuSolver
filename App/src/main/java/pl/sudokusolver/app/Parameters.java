@@ -18,13 +18,13 @@ public class Parameters {
     public Parameters(){
         this.lineThreshold = 50;
         this.lineGap = 5;
-        this.minLineSize = 100;
+        this.minLineSize = 65;
         this.blurSize = 3;
         this.blurBlockSize = 31;
         this.blurC = 15;
-        this.scaling= "Fixed Width Resize";
+        this.scaling= "FIXED WIDTH SCALING";
         this.recognition = "SVM";
-        this.strictMode = true;
+        this.strictMode = false;
     }
 
     /**
