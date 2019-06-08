@@ -6,14 +6,25 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib._INIT_;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.core.CvType.CV_32FC1;
 import static org.opencv.core.CvType.CV_8UC1;
-import static org.opencv.highgui.HighGui.imshow;
-import static org.opencv.highgui.HighGui.waitKey;
 
 @ExtendWith({_INIT_.class})
 class ImageProcessingTest {
+
+    @Test
+    void deskew(){
+        Mat mat = Mat.zeros(10,10, CV_8UC1);
+
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 10; j++)
+                if(i == j)
+                    mat.put(i, j, 255);
+
+        Mat output = ImageProcessing.deskew(mat, (short) 10);
+        for(int i = 0; i < 10; i++)
+            Assert.assertEquals(255, (int)output.get(i,5)[0]);
+    }
 
     @Test
     void procSimpleTest() {
