@@ -11,7 +11,8 @@ import java.util.List;
 
 /**
  * Implementation of cell extraction algorithm.<br>
- * Extraction is being performed by dividing it into equally large pieces.
+ * Extraction is being performed by dividing it into equally large pieces.<br>
+ * Input matrix must be rectangle.
  */
 public class SizeCellsExtractStrategy implements CellsExtractStrategy{
     @Override

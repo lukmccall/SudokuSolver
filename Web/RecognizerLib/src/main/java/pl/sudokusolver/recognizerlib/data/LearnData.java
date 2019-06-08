@@ -19,6 +19,7 @@ import static org.opencv.imgproc.Imgproc.*;
  * Now unused.
  * Class used for keeping learning data.<br>
  */
+@Deprecated
 public class LearnData implements IData {
     /**
      * Samples (images).
