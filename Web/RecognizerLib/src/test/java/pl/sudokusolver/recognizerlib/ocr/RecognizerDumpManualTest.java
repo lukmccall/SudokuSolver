@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-public class IRecognizerTest {
+public class RecognizerDumpManualTest {
 
     int all = 130;
 

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-public class CleanLinesFilterTest {
+public class CleanLinesFilterManualTest {
     int all = 130;
 
     @Test

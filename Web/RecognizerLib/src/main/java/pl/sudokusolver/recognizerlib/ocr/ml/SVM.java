@@ -70,7 +70,7 @@ public class SVM extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
         Mat wraped = applyDigitFilter(img);
         Mat result = new Mat();
 
-        Mat preImg = ImageProcessing.procSimple(wraped, sampleSize);
+        Mat preImg = ImageProcessing.procSimple(wraped, getSampleSize());
         double dist = svm.predict(preImg, result,1);
 
         int r = (int) result.get(0,0)[0];

@@ -14,7 +14,7 @@ import java.util.List;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-public class SizeCellsExtractStrategyTest {
+public class SizeCellsExtractStrategyManualTest {
     int all = 130;
     @Test
     @Ignore

@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 @ExtendWith({_INIT_.class})
-public class FastDigitExtractStrategyTest {
+public class FastDigitExtractStrategyManualTest {
     int all = 130;
 
     @Test
