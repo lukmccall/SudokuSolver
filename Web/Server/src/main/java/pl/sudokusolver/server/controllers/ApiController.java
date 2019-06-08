@@ -132,6 +132,7 @@ public class ApiController {
                 .setCellsStrategy(new SizeCellsExtractStrategy())
                 .setDigitsStrategy(new FastDigitExtractStrategy())
                 .setRecognizer(digitRecognizer.getRecognizer(recognizer, strictMode))
+                .addPreGridFilters(new MaxResizeFilter(new Size(2500,2500)))
                 .addPreCellsFilters(new ToGrayFilter())
                 .addPreCellsFilters(new ResizeFilter(new Size(600,600)))
                 .addPreCellsFilters(new CleanLinesFilter(lineTreshold, minLineSize, lineGap,
