@@ -76,7 +76,7 @@ public class LineGap extends VBox {
      * @return completely created slider
      */
     private Slider initSlider(Text value){
-        Slider slider = new Slider(0, 50, 5);
+        Slider slider = new Slider(1, 50, 5);
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable,
                                                    Number oldValue, Number newValue) -> {
 

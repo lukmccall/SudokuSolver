@@ -65,7 +65,7 @@ public class LineThreshold extends VBox {
      * @return completely created text
      */
     private Text initValue(){
-        Text lineThreshold = new Text("50.0");
+        Text lineThreshold = new Text("50");
         lineThreshold.setTextAlignment(TextAlignment.CENTER);
         return lineThreshold;
     }
@@ -76,7 +76,7 @@ public class LineThreshold extends VBox {
      * @return completely created slider
      */
     private Slider initSlider(Text value){
-        Slider slider = new Slider(0, 50, 50);
+        Slider slider = new Slider(1, 50, 50);
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable,
                                                    Number oldValue, Number newValue) -> {
 

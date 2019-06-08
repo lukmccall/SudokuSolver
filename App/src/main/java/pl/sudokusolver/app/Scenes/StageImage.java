@@ -67,7 +67,7 @@ public class StageImage extends Stage implements ParametersListener, ImageListen
         Scene scene = new Scene(viewImage);
 
         initModality(Modality.APPLICATION_MODAL);
-        setTitle("Image");
+        setTitle("WCZYTAJ OBRAZ");
         setScene(scene);
 
         setWidth(primaryScreenBounds.getWidth() * 0.375f);
