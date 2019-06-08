@@ -28,15 +28,6 @@ public class _TestUtility_ {
         return filenames;
     }
 
-    public static List<String> getAllImages() throws IOException{
-        String pathToDir = _TestUtility_.getPathToResource("/sudokuimages/");
-        List<String> resourceFiles =_TestUtility_.getResourceFiles("/sudokuimages/");
-
-        for(int i = 0; i < resourceFiles.size(); i++)
-            resourceFiles.set(i, pathToDir+resourceFiles.get(i));
-
-        return resourceFiles;
-    }
 
     private static InputStream getResourceAsStream(String resource) {
         final InputStream in
