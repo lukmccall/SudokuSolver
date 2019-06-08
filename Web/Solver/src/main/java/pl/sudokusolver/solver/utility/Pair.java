@@ -54,4 +54,18 @@ public class Pair<U, V> {
     public void setSecond(V second) {
         this.second = second;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if(obj instanceof Pair<?,?>){
+            if(((Pair) obj).getFirst().getClass() == this.getFirst().getClass() &&
+                ((Pair) obj).getSecond().getClass() == this.getSecond().getClass())
+                return ((Pair) obj).getFirst().equals(this.getFirst()) && ((Pair) obj).getSecond().equals(this.getSecond());
+            else
+                return false;
+        }
+        return false;
+    }
+
 }

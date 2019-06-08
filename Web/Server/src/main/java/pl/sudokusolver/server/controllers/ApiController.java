@@ -115,6 +115,15 @@ public class ApiController {
                 && !inputImg.getContentType().equals("image/jpg"))
             throw new IllegalArgumentException("Expected jpg or png get " + inputImg.getContentType());
 
+        LOGGER.trace("Parameters:\nlineThreshold: " + lineTreshold
+                                 + "\nminLineSize " + minLineSize
+                                 + "\nlineGap " + lineGap
+                                 + "\nblurSize " + blurSize
+                                 +"\nblurBlockSize " + blurBlockSize
+                                 +"\nblurC " + blurC
+                                 +"\nscaling " + scaling
+                                 +"\nrecognizer " + recognizer
+                                 +"\nstrictMode " + strictMode);
 
         // building base sudoku extractor
         BaseSudokuExtractor.Builder builder  = BaseSudokuExtractor.builder()
