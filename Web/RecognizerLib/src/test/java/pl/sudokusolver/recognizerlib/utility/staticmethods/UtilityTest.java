@@ -7,14 +7,13 @@ import org.opencv.core.*;
 import pl.sudokusolver.recognizerlib._INIT_;
 import pl.sudokusolver.recognizerlib.filters.*;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.opencv.core.CvType.CV_8SC4;
-import static org.opencv.core.CvType.CV_8UC1;
-import static org.opencv.core.CvType.CV_8UC3;
+import static org.opencv.core.CvType.*;
 
 @ExtendWith({_INIT_.class})
 public class UtilityTest {
@@ -156,6 +155,16 @@ public class UtilityTest {
 
         file = new File(Utility.getTessdata());
         Assert.assertTrue("Tess data should be in resources", file.exists());
+    }
+
+    @Test
+    void matToBufferedImage(){
+        int type1 = BufferedImage.TYPE_BYTE_GRAY;
+        int type2 = BufferedImage.TYPE_3BYTE_BGR;
+        BufferedImage firstImage = Utility.matToBufferedImage(new Mat(3,3,CV_8UC1));
+        Assert.assertEquals(type1,firstImage.getType());
+        BufferedImage secondImage = Utility.matToBufferedImage(new Mat(3,3,CV_8UC3));
+        Assert.assertEquals(type2,secondImage.getType());
     }
 
 }
