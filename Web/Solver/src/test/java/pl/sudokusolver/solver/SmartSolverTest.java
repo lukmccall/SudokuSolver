@@ -39,7 +39,7 @@ class SmartSolverTest {
     }
 
     @Test
-    void solveSudoku(){
+    void solveSudokuTest(){
         int grid[][] = { { 0, 9, 0, 0, 0, 0, 8, 5, 3 },
                 { 0, 0, 0, 8, 0, 0, 0, 0, 4 },
                 { 0, 0, 8, 2, 0, 3, 0, 6, 9 },
@@ -71,7 +71,7 @@ class SmartSolverTest {
     }
 
     @Test
-    void solveSudokuTrueAndEquals(){
+    void solveSudokuTrueAndEqualsTest(){
         //sprawdzenie czy algorytm dziala zgodnie z oczekiwaniem
         int gridOnlyZeros[][] = { { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -159,10 +159,11 @@ class SmartSolverTest {
                 {0, 6, 0, 8, 1, 1, 1, 1, 4}};
 
         // też tylko jedna liczba, przez którą nie mozna rozwiazac
-        grid[0][0] = 6;
+        int grid5[][] = grid.clone();
+        grid5[0][0] = 6;
 
         ISolver smartSolver = new SmartSolver();
-        Assert.assertFalse(smartSolver.solve(grid));
+        Assert.assertFalse(smartSolver.solve(grid5));
         Assert.assertFalse(smartSolver.solve(grid2));
         Assert.assertFalse(smartSolver.solve(grid3));
         Assert.assertFalse(smartSolver.solve(grid4));

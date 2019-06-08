@@ -17,28 +17,24 @@ class ResizeFilterTest {
         Mat matrix = Mat.zeros(50,50, CV_8UC1);
         new ResizeFilter(new Size(25,25)).apply(matrix);
         Assert.assertEquals(new Size(25,25),matrix.size());
+
+        Mat matrix2 = Mat.zeros(1000,1000, CV_8UC4);
+        new ResizeFilter(new Size(15,25)).apply(matrix2);
+        Assert.assertEquals(new Size(15,25),matrix2.size());
     }
+
+
     @Test
-    void simpleResize1(){
-        Mat matrix = Mat.zeros(1000,1000, CV_8UC4);
-        new ResizeFilter(new Size(15,25)).apply(matrix);
-        Assert.assertEquals(new Size(15,25),matrix.size());
-    }
-    @Test
-    void throwExceptionTest(){
+    void invalidCreationsTest(){
         Mat matrix = Mat.zeros(25,25, CV_8U);
         assertThrows(IllegalArgumentException.class, ()->{
             new ResizeFilter(new Size(0,0)).apply(matrix);
         }, "Size must be > 0");
-    }
 
-    @Test
-    void invalidCreations(){
         assertThrows(IllegalArgumentException.class, ()->{
             new ResizeFilter(new Size(-10, -20));
             new ResizeFilter(-5);
             new ResizeFilter(0);
         }, "Size must be greater than 0");
     }
-
 }

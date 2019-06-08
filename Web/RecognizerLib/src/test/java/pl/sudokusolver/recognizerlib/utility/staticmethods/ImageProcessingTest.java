@@ -65,6 +65,8 @@ class ImageProcessingTest {
         Assert.assertEquals(242, c);
     }
 
+
+
 //    Została przestestowana w MaxResizeFilter
 //    @Test
 //    void resizeToMaxSize() {
