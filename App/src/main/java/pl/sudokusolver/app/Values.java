@@ -5,7 +5,7 @@ import okhttp3.MediaType;
 public class Values {
 
     // Server variable
-    public static final String SERVER_URL = "http://localhost:8080/";
+    public static final String SERVER_URL = "http://ns3102827.ip-54-37-129.eu:10020/app/";
     public static final MediaType SERVER_REQUEST_TYPE = MediaType.get("application/json; charset=utf-8");
     public static final MediaType SERVER_IMG_TYPE = MediaType.get("image/jpg");
     public static Theme THEME;
