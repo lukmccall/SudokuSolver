@@ -8,13 +8,13 @@ import java.io.IOException;
 class SmartSolverPerformanceTest {
 
     /**
-        Avg time: 55.84615384615385 ms
+     Avg time: 31.232704402515722 ms
      */
     @Test
     @Ignore
     void performance() throws IOException {
         SmartSolver smartSolver = new SmartSolver();
-        int all = 130;
+        int all = 159;
         int allTime = 0;
         for(int i = 0; i < all; i++) {
 
