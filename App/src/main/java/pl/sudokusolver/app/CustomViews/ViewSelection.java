@@ -157,7 +157,8 @@ class ViewSelection {
                 imageView.setImage(image);
             }
             else{
-                new StageError("Wybierz zdjęcie");
+                ((Stage) imageListener).close();
+                //new StageError("Wybierz zdjęcie");
             }
 
             imageFilter = null;
