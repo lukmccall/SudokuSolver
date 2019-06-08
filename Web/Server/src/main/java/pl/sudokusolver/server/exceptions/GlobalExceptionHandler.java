@@ -18,11 +18,22 @@ import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 import java.io.IOException;
 
 
+/**
+ * Global handler for all exceptions.<br>
+ * This class dispatching all exceptions.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler{
+    /**
+     * logger.
+     */
     @Autowired
     private Logger LOGGER;
 
+    /**
+     * Page not found.
+     * @return error response.
+     */
     @ExceptionHandler({NoHandlerFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
@@ -30,6 +41,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.PageNotFound,"Strona nie znaleziona");
     }
 
+    /**
+     * Missing arguments.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({MissingServletRequestParameterException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -37,6 +53,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.MissingParameter, "Brakujący argument: " + exception.getParameterName());
     }
 
+    /**
+     * Missing arguments (multi parts parameters).
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({MissingServletRequestPartException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -44,6 +65,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.MissingParameter, "Brakujący argument: " + exception.getRequestPartName());
     }
 
+    /**
+     * Invalid argument.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -51,6 +77,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.InvalidParameter, "Niepoprawny argument: " + exception.getMessage());
     }
 
+    /**
+     * File is corrupted.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({IOException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -58,6 +89,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.FileIsCorrupted, "Plik jest uszkodzony");
     }
 
+    /**
+     * Sudoku not found or grid not extracted properly.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({NotFoundSudokuException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -65,6 +101,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.SudokuNotFound, exception.getMessage());
     }
 
+    /**
+     * Digits couldn't be extracted.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({DigitExtractionFailedException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -72,6 +113,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.SudokuNotFound, exception.getMessage());
     }
 
+    /**
+     * Sudoku couldn't be solved.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({SolvingFailedException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -79,6 +125,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.SolverFailed, exception.getMessage());
     }
 
+    /**
+     * Cells couldn't be extracted.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({CellsExtractionFailedException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -86,6 +137,11 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.CellsExtractionFailed, exception.getMessage());
     }
 
+    /**
+     * Invalid json.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({JsonSyntaxException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -93,20 +149,28 @@ public class GlobalExceptionHandler{
         return new ErrorResponse(ErrorCodes.InvalidParameter, "Niepoprawny json: " + exception.getMessage());
     }
 
+    /**
+     * Unknown error (by openCV).
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({org.opencv.core.CvException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    ErrorResponse hadneleCvException(org.opencv.core.CvException ex){
-        ex.printStackTrace();
-        return new ErrorResponse(ErrorCodes.Unknown, "Nieznany błąd.");
+    ErrorResponse hadneleCvException(org.opencv.core.CvException exception){
+        return new ErrorResponse(ErrorCodes.Unknown, "Nieznany błąd. Spowodowany przez openCV." );
     }
 
+    /**
+     * Unknown error.
+     * @param exception caused
+     * @return error response
+     */
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    ErrorResponse hadneleException(Exception ex){
-        LOGGER.trace("Exception: " + ex.getClass().getCanonicalName());
-//        ex.printStackTrace();
+    ErrorResponse hadneleException(Exception exception){
+        LOGGER.error("Exception: " + exception.getClass().getCanonicalName());
         return new ErrorResponse(ErrorCodes.Unknown, "Nieznany błąd.");
     }
 

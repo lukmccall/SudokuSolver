@@ -16,36 +16,55 @@ import pl.sudokusolver.server.bean.DigitRecognizer;
 import pl.sudokusolver.solver.ISolver;
 import pl.sudokusolver.solver.SmartSolver;
 
+/**
+ * Main config file.<br>
+ * Components are located in <code>pl.sudokusolver.server</code>.<br>
+ * Have one properties file.
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan("pl.sudokusolver.server") //default packet for this project
 @PropertySource("classpath:config.properties")
 public class WebConfig implements WebMvcConfigurer{
 
+    /**
+     * openCV path when you are using windows. Loaded form properties file.
+     */
     @Value("${openCVUrlWin}")
     private String openCVUrlWin;
 
+    /**
+     * openCV path when you are using linux. Loaded form properties file.
+     */
     @Value("${openCVUrlLinux}")
     private String openCVUrlLinux;
 
+    /**
+     * Adding jsp support.
+     * @param registry global registry
+     */
     public void configureViewResolvers(ViewResolverRegistry registry) {
         // directory to views folder
         registry.jsp("/WEB-INF/views/", ".jsp");
     }
 
+    /**
+     * Adding assets (css and js).
+     * @param registry global registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-        // Register resource handler for CSS and JS
         registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
-               // .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
-                // todo: adding this later
     }
 
+    /**
+     * Accept <= 4 MB files.
+     * @return bean which will be able to process multi part request.
+     */
     @Bean(name="multipartResolver")
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multi = new CommonsMultipartResolver();
-        multi.setMaxUploadSize(10000000); //todo: change it
+        multi.setMaxUploadSize(4000000); //4 MB
         return multi;
     }
 

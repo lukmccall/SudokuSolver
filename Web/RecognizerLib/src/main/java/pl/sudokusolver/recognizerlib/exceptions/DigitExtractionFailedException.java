@@ -1,5 +1,8 @@
 package pl.sudokusolver.recognizerlib.exceptions;
 
+/**
+ * Couldn't extract digits.
+ */
 public class DigitExtractionFailedException extends Exception {
 
     public DigitExtractionFailedException(){
