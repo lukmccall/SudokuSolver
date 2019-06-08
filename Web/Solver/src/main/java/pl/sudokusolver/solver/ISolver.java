@@ -1,12 +1,12 @@
 package pl.sudokusolver.solver;
 
 /**
- * Podstawowy interfejs obudowujący wszystkie solvery.
+ * Abstract solving algorithm representation.
  */
 public interface ISolver {
     /**
-     * @param sudoku dwu wymiarowa tablica z danymi wejściowymi, w niej również zapisywany jest wynik
-     * @return true jeśli uda się roziązać sudoku, w przeciwnym wypadku false
+     * @param sudoku two dimension array which represent sudoku grid.
+     * @return <code>true</code> if alg found solution, otherwise return <code>false</code>.
      */
     boolean solve(int[][] sudoku);
 }

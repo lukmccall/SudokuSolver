@@ -5,7 +5,7 @@ import org.opencv.core.Point;
 import java.util.Comparator;
 
 /**
- * Porównuje współrzędną x pierwszego punktu z współrzędną y drugiego punktu, punkt(x,y)
+ * Comparator which is looking for x from first point and y from second point, then compare them.
  */
 public class CenterLinesComparator implements Comparator<Point> {
     @Override

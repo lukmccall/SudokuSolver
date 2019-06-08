@@ -1,23 +1,22 @@
 package pl.sudokusolver.app.Scenes;
 
 import com.google.gson.Gson;
-import javafx.geometry.Insets;
-import javafx.scene.layout.VBox;
-import okhttp3.*;
-import pl.sudokusolver.app.*;
-import pl.sudokusolver.app.CustomViews.Canvas;
-import pl.sudokusolver.app.CustomViews.Menu;
-import pl.sudokusolver.app.CustomViews.RightSide;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import okhttp3.*;
 import pl.sudokusolver.app.Api.ErrorResponse;
 import pl.sudokusolver.app.Api.SolveRequest;
 import pl.sudokusolver.app.Api.SudokuResponse;
+import pl.sudokusolver.app.*;
+import pl.sudokusolver.app.CustomViews.Canvas;
+import pl.sudokusolver.app.CustomViews.Menu;
+import pl.sudokusolver.app.CustomViews.RightSide;
 import pl.sudokusolver.app.Listeners.MenuListener;
 import pl.sudokusolver.app.Listeners.Sender;
 
@@ -25,8 +24,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Controls appearance of main screen and logic connected with sending and receiving sudoku
@@ -65,7 +67,12 @@ public class StageMain extends Stage implements MenuListener, Sender {
             HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
                     .addPathSegment("api").addPathSegment("solve").build();
 
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                                                .connectTimeout(10, TimeUnit.SECONDS)
+                                                .writeTimeout(30, TimeUnit.SECONDS)
+                                                .readTimeout(30, TimeUnit.SECONDS)
+                                                .build();
+
             SolveRequest solveRequest = new SolveRequest(sudoku);
             Gson gson = new Gson();
             RequestBody body = RequestBody.create(Values.SERVER_REQUEST_TYPE, gson.toJson(solveRequest, solveRequest.getClass()));
@@ -82,9 +89,15 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
                     Platform.runLater(() -> new StageError(errorResponse.errorMessage));
                 }
+            } catch (ConnectException e){
+                Platform.runLater(() -> new StageError("Nie udało się połączyć z serwerem."));
+            } catch (SocketTimeoutException e){
+                Platform.runLater(() -> new StageError("Serwer nie odpowiedział wystarczająco szybko."));
             } catch (IOException e) {
-                Platform.runLater(() -> new StageError("Couldn't open file"));
-            } finally {
+                Platform.runLater(() -> new StageError("Wystąpił błąd z serwerem."));
+            } catch (Exception e) {
+                Platform.runLater(() -> new StageError("Nieznany błąd."));
+            }  finally {
                 unblock();
             }
         });
@@ -98,13 +111,16 @@ public class StageMain extends Stage implements MenuListener, Sender {
     public void send(BufferedImage image, Parameters parameters) throws Exception{
         block();
 
-
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             HttpUrl url = HttpUrl.parse(Values.SERVER_URL).newBuilder()
                     .addPathSegment("api").addPathSegment("extractfromimg").build();
 
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                                                   .connectTimeout(10, TimeUnit.SECONDS)
+                                                    .writeTimeout(30, TimeUnit.SECONDS)
+                                                    .readTimeout(30, TimeUnit.SECONDS)
+                                                    .build();
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             try {
@@ -135,8 +151,14 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
                     Platform.runLater(() -> new StageError(errorResponse.errorMessage));
                 }
+            } catch (ConnectException e){
+                Platform.runLater(() -> new StageError("Nie udało się połączyć z serwerem."));
+            }catch (SocketTimeoutException e){
+                Platform.runLater(() -> new StageError("Serwer nie odpowiedział wystarczająco szybko."));
             } catch (IOException e) {
-                Platform.runLater(() -> new StageError("Couldn't open file"));
+                Platform.runLater(() -> new StageError("Wystąpił błąd z serwerem."));
+            } catch (Exception e) {
+                Platform.runLater(() -> new StageError("Nieznany błąd."));
             } finally {
                 unblock();
             }

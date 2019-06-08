@@ -8,17 +8,17 @@ import static org.opencv.core.CvType.CV_32FC1;
 import static org.opencv.imgproc.Imgproc.*;
 
 /**
- * Zbiór funkcji operujących na zjdęciach.<br>
- * Autorem części z nich jest: <br>
+ * Set of functions for image processing purpose.<br>
+ * Same of them was created by: <br>
  * -José Luis Diaz (github: <a href="https://github.com/joseluisdiaz/sudoku-solver">joseluisdiaz</a>)
  *
  */
 public class ImageProcessing {
     /**
-     * Metoda obracająca zdjęcia
-     * @param img macierz z zdjęciem wejściowym
-     * @param size rozmiar zdjęcia wyjściowego
-     * @return obrócone zdjęcie wejściowe
+     * Rotating image.
+     * @param img input matrix
+     * @param size size of output
+     * @return rotated and rescaled matrix
      */
     public static Mat deskew(Mat img, short size) {
         Moments m = moments(img);
@@ -38,10 +38,11 @@ public class ImageProcessing {
     }
 
     /**
-     * @param img macierz z zdjęciem (musi to być macierz kwadratowa)
-     * @param size rozmiar tego zdjęcia
-     * @return macierz posiadająca tylko <code>jeden</code> wiersz i <code>size * size</code> kolumn, w których
-     *         ułożone są poszczególne komórki macierzy wejściowej. Wyjście jest typu CV_32FC1
+     * "Flating" and normalizing matrix
+     * @param img input matrix
+     * @param size size of output
+     * @return "falated" input matrix. It has <code>one</code> row and <code>size * size</code> cols.<br>
+     * Output matrix is type of <code>CV_32FC1</code>
      */
     public static Mat procSimple(Mat img, short size) {
         Mat result = Mat.zeros(1, size * size, CV_32FC1);
@@ -49,7 +50,7 @@ public class ImageProcessing {
         for (int row = 0; row < img.rows(); row++) {
             for (int col = 0; col < img.cols(); col++) {
                 int nro = size * row+col;
-                double value = img.get(row, col)[0] / 255.0;
+                double value = img.get(row, col)[0] / 255.0; // normalizing
                 result.put(0, nro, value);
             }
         }
@@ -58,9 +59,9 @@ public class ImageProcessing {
     }
 
     /**
-     * @param digit macierz z zdjęciem
-     * @param size rozmiar zdjęcia wyjściowego
-     * @return macierz z wycentrowanym zdjęciem wejściowym (<code>rozmiar to size * size</code>)
+     * @param digit input matrix
+     * @param size size of output
+     * @return centered input matrix (size of <code>size * size</code>)
      */
     public static Mat center(Mat digit, short size) {
         Mat res = Mat.zeros(digit.size(), CV_32FC1);
@@ -87,9 +88,10 @@ public class ImageProcessing {
     }
 
     /**
-     * @param image macierz, ze zdjęciem wejściowym
-     * @param poly maska w postaci macierzy
-     * @return macierz wejściowej po aplikacji maski
+     * Apply mask to matrix
+     * @param image input matrix
+     * @param poly mask
+     * @return result of applying mask to matrix
      */
     public static Mat applyMask(Mat image, MatOfPoint poly) {
         Mat mask = Mat.zeros(image.size(), CvType.CV_8UC1);
@@ -105,8 +107,9 @@ public class ImageProcessing {
     }
 
     /**
-     * @param image obraz do przeskalowania oraz obiekt wyjściowy
-     * @param maxSize maksymalne wymiary jakie bedzie miało zdjęcie wyjściowe
+     * This method resize, using proportion, image to be smaller then max size.
+     * @param image matrix to resize.
+     * @param maxSize max size of output matrix.
      */
     public static void resizeToMaxSize(Mat image, Size maxSize){
         double height = image.size().height;
@@ -126,7 +129,7 @@ public class ImageProcessing {
     }
 
     /**
-     * Obiekt z metodami statycznymi.
+     * You shouldn't be able to create instance of this class.
      */
     private ImageProcessing(){}
 

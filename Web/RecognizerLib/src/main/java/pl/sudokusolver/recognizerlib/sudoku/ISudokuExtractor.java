@@ -5,23 +5,27 @@ import pl.sudokusolver.recognizerlib.exceptions.CellsExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.DigitExtractionFailedException;
 import pl.sudokusolver.recognizerlib.exceptions.NotFoundSudokuException;
 
+/**
+ * Base interface used by server.<br>
+ * Connect all component in one.
+ */
 public interface ISudokuExtractor {
     /**
-     * @param url absolutna ścieżka do zdjęcia z sudoku
-     * @return sudoku stworzone na podstawie zdjęcia
-     * @throws NotFoundSudokuException gdy nie uda się znaleźć sudoku na zdjęciu
-     * @throws CellsExtractionFailedException gdy nie uda się wyciąć komórek ze zdjęcia
+     * @param url absolute path to sudoku img (can be jpg or png).
+     * @return sudoku sudoku creted from img.
+     * @throws NotFoundSudokuException if couldn't find sudoku.
+     * @throws CellsExtractionFailedException if couldn't extract cells.
+     * @throws DigitExtractionFailedException if couldn't extract digit.
      */
     Sudoku extract(String url) throws NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException;
 
     /**
-     * @param img macierz z zdjęciem
-     * @return sudoku stworzone na podstawie zdjęcia
-     * @throws NotFoundSudokuException gdy nie uda się znaleźć sudoku na zdjęciu
-     * @throws CellsExtractionFailedException gdy nie uda się wyciąć komórek ze zdjęcia
+     * @param img matrix with img.
+     * @return sudoku sudoku creted from img.
+     * @throws NotFoundSudokuException if couldn't find sudoku.
+     * @throws CellsExtractionFailedException if couldn't extract cells.
+     * @throws DigitExtractionFailedException if couldn't extract digit.
      */
     Sudoku extract(Mat img) throws NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException;
-
-    Sudoku extract(Mat img,String path) throws NotFoundSudokuException, CellsExtractionFailedException, DigitExtractionFailedException;
 
 }

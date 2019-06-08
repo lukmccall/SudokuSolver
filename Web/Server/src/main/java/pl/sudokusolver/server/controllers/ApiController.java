@@ -27,32 +27,73 @@ import pl.sudokusolver.solver.ISolver;
 
 import java.io.IOException;
 
+/**
+ * Api controller.
+ */
 @RestController
 @RequestMapping("/api/")
 public class ApiController {
+    /**
+     * logger.
+     */
     @Autowired
     private Logger LOGGER;
 
+    /**
+     * ocr getter.
+     */
     @Autowired
     private DigitRecognizer digitRecognizer;
 
+    /**
+     * solving algorithm.
+     */
     @Autowired
     private ISolver solver;
 
+    /**
+     * Only consume json. Only post requests.
+     * @param json json with sudoku.
+     * @return json from <code>GridModel</code>
+     * @throws MissingServletRequestParameterException if json is invalid or sudoku is missing.
+     * @throws SolvingFailedException if solving algorithm couldn't solve sudoku.
+     */
     @RequestMapping(value = "/solve",
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public String solve(@RequestBody String json) throws MissingServletRequestParameterException, SolvingFailedException {
-
+        // get sudoku from json
         Sudoku sudoku = new Gson().fromJson(json, Sudoku.class);
+        // it was valid?
         if(sudoku == null || sudoku.empty())
             throw new MissingServletRequestParameterException("sudoku", "int[9][9]");
 
+        // try to solve
         if(!solver.solve(sudoku.getGrid()))
             throw new SolvingFailedException();
 
+        // generating response
         return new Gson().toJson(new GridModel(1, sudoku.getGrid()));
     }
 
+    /**
+     * Only post requests.
+     * @param inputImg inputImg
+     * @param lineTreshold lineTreshold
+     * @param minLineSize minLineSize
+     * @param lineGap lineGap
+     * @param blurSize blurSize
+     * @param blurBlockSize blurBlockSize
+     * @param blurC blurC
+     * @param scaling scaling
+     * @param recognizer recognizer
+     * @param strictMode strictMode
+     * @return json response from <code>GridModel</code>
+     * @throws IllegalArgumentException if <code>inputImg</code> is missing.
+     * @throws IOException if <code>inputImg</code> was corrupted.
+     * @throws NotFoundSudokuException if couldn't found sudoku.
+     * @throws CellsExtractionFailedException if couldn't extract cells.
+     * @throws DigitExtractionFailedException if couldn't digits digits.
+     */
     @RequestMapping(value = "/extractfromimg", method = RequestMethod.POST)
     public String extract(
             @RequestParam("sudoku") MultipartFile inputImg,
@@ -69,11 +110,13 @@ public class ApiController {
 
         LOGGER.trace("Get "+inputImg.getContentType()+" which have " + inputImg.getSize() +" bits");
 
+        // checking if img is valid
         if(!inputImg.getContentType().equals("image/jpeg") && !inputImg.getContentType().equals("image/png")
                 && !inputImg.getContentType().equals("image/jpg"))
             throw new IllegalArgumentException("Expected jpg or png get " + inputImg.getContentType());
 
 
+        // building base sudoku extractor
         BaseSudokuExtractor.Builder builder  = BaseSudokuExtractor.builder()
                 .setGridStrategy(new DefaultGridExtractStrategy())
                 .setCellsStrategy(new SizeCellsExtractStrategy())
@@ -86,6 +129,7 @@ public class ApiController {
                 .addPreDigitsFilters(new ResizeFilter(new Size(50f,50f)));
 
 
+        // adding scaling
         if (scaling.equals("FIXED WIDTH SCALING"))
             builder.addPreGridFilters(new FixedWidthResizeFilter());
         else if(scaling.equals("MAX AXIS RESIZE"))
@@ -95,9 +139,13 @@ public class ApiController {
 
         SudokuExtractor baseSudokuExtractor = builder.build();
 
+        // loading img to matrix
         Mat mat = Utility.multipartFileToMat(inputImg);
+        // extracting
         Sudoku sudoku = baseSudokuExtractor.extract(mat);
+        // cleaning
         mat.release();
+        // generating response
         return new Gson().toJson(new GridModel(1, sudoku.getGrid()));
     }
 }

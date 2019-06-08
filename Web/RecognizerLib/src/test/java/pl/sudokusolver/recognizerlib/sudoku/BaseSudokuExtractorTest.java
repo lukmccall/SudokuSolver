@@ -195,7 +195,7 @@ class BaseSudokuExtractorTest {
 
             long startTime = System.currentTimeMillis();
             try{
-                testSudoku = extractor.extract(img,path);
+                testSudoku = extractor.extract(img);
             } catch (Exception e){
                 expections++;
                 System.out.println(e.getMessage());
