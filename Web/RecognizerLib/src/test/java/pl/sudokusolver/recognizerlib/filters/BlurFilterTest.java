@@ -26,7 +26,7 @@ class BlurFilterTest {
     }
 
     @Test
-    void blurChangeParameters(){
+    void blurChangeParametersTest(){
         BlurFilter blurFilter = new BlurFilter(3,11,2);
         blurFilter.apply(matrix);
 
@@ -42,21 +42,21 @@ class BlurFilterTest {
     }
 
     @Test
-    void blurDefParameters(){
+    void blurDefParametersTest(){
         BlurFilter blurFilter = new BlurFilter();
         blurFilter.apply(matrix);
         Assert.assertEquals("Expected matrix only with zeros",matrix.dump(), Mat.zeros(3,3, CV_8UC1).dump());
     }
 
     @Test
-    void wrongTypeOfMatrix(){
+    void wrongTypeOfMatrixTest(){
         assertThrows(CvException.class, () -> {
             new BlurFilter().apply(Mat.zeros(3,3, CV_64FC1));
         }, "Wrong type of matrix - only support CV_8U");
     }
 
     @Test
-    void wrongCreation(){
+    void wrongCreationTest(){
         assertThrows(IllegalArgumentException.class, () -> {
             new BlurFilter(-1,-1,-1);
         }, "Expected invalid argument exception for BlurFilter(-1, -1, -1) - arguments below 0");
@@ -64,6 +64,15 @@ class BlurFilterTest {
         assertThrows(IllegalArgumentException.class, () -> {
             new BlurFilter(9,1,3);
         }, "Expected invalid argument exception for BlurFilter(9, 1, 3) - blockSize must be greater then 1");
+
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new BlurFilter(8,9,-1);
+        }, "Expected invalid argument exception for BlurFilter(8, 9, -1) - c must be greater than 1");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+                    new BlurFilter(0,9,3);
+        }, "Expected invalid argument exception for BlurFilter(0,9,3) - size must be greater than 0");
 
         assertThrows(IllegalArgumentException.class, () -> {
             new BlurFilter(8,9,3);

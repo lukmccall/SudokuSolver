@@ -10,6 +10,7 @@ import java.util.List;
  * Now unused.
  * This filter remove noises from image.<br>
  */
+@Deprecated
 public class NoiceFilter implements IFilter {
     @Override
     public void apply(Mat input){

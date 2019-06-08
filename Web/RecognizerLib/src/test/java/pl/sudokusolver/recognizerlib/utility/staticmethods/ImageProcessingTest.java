@@ -16,7 +16,7 @@ import static org.opencv.highgui.HighGui.waitKey;
 class ImageProcessingTest {
 
     @Test
-    void procSimple() {
+    void procSimpleTest() {
         int size = 30;
         Mat mat = new Mat(size, size, CV_32FC1);
 
@@ -31,6 +31,19 @@ class ImageProcessingTest {
 
         for(int i = 0; i < size * size; i++)
             Assert.assertEquals(1.0, newMat.get(0,i)[0], 1e-10);
+    }
+
+    @Test
+    void centerTest(){
+        Mat mat = new Mat (50,30, CV_32FC1);
+        mat = ImageProcessing.center(mat,(short)20);
+        Assert.assertEquals(new Size(20,20),mat.size());
+
+        mat = new Mat (40, 50, CV_32FC1);
+        mat = ImageProcessing.center(mat,(short)9);
+        Assert.assertEquals(new Size(9,9), mat.size());
+
+
     }
 
     @Test

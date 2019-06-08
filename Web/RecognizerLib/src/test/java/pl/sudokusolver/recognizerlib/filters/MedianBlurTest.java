@@ -26,7 +26,7 @@ class MedianBlurTest {
     }
 
     @Test
-    void blurChangeParameters(){
+    void blurChangeParametersTest(){
         MedianBlur blurFilter = new MedianBlur(3,11,2);
         blurFilter.apply(matrix);
 
@@ -42,7 +42,7 @@ class MedianBlurTest {
     }
 
     @Test
-    void blurDefParameters(){
+    void blurDefParametersTest(){
         MedianBlur blurFilter = new MedianBlur();
         blurFilter.apply(matrix);
 
@@ -57,14 +57,14 @@ class MedianBlurTest {
         Assert.assertEquals(0.0, matrix.get(2,2)[0], 1e-15); }
 
     @Test
-    void wrongTypeOfMatrix(){
+    void wrongTypeOfMatrixTest(){
         assertThrows(CvException.class, () -> {
             new MedianBlur().apply(Mat.zeros(3,3, CV_64FC1));
         }, "Wrong type of matrix - only support CV_8U");
     }
 
     @Test
-    void wrongCreation(){
+    void wrongCreationTest(){
         assertThrows(IllegalArgumentException.class, () -> {
             new MedianBlur(-1,-1,-1);
         }, "Expected invalid argument exception for BlurFilter(-1, -1, -1) - arguments below 0");

@@ -22,7 +22,7 @@ public class BrutalSolverTest {
 
 
     @Test
-    void solveSudokuTrueAndEquals(){
+    void solveSudokuTrueAndEqualsTest(){
         //sprawdzenie czy algorytm dziala zgodnie z oczekiwaniem
         int gridOnlyZeros[][] = { { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -77,7 +77,7 @@ public class BrutalSolverTest {
     }
 
     @Test
-    void solveSudokuTrueAndNotEquals(){
+    void solveSudokuTrueAndNotEqualsTest(){
 
         ISolver brutalSolver = new BrutalSolver();
         Assert.assertTrue(brutalSolver.solve(grid));
@@ -99,7 +99,7 @@ public class BrutalSolverTest {
     }
 
     @Test
-    void solveSudokuFalse() {
+    void solveSudokuFalseTest() {
         int grid2[][] = { { 9, 9, 0, 0, 0, 0, 8, 5, 3 },
                 { 9, 0, 0, 8, 0, 0, 0, 0, 4 },
                 { 9, 0, 8, 2, 0, 3, 0, 6, 9 },

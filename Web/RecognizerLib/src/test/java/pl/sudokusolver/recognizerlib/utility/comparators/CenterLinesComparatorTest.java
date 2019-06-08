@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CenterLinesComparatorTest {
 
     @Test
-    void compare() {
+    void compareTest() {
         CenterLinesComparator clc = new CenterLinesComparator();
 
         Assert.assertEquals(-1, clc.compare(new Point(10, 20), new Point(10, 20)));

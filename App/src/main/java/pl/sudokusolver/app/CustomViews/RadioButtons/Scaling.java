@@ -42,7 +42,7 @@ public class Scaling extends VBox {
     /**
      * Function to initialize layout
      */
-    private void init(){
+    protected void init(){
         Text text = initText();
         toggleGroup = new ToggleGroup();
         initToggleGroup();
