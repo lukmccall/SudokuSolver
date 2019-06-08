@@ -158,7 +158,7 @@ public class UtilityTest {
     }
 
     @Test
-    void matToBufferedImage(){
+    void matToBufferedImageTest(){
         int type1 = BufferedImage.TYPE_BYTE_GRAY;
         int type2 = BufferedImage.TYPE_3BYTE_BGR;
         BufferedImage firstImage = Utility.matToBufferedImage(new Mat(3,3,CV_8UC1));
