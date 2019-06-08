@@ -126,7 +126,7 @@ class ViewSelection {
             Singleton.getInstance().unblock();
 
             if (file != null) {
-                if (!(Utilities.getFileExtension(file).equals("jpg") || Utilities.getFileExtension(file).equals("png"))){
+                if (!(Utilities.getFileExtension(file).toLowerCase().equals("jpg") || Utilities.getFileExtension(file).toLowerCase().equals("png"))){
                     new StageError(2);
                     imageFilter = null;
                     return;

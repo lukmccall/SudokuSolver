@@ -119,7 +119,6 @@ public class Utilities {
             }
         }
         catch (Exception e){
-            logger.log(Level.INFO, "bump");
             Utilities.saveFile("Theme: LIGHT");
             Values.THEME = Theme.LIGHT;
         }
