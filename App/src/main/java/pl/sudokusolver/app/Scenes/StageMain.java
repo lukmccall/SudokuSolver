@@ -136,6 +136,15 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("sudoku", "sudoku.jpg",
                             RequestBody.create(Values.SERVER_IMG_TYPE, outputStream.toByteArray()))
+                    .addFormDataPart("lineThreshold", String.valueOf(parameters.getLineThreshold()))
+                    .addFormDataPart("minLineSize", String.valueOf(parameters.getMinLineSize()))
+                    .addFormDataPart("lineGap", String.valueOf(parameters.getLineGap()))
+                    .addFormDataPart("blurSize", String.valueOf(parameters.getBlurSize()))
+                    .addFormDataPart("blurBlockSize", String.valueOf(parameters.getBlurBlockSize()))
+                    .addFormDataPart("blurC", String.valueOf(parameters.getBlurC()))
+                    .addFormDataPart("scaling", parameters.getScaling())
+                    .addFormDataPart("recognizer", parameters.getRecognition())
+                    .addFormDataPart("strictMode", parameters.getStrictMode() ? "true" : "false")
                     .build();
             Request request = new Request.Builder()
                     .url(url)

@@ -72,7 +72,7 @@ public class Parameters {
      * Function to return line threshold
      * @return line threshold
      */
-    private int getLineThreshold() {
+    public int getLineThreshold() {
         return lineThreshold;
     }
 
@@ -80,7 +80,7 @@ public class Parameters {
      * Function to return line gap
      * @return line gap
      */
-    private int getLineGap() {
+    public int getLineGap() {
         return lineGap;
     }
 
@@ -88,7 +88,7 @@ public class Parameters {
      * Function to return minimal line size
      * @return minimal line size
      */
-    private int getMinLineSize() {
+    public int getMinLineSize() {
         return minLineSize;
     }
 
@@ -96,7 +96,7 @@ public class Parameters {
      * Function to return blur size
      * @return blur size
      */
-    private int getBlurSize() {
+    public int getBlurSize() {
         return blurSize;
     }
 
@@ -104,7 +104,7 @@ public class Parameters {
      * Funtion to return blur block size
      * @return blur block size
      */
-    private int getBlurBlockSize() {
+    public int getBlurBlockSize() {
         return blurBlockSize;
     }
 
@@ -112,7 +112,7 @@ public class Parameters {
      * Function to return blur c
      * @return blur c
      */
-    private int getBlurC() {
+    public int getBlurC() {
         return blurC;
     }
 
@@ -120,7 +120,7 @@ public class Parameters {
      * Function to return scaling
      * @return scaling
      */
-    private String getScaling() {
+    public String getScaling() {
         return scaling;
     }
 
