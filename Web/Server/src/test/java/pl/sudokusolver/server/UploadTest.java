@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 public class UploadTest {
 
-    // todo: report memory leak
     /**
      ********   For ANN    ******
      *** Images upload test ***

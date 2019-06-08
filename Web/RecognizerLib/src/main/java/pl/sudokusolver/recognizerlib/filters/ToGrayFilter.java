@@ -11,7 +11,6 @@ import static org.opencv.imgproc.Imgproc.cvtColor;
 public class ToGrayFilter implements IFilter {
     @Override
     public void apply(Mat input) {
-        // todo: bug report
         if(input.channels() != 1)
             cvtColor(input, input, COLOR_BGR2GRAY);
     }

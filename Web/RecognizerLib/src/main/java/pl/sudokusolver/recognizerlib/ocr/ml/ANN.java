@@ -85,8 +85,7 @@ public class ANN extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
         for(int i = 0; i < 9; i++)
             if(result.get(0,pre - 1)[0] < result.get(0,i)[0])
                 pre = i + 1;
-        // todo: repair this :\
-        // todo: bug report
+
         double dst = result.get(0,pre - 1)[0];
 
         wraped.release();
