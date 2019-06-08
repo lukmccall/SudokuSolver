@@ -172,12 +172,12 @@ public class RightSide extends VBox implements ImageListener {
 
                     try {
                         if (ImageIO.read(file) == null) {
-                            new StageError("File is not valid");
+                            new StageError("Plik nie jest poprawny");
                             imageFilter = null;
                             return;
                         }
                     } catch(IOException ex) {
-                        new StageError("File is not valid");
+                        new StageError("Plik nie jest poprawny");
                         imageFilter = null;
                         return;
                     }
