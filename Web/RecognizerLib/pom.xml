@@ -56,13 +56,6 @@
             <version>2.8.2</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.tensorflow/tensorflow -->
-        <dependency>
-            <groupId>org.tensorflow</groupId>
-            <artifactId>tensorflow</artifactId>
-            <version>1.13.1</version>
-        </dependency>
-
 
     </dependencies>
 </project>
