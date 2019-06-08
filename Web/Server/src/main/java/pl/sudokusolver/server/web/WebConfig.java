@@ -68,6 +68,9 @@ public class WebConfig implements WebMvcConfigurer{
         return multi;
     }
 
+    /**
+     * @return digit recognizer been (singleton).
+     */
     @Bean
     public DigitRecognizer digitRecognizer(){
         if(Init.getOperatingSystemType() == Init.OSType.Linux)
@@ -76,12 +79,19 @@ public class WebConfig implements WebMvcConfigurer{
             return new DigitRecognizer(openCVUrlWin);
     }
 
+    /**
+     * @return solving algorithm (singleton).
+     */
     @Bean
     public ISolver solver(){
         return new SmartSolver();
     }
 
 
+    /**
+     * @param injectionPoint injectionPoint.
+     * @return logger.
+     */
     @Bean
     @Scope("prototype")
     public Logger logger(InjectionPoint injectionPoint) {

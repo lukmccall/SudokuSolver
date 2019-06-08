@@ -1,46 +1,56 @@
 package pl.sudokusolver.solver.utility;
 
 /**
- * Stryktura danych przechowująca parę elementów.
- * @param <U> typ pierwszego element
- * @param <V> typ drugiego element
+ * @param <U> type of first element
+ * @param <V> type of second element
  */
 public class Pair<U, V> {
 
     /**
-     * Pierwszy element <code>Pair</code>.
+     * fist element
      */
     private U first;
 
     /**
-     * Drugi element <code>Pair</code>.
+     * second element
      */
     private V second;
 
     /**
-     * Tworzenie nowej <code>Pair</code> z podanymi wartościami.
-     *
+     * Create new <code>Pair</code> from given parameters.
      * @param first  the first element
      * @param second the second element
      */
-    public Pair(final U first, final V second) {
+    public Pair(U first, V second) {
 
         this.first = first;
         this.second = second;
     }
 
+    /**
+     * @return first element
+     */
     public U getFirst() {
         return first;
     }
 
+    /**
+     * @param first first element
+     */
     public void setFirst(U first) {
         this.first = first;
     }
 
+    /**
+     * @return second element
+     */
     public V getSecond() {
         return second;
     }
 
+    /**
+     * @param second second element
+     */
     public void setSecond(V second) {
         this.second = second;
     }
