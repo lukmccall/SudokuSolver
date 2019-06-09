@@ -1,18 +1,25 @@
 package pl.sudokusolver.recognizerlib;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class _INIT_ implements BeforeAllCallback {
     private static boolean load = false;
     @Override
-    public void beforeAll(ExtensionContext extensionContext) {
+    public void beforeAll(ExtensionContext extensionContext) throws IOException {
         if(!load) {
-            Init.init("C:\\opencv4.0.1\\opencv\\build\\java\\x64");
+            InputStream input = _INIT_.class.getClassLoader().getResourceAsStream("config.properties");
+            Properties prop = new Properties();
+            //load a properties file from class path, inside static method
+            prop.load(input);
+            Init.init(prop.getProperty("opencv"));
             load = true;
         }
-        //C:\opencv4.0.1\opencv\build\java\x64 - łukasza
-        //C:\sudokuSolver\opencv\build\java\x64 - moje
 
     }
 }

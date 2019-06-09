@@ -59,7 +59,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
             new StageError("Sudoku is not valid!");
             return;
         }
-        
+
         block();
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
