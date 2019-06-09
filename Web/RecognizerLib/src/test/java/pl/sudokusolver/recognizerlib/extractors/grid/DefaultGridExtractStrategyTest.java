@@ -31,8 +31,8 @@ class DefaultGridExtractStrategyTest {
             for (int j = 0; j < output.cols(); j++)
                 Assert.assertEquals(expectedOuput.get(i,j)[0], output.get(i,j)[0], 4);
 
-        input = imread(getPathToResource("/gridtest/input0.jpg"), -1);
-        expectedOuput = imread(getPathToResource("/gridtest/output0.jpg"), -1);
+        input = imread(getPathToResource("/gridtest/input1.jpg"), -1);
+        expectedOuput = imread(getPathToResource("/gridtest/output1.jpg"), -1);
         output = dge.extract(input);
 
         new ToGrayFilter().apply(output);
