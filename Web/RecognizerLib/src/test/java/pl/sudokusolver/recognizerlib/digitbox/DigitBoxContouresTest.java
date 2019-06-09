@@ -16,7 +16,7 @@ import static org.opencv.core.CvType.CV_8UC1;
 class DigitBoxContouresTest {
 
     @Test
-    void getDigitBox(){
+    void getDigitBoxTest(){
         Mat input = Mat.zeros(30,30, CV_8UC1);
         for(int i = 0; i < 30; i++)
             for (int j = 0; j < 30; j++)
@@ -36,14 +36,14 @@ class DigitBoxContouresTest {
     }
 
     @Test
-    void digitNotFound(){
+    void digitNotFoundTest(){
         Mat input = Mat.zeros(30,30, CV_8UC1);
         Optional<Rect> optionalRect = new DigitBoxContoures().getDigitBox(input);
         Assert.assertFalse(optionalRect.isPresent());
     }
 
     @Test
-    void digitCoverAllImage(){
+    void digitCoverAllImageTest(){
         Mat input = Mat.zeros(30,30, CV_8UC1);
         for(int i = 0; i < 30; i++)
             for (int j = 0; j < 30; j++)
