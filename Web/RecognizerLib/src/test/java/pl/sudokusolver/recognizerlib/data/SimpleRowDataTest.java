@@ -15,7 +15,7 @@ import static org.opencv.core.CvType.CV_8U;
 class SimpleRowDataTest {
 
     @Test
-    void getDataFromImg(){
+    void getDataFromImgTest(){
         String res = _TestUtility_.getPathToResource("/digits.png");
         SimpleRowData data = new SimpleRowData(res, (short)20);
 
@@ -30,7 +30,7 @@ class SimpleRowDataTest {
     }
 
     @Test
-    void simpleCreation(){
+    void simpleCreationTest(){
         Mat data = Mat.zeros(3,3, CV_8U);
         Mat label = Mat.zeros(3,3, CV_8U);
         for(int i = 0; i < 3; i++)
