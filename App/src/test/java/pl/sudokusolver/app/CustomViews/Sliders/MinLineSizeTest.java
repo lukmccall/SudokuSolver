@@ -10,7 +10,7 @@ public class MinLineSizeTest {
     @Test
     public void getValue() {
         MinLineSize minLineSize = new MinLineSizeStub();
-        Assert.assertEquals(100,minLineSize.getValue());
+        Assert.assertEquals(65,minLineSize.getValue());
     }
 
     @Test

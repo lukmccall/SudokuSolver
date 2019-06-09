@@ -34,15 +34,6 @@ class GameBoardTest {
                     {1,7,5,6,3,4,2,8,9}
             };
 
-
-
-
-    @Test
-    void getSolution1() {
-        GameBoard gameBoard = new GameBoard();
-        Assert.assertArrayEquals(solution,gameBoard.getSolution());
-    }
-
     @Test
     void getInitial() {
         GameBoard gameBoard = new GameBoard();
