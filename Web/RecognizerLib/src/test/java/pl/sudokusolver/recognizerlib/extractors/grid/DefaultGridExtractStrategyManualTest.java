@@ -27,7 +27,6 @@ public class DefaultGridExtractStrategyManualTest {
             new FixedWidthResizeFilter().apply(img);
             try {
                 Mat grid = gridExtractStrategy.extract(img);
-                System.out.println(grid.type());
                 new SaveFilter(save + i + ".jpg").apply(grid);
             } catch (Exception e) {
                 Assert.fail("Could't extract grid - " + e.getMessage());

@@ -23,11 +23,6 @@ Web/RecognizerLib/recognizerlib.iml
 Web/Server/server.iml
 Web/Solver/solver.iml
 
-Data/Dump/Grid/
-Data/Dump/CleanGrid/
-Data/Dump/Digit/
-Data/Dump/Result/
-Data/Dump/Cell/
 
 Web/RecognizerLib/src/test/resources/config.properties
 Web/Server/src/main/resources/config.properties
