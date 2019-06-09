@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage stage){
         //check if java version is correct
         if (!Utilities.isJavaValid()) {
-            new StageError(1, "Nieznany bład");
+            new StageError(1, "Nie wykryto odpowiedniej wersji JAVY.");
             return;
         }
         Utilities.readFile();
