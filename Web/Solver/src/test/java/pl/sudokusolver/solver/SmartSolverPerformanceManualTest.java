@@ -14,7 +14,7 @@ class SmartSolverPerformanceManualTest {
     @Ignore
     void performance() throws IOException {
         SmartSolver smartSolver = new SmartSolver();
-        int all = 159;
+        int all = 155;
         int allTime = 0;
         for(int i = 0; i < all; i++) {
 

@@ -13,7 +13,7 @@ import static org.opencv.core.CvType.CV_8UC1;
 class ImageProcessingTest {
 
     @Test
-    void deskew(){
+    void deskewTest(){
         Mat mat = Mat.zeros(10,10, CV_8UC1);
 
         for(int i = 0; i < 10; i++)
@@ -58,7 +58,7 @@ class ImageProcessingTest {
     }
 
     @Test
-    void applyMask() {
+    void applyMaskTest() {
         short size = 30;
         Mat mat =  Mat.ones(size, size, CV_8UC1);
         Core.multiply(mat, new Scalar(250), mat);

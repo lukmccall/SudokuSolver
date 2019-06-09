@@ -1,1 +1,1 @@
-Theme: DARK
+Theme: LIGHT
