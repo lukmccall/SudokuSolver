@@ -108,7 +108,7 @@ public abstract class SudokuExtractor implements ISudokuExtractor {
     }
 
     /**
-     * @param gridExtractStrategy new extraction strategy
+     * @param cellsExtractStrategy new extraction strategy
      */
     public void setCellsExtractStrategy(CellsExtractStrategy cellsExtractStrategy) {
         this.cellsExtractStrategy = cellsExtractStrategy;
@@ -122,7 +122,7 @@ public abstract class SudokuExtractor implements ISudokuExtractor {
     }
 
     /**
-     * @param gridExtractStrategy new extraction strategy
+     * @param digitsExtractStrategy new extraction strategy
      */
     public void setDigitsExtractStrategy(DigitsExtractStrategy digitsExtractStrategy) {
         this.digitsExtractStrategy = digitsExtractStrategy;
@@ -136,7 +136,7 @@ public abstract class SudokuExtractor implements ISudokuExtractor {
     }
 
     /**
-     * @param gridExtractStrategy new ocr
+     * @param recognizer new ocr
      */
     public void setRecognizer(IRecognizer recognizer) {
         this.recognizer = recognizer;

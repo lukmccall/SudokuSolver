@@ -46,7 +46,7 @@ public class SVM extends MLWrapper implements ILoader, IRowRecognizer, IRowModel
     /**
      * Create and learn svm form IData.
      * @param data learning data.
-     * @param f configuration function or object.
+     * @param config configuration function or object.
      */
     public SVM(IData data, svmConfig config){
         svm = org.opencv.ml.SVM.create();
