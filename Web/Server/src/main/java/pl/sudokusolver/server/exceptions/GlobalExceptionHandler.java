@@ -103,6 +103,18 @@ public class GlobalExceptionHandler{
     }
 
     /**
+     * Sudoku not found or grid not extracted properly.
+     * @param exception caused
+     * @return error response
+     */
+    @ExceptionHandler({IndexOutOfBoundsException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ErrorResponse handleNotFoundSudokuExceptionByIndexOutOfBound(IndexOutOfBoundsException exception){
+        return new ErrorResponse(ErrorCodes.SudokuNotFound, "Sudoku nie zostało znalezione.");
+    }
+
+    /**
      * Digits couldn't be extracted.
      * @param exception caused
      * @return error response

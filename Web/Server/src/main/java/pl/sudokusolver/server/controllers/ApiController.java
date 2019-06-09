@@ -159,6 +159,12 @@ public class ApiController {
         Sudoku sudoku = baseSudokuExtractor.extract(mat);
         // cleaning
         mat.release();
+
+        // check if sudoku img was valid
+        if(sudoku.getGrid() == null || sudoku.empty())
+            throw new NotFoundSudokuException();
+
+
         // generating response
         return new Gson().toJson(new GridModel(1, sudoku.getGrid()));
     }
