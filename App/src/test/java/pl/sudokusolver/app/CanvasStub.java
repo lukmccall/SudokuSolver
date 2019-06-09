@@ -16,6 +16,10 @@ public class CanvasStub extends Canvas {
     }
 
     @Override
+    public void update(){
+    }
+
+    @Override
     public void onValueInserted(int value) {
         this.onValueInserted = value;
     }
