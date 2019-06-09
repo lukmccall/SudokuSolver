@@ -17,7 +17,7 @@ import static pl.sudokusolver.recognizerlib._TestUtility_.*;
 class MNISTReaderTest {
 
     @Test
-    void mnistFilesDontExist() {
+    void mnistFilesDontExistTest() {
         assertThrows(IOException.class, () -> {
             MNISTReader.read("path_doesn't_exitst", "path_doesn't_exitst", DataType.Simple);
         },
@@ -25,7 +25,7 @@ class MNISTReaderTest {
     }
 
     @Test
-    void versionMismatchedException(){
+    void versionMismatchedExceptionTest(){
         assertThrows(VersionMismatchException.class, () -> {
                 MNISTReader.read(getPathToResource("/mnisttest/labels"), getPathToResource("/mnisttest/images"), DataType.Simple);
             });
