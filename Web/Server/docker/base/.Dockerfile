@@ -5,7 +5,9 @@ RUN apt-get update -y && apt-get upgrade -y && \
 	apt-get install -y build-essential cmake git libgtk2.0-dev libgtk2.0-0 pkg-config libavcodec-dev libavformat-dev libswscale-dev && \
 	apt-get install -y python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff5-dev libdc1394-22-dev && \
 	apt-get install ant -y
-	
+
+RUN apt-get install -y --no-install-recommends apt-utils
+
 # downloading and building opencv 
 RUN cd /tmp && wget https://github.com/opencv/opencv/archive/4.0.1.tar.gz -q --show-progress && \
     tar xzf 4.0.1.tar.gz && rm -f 4.0.1.tar.gz && cd opencv-4.0.1 && mkdir build && \
