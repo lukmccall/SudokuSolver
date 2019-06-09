@@ -106,7 +106,6 @@ public class Utilities {
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()){
                 String temp = sc.nextLine();
-                //logger.log(Level.INFO, temp);
 
                 if (temp.startsWith("Theme:")){
                     if (temp.lastIndexOf("LIGHT") != -1){

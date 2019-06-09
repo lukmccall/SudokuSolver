@@ -76,7 +76,7 @@ public class LineThreshold extends VBox {
      * @return completely created slider
      */
     private Slider initSlider(Text value){
-        Slider slider = new Slider(1, 50, 50);
+        Slider slider = new Slider(1, 200, 50);
         slider.valueProperty().addListener((ObservableValue<? extends Number> observable,
                                                    Number oldValue, Number newValue) -> {
 
