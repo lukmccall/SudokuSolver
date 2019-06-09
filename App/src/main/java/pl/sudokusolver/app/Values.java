@@ -67,21 +67,24 @@ public class Values {
     public static final String CLEAR = "Wyczyść";
     public static final String SUDOKU = "SUDOKU";
 
-    public static final String E000 = "Nieznany bład.";
+//    public static final String E000 = "Nieznany bład.";
     public static final String E001 = "Nie wykryto odpowiedniej wersji JAVY.";
     public static final String E002 = "Nieznany format pliku (tylko .jpg, .png).";
 
     public static final String E003 = "Niewykryte poprawne sudoku na zdjęciu.";
     public static final String E004 = "Sudoku nie posiada rozwiązania.";
     public static final String E005 = "Brak połączenia z siecią.";
-    public static final String E006 = "Serwer nieaktywny.";
-    public static final String E007 = "Plik nie istnieje.";
+    public static final String E006 = "Nie udało się połączyć z serwerem.";
 
+    public static final String E007 = "Plik nie istnieje.";
     public static final String E008 = "Nie można wpisać tej wartości w to pole.";
     public static final String E009 = "Nie można wyciąć bez zaznaczenia.";
-    public static final String E010 = "Serwer nie odpowiedział wystarczająco szybko.";
-    public static final String E011 = "Plik nie jest poprawny.";
-    public static final String E012 = "Nie udało się otworzyć zdjęcia.";
-
-
+//    public static final String E010 = "Serwer nie odpowiedział wystarczająco szybko.";
+//    public static final String E011 = "Plik nie jest poprawny.";
+//    public static final String E012 = "Nie udało się otworzyć zdjęcia.";
+//    PageNotFound(13),
+//    MissingParameter(14),
+//    InvalidParameter(15),
+//    FileIsCorrupted(11),
+//    CellsExtractionFailed(16),
 }

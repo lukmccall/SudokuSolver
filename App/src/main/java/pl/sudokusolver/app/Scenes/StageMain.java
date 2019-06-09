@@ -56,7 +56,12 @@ public class StageMain extends Stage implements MenuListener, Sender {
             sudoku = canvas.getInitial();
         }
         catch (IllegalArgumentException e){
-            new StageError("Sudoku is not valid!");
+            new StageError(4, "Sudoku nie posiada rozwiązania.");
+            return;
+        }
+
+        if (!Utilities.netIsAvailable()){
+            new StageError(5, "Brak połączenia z siecią.");
             return;
         }
 
@@ -87,7 +92,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     receivedSolved(sudokuResponse.sudoku);
                 } else {
                     ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
-                    Platform.runLater(() -> new StageError(errorResponse.errorMessage));
+                    Platform.runLater(() -> new StageError(errorResponse.errorCode, errorResponse.errorMessage));
                 }
             } catch (ConnectException e){
                 Platform.runLater(() -> new StageError(6, "Nie udało się połączyć z serwerem."));
@@ -109,6 +114,11 @@ public class StageMain extends Stage implements MenuListener, Sender {
      */
     @Override
     public void send(BufferedImage image, Parameters parameters) throws Exception{
+        if (!Utilities.netIsAvailable()){
+            new StageError(5, "Brak połączenia z siecią.");
+            return;
+        }
+
         block();
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -126,7 +136,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
             try {
                 ImageIO.write(image, "jpg", outputStream);
             } catch (IOException e) {
-                Platform.runLater(() -> new StageError("Nie udało sie otworzyć zdjęcia"));
+                Platform.runLater(() -> new StageError(12, "Nie udało sie otworzyć zdjęcia"));
                 unblock();
                 return;
             }
@@ -158,7 +168,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     receivedInitial(sudokuResponse.sudoku);
                 } else {
                     ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
-                    Platform.runLater(() -> new StageError(errorResponse.errorMessage));
+                    Platform.runLater(() -> new StageError(errorResponse.errorCode, errorResponse.errorMessage));
                 }
             } catch (ConnectException e){
                 Platform.runLater(() -> new StageError(6, "Nie udało się połączyć z serwerem."));

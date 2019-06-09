@@ -3,6 +3,9 @@ package pl.sudokusolver.app;
 import javafx.geometry.Rectangle2D;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -72,6 +75,18 @@ public class Utilities {
                 return Values.E009;
         }
         return null;
+    }
+
+    public static boolean netIsAvailable() {
+        try {
+            final URL url = new URL("http://www.google.com");
+            final URLConnection conn = url.openConnection();
+            conn.connect();
+            conn.getInputStream().close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
