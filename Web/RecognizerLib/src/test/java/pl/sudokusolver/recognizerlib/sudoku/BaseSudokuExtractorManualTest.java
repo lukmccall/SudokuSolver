@@ -16,6 +16,7 @@ import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSimple;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractStrictMode;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.opencv.imgcodecs.Imgcodecs.imread;
@@ -23,21 +24,21 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 @ExtendWith({_INIT_.class})
 class BaseSudokuExtractorManualTest {
 
-    private int all = 130;
+    private int all = 156;
 
     /**
     *** Sudoku extractor with SVM ***
        ---    Correctness  ---
 
-    All: 0.9819563152896486
-    Full: 102
+    All: 0.9754669199113641
+    Full: 110
     Errors: 0
-    Without errors: 0.9819563152896486
+    Without errors: 0.9754669199113641
 
        ---    Performance  ---
-    Avg time: 231.93846153846152ms
-    Min time: 87ms
-    Max time: 385ms
+    Avg time: 202.06410256410257ms
+    Min time: 84ms
+    Max time: 383ms
 
      ***********************************
     **/
@@ -66,16 +67,16 @@ class BaseSudokuExtractorManualTest {
     *** Sudoku extractor with ANN ***
        ---    Correctness  ---
 
-    All: 0.9540360873694204
-    Full: 19
-    Errors: 0
-    Without errors: 0.9540360873694204
+     All: 0.9502215891104777
+     Full: 22
+     Errors: 0
+     Without errors: 0.9502215891104777
 
        ---    Performance  ---
 
-    Avg time: 901.7307692307693ms
-    Min time: 369ms
-    Max time: 1363ms
+     Avg time: 149.26282051282053ms
+     Min time: 72ms
+     Max time: 400ms
 
    **********************************
     **/
@@ -104,16 +105,16 @@ class BaseSudokuExtractorManualTest {
      *** Sudoku extractor with tesseract ***
            ---    Correctness  ---
 
-     All: 0.9637226970560305
-     Full: 79
+     All: 0.9603513770180439
+     Full: 86
      Errors: 0
-     Without errors: 0.9637226970560305
+     Without errors: 0.9603513770180439
 
           ---    Performance  ---
 
-     Avg time: 7320.523076923077ms
-     Min time: 1304ms
-     Max time: 12694ms
+     Avg time: 4131.294871794872ms
+     Min time: 702ms
+     Max time: 7705ms
 
      *********************************
      **/
@@ -142,16 +143,16 @@ class BaseSudokuExtractorManualTest {
      *** Sudoku extractor with tesseract stict ***
      ---    Correctness  ---
 
-     All: 0.7469135802469138
-     Full: 76
-     Errors: 32
-     Without errors: 0.9908037288989672
+     All: 0.7211142766698321
+     Full: 84
+     Errors: 42
+     Without errors: 0.9867879575481913
 
      ---    Performance  ---
 
-     Avg time: 6263.007692307692ms
-     Min time: 937ms
-     Max time: 10680ms
+     Avg time: 3545.7051282051284ms
+     Min time: 240ms
+     Max time: 6656ms
 
      **************************************
      */
@@ -187,8 +188,11 @@ class BaseSudokuExtractorManualTest {
 
 
         for(int i = 0; i < all; i++){
+            String path;
+            File n = new File("../../Data/TestImgs/"+i+".jpg");
+            if(n.exists()) path = "../../Data/TestImgs/"+i+".jpg";
+            else path = "../../Data/TestImgs/"+i+".png";
 
-            String path = "../../Data/TestImgs/"+i+".jpg";
             String pathToDat = "../../Data/TestImgs/"+i+".dat";
             Mat img = imread(path);
             Sudoku testSudoku = null;
@@ -198,6 +202,7 @@ class BaseSudokuExtractorManualTest {
                 testSudoku = extractor.extract(img);
             } catch (Exception e){
                 expections++;
+                e.printStackTrace();
                 System.out.println(e.getMessage());
             }
             long endTime = System.currentTimeMillis();
@@ -216,7 +221,7 @@ class BaseSudokuExtractorManualTest {
                 double s = goodAnsSudoku.score(testSudoku);
 
                 if(s == 1.0f) full++;
-//                else if(s < 0.7) System.out.println("Below 70%. Score " + s + " - " + i);
+                else if(s < 0.7) System.out.println("Below 70%. Score " + s + " - " + i);
                 avgCorrectness += s;
             }
         }

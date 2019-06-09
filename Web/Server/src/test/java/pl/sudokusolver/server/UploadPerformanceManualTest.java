@@ -15,15 +15,18 @@ public class UploadPerformanceManualTest {
      ********   For ANN    ******
      *** Images upload test ***
 
-     Avg Time: 1489.1076923076923 ms
-     Min Time: 313 ms
-     Max Time: 4315 ms
+     Avg Time: 3431.7076923076922 ms
+     Min Time: 580 ms
+     Max Time: 8415 ms
+
+
      *******   For SVM   *******
      *** Images upload test ***
 
-     Avg Time: 1431.7076923076922 ms
-     Min Time: 380 ms
-     Max Time: 3415 ms
+     Avg Time: 3243.50315432 ms
+     Min Time: 560 ms
+     Max Time: 9415 ms
+
 
      */
     @Test

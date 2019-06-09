@@ -158,7 +158,7 @@ public class GlobalExceptionHandler{
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     ErrorResponse handleNestedServletException(NestedServletException exception){
-        return new ErrorResponse(ErrorCodes.InvalidParameter, "Nieznany błąd.");
+        return new ErrorResponse(ErrorCodes.Unknown, "Nieznany błąd.");
     }
 
     /**
