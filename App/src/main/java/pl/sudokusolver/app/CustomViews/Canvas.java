@@ -135,7 +135,7 @@ public class Canvas extends javafx.scene.canvas.Canvas {
      */
     public void onValueInserted(int value){
         if (!isValid(value, playerRow, playerCol)){
-            new StageError(Values.E008);
+            new StageError(8, "Nie można wpisać tej wartości w to pole");
             return;
         }
 

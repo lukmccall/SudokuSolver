@@ -42,7 +42,7 @@ public class RightSide extends VBox implements ImageListener {
             init(a, b);
         }
         catch (FileNotFoundException e){
-            new StageError(7);
+            new StageError(7, "Plik nie istnieje");
         }
     }
 
@@ -62,7 +62,7 @@ public class RightSide extends VBox implements ImageListener {
     @Override
     public void accepted(Image image, Parameters parameters){
         imageView.setImage(image);
-        Utilities.log(parameters.getRecognition());
+        //Utilities.log(parameters.getRecognition());
 
         BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
         try{
@@ -72,7 +72,7 @@ public class RightSide extends VBox implements ImageListener {
         catch (Exception e){
             //TODO error codes handiling ukasz musi mi powiedziec jak wygladaja exception zebym wiecial co logowac
             Singleton.getInstance().unblock();
-            Utilities.log(e.toString());
+            //Utilities.log(e.toString());
         }
     }
 
@@ -165,19 +165,19 @@ public class RightSide extends VBox implements ImageListener {
 
                 if (file != null) {
                     if (!(Utilities.getFileExtension(file).toLowerCase().equals("jpg") || Utilities.getFileExtension(file).toLowerCase().equals("png"))){
-                        new StageError(2);
+                        new StageError(2, "Nieznany format pliku (tylko .jpg, .png)");
                         imageFilter = null;
                         return;
                     }
 
                     try {
                         if (ImageIO.read(file) == null) {
-                            new StageError("Plik nie jest poprawny");
+                            new StageError(11, "Plik nie jest poprawny");
                             imageFilter = null;
                             return;
                         }
                     } catch(IOException ex) {
-                        new StageError("Plik nie jest poprawny");
+                        new StageError(11, "Plik nie jest poprawny");
                         imageFilter = null;
                         return;
                     }
@@ -217,7 +217,7 @@ public class RightSide extends VBox implements ImageListener {
             catch (Exception e){
                 //TODO error codes handiling ukasz musi mi powiedziec jak wygladaja exception zebym wiecial co logowac
                 Singleton.getInstance().unblock();
-                Utilities.log(e.toString());
+                //Utilities.log(e.toString());
             }
 
         });

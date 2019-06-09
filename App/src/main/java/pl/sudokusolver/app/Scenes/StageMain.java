@@ -90,13 +90,13 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     Platform.runLater(() -> new StageError(errorResponse.errorMessage));
                 }
             } catch (ConnectException e){
-                Platform.runLater(() -> new StageError("Nie udało się połączyć z serwerem."));
+                Platform.runLater(() -> new StageError(6, "Nie udało się połączyć z serwerem."));
             } catch (SocketTimeoutException e){
-                Platform.runLater(() -> new StageError("Serwer nie odpowiedział wystarczająco szybko."));
+                Platform.runLater(() -> new StageError(10,"Serwer nie odpowiedział wystarczająco szybko."));
             } catch (IOException e) {
-                Platform.runLater(() -> new StageError("Wystąpił błąd z serwerem."));
+                Platform.runLater(() -> new StageError(6, "Wystąpił błąd z serwerem."));
             } catch (Exception e) {
-                Platform.runLater(() -> new StageError("Nieznany błąd."));
+                Platform.runLater(() -> new StageError(0,"Nieznany błąd."));
             }  finally {
                 unblock();
             }
@@ -126,7 +126,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
             try {
                 ImageIO.write(image, "jpg", outputStream);
             } catch (IOException e) {
-                Platform.runLater(() -> new StageError("Couldn't open file"));
+                Platform.runLater(() -> new StageError("Nie udało sie otworzyć zdjęcia"));
                 unblock();
                 return;
             }
@@ -161,13 +161,13 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     Platform.runLater(() -> new StageError(errorResponse.errorMessage));
                 }
             } catch (ConnectException e){
-                Platform.runLater(() -> new StageError("Nie udało się połączyć z serwerem."));
+                Platform.runLater(() -> new StageError(6, "Nie udało się połączyć z serwerem."));
             }catch (SocketTimeoutException e){
-                Platform.runLater(() -> new StageError("Serwer nie odpowiedział wystarczająco szybko."));
+                Platform.runLater(() -> new StageError(10, "Serwer nie odpowiedział wystarczająco szybko."));
             } catch (IOException e) {
-                Platform.runLater(() -> new StageError("Wystąpił błąd z serwerem."));
+                Platform.runLater(() -> new StageError(6, "Wystąpił błąd z serwerem."));
             } catch (Exception e) {
-                Platform.runLater(() -> new StageError("Nieznany błąd."));
+                Platform.runLater(() -> new StageError(0, "Nieznany błąd."));
             } finally {
                 unblock();
             }

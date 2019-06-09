@@ -80,7 +80,7 @@ public class ViewImage extends BorderPane implements ParametersListener {
             initImage(file, width, height);
         }
         catch (FileNotFoundException e){
-            new StageError("Nie udało się otworzyć pliku");
+            new StageError(12, "Nie udało się otworzyć zdjęcia");
             return;
         }
 
@@ -149,7 +149,7 @@ public class ViewImage extends BorderPane implements ParametersListener {
             Rectangle2D rectangle2D = rubberBandSelection.getRectangle();
 
             if (!Utilities.isValid(rectangle2D)){
-                new StageError(9);
+                new StageError(9, "Nie można wyciąć bez zaznaczenia.");
                 return;
             }
 

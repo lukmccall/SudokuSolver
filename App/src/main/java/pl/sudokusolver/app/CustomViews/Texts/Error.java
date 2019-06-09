@@ -15,6 +15,10 @@ public class Error extends VBox {
         initError(error, width);
     }
 
+    public Error(int error, String string, double width){
+        initError(error, string, width);
+    }
+
     public Error(String error, double width){
         initError(error, width);
     }
@@ -26,6 +30,17 @@ public class Error extends VBox {
     private void initError(int errorID, double width){
         setSpacing(30);
         getChildren().addAll(initErrorText(errorID, width), initErrorDescription(errorID, width));
+        setAlignment(Pos.CENTER);
+    }
+
+    /**
+     * Function to initialize whole layout
+     * @param string error string
+     * @param errorID id of the error
+     */
+    private void initError(int errorID, String string, double width){
+        setSpacing(30);
+        getChildren().addAll(initErrorText(errorID, width), initErrorDescription(string, width));
         setAlignment(Pos.CENTER);
     }
 
@@ -44,7 +59,14 @@ public class Error extends VBox {
      * @return  completely created text
      */
     private Text initErrorText(int errorID, double width){
-        Text name = new Text("Error 00" + errorID + ":");
+        Text name;
+        if (errorID < 10){
+            name = new Text("Error 00" + errorID + ":");
+        }
+        else{
+            name = new Text("Error 0" + errorID + ":");
+        }
+
         name.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 24;");
         name.setTextAlignment(TextAlignment.CENTER);
         name.setWrappingWidth(width * 0.95f);

@@ -127,19 +127,19 @@ class ViewSelection {
 
             if (file != null) {
                 if (!(Utilities.getFileExtension(file).toLowerCase().equals("jpg") || Utilities.getFileExtension(file).toLowerCase().equals("png"))){
-                    new StageError(2);
+                    new StageError(2, "Nieznany format pliku (tylko .jpg, .png).");
                     imageFilter = null;
                     return;
                 }
 
                 try {
                     if (ImageIO.read(file) == null) {
-                        new StageError("Plik nie jest poprawny");
+                        new StageError(11, "Plik nie jest poprawny.");
                         imageFilter = null;
                         return;
                     }
                 } catch(IOException ex) {
-                    new StageError("Plik nie jest poprawny");
+                    new StageError(11, "Plik nie jest poprawny.");
                     imageFilter = null;
                     return;
                 }
@@ -149,7 +149,7 @@ class ViewSelection {
                     image = new Image(new FileInputStream(file.getPath()));
                 }
                 catch (Exception e){
-                    new StageError("Nie udało się otworzyć zdjęcia");
+                    new StageError(12, "Nie udało się otworzyć zdjęcia.");
                     imageFilter = null;
                     return;
                 }

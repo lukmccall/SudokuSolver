@@ -22,6 +22,11 @@ public class StageError extends Stage {
         init(error);
     }
 
+    public StageError(int error, String string){
+        super();
+        init(error, string);
+    }
+
     public StageError(String error){
         super();
         init(error);
@@ -35,6 +40,26 @@ public class StageError extends Stage {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
         viewError = new ViewError(error, screenBounds.getWidth() * 0.25f);
+        errorScene = new Scene(viewError, screenBounds.getWidth() * 0.25f, screenBounds.getHeight() * 0.5f);
+
+        initModality(Modality.APPLICATION_MODAL);
+        setDimensions(screenBounds);
+        setTitle(Values.ERROR);
+        setScene(errorScene);
+        setResizable(false);
+        change();
+        show();
+    }
+
+    /**
+     * Function to initialize whole screen
+     * @param error error id
+     * @param string error string
+     */
+    private void init(int error, String string){
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+        viewError = new ViewError(error, string, screenBounds.getWidth() * 0.25f);
         errorScene = new Scene(viewError, screenBounds.getWidth() * 0.25f, screenBounds.getHeight() * 0.5f);
 
         initModality(Modality.APPLICATION_MODAL);

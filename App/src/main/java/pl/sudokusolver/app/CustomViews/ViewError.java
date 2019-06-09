@@ -15,6 +15,10 @@ public class ViewError extends VBox {
         init(error, width);
     }
 
+    public ViewError(int error, String string, double width){
+        init(error, string, width);
+    }
+
     public ViewError(String error, double width){
         init(error, width);
     }
@@ -30,6 +34,20 @@ public class ViewError extends VBox {
         setTheme();
 
         getChildren().addAll(new Error(error, width));
+    }
+
+    /**
+     * Function to initialize error layout
+     * @param error error id
+     * @param string error string
+     * @param width maximal width of error window
+     */
+    private void init(int error, String string, double width){
+        setAlignment(Pos.CENTER);
+        setSpacing(15);
+        setTheme();
+
+        getChildren().addAll(new Error(error, string, width));
     }
 
     /**
