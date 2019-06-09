@@ -25,15 +25,15 @@ public class UtilitiesTest {
     @Test
     public void getError() {
         Assert.assertNull(Utilities.getError(0));
-        Assert.assertEquals("Nie wykryto odpowiedniej wersji JAVY",Utilities.getError(1));
-        Assert.assertEquals("Nieznany format pliku (tylko .jpg, .png)",Utilities.getError(2));
-        Assert.assertEquals("Niewykryte poprawne sudoku na zdjęciu",Utilities.getError(3));
-        Assert.assertEquals("Sudoku nie posiada rozwiązania",Utilities.getError(4));
-        Assert.assertEquals("Brak połączenia z siecią",Utilities.getError(5));
-        Assert.assertEquals("Serwer nieaktywny",Utilities.getError(6));
-        Assert.assertEquals("Plik nie istnieje",Utilities.getError(7));
-        Assert.assertEquals("Nie można wpisać tej wartości w to pole",Utilities.getError(8));
-        Assert.assertEquals("Nie można wyciąć bez zaznaczenia",Utilities.getError(9));
+        Assert.assertEquals("Nie wykryto odpowiedniej wersji JAVY.",Utilities.getError(1));
+        Assert.assertEquals("Nieznany format pliku (tylko .jpg, .png).",Utilities.getError(2));
+        Assert.assertEquals("Niewykryte poprawne sudoku na zdjęciu.",Utilities.getError(3));
+        Assert.assertEquals("Sudoku nie posiada rozwiązania.",Utilities.getError(4));
+        Assert.assertEquals("Brak połączenia z siecią.",Utilities.getError(5));
+        Assert.assertEquals("Serwer nieaktywny.",Utilities.getError(6));
+        Assert.assertEquals("Plik nie istnieje.",Utilities.getError(7));
+        Assert.assertEquals("Nie można wpisać tej wartości w to pole.",Utilities.getError(8));
+        Assert.assertEquals("Nie można wyciąć bez zaznaczenia.",Utilities.getError(9));
     }
 
     @Test

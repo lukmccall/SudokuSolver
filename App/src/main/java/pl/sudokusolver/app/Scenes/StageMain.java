@@ -87,7 +87,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     receivedSolved(sudokuResponse.sudoku);
                 } else {
                     ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
-                    Platform.runLater(() -> new StageError(errorResponse.errorMessage));
+                    Platform.runLater(() -> new StageError(errorResponse.errorCode, errorResponse.errorMessage));
                 }
             } catch (ConnectException e){
                 Platform.runLater(() -> new StageError(6, "Nie udało się połączyć z serwerem."));
@@ -158,7 +158,7 @@ public class StageMain extends Stage implements MenuListener, Sender {
                     receivedInitial(sudokuResponse.sudoku);
                 } else {
                     ErrorResponse errorResponse = gson.fromJson(response.body().charStream(), ErrorResponse.class);
-                    Platform.runLater(() -> new StageError(errorResponse.errorMessage));
+                    Platform.runLater(() -> new StageError(errorResponse.errorCode, errorResponse.errorMessage));
                 }
             } catch (ConnectException e){
                 Platform.runLater(() -> new StageError(6, "Nie udało się połączyć z serwerem."));
