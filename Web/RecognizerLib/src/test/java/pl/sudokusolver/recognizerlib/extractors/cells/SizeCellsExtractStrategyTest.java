@@ -16,15 +16,23 @@ import static org.opencv.core.CvType.CV_8UC1;
 class SizeCellsExtractStrategyTest {
 
     @Test
-    void cellExtractionsShouldFailed(){
+    void cellExtractionsShouldFailedTest(){
         assertThrows(CellsExtractionFailedException.class, ()->
                 new SizeCellsExtractStrategy().extract(new Mat(1,1, CV_8UC1)),
         "Matrix is too small for this method."
         );
+        assertThrows(CellsExtractionFailedException.class, ()->
+                        new SizeCellsExtractStrategy().extract(new Mat(8,8, CV_8UC1)),
+                "Matrix is too small for this method."
+        );
+        assertThrows(CellsExtractionFailedException.class, ()->
+                        new SizeCellsExtractStrategy().extract(new Mat(8,9, CV_8UC1)),
+                "Matrix is too small for this method."
+        );
     }
 
     @Test
-    void cellExtractions() throws CellsExtractionFailedException {
+    void cellExtractionsTest() throws CellsExtractionFailedException {
         String allOnes = "[  1,   1,   1,   1,   1,   1,   1,   1,   1,   1;\n" +
                 "   1,   1,   1,   1,   1,   1,   1,   1,   1,   1;\n" +
                 "   1,   1,   1,   1,   1,   1,   1,   1,   1,   1;\n" +
