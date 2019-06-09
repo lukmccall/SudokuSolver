@@ -16,14 +16,11 @@ class GridModelTest {
             { 6, 8, 2, 0, 0, 0, 0, 9, 0 } };
 
     @Test
-    void constructorTestTrue(){
+    void constructorTest(){
         GridModel a = new GridModel(0,grid);
-        assertEquals(grid, a.sudoku);
-        assertEquals(0,a.status);
-    }
 
-    @Test
-    void constructorTestFalse(){
+
+
         int grid2[][] = { { 0, 9, 0, 0, 0, 0, 8, 5, 3 },
                 { 0, 0, 0, 8, 0, 0, 0, 0, 4 },
                 { 0, 0, 8, 2, 0, 3, 0, 6, 9 },
@@ -33,10 +30,12 @@ class GridModelTest {
                 { 9, 4, 0, 1, 0, 8, 5, 0, 0 },
                 { 7, 0, 0, 0, 0, 6, 0, 0, 0 },
                 { 6, 8, 2, 0, 0, 0, 0, 9, 0 } };
-        GridModel a = new GridModel(0,grid);
-        assertNotEquals(9,a.status);
-        assertNotEquals(grid2,a.sudoku);
+        GridModel b = new GridModel(0,grid2);
+        assertNotEquals(9,b.status);
+        assertEquals(grid2,b.sudoku);
+        assertEquals(0,b.status);
     }
+
 
 
 }

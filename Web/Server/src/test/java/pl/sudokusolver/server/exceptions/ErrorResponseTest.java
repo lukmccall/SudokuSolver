@@ -8,41 +8,23 @@ class ErrorResponseTest {
 
     ErrorResponse e = new ErrorResponse(0,"error 0 - uknown");
     @Test
-    void getErrorMessageTrue() {
-        assertEquals(e.getErrorMessage(),"error 0 - uknown");
+    void getErrorMessage() {
+        assertEquals("error 0 - uknown",e.getErrorMessage());
     }
 
     @Test
-    void setErrorMessageTrue() {
+    void setErrorMessage() {
         e.setErrorMessage("testErrorMessage");
-        assertEquals(e.getErrorMessage(),"testErrorMessage");
+        assertEquals("testErrorMessage",e.getErrorMessage());
         e.setErrorMessage(null);
-        assertEquals(e.getErrorMessage(),null);
-    }
+        assertEquals(null, e.getErrorMessage());
 
-    @Test
-    void getAndSetErrorCodeFalse() {
-        assertEquals(e.getErrorCode(),0);
-        e.setErrorCode(5);
-        assertEquals(e.getErrorCode(),5);
+        assertNotEquals("false", e.getErrorMessage());
 
-    }
-    @Test
-    void getErrorMessageFalse() {
-        assertNotEquals(e.getErrorMessage(),"false");
-    }
-
-    @Test
-    void setErrorMessageFalse() {
         e.setErrorMessage("testErrorMessage");
-        assertNotEquals(e.getErrorMessage(),"");
-    }
+        assertNotEquals("",e.getErrorMessage());
 
-    @Test
-    void getandSetErrorCodeFalse() {
-        assertNotEquals(e.getErrorCode(),9);
-        e.setErrorCode(5);
-        assertNotEquals(e.getErrorCode(),9);
+
     }
 
 }
