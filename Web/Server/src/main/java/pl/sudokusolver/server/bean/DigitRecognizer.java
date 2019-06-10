@@ -78,6 +78,7 @@ public class DigitRecognizer {
 
         this.svm = new SVM(ResourceManager.extract("/svm.xml"));
         this.ann = new ANN(ResourceManager.extract("/ann.xml"));
+        TesseractSingletonWrapper.tesseract.setDatapath(System.getProperty("user.dir")+"/tessdata/");
         this.tesseractSimple = new TesseractSimple();
         this.tesseractStrict = new TesseractStrictMode();
     }
