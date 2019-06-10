@@ -61,11 +61,11 @@ java -jar app-1.0-jar-with-dependencies.jar
 
 Proces uruchomienia serwera w pojemniku dockera został również opisany w pliku _Instrukcja kompilacji.pdf_.
 
-### Dokumentacja kodu ###
+## Dokumentacja kodu ##
 
 Kod jest udokumentowany w postaci _JavaDoc_, które znajdują się [tutaj](https://github.com/lukmccall/SudokuSolver/tree/master/Doc/JavaDoc).
 
-### Materiały użyte podczas procesu tworzenia programy ###
+## Materiały użyte podczas procesu tworzenia programy ##
 
 * http://www.aishack.in/tutorials/sudoku-grabber-opencv-detection/
 * https://github.com/joseluisdiaz/sudoku-solver
