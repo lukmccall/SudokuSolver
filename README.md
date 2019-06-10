@@ -1,5 +1,5 @@
 # SudokuSolver #
-----
+
 ###### Projekt został stworzony przez:
 * Daniel Dobrowolski
 * Małgorzata Dymek
@@ -9,7 +9,7 @@
 * Dawid Szczerba
 
 ## Krótki opis aplikacji ##
-------
+
 Aplikacja jest połączeniem sudoku grabbera, który jest w stanie przeczytać łamigłówkę ze zdjęcia oraz sudoku solvera, który rozwiązuje podane przez użytkownika sudoku.
 Aplikacja została podzielona na dwa główne moduły.
 * Web - część odpowiedzialna za serwer oraz proces rozwiązywania/rozpoznawania sudoku. Moduł ten również został podzielony na pod moduły.
@@ -20,7 +20,7 @@ Aplikacja została podzielona na dwa główne moduły.
 
 Dzięki modułowemu podejściu zyskaliśmy dużą swobodę w wymianie poszczególnych elementów oraz ułatwiło to zrozumienie kodu, ponieważ każda część działa od siebie nie zależnie. Ułatwiło to również testowanie całej aplikacji.
 ## Użyte technologie ##
-----
+
 * Web
     * [OpenCV 4.0.1](https://docs.opencv.org/4.0.1/)
     * [Googlw Guava 16.0.1](https://github.com/google/guava/tree/v16.0.1)
@@ -37,7 +37,7 @@ Wszystkie komponenty są kompatybilne z Javą 8 oraz zostały napisane z myślą
 Do testowania używaliśmy [junit 5.4.2](https://junit.org/junit5/) oraz [mokito 2.27.0](https://site.mockito.org/).
 
 ## Kompilacja ##
-----
+
 Proces kompilacji przy użyciu IDE został opisany w dokumencie _Instrukcja kompilacji.pdf_.
 
 Istnieje również możliwość kompilacji serwera oraz aplikacji bez użycia środkownika.
@@ -62,11 +62,11 @@ java -jar app-1.0-jar-with-dependencies.jar
 Proces uruchomienia serwera w pojemniku dockera został również opisany w pliku _Instrukcja kompilacji.pdf_.
 
 ### Dokumentacja kodu ###
------
+
 Kod jest udokumentowany w postaci _JavaDoc_, które znajdują się [tutaj](https://github.com/lukmccall/SudokuSolver/tree/master/Doc/JavaDoc).
 
 ### Materiały użyte podczas procesu tworzenia programy ###
-----
+
 * http://www.aishack.in/tutorials/sudoku-grabber-opencv-detection/
 * https://github.com/joseluisdiaz/sudoku-solver
 * http://neuralnetworksanddeeplearning.com/chap1.html
@@ -74,5 +74,4 @@ Kod jest udokumentowany w postaci _JavaDoc_, które znajdują się [tutaj](https
 * http://emaraic.com/blog/realtime-sudoku-solver
 
 ### Licencja ###
--------
 [Apache License 2.0](https://github.com/lukmccall/SudokuSolver/blob/master/LICENSE)
