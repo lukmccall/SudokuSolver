@@ -1,0 +1,8 @@
+pl.sudokusolver.app
+pl.sudokusolver.app.Api
+pl.sudokusolver.app.CustomViews
+pl.sudokusolver.app.CustomViews.RadioButtons
+pl.sudokusolver.app.CustomViews.Sliders
+pl.sudokusolver.app.CustomViews.Texts
+pl.sudokusolver.app.Listeners
+pl.sudokusolver.app.Scenes
