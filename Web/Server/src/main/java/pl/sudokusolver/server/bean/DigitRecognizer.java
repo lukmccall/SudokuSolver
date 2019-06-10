@@ -8,6 +8,7 @@ import pl.sudokusolver.recognizerlib.ocr.ml.ANN;
 import pl.sudokusolver.recognizerlib.ocr.ml.SVM;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSimple;
 import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractStrictMode;
+import pl.sudokusolver.recognizerlib.ocr.tesseract.TesseractSingletonWrapper;
 import pl.sudokusolver.recognizerlib.utility.ResourceManager;
 import pl.sudokusolver.server.utility.Utility;
 
