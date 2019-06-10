@@ -30,7 +30,7 @@ public class UtilitiesTest {
         Assert.assertEquals("Niewykryte poprawne sudoku na zdjęciu.",Utilities.getError(3));
         Assert.assertEquals("Sudoku nie posiada rozwiązania.",Utilities.getError(4));
         Assert.assertEquals("Brak połączenia z siecią.",Utilities.getError(5));
-        Assert.assertEquals("Serwer nieaktywny.",Utilities.getError(6));
+        Assert.assertEquals("Nie udało się połączyć z serwerem.",Utilities.getError(6));
         Assert.assertEquals("Plik nie istnieje.",Utilities.getError(7));
         Assert.assertEquals("Nie można wpisać tej wartości w to pole.",Utilities.getError(8));
         Assert.assertEquals("Nie można wyciąć bez zaznaczenia.",Utilities.getError(9));

@@ -26,3 +26,6 @@ Web/Solver/solver.iml
 
 Web/RecognizerLib/src/test/resources/config.properties
 Web/Server/src/main/resources/config.properties
+
+#macos file
+.DS_Store

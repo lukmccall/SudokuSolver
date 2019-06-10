@@ -1,0 +1,16 @@
+pl.sudokusolver.recognizerlib
+pl.sudokusolver.recognizerlib.data
+pl.sudokusolver.recognizerlib.digitbox
+pl.sudokusolver.recognizerlib.exceptions
+pl.sudokusolver.recognizerlib.extractors.cells
+pl.sudokusolver.recognizerlib.extractors.digits
+pl.sudokusolver.recognizerlib.extractors.grid
+pl.sudokusolver.recognizerlib.filters
+pl.sudokusolver.recognizerlib.ocr
+pl.sudokusolver.recognizerlib.ocr.ml
+pl.sudokusolver.recognizerlib.ocr.ml.config
+pl.sudokusolver.recognizerlib.ocr.tesseract
+pl.sudokusolver.recognizerlib.sudoku
+pl.sudokusolver.recognizerlib.utility
+pl.sudokusolver.recognizerlib.utility.comparators
+pl.sudokusolver.recognizerlib.utility.staticmethods
