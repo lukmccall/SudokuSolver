@@ -63,7 +63,7 @@ Proces uruchomienia serwera w pojemniku dockera został również opisany w plik
 
 ## Dokumentacja kodu ##
 
-Kod jest udokumentowany w postaci _JavaDoc_, które znajdują się [tutaj](https://github.com/lukmccall/SudokuSolver/tree/master/Doc/JavaDoc).
+Kod jest udokumentowany w postaci _JavaDoc_, które znajdują się [tutaj](http://ns3102827.ip-54-37-129.eu:10021/).
 
 ## Materiały użyte podczas procesu tworzenia programy ##
 
