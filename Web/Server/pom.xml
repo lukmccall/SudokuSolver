@@ -17,7 +17,7 @@
     <properties>
         <warName>SudokuServer-${project.version}</warName>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springVersion>5.2.3.RELEASE</springVersion>
+        <springVersion>5.3.19</springVersion>
     </properties>
 
     <!-- Repo for spring test bundle -->
